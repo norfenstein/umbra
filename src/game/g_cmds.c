@@ -1465,18 +1465,28 @@ void Cmd_Class_f( gentity_t *ent )
       G_StopFollowing( ent );
     if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
+	  int cost;
+
       if( !BG_ClassIsAllowed( newClass ) )
       {
         G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTALLOWED, newClass );
         return;
       }
 
-      // spawn from an egg
-      if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
-      {
-        ent->client->pers.classSelection = newClass;
-        ent->client->ps.stats[ STAT_CLASS ] = newClass;
-      }
+      cost = BG_Class( newClass )->cost * ALIEN_CREDITS_PER_KILL;
+
+      if( cost <= ent->client->pers.credit )
+	  {
+        // spawn from an egg
+        if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
+        {
+          ent->client->pers.classSelection = newClass;
+          ent->client->ps.stats[ STAT_CLASS ] = newClass;
+          G_AddCreditToClient( ent->client, -cost, qtrue );
+        }
+	  }
+      else
+        G_TriggerMenuArgs( clientNum, MN_A_CANTEVOLVE, newClass );
     }
     else if( ent->client->pers.teamSelection == TEAM_HUMANS )
     {
@@ -1522,13 +1532,6 @@ void Cmd_Class_f( gentity_t *ent )
     if( ent->client->pers.classSelection != PCL_NONE )
     {
       int cost;
-
-      //check that we have an overmind
-      if( !G_Overmind( ) )
-      {
-        G_TriggerMenu( clientNum, MN_A_NOOVMND_EVOLVE );
-        return;
-      }
 
       //check there are no humans nearby
       VectorAdd( ent->client->ps.origin, range, maxs );

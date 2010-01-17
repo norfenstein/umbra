@@ -177,37 +177,37 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LEVEL1_UPG_VALUE            AVM(330)
 #define LEVEL1_UPG_HEALTH           AHM(80)
 #define LEVEL1_UPG_REGEN            (0.03f * LEVEL1_UPG_HEALTH)
-#define LEVEL1_UPG_COST             1
+#define LEVEL1_UPG_COST             2
 
 #define LEVEL2_SPEED                1.2f
 #define LEVEL2_VALUE                AVM(420)
 #define LEVEL2_HEALTH               AHM(150)
 #define LEVEL2_REGEN                (0.03f * LEVEL2_HEALTH)
-#define LEVEL2_COST                 1
+#define LEVEL2_COST                 2
 
 #define LEVEL2_UPG_SPEED            1.2f
 #define LEVEL2_UPG_VALUE            AVM(540)
 #define LEVEL2_UPG_HEALTH           AHM(175)
 #define LEVEL2_UPG_REGEN            (0.03f * LEVEL2_UPG_HEALTH)
-#define LEVEL2_UPG_COST             1
+#define LEVEL2_UPG_COST             3
 
 #define LEVEL3_SPEED                1.1f
 #define LEVEL3_VALUE                AVM(600)
 #define LEVEL3_HEALTH               AHM(200)
 #define LEVEL3_REGEN                (0.03f * LEVEL3_HEALTH)
-#define LEVEL3_COST                 1
+#define LEVEL3_COST                 3
 
 #define LEVEL3_UPG_SPEED            1.1f
 #define LEVEL3_UPG_VALUE            AVM(720)
 #define LEVEL3_UPG_HEALTH           AHM(250)
 #define LEVEL3_UPG_REGEN            (0.03f * LEVEL3_UPG_HEALTH)
-#define LEVEL3_UPG_COST             1
+#define LEVEL3_UPG_COST             4
 
 #define LEVEL4_SPEED                1.2f
 #define LEVEL4_VALUE                AVM(960)
 #define LEVEL4_HEALTH               AHM(350)
 #define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
-#define LEVEL4_COST                 2
+#define LEVEL4_COST                 4
 
 /*
  * ALIEN buildables

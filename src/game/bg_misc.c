@@ -1318,6 +1318,30 @@ int BG_ClassCanEvolveFromTo( class_t fclass,
 
 /*
 ==============
+BG_AlienCanAffordClass
+==============
+*/
+qboolean BG_AlienCanAffordClass( class_t class, int credits )
+{
+  if ( ( class == PCL_ALIEN_BUILDER0 ||
+         class == PCL_ALIEN_BUILDER0_UPG ||
+         class == PCL_ALIEN_LEVEL0 ||
+         class == PCL_ALIEN_LEVEL1 ||
+         class == PCL_ALIEN_LEVEL1_UPG ||
+         class == PCL_ALIEN_LEVEL2 ||
+         class == PCL_ALIEN_LEVEL2_UPG ||
+         class == PCL_ALIEN_LEVEL3 ||
+         class == PCL_ALIEN_LEVEL3_UPG ||
+         class == PCL_ALIEN_LEVEL4 ) &&
+       BG_ClassIsAllowed( class ) &&
+       credits >= BG_Class( class )->cost * ALIEN_CREDITS_PER_KILL )
+	return qtrue;
+  else
+    return qfalse;
+}
+
+/*
+==============
 BG_AlienCanEvolve
 ==============
 */

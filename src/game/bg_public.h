@@ -560,7 +560,6 @@ typedef enum
   MN_A_HOVEL_BLOCKED,
   MN_A_NOEROOM,
   MN_A_TOOCLOSE,
-  MN_A_NOOVMND_EVOLVE,
   MN_A_TEAMCHANGEBUILDTIMER,
   MN_A_EVOLVEBUILDTIMER,
   MN_A_CANTEVOLVE,
@@ -1117,6 +1116,7 @@ int                         BG_ClassCanEvolveFromTo( class_t fclass,
                                                      class_t tclass,
                                                      int credits, int num );
 qboolean                    BG_AlienCanEvolve( class_t class, int credits );
+qboolean                    BG_AlienCanAffordClass( class_t class, int credits );
 
 void                        BG_InitClassConfigs( void );
 
