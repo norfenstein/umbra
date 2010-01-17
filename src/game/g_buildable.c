@@ -2630,8 +2630,6 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
   int               remainingBP, remainingSpawns;
   qboolean          collision = qfalse;
   int               collisionCount = 0;
-  qboolean          repeaterInRange = qfalse;
-  int               repeaterInRangeCount = 0;
   itemBuildError_t  bpError;
   buildable_t       spawn;
   buildable_t       core;
@@ -2649,11 +2647,7 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
   }
   else if( team == TEAM_HUMANS )
   {
-    if( buildable == BA_H_REACTOR || buildable == BA_H_REPEATER )
-      remainingBP   = level.humanBuildPoints;
-    else
-      remainingBP   = G_GetBuildPoints( origin, team, 0 );
-
+    remainingBP     = G_GetBuildPoints( origin, team, 0 );
     remainingSpawns = level.numHumanSpawns;
     bpError         = IBE_NOHUMANBP;
     spawn           = BA_H_SPAWN;
@@ -2710,17 +2704,6 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
       collisionCount++;
     }
 
-    // Check if this is a repeater and it's in range
-    if( buildable == BA_H_REPEATER &&
-        buildable == ent->s.modelindex &&
-        Distance( ent->s.origin, origin ) < REPEATER_BASESIZE )
-    {
-      repeaterInRange = qtrue;
-      repeaterInRangeCount++;
-    }
-    else
-      repeaterInRange = qfalse;
-
     if( !ent->inuse )
       continue;
 
@@ -2745,17 +2728,12 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
 
       // Buildables that are marked here will always end up at the front of the
       // removal list, so just incrementing numBuildablesForRemoval is sufficient
-      if( collision || repeaterInRange )
+      if( collision )
       {
-        // Collided with something, so we definitely have to remove it or
-        // it's a repeater that intersects the new repeater's power area,
-        // so it must be removed
+        // Collided with something, so we definitely have to remove it
 
         if( collision )
           collisionCount--;
-
-        if( repeaterInRange )
-          repeaterInRangeCount--;
 
         pointsYielded += BG_Buildable( ent->s.modelindex )->buildPoints;
         level.numBuildablesForRemoval++;
