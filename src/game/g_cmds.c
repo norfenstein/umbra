@@ -1490,22 +1490,6 @@ void Cmd_Class_f( gentity_t *ent )
     }
     else if( ent->client->pers.teamSelection == TEAM_HUMANS )
     {
-      //set the item to spawn with
-      if( !Q_stricmp( s, BG_Weapon( WP_MACHINEGUN )->name ) &&
-          BG_WeaponIsAllowed( WP_MACHINEGUN ) )
-      {
-        ent->client->pers.humanItemSelection = WP_MACHINEGUN;
-      }
-      else if( !Q_stricmp( s, BG_Weapon( WP_HBUILD )->name ) &&
-               BG_WeaponIsAllowed( WP_HBUILD ) )
-      {
-        ent->client->pers.humanItemSelection = WP_HBUILD;
-      }
-      else
-      {
-        G_TriggerMenu( ent->client->ps.clientNum, MN_H_UNKNOWNSPAWNITEM );
-        return;
-      }
       // spawn from a telenode
       if( G_PushSpawnQueue( &level.humanSpawnQueue, clientNum ) )
       {
