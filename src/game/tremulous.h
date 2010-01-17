@@ -669,20 +669,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define DEFAULT_ALIEN_BUILDPOINTS   "150"
 #define DEFAULT_ALIEN_QUEUE_TIME    "12000"
-#define DEFAULT_ALIEN_STAGE2_THRESH "8000"
-#define DEFAULT_ALIEN_STAGE3_THRESH "16000"
-#define DEFAULT_ALIEN_MAX_STAGE     "2"
 #define DEFAULT_HUMAN_BUILDPOINTS   "100"
 #define DEFAULT_HUMAN_QUEUE_TIME    "8000"
 #define DEFAULT_HUMAN_REPEATER_BUILDPOINTS "20"
 #define DEFAULT_HUMAN_REPEATER_QUEUE_TIME "0"
 #define DEFAULT_HUMAN_REPEATER_MAX_ZONES "500"
-#define DEFAULT_HUMAN_STAGE2_THRESH "4000"
-#define DEFAULT_HUMAN_STAGE3_THRESH "8000"
-#define DEFAULT_HUMAN_MAX_STAGE     "2"
-
-#define DAMAGE_FRACTION_FOR_KILL    0.5f //how much damage players (versus structures) need to
-                                         //do to increment the stage kill counters
                                          
 #define MAXIMUM_BUILD_TIME          20000 // used for pie timer
 

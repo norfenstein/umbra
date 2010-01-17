@@ -175,9 +175,6 @@ float G_RewardAttackers( gentity_t *self )
   {
     gentity_t *player = g_entities + i;
     short num = value * self->credits[ i ] / totalDamage;
-    int stageValue = num;
-    if( totalDamage < maxHealth )
-      stageValue *= totalDamage / maxHealth;
 
     if( !player->client || !self->credits[ i ] ||
         player->client->ps.stats[ STAT_TEAM ] == team )
@@ -189,12 +186,6 @@ float G_RewardAttackers( gentity_t *self )
     if( self->s.eType != ET_BUILDABLE )
     {
       G_AddCreditToClient( player->client, num, qtrue );
-
-      // add to stage counters
-      if( player->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-        trap_Cvar_Set( "g_alienCredits", va( "%d", g_alienCredits.integer + stageValue ) );
-      else if( player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-        trap_Cvar_Set( "g_humanCredits", va( "%d", g_humanCredits.integer + stageValue ) );
     }
 
     self->credits[ i ] = 0;

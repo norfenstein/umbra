@@ -64,9 +64,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CS_BOTINFO          25
 #define CS_CLIENTS_READY    26
 
-#define CS_ALIEN_STAGES     29
-#define CS_HUMAN_STAGES     30
-
 #define CS_MODELS           33
 #define CS_SOUNDS           (CS_MODELS+MAX_MODELS)
 #define CS_SHADERS          (CS_SOUNDS+MAX_SOUNDS)
@@ -572,7 +569,6 @@ typedef enum
   MN_A_UNKNOWNCLASS,
   MN_A_CLASSNOTSPAWN,
   MN_A_CLASSNOTALLOWED,
-  MN_A_CLASSNOTATSTAGE,
 
   //shared build
   MN_B_NOROOM,
@@ -916,8 +912,6 @@ typedef struct
   char      *name;
   char      *info;
 
-  int       stages;
-
   int       health;
   float     fallDamage;
   float     regenRate;
@@ -966,14 +960,6 @@ typedef struct
   vec3_t    shoulderOffsets;
 } classConfig_t;
 
-//stages
-typedef enum
-{
-  S1,
-  S2,
-  S3
-} stage_t;
-
 #define MAX_BUILDABLE_MODELS 4
 
 // buildable item record
@@ -990,7 +976,6 @@ typedef struct
   float         bounce;
 
   int           buildPoints;
-  int           stages;
 
   int           health;
   int           regenRate;
@@ -1042,7 +1027,6 @@ typedef struct
   weapon_t  number;
 
   int       price;
-  int       stages;
 
   int       slots;
 
@@ -1079,7 +1063,6 @@ typedef struct
   upgrade_t number;
 
   int       price;
-  int       stages;
 
   int       slots;
 
@@ -1124,8 +1107,6 @@ int       BG_UnpackEntityNumbers( entityState_t *es, int *entityNums, int count 
 const buildableAttributes_t *BG_BuildableByName( const char *name );
 const buildableAttributes_t *BG_BuildableByEntityName( const char *name );
 const buildableAttributes_t *BG_Buildable( buildable_t buildable );
-qboolean                    BG_BuildableAllowedInStage( buildable_t buildable,
-                                                        stage_t stage );
 
 buildableConfig_t           *BG_BuildableConfig( buildable_t buildable );
 void                        BG_BuildableBoundingBox( buildable_t buildable,
@@ -1134,8 +1115,6 @@ void                        BG_InitBuildableConfigs( void );
 
 const classAttributes_t     *BG_ClassByName( const char *name );
 const classAttributes_t     *BG_Class( class_t class );
-qboolean                    BG_ClassAllowedInStage( class_t class,
-                                                    stage_t stage );
 
 classConfig_t               *BG_ClassConfig( class_t class );
 
@@ -1145,20 +1124,16 @@ void                        BG_ClassBoundingBox( class_t class, vec3_t mins,
 qboolean                    BG_ClassHasAbility( class_t class, int ability );
 int                         BG_ClassCanEvolveFromTo( class_t fclass,
                                                      class_t tclass,
-                                                     int credits, int alienStage, int num );
-qboolean                    BG_AlienCanEvolve( class_t class, int credits, int alienStage );
+                                                     int credits, int num );
+qboolean                    BG_AlienCanEvolve( class_t class, int credits );
 
 void                        BG_InitClassConfigs( void );
 
 const weaponAttributes_t    *BG_WeaponByName( const char *name );
 const weaponAttributes_t    *BG_Weapon( weapon_t weapon );
-qboolean                    BG_WeaponAllowedInStage( weapon_t weapon,
-                                                     stage_t stage );
 
 const upgradeAttributes_t   *BG_UpgradeByName( const char *name );
 const upgradeAttributes_t   *BG_Upgrade( upgrade_t upgrade );
-qboolean                    BG_UpgradeAllowedInStage( upgrade_t upgrade,
-                                                      stage_t stage );
 
 // content masks
 #define MASK_ALL          (-1)

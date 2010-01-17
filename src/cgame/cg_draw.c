@@ -324,8 +324,7 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
   {
     if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS )
     {
-      if( !BG_AlienCanEvolve( cg.predictedPlayerState.stats[ STAT_CLASS ],
-                              value, cgs.alienStage ) &&
+      if( !BG_AlienCanEvolve( cg.predictedPlayerState.stats[ STAT_CLASS ], value ) &&
           cg.time - cg.lastEvolveAttempt <= NO_CREDITS_TIME &&
           ( ( cg.time - cg.lastEvolveAttempt ) / 300 ) & 1 )
       {
@@ -1370,24 +1369,17 @@ static void CG_DrawTeamLabel( rectDef_t *rect, team_t team, float text_x, float 
     vec4_t color, float scale, int textalign, int textvalign, int textStyle )
 {
   char  *t;
-  char  stage[ MAX_TOKEN_CHARS ];
   char  *s;
   float tx, ty;
-
-  stage[ 0 ] = '\0';
 
   switch( team )
   {
     case TEAM_ALIENS:
       t = "Aliens";
-      if( cg.intermissionStarted )
-        Com_sprintf( stage, MAX_TOKEN_CHARS, "(Stage %d)", cgs.alienStage + 1 );
       break;
 
     case TEAM_HUMANS:
       t = "Humans";
-      if( cg.intermissionStarted )
-        Com_sprintf( stage, MAX_TOKEN_CHARS, "(Stage %d)", cgs.humanStage + 1 );
       break;
 
     default:
@@ -1395,73 +1387,9 @@ static void CG_DrawTeamLabel( rectDef_t *rect, team_t team, float text_x, float 
       break;
   }
 
-  switch( textalign )
-  {
-    default:
-    case ALIGN_LEFT:
-      s = va( "%s %s", t, stage );
-      break;
-
-    case ALIGN_RIGHT:
-      s = va( "%s %s", stage, t );
-      break;
-  }
+  s = va( "%s", t );
 
   CG_AlignText( rect, s, scale, 0.0f, 0.0f, textalign, textvalign, &tx, &ty );
-  UI_Text_Paint( text_x + tx, text_y + ty, scale, color, s, 0, 0, textStyle );
-}
-
-/*
-==================
-CG_DrawStageReport
-==================
-*/
-static void CG_DrawStageReport( rectDef_t *rect, float text_x, float text_y,
-    vec4_t color, float scale, int textalign, int textvalign, int textStyle )
-{
-  char  s[ MAX_TOKEN_CHARS ];
-  float tx, ty;
-
-  if( cg.intermissionStarted )
-    return;
-
-  if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_NONE )
-    return;
-
-  if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-  {
-    int kills = ceil( (float)(cgs.alienNextStageThreshold - cgs.alienCredits) / ALIEN_CREDITS_PER_KILL );
-    if( kills < 0 )
-      kills = 0;
-
-    if( cgs.alienNextStageThreshold < 0 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.alienStage + 1 );
-    else if( kills == 1 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 frag for next stage",
-          cgs.alienStage + 1 );
-    else
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d frags for next stage",
-          cgs.alienStage + 1, kills );
-  }
-  else if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-  {
-    int credits = cgs.humanNextStageThreshold - cgs.humanCredits;
-
-    if( credits < 0 )
-      credits = 0;
-
-    if( cgs.humanNextStageThreshold < 0 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d", cgs.humanStage + 1 );
-    else if( credits == 1 )
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, 1 credit for next stage",
-          cgs.humanStage + 1 );
-    else
-      Com_sprintf( s, MAX_TOKEN_CHARS, "Stage %d, %d credits for next stage",
-          cgs.humanStage + 1, credits );
-  }
-
-  CG_AlignText( rect, s, scale, 0.0f, 0.0f, textalign, textvalign, &tx, &ty );
-
   UI_Text_Paint( text_x + tx, text_y + ty, scale, color, s, 0, 0, textStyle );
 }
 
@@ -2338,7 +2266,7 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
 
   if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS &&
       !BG_AlienCanEvolve( cg.predictedPlayerState.stats[ STAT_CLASS ],
-                          ps->persistant[ PERS_CREDIT ], cgs.alienStage ) )
+                          ps->persistant[ PERS_CREDIT ] ) )
   {
     if( cg.time - cg.lastEvolveAttempt <= NO_CREDITS_TIME )
     {
@@ -2674,9 +2602,6 @@ void CG_OwnerDraw( float x, float y, float w, float h, float text_x,
       break;
     case CG_PLAYER_CROSSHAIR:
       CG_DrawCrosshair( &rect, foreColor );
-      break;
-    case CG_STAGE_REPORT_TEXT:
-      CG_DrawStageReport( &rect, text_x, text_y, foreColor, scale, textalign, textvalign, textStyle );
       break;
     case CG_ALIENS_SCORE_LABEL:
       CG_DrawTeamLabel( &rect, TEAM_ALIENS, text_x, text_y, foreColor, scale, textalign, textvalign, textStyle );

@@ -1238,9 +1238,6 @@ typedef struct
 
   sfxHandle_t medkitUseSound;
 
-  sfxHandle_t alienStageTransition;
-  sfxHandle_t humanStageTransition;
-
   sfxHandle_t alienOvermindAttack;
   sfxHandle_t alienOvermindDying;
   sfxHandle_t alienOvermindSpawns;
@@ -1364,13 +1361,6 @@ typedef struct
   int           scores1, scores2;   // from configstrings
 
   qboolean      newHud;
-
-  int           alienStage;
-  int           humanStage;
-  int           alienCredits;
-  int           humanCredits;
-  int           alienNextStageThreshold;
-  int           humanNextStageThreshold;
 
   //
   // locally derived information from gamestate
@@ -1525,7 +1515,6 @@ extern  vmCvar_t    cg_debugVoices;
 
 extern  vmCvar_t    ui_currentClass;
 extern  vmCvar_t    ui_carriage;
-extern  vmCvar_t    ui_stages;
 extern  vmCvar_t    ui_dialog;
 extern  vmCvar_t    ui_voteActive;
 extern  vmCvar_t    ui_alienTeamVoteActive;

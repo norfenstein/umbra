@@ -81,16 +81,6 @@ vmCvar_t  g_humanBuildQueueTime;
 vmCvar_t  g_humanRepeaterBuildPoints;
 vmCvar_t  g_humanRepeaterBuildQueueTime;
 vmCvar_t  g_humanRepeaterMaxZones;
-vmCvar_t  g_humanStage;
-vmCvar_t  g_humanCredits;
-vmCvar_t  g_humanMaxStage;
-vmCvar_t  g_humanStage2Threshold;
-vmCvar_t  g_humanStage3Threshold;
-vmCvar_t  g_alienStage;
-vmCvar_t  g_alienCredits;
-vmCvar_t  g_alienMaxStage;
-vmCvar_t  g_alienStage2Threshold;
-vmCvar_t  g_alienStage3Threshold;
 vmCvar_t  g_freeFundPeriod;
 
 vmCvar_t  g_unlagged;
@@ -203,16 +193,6 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_humanRepeaterBuildPoints, "g_humanRepeaterBuildPoints", DEFAULT_HUMAN_REPEATER_BUILDPOINTS, CVAR_ARCHIVE, 0, qfalse  },
   { &g_humanRepeaterMaxZones, "g_humanRepeaterMaxZones", DEFAULT_HUMAN_REPEATER_MAX_ZONES, CVAR_ARCHIVE, 0, qfalse  },
   { &g_humanRepeaterBuildQueueTime, "g_humanRepeaterBuildQueueTime", DEFAULT_HUMAN_REPEATER_QUEUE_TIME, CVAR_ARCHIVE, 0, qfalse  },
-  { &g_humanStage, "g_humanStage", "0", 0, 0, qfalse  },
-  { &g_humanCredits, "g_humanCredits", "0", 0, 0, qfalse  },
-  { &g_humanMaxStage, "g_humanMaxStage", DEFAULT_HUMAN_MAX_STAGE, 0, 0, qfalse  },
-  { &g_humanStage2Threshold, "g_humanStage2Threshold", DEFAULT_HUMAN_STAGE2_THRESH, 0, 0, qfalse  },
-  { &g_humanStage3Threshold, "g_humanStage3Threshold", DEFAULT_HUMAN_STAGE3_THRESH, 0, 0, qfalse  },
-  { &g_alienStage, "g_alienStage", "0", 0, 0, qfalse  },
-  { &g_alienCredits, "g_alienCredits", "0", 0, 0, qfalse  },
-  { &g_alienMaxStage, "g_alienMaxStage", DEFAULT_ALIEN_MAX_STAGE, 0, 0, qfalse  },
-  { &g_alienStage2Threshold, "g_alienStage2Threshold", DEFAULT_ALIEN_STAGE2_THRESH, 0, 0, qfalse  },
-  { &g_alienStage3Threshold, "g_alienStage3Threshold", DEFAULT_ALIEN_STAGE3_THRESH, 0, 0, qfalse  },
   { &g_freeFundPeriod, "g_freeFundPeriod", DEFAULT_FREEKILL_PERIOD, CVAR_ARCHIVE, 0, qtrue },
 
   { &g_unlagged, "g_unlagged", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
@@ -512,8 +492,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   memset( &level, 0, sizeof( level ) );
   level.time = levelTime;
   level.startTime = levelTime;
-  level.alienStage2Time = level.alienStage3Time =
-    level.humanStage2Time = level.humanStage3Time = level.startTime;
 
   level.snd_fry = G_SoundIndex( "sound/misc/fry.wav" ); // FIXME standing in lava / slime
 
@@ -614,11 +592,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
   level.voices = BG_VoiceInit( );
   BG_PrintVoices( level.voices, g_debugVoices.integer );
 
-  //reset stages
-  trap_Cvar_Set( "g_alienStage", va( "%d", S1 ) );
-  trap_Cvar_Set( "g_humanStage", va( "%d", S1 ) );
-  trap_Cvar_Set( "g_alienCredits", 0 );
-  trap_Cvar_Set( "g_humanCredits", 0 );
   level.suddenDeathBeginTime = g_suddenDeathTime.integer * 60000;
 
   G_Printf( "-----------------------------------\n" );
@@ -1208,157 +1181,6 @@ void G_CalculateBuildPoints( void )
 
 /*
 ============
-G_CalculateStages
-============
-*/
-void G_CalculateStages( void )
-{
-  float         alienPlayerCountMod     = level.averageNumAlienClients / PLAYER_COUNT_MOD;
-  float         humanPlayerCountMod     = level.averageNumHumanClients / PLAYER_COUNT_MOD;
-  int           alienNextStageThreshold, humanNextStageThreshold;
-  static int    lastAlienStageModCount  = 1;
-  static int    lastHumanStageModCount  = 1;
-
-  if( alienPlayerCountMod < 0.1f )
-    alienPlayerCountMod = 0.1f;
-
-  if( humanPlayerCountMod < 0.1f )
-    humanPlayerCountMod = 0.1f;
-
-  if( g_alienCredits.integer >=
-      (int)( ceil( (float)g_alienStage2Threshold.integer * alienPlayerCountMod ) ) &&
-      g_alienStage.integer == S1 && g_alienMaxStage.integer > S1 )
-  {
-    trap_Cvar_Set( "g_alienStage", va( "%d", S2 ) );
-    level.alienStage2Time = level.time;
-    lastAlienStageModCount = g_alienStage.modificationCount;
-    G_LogPrintf("Stage: A 2: Aliens reached Stage 2\n");
-  }
-
-  if( g_alienCredits.integer >=
-      (int)( ceil( (float)g_alienStage3Threshold.integer * alienPlayerCountMod ) ) &&
-      g_alienStage.integer == S2 && g_alienMaxStage.integer > S2 )
-  {
-    trap_Cvar_Set( "g_alienStage", va( "%d", S3 ) );
-    level.alienStage3Time = level.time;
-    lastAlienStageModCount = g_alienStage.modificationCount;
-    G_LogPrintf("Stage: A 3: Aliens reached Stage 3\n");
-  }
-
-  if( g_humanCredits.integer >=
-      (int)( ceil( (float)g_humanStage2Threshold.integer * humanPlayerCountMod ) ) &&
-      g_humanStage.integer == S1 && g_humanMaxStage.integer > S1 )
-  {
-    trap_Cvar_Set( "g_humanStage", va( "%d", S2 ) );
-    level.humanStage2Time = level.time;
-    lastHumanStageModCount = g_humanStage.modificationCount;
-    G_LogPrintf("Stage: H 2: Humans reached Stage 2\n");
-  }
-
-  if( g_humanCredits.integer >=
-      (int)( ceil( (float)g_humanStage3Threshold.integer * humanPlayerCountMod ) ) &&
-      g_humanStage.integer == S2 && g_humanMaxStage.integer > S2 )
-  {
-    trap_Cvar_Set( "g_humanStage", va( "%d", S3 ) );
-    level.humanStage3Time = level.time;
-    lastHumanStageModCount = g_humanStage.modificationCount;
-    G_LogPrintf("Stage: H 3: Humans reached Stage 3\n");
-  }
-
-  if( g_alienStage.modificationCount > lastAlienStageModCount )
-  {
-    G_Checktrigger_stages( TEAM_ALIENS, g_alienStage.integer );
-
-    if( g_alienStage.integer == S2 )
-      level.alienStage2Time = level.time;
-    else if( g_alienStage.integer == S3 )
-      level.alienStage3Time = level.time;
-
-    lastAlienStageModCount = g_alienStage.modificationCount;
-  }
-
-  if( g_humanStage.modificationCount > lastHumanStageModCount )
-  {
-    G_Checktrigger_stages( TEAM_HUMANS, g_humanStage.integer );
-
-    if( g_humanStage.integer == S2 )
-      level.humanStage2Time = level.time;
-    else if( g_humanStage.integer == S3 )
-      level.humanStage3Time = level.time;
-
-    lastHumanStageModCount = g_humanStage.modificationCount;
-  }
-
-  if( g_alienStage.integer == S1 && g_alienMaxStage.integer > S1 )
-    alienNextStageThreshold = (int)( ceil( (float)g_alienStage2Threshold.integer * alienPlayerCountMod ) );
-  else if( g_alienStage.integer == S2 && g_alienMaxStage.integer > S2 )
-    alienNextStageThreshold = (int)( ceil( (float)g_alienStage3Threshold.integer * alienPlayerCountMod ) );
-  else
-    alienNextStageThreshold = -1;
-
-  if( g_humanStage.integer == S1 && g_humanMaxStage.integer > S1 )
-    humanNextStageThreshold = (int)( ceil( (float)g_humanStage2Threshold.integer * humanPlayerCountMod ) );
-  else if( g_humanStage.integer == S2 && g_humanMaxStage.integer > S2 )
-    humanNextStageThreshold = (int)( ceil( (float)g_humanStage3Threshold.integer * humanPlayerCountMod ) );
-  else
-    humanNextStageThreshold = -1;
-
-  // save a lot of bandwidth by rounding thresholds up to the nearest 100
-  if( alienNextStageThreshold > 0 )
-    alienNextStageThreshold = ceil( (float)alienNextStageThreshold / 100 ) * 100;
-
-  if( humanNextStageThreshold > 0 )
-    humanNextStageThreshold = ceil( (float)humanNextStageThreshold / 100 ) * 100;
-
-  trap_SetConfigstring( CS_ALIEN_STAGES, va( "%d %d %d",
-        g_alienStage.integer, g_alienCredits.integer,
-        alienNextStageThreshold ) );
-
-  trap_SetConfigstring( CS_HUMAN_STAGES, va( "%d %d %d",
-        g_humanStage.integer, g_humanCredits.integer,
-        humanNextStageThreshold ) );
-}
-
-/*
-============
-CalculateAvgPlayers
-
-Calculates the average number of players playing this game
-============
-*/
-void G_CalculateAvgPlayers( void )
-{
-  //there are no clients or only spectators connected, so
-  //reset the number of samples in order to avoid the situation
-  //where the average tends to 0
-  if( !level.numAlienClients )
-  {
-    level.numAlienSamples = 0;
-    trap_Cvar_Set( "g_alienCredits", "0" );
-  }
-
-  if( !level.numHumanClients )
-  {
-    level.numHumanSamples = 0;
-    trap_Cvar_Set( "g_humanCredits", "0" );
-  }
-
-  //calculate average number of clients for stats
-  level.averageNumAlienClients =
-    ( ( level.averageNumAlienClients * level.numAlienSamples )
-      + level.numAlienClients ) /
-    (float)( level.numAlienSamples + 1 );
-  level.numAlienSamples++;
-
-  level.averageNumHumanClients =
-    ( ( level.averageNumHumanClients * level.numHumanSamples )
-      + level.numHumanClients ) /
-    (float)( level.numHumanSamples + 1 );
-  level.numHumanSamples++;
-}
-
-/*
-============
 CalculateRanks
 
 Recalculates the score ranks of all players
@@ -1714,7 +1536,7 @@ void G_SendGameStat( team_t team )
   }
 
   Com_sprintf( data, BIG_INFO_STRING,
-      "%s %s T:%c A:%f H:%f M:%s D:%d SD:%d AS:%d AS2T:%d AS3T:%d HS:%d HS2T:%d HS3T:%d CL:%d",
+      "%s %s T:%c A:%f H:%f M:%s D:%d SD:%d CL:%d",
       Q3_VERSION,
       g_tag.string,
       teamChar,
@@ -1723,12 +1545,6 @@ void G_SendGameStat( team_t team )
       map,
       level.time - level.startTime,
       G_TimeTilSuddenDeath( ),
-      g_alienStage.integer,
-      level.alienStage2Time - level.startTime,
-      level.alienStage3Time - level.startTime,
-      g_humanStage.integer,
-      level.humanStage2Time - level.startTime,
-      level.humanStage3Time - level.startTime,
       level.numConnectedClients );
 
   dataLength = strlen( data );
@@ -1825,7 +1641,7 @@ void LogExit( const char *string )
 
     if( !Q_stricmp( ent->classname, "trigger_win" ) )
     {
-      if( level.lastWin == ent->stageTeam )
+      if( level.lastWin == ent->playerTeam )
         ent->use( ent, ent, ent );
     }
   }
@@ -2381,10 +2197,8 @@ void G_RunFrame( int levelTime )
 
   G_CountSpawns( );
   G_CalculateBuildPoints( );
-  G_CalculateStages( );
   G_SpawnClients( TEAM_ALIENS );
   G_SpawnClients( TEAM_HUMANS );
-  G_CalculateAvgPlayers( );
   G_UpdateZaps( msec );
 
   // see if it is time to end the level

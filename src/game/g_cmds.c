@@ -1479,12 +1479,6 @@ void Cmd_Class_f( gentity_t *ent )
         return;
       }
 
-      if( !BG_ClassAllowedInStage( newClass, g_alienStage.integer ) )
-      {
-        G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTATSTAGE, newClass );
-        return;
-      }
-
       // spawn from an egg
       if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
       {
@@ -1579,9 +1573,7 @@ void Cmd_Class_f( gentity_t *ent )
         return;
       }
 
-      cost = BG_ClassCanEvolveFromTo( currentClass, newClass,
-                                      ent->client->pers.credit,
-                                      g_alienStage.integer, 0 );
+      cost = BG_ClassCanEvolveFromTo( currentClass, newClass, ent->client->pers.credit, 0 );
 
       if( G_RoomForClassChange( ent, newClass, infestOrigin ) )
       {
@@ -1913,7 +1905,7 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //are we /allowed/ to buy this?
-    if( !BG_WeaponAllowedInStage( weapon, g_humanStage.integer ) || !BG_WeaponIsAllowed( weapon ) )
+    if( !BG_WeaponIsAllowed( weapon ) )
     {
       trap_SendServerCommand( ent-g_entities, "print \"You can't buy this item\n\"" );
       return;
@@ -1991,7 +1983,7 @@ void Cmd_Buy_f( gentity_t *ent )
     }
 
     //are we /allowed/ to buy this?
-    if( !BG_UpgradeAllowedInStage( upgrade, g_humanStage.integer ) || !BG_UpgradeIsAllowed( upgrade ) )
+    if( !BG_UpgradeIsAllowed( upgrade ) )
     {
       trap_SendServerCommand( ent-g_entities, "print \"You can't buy this item\n\"" );
       return;
@@ -2246,9 +2238,7 @@ void Cmd_Build_f( gentity_t *ent )
   if( buildable != BA_NONE &&
       ( ( 1 << ent->client->ps.weapon ) & BG_Buildable( buildable )->buildWeapon ) &&
       !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) &&
-      BG_BuildableIsAllowed( buildable ) &&
-      ( ( team == TEAM_ALIENS && BG_BuildableAllowedInStage( buildable, g_alienStage.integer ) ) ||
-        ( team == TEAM_HUMANS && BG_BuildableAllowedInStage( buildable, g_humanStage.integer ) ) ) )
+      BG_BuildableIsAllowed( buildable ) )
   {
     dynMenu_t err;
     dist = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->buildDist;

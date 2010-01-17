@@ -190,8 +190,7 @@ struct gentity_s
   float             wait;
   float             random;
 
-  team_t            stageTeam;
-  stage_t           stageStage;
+  team_t            playerTeam;
 
   team_t            buildableTeam;      // buildable item team
   gentity_t         *parentNode;        // for creep and defence/spawn dependencies
@@ -612,11 +611,6 @@ typedef struct
   spawnQueue_t      alienSpawnQueue;
   spawnQueue_t      humanSpawnQueue;
 
-  int               alienStage2Time;
-  int               alienStage3Time;
-  int               humanStage2Time;
-  int               humanStage3Time;
-
   qboolean          uncondAlienWin;
   qboolean          uncondHumanWin;
   qboolean          alienTeamLocked;
@@ -877,7 +871,6 @@ void manualTriggerSpectator( gentity_t *trigger, gentity_t *player );
 // g_trigger.c
 //
 void trigger_teleporter_touch( gentity_t *self, gentity_t *other, trace_t *trace );
-void G_Checktrigger_stages( team_t team, stage_t stage );
 
 
 //
@@ -1081,16 +1074,6 @@ extern  vmCvar_t  g_humanBuildQueueTime;
 extern  vmCvar_t  g_humanRepeaterBuildPoints;
 extern  vmCvar_t  g_humanRepeaterBuildQueueTime;
 extern  vmCvar_t  g_humanRepeaterMaxZones;
-extern  vmCvar_t  g_humanStage;
-extern  vmCvar_t  g_humanCredits;
-extern  vmCvar_t  g_humanMaxStage;
-extern  vmCvar_t  g_humanStage2Threshold;
-extern  vmCvar_t  g_humanStage3Threshold;
-extern  vmCvar_t  g_alienStage;
-extern  vmCvar_t  g_alienCredits;
-extern  vmCvar_t  g_alienMaxStage;
-extern  vmCvar_t  g_alienStage2Threshold;
-extern  vmCvar_t  g_alienStage3Threshold;
 extern  vmCvar_t  g_freeFundPeriod;
 
 extern  vmCvar_t  g_unlagged;

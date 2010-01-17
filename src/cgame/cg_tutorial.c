@@ -687,8 +687,7 @@ const char *CG_TutorialText( void )
                 CG_KeyNameForCommand( "+button7" ) ) );
         }
         else if( BG_AlienCanEvolve( ps->stats[ STAT_CLASS ],
-                                    ps->persistant[ PERS_CREDIT ],
-                                    cgs.alienStage ) )
+                                    ps->persistant[ PERS_CREDIT ] ) )
         {
           Q_strcat( text, MAX_TUTORIAL_TEXT,
               va( "Press %s to evolve\n",

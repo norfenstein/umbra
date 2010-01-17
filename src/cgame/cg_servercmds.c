@@ -149,26 +149,6 @@ Called on load to set the initial values from configure strings
 */
 void CG_SetConfigValues( void )
 {
-  const char *alienStages = CG_ConfigString( CS_ALIEN_STAGES );
-  const char *humanStages = CG_ConfigString( CS_HUMAN_STAGES );
-
-  if( alienStages[0] )
-  {
-    sscanf( alienStages, "%d %d %d", &cgs.alienStage, &cgs.alienCredits,
-        &cgs.alienNextStageThreshold );
-  }
-  else
-    cgs.alienStage = cgs.alienCredits = cgs.alienNextStageThreshold = 0;
-
-
-  if( humanStages[0] )
-  {
-    sscanf( humanStages, "%d %d %d", &cgs.humanStage, &cgs.humanCredits,
-        &cgs.humanNextStageThreshold );
-  }
-  else
-    cgs.humanStage = cgs.humanCredits = cgs.humanNextStageThreshold = 0;
-
   cgs.levelStartTime = atoi( CG_ConfigString( CS_LEVEL_START_TIME ) );
   cg.warmupTime = atoi( CG_ConfigString( CS_WARMUP ) );
 }
@@ -226,34 +206,6 @@ void CG_ShaderStateChanged( void )
 
 /*
 ================
-CG_AnnounceAlienStageTransistion
-================
-*/
-static void CG_AnnounceAlienStageTransistion( stage_t from, stage_t to )
-{
-  if( cg.predictedPlayerState.stats[ STAT_TEAM ] != TEAM_ALIENS )
-    return;
-
-  trap_S_StartLocalSound( cgs.media.alienStageTransition, CHAN_ANNOUNCER );
-  CG_CenterPrint( "We have evolved!", 200, GIANTCHAR_WIDTH * 4 );
-}
-
-/*
-================
-CG_AnnounceHumanStageTransistion
-================
-*/
-static void CG_AnnounceHumanStageTransistion( stage_t from, stage_t to )
-{
-  if( cg.predictedPlayerState.stats[ STAT_TEAM ] != TEAM_HUMANS )
-    return;
-
-  trap_S_StartLocalSound( cgs.media.humanStageTransition, CHAN_ANNOUNCER );
-  CG_CenterPrint( "Reinforcements have arrived!", 200, GIANTCHAR_WIDTH * 4 );
-}
-
-/*
-================
 CG_ConfigStringModified
 
 ================
@@ -279,40 +231,6 @@ static void CG_ConfigStringModified( void )
     CG_ParseServerinfo( );
   else if( num == CS_WARMUP )
     CG_ParseWarmup( );
-  else if( num == CS_ALIEN_STAGES )
-  {
-    stage_t oldAlienStage = cgs.alienStage;
-
-    if( str[0] )
-    {
-      sscanf( str, "%d %d %d", &cgs.alienStage, &cgs.alienCredits,
-          &cgs.alienNextStageThreshold );
-
-      if( cgs.alienStage != oldAlienStage )
-        CG_AnnounceAlienStageTransistion( oldAlienStage, cgs.alienStage );
-    }
-    else
-    {
-      cgs.alienStage = cgs.alienCredits = cgs.alienNextStageThreshold = 0;
-    }
-  }
-  else if( num == CS_HUMAN_STAGES )
-  {
-    stage_t oldHumanStage = cgs.humanStage;
-
-    if( str[0] )
-    {
-      sscanf( str, "%d %d %d", &cgs.humanStage, &cgs.humanCredits,
-          &cgs.humanNextStageThreshold );
-
-      if( cgs.humanStage != oldHumanStage )
-        CG_AnnounceHumanStageTransistion( oldHumanStage, cgs.humanStage );
-    }
-    else
-    {
-      cgs.humanStage = cgs.humanCredits = cgs.humanNextStageThreshold = 0;
-    }
-  }
   else if( num == CS_LEVEL_START_TIME )
     cgs.levelStartTime = atoi( str );
   else if( num >= CS_VOTE_TIME && num < CS_VOTE_TIME + NUM_TEAMS )
@@ -866,13 +784,6 @@ void CG_Menu( int menu, int arg )
     case MN_A_CLASSNOTALLOWED:
       shortMsg  = va( "The %s is not allowed",
                       BG_ClassConfig( arg )->humanName );
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_A_CLASSNOTATSTAGE:
-      shortMsg  = va( "The %s is not allowed at Stage %d",
-                      BG_ClassConfig( arg )->humanName,
-                      cgs.alienStage + 1 );
       type      = DT_ARMOURYEVOLVE;
       break;
 

@@ -202,7 +202,6 @@ vmCvar_t  cg_debugVoices;
 
 vmCvar_t  ui_currentClass;
 vmCvar_t  ui_carriage;
-vmCvar_t  ui_stages;
 vmCvar_t  ui_dialog;
 vmCvar_t  ui_voteActive;
 vmCvar_t  ui_alienTeamVoteActive;
@@ -319,7 +318,6 @@ static cvarTable_t cvarTable[ ] =
   // communication cvars set by the cgame to be read by ui
   { &ui_currentClass, "ui_currentClass", "0", CVAR_ROM },
   { &ui_carriage, "ui_carriage", "", CVAR_ROM },
-  { &ui_stages, "ui_stages", "0 0", CVAR_ROM },
   { &ui_dialog, "ui_dialog", "Text not set", CVAR_ROM },
   { &ui_voteActive, "ui_voteActive", "0", CVAR_ROM },
   { &ui_humanTeamVoteActive, "ui_humanTeamVoteActive", "0", CVAR_ROM },
@@ -411,8 +409,6 @@ static void CG_SetUIVars( void )
   strcat( carriageCvar, "$" );
 
   trap_Cvar_Set( "ui_carriage", carriageCvar );
-
-  trap_Cvar_Set( "ui_stages", va( "%d %d", cgs.alienStage, cgs.humanStage ) );
 }
 
 /*
@@ -606,9 +602,6 @@ static void CG_RegisterSounds( void )
   int         i;
   char        name[ MAX_QPATH ];
   const char  *soundName;
-
-  cgs.media.alienStageTransition  = trap_S_RegisterSound( "sound/announcements/overmindevolved.wav", qtrue );
-  cgs.media.humanStageTransition  = trap_S_RegisterSound( "sound/announcements/reinforcement.wav", qtrue );
 
   cgs.media.alienOvermindAttack   = trap_S_RegisterSound( "sound/announcements/overmindattack.wav", qtrue );
   cgs.media.alienOvermindDying    = trap_S_RegisterSound( "sound/announcements/overminddying.wav", qtrue );
