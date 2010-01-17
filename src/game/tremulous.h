@@ -667,13 +667,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FREEKILL_ALIEN              ALIEN_CREDITS_PER_KILL
 #define FREEKILL_HUMAN              LEVEL0_VALUE
 
-#define DEFAULT_ALIEN_BUILDPOINTS   "150"
-#define DEFAULT_ALIEN_QUEUE_TIME    "12000"
+#define DEFAULT_ALIEN_BUILDPOINTS   "100"
+#define DEFAULT_ALIEN_QUEUE_TIME    "8000"
 #define DEFAULT_HUMAN_BUILDPOINTS   "100"
 #define DEFAULT_HUMAN_QUEUE_TIME    "8000"
-#define DEFAULT_HUMAN_REPEATER_BUILDPOINTS "20"
-#define DEFAULT_HUMAN_REPEATER_QUEUE_TIME "0"
-#define DEFAULT_HUMAN_REPEATER_MAX_ZONES "500"
                                          
 #define MAXIMUM_BUILD_TIME          20000 // used for pie timer
 

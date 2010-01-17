@@ -62,7 +62,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.5f,                  //float     minNormal;
     qtrue,                 //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     ASPAWN_CREEPSIZE,      //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -96,7 +95,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     OVERMIND_CREEPSIZE,    //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -130,7 +128,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.707f,                //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     BARRICADE_CREEPSIZE,   //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -164,7 +161,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.0f,                  //float     minNormal;
     qtrue,                 //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     ACIDTUBE_CREEPSIZE,    //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -198,7 +194,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_LOCKBLOB_LAUNCHER,  //weapon_t  turretProjType;
     0.0f,                  //float     minNormal;
     qtrue,                 //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     TRAPPER_CREEPSIZE,     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -233,7 +228,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.707f,                //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     BOOSTER_CREEPSIZE,     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -266,7 +260,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_HIVE,               //weapon_t  turretProjType;
     0.0f,                  //float     minNormal;
     qtrue,                 //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     HIVE_CREEPSIZE,        //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -300,7 +293,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qtrue,                 //qboolean  creepTest;
     HOVEL_CREEPSIZE,       //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -334,7 +326,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -368,7 +359,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_MGTURRET,           //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -402,7 +392,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_TESLAGEN,           //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -436,7 +425,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -470,7 +458,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -505,7 +492,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
@@ -539,7 +525,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
@@ -573,7 +558,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     WP_NONE,               //weapon_t  turretProjType;
     0.95f,                 //float     minNormal;
     qfalse,                //qboolean  invertNormal;
-    qfalse,                //qboolean  creepTest;
     0,                     //int       creepSize;
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;

@@ -196,7 +196,6 @@ struct gentity_s
   gentity_t         *parentNode;        // for creep and defence/spawn dependencies
   qboolean          active;             // for power repeater, but could be useful elsewhere
   qboolean          locked;             // used for turret tracking
-  qboolean          powered;            // for human buildables
   int               builtBy;            // clientNum of person that built this
   int               dcc;                // number of controlling dccs
   qboolean          spawned;            // whether or not this buildable has finished spawning
@@ -243,9 +242,6 @@ struct gentity_s
   qboolean          ownerClear;                     // used for missle tracking
 
   qboolean          pointAgainstWorld;              // don't use the bbox for map collisions
-
-  int               buildPointZone;                 // index for zone
-  int               usesBuildPointZone;             // does it use a zone?
 };
 
 typedef enum
@@ -465,16 +461,6 @@ void      G_PrintSpawnQueue( spawnQueue_t *sq );
 #define MAX_DAMAGE_REGION_TEXT    8192
 #define MAX_DAMAGE_REGIONS 16
 
-// build point zone
-typedef struct
-{
-  int active;
-
-  int totalBuildPoints;
-  int queuedBuildPoints;
-  int nextQueueTime;
-} buildPointZone_t;
-
 // store locational damage regions
 typedef struct damageRegion_s
 {
@@ -590,8 +576,6 @@ typedef struct
   int               humanBuildPointQueue;
   int               humanNextQueueTime;
 
-  buildPointZone_t  *buildPointZones;
-
   gentity_t         *markedBuildables[ MAX_GENTITIES ];
   int               numBuildablesForRemoval;
 
@@ -699,19 +683,14 @@ typedef enum
 {
   IBE_NONE,
 
-  IBE_NOOVERMIND,
   IBE_ONEOVERMIND,
   IBE_NOALIENBP,
   IBE_SPWNWARN, // not currently used
-  IBE_NOCREEP,
   IBE_ONEHOVEL,
   IBE_HOVELEXIT,
 
   IBE_ONEREACTOR,
-  IBE_NOPOWERHERE,
   IBE_TNODEWARN, // not currently used
-  IBE_RPTNOREAC,
-  IBE_RPTPOWERHERE,
   IBE_NOHUMANBP,
   IBE_NODCC,
 
@@ -727,7 +706,6 @@ qboolean          AHovel_Blocked( gentity_t *hovel, gentity_t *player, qboolean 
 gentity_t         *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
                     buildable_t spawn, vec3_t spawnOrigin );
 
-buildable_t       G_IsPowered( vec3_t origin );
 qboolean          G_IsDCCBuilt( void );
 int               G_FindDCC( gentity_t *self );
 gentity_t         *G_Reactor( void );
@@ -751,11 +729,6 @@ void              G_BaseSelfDestruct( team_t team );
 int               G_NextQueueTime( int queuedBP, int totalBP, int queueBaseRate );
 void              G_QueueBuildPoints( gentity_t *self );
 int               G_GetBuildPoints( const vec3_t pos, team_t team, int dist );
-qboolean          G_FindPower( gentity_t *self );
-gentity_t         *G_PowerEntityForPoint( const vec3_t origin );
-gentity_t         *G_PowerEntityForEntity( gentity_t *ent );
-gentity_t         *G_RepeaterEntityForPoint( vec3_t origin );
-qboolean          G_InPowerZone( gentity_t *self );
 
 //
 // g_utils.c
@@ -1071,9 +1044,6 @@ extern  vmCvar_t  g_alienBuildPoints;
 extern  vmCvar_t  g_alienBuildQueueTime;
 extern  vmCvar_t  g_humanBuildPoints;
 extern  vmCvar_t  g_humanBuildQueueTime;
-extern  vmCvar_t  g_humanRepeaterBuildPoints;
-extern  vmCvar_t  g_humanRepeaterBuildQueueTime;
-extern  vmCvar_t  g_humanRepeaterMaxZones;
 extern  vmCvar_t  g_freeFundPeriod;
 
 extern  vmCvar_t  g_unlagged;

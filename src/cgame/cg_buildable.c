@@ -847,7 +847,7 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
   int             health;
   float           x, y;
   vec4_t          color;
-  qboolean        powered, marked;
+  qboolean        marked;
   trace_t         tr;
   float           d;
   buildStat_t     *bs;
@@ -996,7 +996,6 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
     // this is fudged to get the width/height in the cfg to be more realistic
     scale = ( picH / d ) * 3;
 
-    powered = es->eFlags & EF_B_POWERED;
     marked = es->eFlags & EF_B_MARKED;
 
     picH *= scale;
@@ -1069,13 +1068,6 @@ static void CG_BuildableStatusDisplay( centity_t *cent )
     }
 
     trap_R_SetColor( color );
-    if( !powered )
-    {
-      float pX;
-
-      pX = picX + ( subH * bs->horizontalMargin );
-      CG_DrawPic( pX, subY, subH, subH, bs->noPowerShader );
-    }
 
     if( marked )
     {

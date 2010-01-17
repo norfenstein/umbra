@@ -565,13 +565,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_H_NOTPOWERED:
-      longMsg   = "This buildable is not powered. Build a Reactor and/or Repeater "
-                  "in order to power it.";
-      shortMsg  = "This buildable is not powered";
-      type      = DT_BUILD;
-      break;
-
     case MN_H_ONEREACTOR:
       longMsg   = "There can only be one Reactor. Deconstruct the existing one if you "
                   "wish to move it.";
@@ -579,23 +572,10 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_H_NOPOWERHERE:
-      longMsg   = "There is no power here. If available, a Repeater may be used to "
-                  "transmit power to this location.";
-      shortMsg  = "There is no power here";
-      type      = DT_BUILD;
-      break;
-
     case MN_H_NODCC:
       longMsg   = "There is no Defense Computer. A Defense Computer is needed to "
                   "build this.";
       shortMsg  = "There is no Defense Computer";
-      type      = DT_BUILD;
-      break;
-
-    case MN_H_RPTPOWERHERE:
-      longMsg   = "This area already has power. A Repeater is not required here.";
-      shortMsg  = "This area already has power";
       type      = DT_BUILD;
       break;
 
@@ -621,16 +601,16 @@ void CG_Menu( int menu, int arg )
       break;
 
     case MN_H_NOARMOURYHERE:
-      longMsg   = "You must be near a powered Armoury in order to purchase "
+      longMsg   = "You must be near an Armoury in order to purchase "
                   "weapons, upgrades or ammunition.";
-      shortMsg  = "You must be near a powered Armoury";
+      shortMsg  = "You must be near an Armoury";
       type      = DT_ARMOURYEVOLVE;
       break;
 
     case MN_H_NOENERGYAMMOHERE:
-      longMsg   = "You must be near a Reactor or a powered Armoury or Repeater "
+      longMsg   = "You must be near a Reactor or an Armoury or Repeater "
                   "in order to purchase energy ammunition.";
-      shortMsg  = "You must be near a Reactor or a powered Armoury or Repeater";
+      shortMsg  = "You must be near a Reactor or an Armoury or Repeater";
       type      = DT_ARMOURYEVOLVE;
       break;
 
@@ -667,20 +647,6 @@ void CG_Menu( int menu, int arg )
       break;
 
     //===============================
-
-    case MN_A_NOCREEP:
-      longMsg   = "There is no creep here. You must build near existing Eggs or "
-                  "the Overmind. Alien structures will not support themselves.";
-      shortMsg  = "There is no creep here";
-      type      = DT_BUILD;
-      break;
-
-    case MN_A_NOOVMND:
-      longMsg   = "There is no Overmind. An Overmind must be built to control "
-                  "the structure you tried to place.";
-      shortMsg  = "There is no Overmind";
-      type      = DT_BUILD;
-      break;
 
     case MN_A_ONEOVERMIND:
       longMsg   = "There can only be one Overmind. Deconstruct the existing one if you "

@@ -122,8 +122,7 @@ char *modNames[ ] =
   "MOD_ASPAWN",
   "MOD_ATUBE",
   "MOD_OVERMIND",
-  "MOD_DECONSTRUCT",
-  "MOD_NOCREEP"
+  "MOD_DECONSTRUCT"
 };
 
 /*

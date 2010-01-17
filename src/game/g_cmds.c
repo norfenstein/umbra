@@ -1548,8 +1548,7 @@ void Cmd_Class_f( gentity_t *ent )
         other = &g_entities[ entityList[ i ] ];
 
         if( ( other->client && other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS ) ||
-            ( other->s.eType == ET_BUILDABLE && other->buildableTeam == TEAM_HUMANS &&
-              other->powered ) )
+            ( other->s.eType == ET_BUILDABLE && other->buildableTeam == TEAM_HUMANS ) )
         {
           G_TriggerMenu( clientNum, MN_A_TOOCLOSE );
           return;
@@ -1705,9 +1704,7 @@ void Cmd_Destroy_f( gentity_t *ent )
       return;
     }
 
-    if( !g_markDeconstruct.integer ||
-        ( ent->client->pers.teamSelection == TEAM_HUMANS &&
-          !G_FindPower( traceEnt ) ) )
+    if( !g_markDeconstruct.integer )
     {
       if( ent->client->ps.stats[ STAT_MISC ] > 0 )
       {
@@ -1723,9 +1720,7 @@ void Cmd_Destroy_f( gentity_t *ent )
         G_Damage( traceEnt, ent, ent, forward, tr.endpos,
                   traceEnt->health, 0, MOD_SUICIDE );
       }
-      else if( g_markDeconstruct.integer &&
-               ( ent->client->pers.teamSelection != TEAM_HUMANS ||
-                 G_FindPower( traceEnt ) || lastSpawn ) )
+      else if( g_markDeconstruct.integer )
       {
         traceEnt->deconstruct     = qtrue; // Mark buildable for deconstruction
         traceEnt->deconstructTime = level.time;
@@ -2251,8 +2246,6 @@ void Cmd_Build_f( gentity_t *ent )
       // can place right away, set the blueprint and the valid togglebit
       case IBE_NONE:
       case IBE_TNODEWARN:
-      case IBE_RPTNOREAC:
-      case IBE_RPTPOWERHERE:
       case IBE_SPWNWARN:
         err = MN_NONE;
         // we OR-in the selected builable later
@@ -2262,10 +2255,7 @@ void Cmd_Build_f( gentity_t *ent )
       // can't place yet but maybe soon: start with valid togglebit off
       case IBE_NORMAL:
       case IBE_HOVELEXIT:
-      case IBE_NOCREEP:
       case IBE_NOROOM:
-      case IBE_NOOVERMIND:
-      case IBE_NOPOWERHERE:
         err = MN_NONE;
         break;
 

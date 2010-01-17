@@ -276,7 +276,6 @@ typedef enum
 #define EF_BOUNCE_HALF      0x00000010    // for missiles
 #define EF_NO_BOUNCE_SOUND  0x00000020    // for missiles
 #define EF_B_SPAWNED        0x00000008    // buildable has spawned
-#define EF_B_POWERED        0x00000010    // buildable is powered
 #define EF_B_MARKED         0x00000020    // buildable is marked for deconstruction
 #define EF_WALLCLIMB        0x00000040    // wall walking
 #define EF_WALLCLIMBCEILING 0x00000080    // wall walking ceiling hack
@@ -583,8 +582,6 @@ typedef enum
   MN_A_ONEOVERMIND,
   MN_A_ONEHOVEL,
   MN_A_NOBP,
-  MN_A_NOCREEP,
-  MN_A_NOOVMND,
   MN_A_HOVEL_EXIT,
 
   //human stuff
@@ -605,12 +602,9 @@ typedef enum
   MN_H_UNKNOWNSPAWNITEM,
 
   //human build
-  MN_H_NOPOWERHERE,
   MN_H_NOBP,
-  MN_H_NOTPOWERED,
   MN_H_NODCC,
   MN_H_ONEREACTOR,
-  MN_H_RPTPOWERHERE,
 } dynMenu_t;
 
 // animations
@@ -897,8 +891,7 @@ typedef enum
   MOD_ASPAWN,
   MOD_ATUBE,
   MOD_OVERMIND,
-  MOD_DECONSTRUCT,
-  MOD_NOCREEP
+  MOD_DECONSTRUCT
 } meansOfDeath_t;
 
 
@@ -1001,7 +994,6 @@ typedef struct
   float         minNormal;
   qboolean      invertNormal;
 
-  qboolean      creepTest;
   int           creepSize;
 
   qboolean      dccTest;
