@@ -355,7 +355,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_MAX_FRAGS             9
 #define ALIEN_MAX_CREDITS           (ALIEN_MAX_FRAGS*ALIEN_CREDITS_PER_KILL)
 #define ALIEN_CREDITS_PER_KILL      400
-#define ALIEN_TK_SUICIDE_PENALTY    350
+#define ALIEN_TK_SUICIDE_PENALTY    ALIEN_CREDITS_PER_KILL
 
 /*
  * HUMAN weapons

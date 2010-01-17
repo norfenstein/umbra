@@ -669,23 +669,10 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_A_NOEROOM:
-      longMsg   = "There is no room to evolve here. Move away from walls or other "
-                  "nearby objects and try again.";
-      shortMsg  = "There is no room to evolve here";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
     case MN_A_TOOCLOSE:
       longMsg   = "This location is too close to the enemy to evolve. Move away "
                   "from the enemy's presence and try again.";
       shortMsg  = "This location is too close to the enemy to evolve";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_A_EVOLVEBUILDTIMER:
-      longMsg   = "You cannot evolve until your build timer has expired.";
-      shortMsg  = "You cannot evolve until your build timer expires";
       type      = DT_ARMOURYEVOLVE;
       break;
 
@@ -712,11 +699,6 @@ void CG_Menu( int menu, int arg )
     case MN_A_CANTEVOLVE:
       shortMsg  = va( "You cannot evolve into a %s", 
                       BG_ClassConfig( arg )->humanName );
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_A_EVOLVEWALLWALK:
-      shortMsg  = "You cannot evolve while wallwalking";
       type      = DT_ARMOURYEVOLVE;
       break;
 
