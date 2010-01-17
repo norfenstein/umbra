@@ -555,7 +555,6 @@ typedef enum
   //alien stuff
   MN_A_CLASS,
   MN_A_BUILD,
-  MN_A_INFEST,
   MN_A_HOVEL_OCCUPIED,
   MN_A_HOVEL_BLOCKED,
   MN_A_NOEROOM,
@@ -1112,11 +1111,7 @@ void                        BG_ClassBoundingBox( class_t class, vec3_t mins,
                                                  vec3_t maxs, vec3_t cmaxs,
                                                  vec3_t dmins, vec3_t dmaxs );
 qboolean                    BG_ClassHasAbility( class_t class, int ability );
-int                         BG_ClassCanEvolveFromTo( class_t fclass,
-                                                     class_t tclass,
-                                                     int credits, int num );
 qboolean                    BG_AlienCanEvolve( class_t class, int credits );
-qboolean                    BG_AlienCanAffordClass( class_t class, int credits );
 
 void                        BG_InitClassConfigs( void );
 

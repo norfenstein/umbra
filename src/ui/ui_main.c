@@ -2488,41 +2488,6 @@ static void UI_ArmouryRefreshCb( void *data )
 
 /*
 ===============
-UI_LoadAlienUpgrades
-===============
-*/
-static void UI_LoadAlienUpgrades( void )
-{
-  int     i, j = 0;
-
-  int     class, credits;
-  char    ui_currentClass[ MAX_STRING_CHARS ];
-
-  trap_Cvar_VariableStringBuffer( "ui_currentClass", ui_currentClass, MAX_STRING_CHARS );
-
-  sscanf( ui_currentClass, "%d %d", &class, &credits );
-
-  uiInfo.alienUpgradeCount = 0;
-
-  for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
-  {
-    if( BG_ClassCanEvolveFromTo( class, i, credits, 0 ) >= 0 )
-    {
-      uiInfo.alienUpgradeList[ j ].text = String_Alloc( BG_ClassConfig( i )->humanName );
-      uiInfo.alienUpgradeList[ j ].cmd =
-        String_Alloc( va( "cmd class %s\n", BG_Class( i )->name ) );
-      uiInfo.alienUpgradeList[ j ].type = INFOTYPE_CLASS;
-      uiInfo.alienUpgradeList[ j ].v.pclass = i;
-
-      j++;
-
-      uiInfo.alienUpgradeCount++;
-    }
-  }
-}
-
-/*
-===============
 UI_LoadAlienBuilds
 ===============
 */
@@ -2956,15 +2921,6 @@ static void UI_RunMenuScript( char **args )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
 
       UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "LoadAlienUpgrades" ) == 0 )
-    {
-      UI_LoadAlienUpgrades( );
-
-      //disallow the menu if it would be empty
-
-      if( uiInfo.alienUpgradeCount <= 0 )
-        Menus_CloseAll( );
     }
     else if( Q_stricmp( name, "UpgradeToNewClass" ) == 0 )
     {

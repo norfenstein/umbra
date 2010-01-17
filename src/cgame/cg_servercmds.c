@@ -709,15 +709,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_A_INFEST:
-      trap_Cvar_Set( "ui_currentClass",
-         va( "%d %d", cg.snap->ps.stats[ STAT_CLASS ],
-                      cg.snap->ps.persistant[ PERS_CREDIT ] ) );
-
-      cmd       = "menu tremulous_alienupgrade\n";
-      type      = DT_INTERACTIVE;
-      break;
-
     case MN_A_CANTEVOLVE:
       shortMsg  = va( "You cannot evolve into a %s", 
                       BG_ClassConfig( arg )->humanName );
