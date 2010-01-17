@@ -2360,21 +2360,8 @@ UI_LoadHumanArmouryBuys
 static void UI_LoadHumanArmouryBuys( void )
 {
   int i, j = 0;
-  int slots = 0;
 
   UI_ParseCarriageList( );
-
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( uiInfo.weapons & ( 1 << i ) )
-      slots |= BG_Weapon( i )->slots;
-  }
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( uiInfo.upgrades & ( 1 << i ) )
-      slots |= BG_Upgrade( i )->slots;
-  }
 
   uiInfo.humanArmouryBuyCount = 0;
 
@@ -2383,7 +2370,6 @@ static void UI_LoadHumanArmouryBuys( void )
     if( BG_Weapon( i )->team == TEAM_HUMANS &&
         BG_Weapon( i )->purchasable &&
         BG_WeaponIsAllowed( i ) &&
-        !( BG_Weapon( i )->slots & slots ) &&
         !( uiInfo.weapons & ( 1 << i ) ) )
     {
       uiInfo.humanArmouryBuyList[ j ].text =
@@ -2404,7 +2390,6 @@ static void UI_LoadHumanArmouryBuys( void )
     if( BG_Upgrade( i )->team == TEAM_HUMANS &&
         BG_Upgrade( i )->purchasable &&
         BG_UpgradeIsAllowed( i ) &&
-        !( BG_Upgrade( i )->slots & slots ) &&
         !( uiInfo.upgrades & ( 1 << i ) ) )
     {
       uiInfo.humanArmouryBuyList[ j ].text =

@@ -1611,7 +1611,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL0,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level0",             //char      *weaponName;
     "Bite",               //char      *humanName;
     "",
@@ -1635,7 +1634,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL1,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level1",             //char      *weaponName;
     "Claws",              //char      *humanName;
     "",
@@ -1659,7 +1657,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL1_UPG,       //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level1upg",          //char      *weaponName;
     "Claws Upgrade",      //char      *humanName;
     "",
@@ -1683,7 +1680,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL2,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level2",             //char      *weaponName;
     "Bite",               //char      *humanName;
     "",
@@ -1707,7 +1703,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL2_UPG,       //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level2upg",          //char      *weaponName;
     "Zap",                //char      *humanName;
     "",
@@ -1731,7 +1726,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL3,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level3",             //char      *weaponName;
     "Pounce",             //char      *humanName;
     "",
@@ -1755,7 +1749,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL3_UPG,       //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level3upg",          //char      *weaponName;
     "Pounce (upgrade)",   //char      *humanName;
     "",
@@ -1779,7 +1772,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL4,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "level4",             //char      *weaponName;
     "Charge",             //char      *humanName;
     "",
@@ -1803,7 +1795,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_BLASTER,           //int       weaponNum;
     0,                    //int       price;
-    0,                    //int       slots;
     "blaster",            //char      *weaponName;
     "Blaster",            //char      *humanName;
     "",
@@ -1827,7 +1818,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_MACHINEGUN,        //int       weaponNum;
     RIFLE_PRICE,          //int       price;
-    SLOT_WEAPON,          //int       slots;
     "rifle",              //char      *weaponName;
     "Rifle",              //char      *humanName;
     "Basic weapon. Cased projectile weapon, with a slow clip based "
@@ -1852,7 +1842,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_PAIN_SAW,          //int       weaponNum;
     PAINSAW_PRICE,        //int       price;
-    SLOT_WEAPON,          //int       slots;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *humanName;
     "Similar to a chainsaw, but instead of a chain it has an "
@@ -1878,7 +1867,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_SHOTGUN,           //int       weaponNum;
     SHOTGUN_PRICE,        //int       price;
-    SLOT_WEAPON,          //int       slots;
     "shotgun",            //char      *weaponName;
     "Shotgun",            //char      *humanName;
     "Close range weapon that is useful against larger foes. "
@@ -1904,7 +1892,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_LAS_GUN,           //int       weaponNum;
     LASGUN_PRICE,         //int       price;
-    SLOT_WEAPON,          //int       slots;
     "lgun",               //char      *weaponName;
     "Las Gun",            //char      *humanName;
     "Slightly more powerful than the basic rifle, rapidly fires "
@@ -1929,7 +1916,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_MASS_DRIVER,       //int       weaponNum;
     MDRIVER_PRICE,        //int       price;
-    SLOT_WEAPON,          //int       slots;
     "mdriver",            //char      *weaponName;
     "Mass Driver",        //char      *humanName;
     "A portable particle accelerator which causes minor nuclear "
@@ -1955,7 +1941,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_CHAINGUN,          //int       weaponNum;
     CHAINGUN_PRICE,       //int       price;
-    SLOT_WEAPON,          //int       slots;
     "chaingun",           //char      *weaponName;
     "Chaingun",           //char      *humanName;
     "Belt drive, cased projectile weapon. It has a high repeat "
@@ -1981,7 +1966,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_FLAMER,            //int       weaponNum;
     FLAMER_PRICE,         //int       price;
-    SLOT_WEAPON,          //int       slots;
     "flamer",             //char      *weaponName;
     "Flame Thrower",      //char      *humanName;
     "Sprays fire at its target. It is powered by compressed "
@@ -2007,7 +1991,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_PULSE_RIFLE,       //int       weaponNum;
     PRIFLE_PRICE,         //int       price;
-    SLOT_WEAPON,          //int       slots;
     "prifle",             //char      *weaponName;
     "Pulse Rifle",        //char      *humanName;
     "An energy weapon that fires rapid pulses of concentrated energy.",
@@ -2031,7 +2014,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_LUCIFER_CANNON,    //int       weaponNum;
     LCANNON_PRICE,        //int       price;
-    SLOT_WEAPON,          //int       slots;
     "lcannon",            //char      *weaponName;
     "Lucifer Cannon",     //char      *humanName;
     "Blaster technology scaled up to deliver devastating power. "
@@ -2057,7 +2039,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_GRENADE,           //int       weaponNum;
     GRENADE_PRICE,        //int       price;
-    SLOT_NONE,            //int       slots;
     "grenade",            //char      *weaponName;
     "Grenade",            //char      *humanName;
     "",
@@ -2081,7 +2062,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_LOCKBLOB_LAUNCHER, //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *humanName;
     "",
@@ -2105,7 +2085,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_HIVE,              //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "hive",               //char      *weaponName;
     "Hive",               //char      *humanName;
     "",
@@ -2129,7 +2108,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_TESLAGEN,          //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "teslagen",           //char      *weaponName;
     "Tesla Generator",    //char      *humanName;
     "",
@@ -2153,7 +2131,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_MGTURRET,          //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "mgturret",           //char      *weaponName;
     "Machinegun Turret",  //char      *humanName;
     "",
@@ -2177,7 +2154,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ABUILD,            //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "abuild",             //char      *weaponName;
     "Alien build weapon", //char      *humanName;
     "",
@@ -2201,7 +2177,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ABUILD2,           //int       weaponNum;
     0,                    //int       price;
-    SLOT_WEAPON,          //int       slots;
     "abuildupg",          //char      *weaponName;
     "Alien build weapon2",//char      *humanName;
     "",
@@ -2225,7 +2200,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_HBUILD,            //int       weaponNum;
     HBUILD_PRICE,         //int       price;
-    SLOT_WEAPON,          //int       slots;
     "ckit",               //char      *weaponName;
     "Construction Kit",   //char      *humanName;
     "Used for building structures. This includes "
@@ -2291,7 +2265,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_LIGHTARMOUR,         //int   upgradeNum;
     LIGHTARMOUR_PRICE,      //int   price;
-    SLOT_TORSO|SLOT_ARMS|SLOT_LEGS, //int   slots;
     "larmour",              //char  *upgradeName;
     "Light Armour",         //char  *humanName;
     "Protective armour that helps to defend against light alien melee "
@@ -2304,7 +2277,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_HELMET,              //int   upgradeNum;
     HELMET_PRICE,           //int   price;
-    SLOT_HEAD,              //int   slots;
     "helmet",               //char  *upgradeName;
     "Helmet",               //char  *humanName;
     "In addition to protecting your head, the helmet provides a "
@@ -2318,7 +2290,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_MEDKIT,              //int   upgradeNum;
     MEDKIT_PRICE,           //int   price;
-    SLOT_NONE,              //int   slots;
     "medkit",               //char  *upgradeName;
     "Medkit",               //char  *humanName;
     "",
@@ -2330,7 +2301,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_BATTPACK,            //int   upgradeNum;
     BATTPACK_PRICE,         //int   price;
-    SLOT_BACKPACK,          //int   slots;
     "battpack",             //char  *upgradeName;
     "Battery Pack",         //char  *humanName;
     "Back-mounted battery pack that permits storage of one and a half "
@@ -2343,7 +2313,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_JETPACK,             //int   upgradeNum;
     JETPACK_PRICE,          //int   price;
-    SLOT_BACKPACK,          //int   slots;
     "jetpack",              //char  *upgradeName;
     "Jet Pack",             //char  *humanName;
     "Back-mounted jet pack that enables the user to fly to remote "
@@ -2357,7 +2326,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_BATTLESUIT,          //int   upgradeNum;
     BSUIT_PRICE,            //int   price;
-    SLOT_HEAD|SLOT_TORSO|SLOT_ARMS|SLOT_LEGS|SLOT_BACKPACK, //int   slots;
     "bsuit",                //char  *upgradeName;
     "Battlesuit",           //char  *humanName;
     "A full body armour that is highly effective at repelling alien attacks. "
@@ -2371,7 +2339,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_GRENADE,             //int   upgradeNum;
     GRENADE_PRICE,          //int   price;
-    SLOT_NONE,              //int   slots;
     "gren",                 //char  *upgradeName;
     "Grenade",              //char  *humanName;
     "A small incendinary device ideal for damaging tightly packed "
@@ -2384,7 +2351,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
   {
     UP_AMMO,                //int   upgradeNum;
     0,                      //int   price;
-    SLOT_NONE,              //int   slots;
     "ammo",                 //char  *upgradeName;
     "Ammunition",           //char  *humanName;
     "Ammunition for the currently held weapon.",
@@ -2944,41 +2910,6 @@ qboolean BG_InventoryContainsWeapon( int weapon, int stats[ ] )
     return qtrue;
 
   return ( stats[ STAT_WEAPON ] == weapon );
-}
-
-/*
-========================
-BG_SlotsForInventory
-
-Calculate the slots used by an inventory and warn of conflicts
-========================
-*/
-int BG_SlotsForInventory( int stats[ ] )
-{
-  int i, slot, slots;
-
-  slots = BG_Weapon( stats[ STAT_WEAPON ] )->slots;
-  if( stats[ STAT_TEAM ] == TEAM_HUMANS )
-    slots |= BG_Weapon( WP_BLASTER )->slots;
-
-  for( i = UP_NONE; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( BG_InventoryContainsUpgrade( i, stats ) )
-    {
-      slot = BG_Upgrade( i )->slots;
-
-      // this check should never be true
-      if( slots & slot )
-      {
-        Com_Printf( S_COLOR_YELLOW "WARNING: held item %d conflicts with "
-                    "inventory slot %d\n", i, slot );
-      }
-
-      slots |= slot;
-    }
-  }
-
-  return slots;
 }
 
 /*
@@ -3673,11 +3604,9 @@ weapon_t BG_PrimaryWeapon( int stats[ ] )
 {
   int i;
 
-  for( i = WP_NONE; i < WP_NUM_WEAPONS; i++ )
+  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
   {
-    if( BG_Weapon( i )->slots != SLOT_WEAPON )
-      continue;
-    if( BG_InventoryContainsWeapon( i, stats ) )
+    if( BG_InventoryContainsWeapon( i, stats ) && i != WP_BLASTER )
       return i;
   }
 

@@ -579,13 +579,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_H_NOSLOTS:
-      longMsg   = "You have no room to carry this. Please sell any conflicting "
-                  "upgrades before purchasing this item.";
-      shortMsg  = "You have no room to carry this";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
     case MN_H_NOFUNDS:
       longMsg   = "Insufficient funds. You do not have enough credits to perform "
                   "this action.";

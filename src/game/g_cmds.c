@@ -1803,13 +1803,6 @@ void Cmd_Buy_f( gentity_t *ent )
       return;
     }
 
-    //have space to carry this?
-    if( BG_Weapon( weapon )->slots & BG_SlotsForInventory( ent->client->ps.stats ) )
-    {
-      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
-      return;
-    }
-
     // In some instances, weapons can't be changed
     if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) )
       return;
@@ -1843,13 +1836,6 @@ void Cmd_Buy_f( gentity_t *ent )
     if( BG_Upgrade( upgrade )->price > (short)ent->client->pers.credit )
     {
       G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOFUNDS );
-      return;
-    }
-
-    //have space to carry this?
-    if( BG_Upgrade( upgrade )->slots & BG_SlotsForInventory( ent->client->ps.stats ) )
-    {
-      G_TriggerMenu( ent->client->ps.clientNum, MN_H_NOSLOTS );
       return;
     }
 

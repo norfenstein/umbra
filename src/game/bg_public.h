@@ -368,16 +368,6 @@ typedef enum
   UP_NUM_UPGRADES
 } upgrade_t;
 
-// bitmasks for upgrade slots
-#define SLOT_NONE       0x00000000
-#define SLOT_HEAD       0x00000001
-#define SLOT_TORSO      0x00000002
-#define SLOT_ARMS       0x00000004
-#define SLOT_LEGS       0x00000008
-#define SLOT_BACKPACK   0x00000010
-#define SLOT_WEAPON     0x00000020
-#define SLOT_SIDEARM    0x00000040
-
 typedef enum
 {
   BA_NONE,
@@ -583,7 +573,6 @@ typedef enum
   MN_H_BUILD,
   MN_H_ARMOURY,
   MN_H_UNKNOWNITEM,
-  MN_H_NOSLOTS,
   MN_H_NOFUNDS,
   MN_H_ITEMHELD,
   MN_H_TEAMCHANGEBUILDTIMER,
@@ -1014,8 +1003,6 @@ typedef struct
 
   int       price;
 
-  int       slots;
-
   char      *name;
   char      *humanName;
   char      *info;
@@ -1050,8 +1037,6 @@ typedef struct
 
   int       price;
 
-  int       slots;
-
   char      *name;
   char      *humanName;
   char      *info;
@@ -1066,7 +1051,6 @@ typedef struct
 
 qboolean  BG_WeaponIsFull( weapon_t weapon, int stats[ ], int ammo, int clips );
 qboolean  BG_InventoryContainsWeapon( int weapon, int stats[ ] );
-int       BG_SlotsForInventory( int stats[ ] );
 void      BG_AddUpgradeToInventory( int item, int stats[ ] );
 void      BG_RemoveUpgradeFromInventory( int item, int stats[ ] );
 qboolean  BG_InventoryContainsUpgrade( int item, int stats[ ] );
