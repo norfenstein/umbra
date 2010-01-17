@@ -741,12 +741,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_ARMOURYEVOLVE;
       break;
       
-    case MN_A_CLASSNOTSPAWN:
-      shortMsg  = va( "You cannot spawn as a %s", 
-                      BG_ClassConfig( arg )->humanName );
-      type      = DT_ARMOURYEVOLVE;
-      break;
-    
     case MN_A_CLASSNOTALLOWED:
       shortMsg  = va( "The %s is not allowed",
                       BG_ClassConfig( arg )->humanName );

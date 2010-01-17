@@ -2223,13 +2223,10 @@ UI_AddClass
 static void UI_AddClass( class_t class )
 {
   uiInfo.alienClassList[ uiInfo.alienClassCount ].text =
-
     String_Alloc( BG_ClassConfig( class )->humanName );
   uiInfo.alienClassList[ uiInfo.alienClassCount ].cmd =
-
     String_Alloc( va( "cmd class %s\n", BG_Class( class )->name ) );
   uiInfo.alienClassList[ uiInfo.alienClassCount ].type = INFOTYPE_CLASS;
-
   uiInfo.alienClassList[ uiInfo.alienClassCount ].v.pclass = class;
 
   uiInfo.alienClassCount++;
@@ -2242,15 +2239,29 @@ UI_LoadAlienClasses
 */
 static void UI_LoadAlienClasses( void )
 {
+  int i;
+
   uiInfo.alienClassCount = 0;
 
-  if( BG_ClassIsAllowed( PCL_ALIEN_LEVEL0 ) )
-    UI_AddClass( PCL_ALIEN_LEVEL0 );
+  for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
+  {
+    if ( i != PCL_ALIEN_BUILDER0 &&
+         i != PCL_ALIEN_BUILDER0_UPG &&
+         i != PCL_ALIEN_LEVEL0 &&
+         i != PCL_ALIEN_LEVEL1 &&
+         i != PCL_ALIEN_LEVEL1_UPG &&
+         i != PCL_ALIEN_LEVEL2 &&
+         i != PCL_ALIEN_LEVEL2_UPG &&
+         i != PCL_ALIEN_LEVEL3 &&
+         i != PCL_ALIEN_LEVEL3_UPG &&
+         i != PCL_ALIEN_LEVEL4 )
+      continue;
 
-  if( BG_ClassIsAllowed( PCL_ALIEN_BUILDER0_UPG ) )
-    UI_AddClass( PCL_ALIEN_BUILDER0_UPG );
-  else if( BG_ClassIsAllowed( PCL_ALIEN_BUILDER0 ) )
-    UI_AddClass( PCL_ALIEN_BUILDER0 );
+    if( BG_ClassIsAllowed( i ) )
+    {
+      UI_AddClass( i );
+    }
+  }
 }
 
 /*

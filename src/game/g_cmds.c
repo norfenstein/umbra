@@ -1465,14 +1465,6 @@ void Cmd_Class_f( gentity_t *ent )
       G_StopFollowing( ent );
     if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
-      if( newClass != PCL_ALIEN_BUILDER0 &&
-          newClass != PCL_ALIEN_BUILDER0_UPG &&
-          newClass != PCL_ALIEN_LEVEL0 )
-      {
-        G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTSPAWN, newClass );
-        return;
-      }
-
       if( !BG_ClassIsAllowed( newClass ) )
       {
         G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTALLOWED, newClass );
