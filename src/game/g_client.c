@@ -1529,7 +1529,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   }
 
   if( client->sess.spectatorState == SPECTATOR_NOT )
-    weapon = BG_Class( ent->client->pers.classSelection )->startWeapon;
+    weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 0 ];
   else
     weapon = WP_NONE;
 

@@ -1653,7 +1653,7 @@ static void CG_DrawTeamOverlay( rectDef_t *rect, float scale, vec4_t color )
       if( ci->team == TEAM_HUMANS )
         curWeapon = ci->curWeaponClass;
       else if( ci->team == TEAM_ALIENS )
-        curWeapon = BG_Class( ci->curWeaponClass )->startWeapon;
+        curWeapon = BG_Class( ci->curWeaponClass )->weapons[ 0 ];
 
       CG_DrawPic( x + leftMargin, y - iconSize + iconTopMargin, iconSize, iconSize,
                   cg_weapons[ curWeapon ].weaponIcon );

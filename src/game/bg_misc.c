@@ -845,7 +845,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
     0,                                              //int     abilities;
-    WP_NONE,                                        //weapon_t  startWeapon
+    { WP_NONE, WP_NONE, WP_NONE },                  //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.000f,                                         //float   bob;
@@ -871,7 +871,7 @@ static const classAttributes_t bg_classList[ ] =
     0.2f,                                           //float   fallDamage;
     ABUILDER_REGEN,                                 //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_ALIENSENSE,//int     abilities;
-    WP_ABUILD,                                      //weapon_t  startWeapon
+    { WP_ABUILD, WP_NONE, WP_NONE },                //weapon_t  weapons[ 3 ];
     95.0f,                                          //float   buildDist;
     110,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -898,7 +898,7 @@ static const classAttributes_t bg_classList[ ] =
     0.2f,                                           //float   fallDamage;
     ABUILDER_UPG_REGEN,                             //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    WP_ABUILD2,                                     //weapon_t  startWeapon
+    { WP_ABUILD2, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     105.0f,                                         //float   buildDist;
     110,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -924,7 +924,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL0_REGEN,                                   //float   regenRate;
     SCA_WALLCLIMBER|SCA_FOVWARPS|SCA_ALIENSENSE,    //int     abilities;
-    WP_ALEVEL0,                                     //weapon_t  startWeapon
+    { WP_ALEVEL0, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     140,                                            //int     fov;
     0.0f,                                           //float   bob;
@@ -952,7 +952,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL1_REGEN,                                   //float   regenRate;
     SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    WP_ALEVEL1,                                     //weapon_t  startWeapon
+    { WP_ALEVEL1, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -980,7 +980,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL1_UPG_REGEN,                               //float   regenRate;
     SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    WP_ALEVEL1_UPG,                                 //weapon_t  startWeapon
+    { WP_ALEVEL1_UPG, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -1006,7 +1006,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL2_REGEN,                                   //float   regenRate;
     SCA_WALLJUMPER|SCA_FOVWARPS|SCA_ALIENSENSE,     //int     abilities;
-    WP_ALEVEL2,                                     //weapon_t  startWeapon
+    { WP_ALEVEL2, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.001f,                                         //float   bob;
@@ -1032,7 +1032,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL2_UPG_REGEN,                               //float   regenRate;
     SCA_WALLJUMPER|SCA_FOVWARPS|SCA_ALIENSENSE,     //int     abilities;
-    WP_ALEVEL2_UPG,                                 //weapon_t  startWeapon
+    { WP_ALEVEL2_UPG, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.001f,                                         //float   bob;
@@ -1059,7 +1059,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL3_REGEN,                                   //float   regenRate;
     SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
-    WP_ALEVEL3,                                     //weapon_t  startWeapon
+    { WP_ALEVEL3, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     110,                                            //int     fov;
     0.0005f,                                        //float   bob;
@@ -1086,7 +1086,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL3_UPG_REGEN,                               //float   regenRate;
     SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
-    WP_ALEVEL3_UPG,                                 //weapon_t  startWeapon
+    { WP_ALEVEL3_UPG, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     110,                                            //int     fov;
     0.0005f,                                        //float   bob;
@@ -1114,7 +1114,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   fallDamage;
     LEVEL4_REGEN,                                   //float   regenRate;
     SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
-    WP_ALEVEL4,                                     //weapon_t  startWeapon
+    { WP_ALEVEL4, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.001f,                                         //float   bob;
@@ -1139,7 +1139,7 @@ static const classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
-    WP_MACHINEGUN,                                  //weapon_t  startWeapon
+    { WP_MACHINEGUN, WP_BLASTER, WP_NONE },         //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1165,7 +1165,7 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|
       SCA_CANUSELADDERS,                            //int     abilities;
-    WP_MACHINEGUN,                                  //weapon_t  startWeapon
+    { WP_MACHINEGUN, WP_BLASTER, WP_NONE },                  //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -2905,11 +2905,16 @@ Does the player hold a weapon?
 */
 qboolean BG_InventoryContainsWeapon( int weapon, int stats[ ] )
 {
-  // humans always have a blaster
-  if( stats[ STAT_TEAM ] == TEAM_HUMANS && weapon == WP_BLASTER )
+  if ( weapon == BG_Class( stats[ STAT_CLASS ] )->weapons[ 0 ] )
     return qtrue;
 
-  return ( stats[ STAT_WEAPON ] == weapon );
+  if ( weapon == BG_Class( stats[ STAT_CLASS ] )->weapons[ 1 ] )
+    return qtrue;
+
+  if ( weapon == BG_Class( stats[ STAT_CLASS ] )->weapons[ 2 ] )
+    return qtrue;
+
+  return qfalse;
 }
 
 /*

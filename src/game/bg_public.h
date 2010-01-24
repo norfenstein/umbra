@@ -894,7 +894,7 @@ typedef struct
 
   int       abilities;
 
-  weapon_t  startWeapon;
+  weapon_t  weapons[ 3 ];
 
   float     buildDist;
 
