@@ -281,8 +281,6 @@ void CG_InitConsoleCommands( void )
   trap_AddCommand( "teamvote" );
   trap_AddCommand( "class" );
   trap_AddCommand( "build" );
-  trap_AddCommand( "buy" );
-  trap_AddCommand( "sell" );
   trap_AddCommand( "reload" );
   trap_AddCommand( "itemact" );
   trap_AddCommand( "itemdeact" );

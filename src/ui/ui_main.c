@@ -1947,16 +1947,6 @@ static void UI_OwnerDraw( float x, float y, float w, float h,
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
       break;
 
-    case UI_HBUYINFOPANE:
-      UI_DrawInfoPane( &uiInfo.humanArmouryBuyList[ uiInfo.humanArmouryBuyIndex ],
-                       &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
-      break;
-
-    case UI_HSELLINFOPANE:
-      UI_DrawInfoPane( &uiInfo.humanArmourySellList[ uiInfo.humanArmourySellIndex ],
-                       &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
-      break;
-
     case UI_ABUILDINFOPANE:
       UI_DrawInfoPane( &uiInfo.alienBuildList[ uiInfo.alienBuildIndex ],
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
@@ -2349,125 +2339,6 @@ static void UI_ParseCarriageList( void )
     }
 
     iterator++;
-  }
-}
-
-/*
-===============
-UI_LoadHumanArmouryBuys
-===============
-*/
-static void UI_LoadHumanArmouryBuys( void )
-{
-  int i, j = 0;
-
-  UI_ParseCarriageList( );
-
-  uiInfo.humanArmouryBuyCount = 0;
-
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( BG_Weapon( i )->team == TEAM_HUMANS &&
-        BG_Weapon( i )->purchasable &&
-        BG_WeaponIsAllowed( i ) &&
-        !( uiInfo.weapons & ( 1 << i ) ) )
-    {
-      uiInfo.humanArmouryBuyList[ j ].text =
-        String_Alloc( BG_Weapon( i )->humanName );
-      uiInfo.humanArmouryBuyList[ j ].cmd =
-        String_Alloc( va( "cmd buy %s\n", BG_Weapon( i )->name ) );
-      uiInfo.humanArmouryBuyList[ j ].type = INFOTYPE_WEAPON;
-      uiInfo.humanArmouryBuyList[ j ].v.weapon = i;
-
-      j++;
-
-      uiInfo.humanArmouryBuyCount++;
-    }
-  }
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( BG_Upgrade( i )->team == TEAM_HUMANS &&
-        BG_Upgrade( i )->purchasable &&
-        BG_UpgradeIsAllowed( i ) &&
-        !( uiInfo.upgrades & ( 1 << i ) ) )
-    {
-      uiInfo.humanArmouryBuyList[ j ].text =
-        String_Alloc( BG_Upgrade( i )->humanName );
-      uiInfo.humanArmouryBuyList[ j ].cmd =
-        String_Alloc( va( "cmd buy %s\n", BG_Upgrade( i )->name ) );
-      uiInfo.humanArmouryBuyList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmouryBuyList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmouryBuyCount++;
-    }
-  }
-}
-
-/*
-===============
-UI_LoadHumanArmourySells
-===============
-*/
-static void UI_LoadHumanArmourySells( void )
-{
-  int i, j = 0;
-
-  uiInfo.humanArmourySellCount = 0;
-  UI_ParseCarriageList( );
-
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( uiInfo.weapons & ( 1 << i ) )
-    {
-      uiInfo.humanArmourySellList[ j ].text = String_Alloc( BG_Weapon( i )->humanName );
-      uiInfo.humanArmourySellList[ j ].cmd =
-        String_Alloc( va( "cmd sell %s\n", BG_Weapon( i )->name ) );
-      uiInfo.humanArmourySellList[ j ].type = INFOTYPE_WEAPON;
-      uiInfo.humanArmourySellList[ j ].v.weapon = i;
-
-      j++;
-
-      uiInfo.humanArmourySellCount++;
-    }
-  }
-
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( uiInfo.upgrades & ( 1 << i ) )
-    {
-      uiInfo.humanArmourySellList[ j ].text = String_Alloc( BG_Upgrade( i )->humanName );
-      uiInfo.humanArmourySellList[ j ].cmd =
-        String_Alloc( va( "cmd sell %s\n", BG_Upgrade( i )->name ) );
-      uiInfo.humanArmourySellList[ j ].type = INFOTYPE_UPGRADE;
-      uiInfo.humanArmourySellList[ j ].v.upgrade = i;
-
-      j++;
-
-      uiInfo.humanArmourySellCount++;
-    }
-  }
-}
-
-/*
-===============
-UI_ArmouryRefreshCb
-===============
-*/
-static void UI_ArmouryRefreshCb( void *data )
-{
-  int oldWeapons  = uiInfo.weapons;
-  int oldUpgrades = uiInfo.upgrades;
-
-  UI_ParseCarriageList( );
-
-  if( uiInfo.weapons != oldWeapons || uiInfo.upgrades != oldUpgrades )
-  {
-    UI_LoadHumanArmouryBuys( );
-    UI_LoadHumanArmourySells( );
-    UI_RemoveCaptureFunc( );
   }
 }
 
@@ -2888,24 +2759,6 @@ static void UI_RunMenuScript( char **args )
     {
       if( ( cmd = uiInfo.alienClassList[ uiInfo.alienClassIndex ].cmd ) )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-    }
-    else if( Q_stricmp( name, "LoadHumanArmouryBuys" ) == 0 )
-      UI_LoadHumanArmouryBuys( );
-    else if( Q_stricmp( name, "BuyFromArmoury" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmouryBuyList[ uiInfo.humanArmouryBuyIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
-    }
-    else if( Q_stricmp( name, "LoadHumanArmourySells" ) == 0 )
-      UI_LoadHumanArmourySells( );
-    else if( Q_stricmp( name, "SellToArmoury" ) == 0 )
-    {
-      if( ( cmd = uiInfo.humanArmourySellList[ uiInfo.humanArmourySellIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-
-      UI_InstallCaptureFunc( UI_ArmouryRefreshCb, NULL, 1000 );
     }
     else if( Q_stricmp( name, "UpgradeToNewClass" ) == 0 )
     {
@@ -3378,10 +3231,6 @@ static int UI_FeederCount( int feederID )
     return uiInfo.humanItemCount;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     return uiInfo.alienClassCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY )
-    return uiInfo.humanArmouryBuyCount;
-  else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
-    return uiInfo.humanArmourySellCount;
   else if( feederID == FEEDER_TREMALIENUPGRADE )
     return uiInfo.alienUpgradeCount;
   else if( feederID == FEEDER_TREMALIENBUILD )
@@ -3633,16 +3482,6 @@ static const char *UI_FeederItemText( int feederID, int index, int column, qhand
     if( index >= 0 && index < uiInfo.alienClassCount )
       return uiInfo.alienClassList[ index ].text;
   }
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY )
-  {
-    if( index >= 0 && index < uiInfo.humanArmouryBuyCount )
-      return uiInfo.humanArmouryBuyList[ index ].text;
-  }
-  else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
-  {
-    if( index >= 0 && index < uiInfo.humanArmourySellCount )
-      return uiInfo.humanArmourySellList[ index ].text;
-  }
   else if( feederID == FEEDER_TREMALIENUPGRADE )
   {
     if( index >= 0 && index < uiInfo.alienUpgradeCount )
@@ -3797,10 +3636,6 @@ static void UI_FeederSelection( int feederID, int index )
     uiInfo.humanItemIndex = index;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     uiInfo.alienClassIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYBUY )
-    uiInfo.humanArmouryBuyIndex = index;
-  else if( feederID == FEEDER_TREMHUMANARMOURYSELL )
-    uiInfo.humanArmourySellIndex = index;
   else if( feederID == FEEDER_TREMALIENUPGRADE )
     uiInfo.alienUpgradeIndex = index;
   else if( feederID == FEEDER_TREMALIENBUILD )

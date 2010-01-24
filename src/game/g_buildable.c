@@ -1665,8 +1665,6 @@ void HArmoury_Activate( gentity_t *self, gentity_t *other, gentity_t *activator 
     //only humans can activate this
     if( activator->client->ps.stats[ STAT_TEAM ] != TEAM_HUMANS )
       return;
-
-    G_TriggerMenu( activator->client->ps.clientNum, MN_H_ARMOURY );
   }
 }
 

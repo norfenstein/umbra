@@ -244,14 +244,6 @@ typedef struct
   int         humanItemCount;
   int         humanItemIndex;
 
-  menuItem_t  humanArmouryBuyList[ 32 ];
-  int         humanArmouryBuyCount;
-  int         humanArmouryBuyIndex;
-
-  menuItem_t  humanArmourySellList[ 32 ];
-  int         humanArmourySellCount;
-  int         humanArmourySellIndex;
-
   menuItem_t  alienUpgradeList[ 16 ];
   int         alienUpgradeCount;
   int         alienUpgradeIndex;

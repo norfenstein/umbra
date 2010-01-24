@@ -42,7 +42,6 @@ static bind_t bindings[ ] =
   { "+attack",        "Primary Attack",         { -1, -1 } },
   { "+button5",       "Secondary Attack",       { -1, -1 } },
   { "reload",         "Reload",                 { -1, -1 } },
-  { "buy ammo",       "Buy Ammo",               { -1, -1 } },
   { "itemact medkit", "Use Medkit",             { -1, -1 } },
   { "+button7",       "Use Structure/Evolve",   { -1, -1 } },
   { "deconstruct",    "Deconstruct Structure",  { -1, -1 } },
@@ -417,86 +416,56 @@ static void CG_HumanText( char *text, playerState_t *ps )
     upgrade = cg.weaponSelect - 32;
   }
 
-  if( !ps->ammo && !ps->clips && !BG_Weapon( ps->weapon )->infiniteAmmo )
+  switch( ps->weapon )
   {
-    //no ammo
-    switch( ps->weapon )
-    {
-      case WP_MACHINEGUN:
-      case WP_CHAINGUN:
-      case WP_SHOTGUN:
-      case WP_FLAMER:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Find an Armoury and press %s for more ammo\n",
-              CG_KeyNameForCommand( "buy ammo" ) ) );
-        break;
+    case WP_BLASTER:
+    case WP_MACHINEGUN:
+    case WP_SHOTGUN:
+    case WP_LAS_GUN:
+    case WP_CHAINGUN:
+    case WP_PULSE_RIFLE:
+    case WP_FLAMER:
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Press %s to fire the %s\n",
+            CG_KeyNameForCommand( "+attack" ),
+            BG_Weapon( ps->weapon )->humanName ) );
+      break;
 
-      case WP_LAS_GUN:
-      case WP_PULSE_RIFLE:
-      case WP_MASS_DRIVER:
-      case WP_LUCIFER_CANNON:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Find a Reactor or Repeater and press %s for more ammo\n",
-              CG_KeyNameForCommand( "buy ammo" ) ) );
-        break;
+    case WP_MASS_DRIVER:
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Press %s to fire the %s\n",
+            CG_KeyNameForCommand( "+attack" ),
+            BG_Weapon( ps->weapon )->humanName ) );
 
-      default:
-        break;
-    }
-  }
-  else
-  {
-    switch( ps->weapon )
-    {
-      case WP_BLASTER:
-      case WP_MACHINEGUN:
-      case WP_SHOTGUN:
-      case WP_LAS_GUN:
-      case WP_CHAINGUN:
-      case WP_PULSE_RIFLE:
-      case WP_FLAMER:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to fire the %s\n",
-              CG_KeyNameForCommand( "+attack" ),
-              BG_Weapon( ps->weapon )->humanName ) );
-        break;
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Hold %s to zoom\n",
+            CG_KeyNameForCommand( "+button5" ) ) );
+      break;
 
-      case WP_MASS_DRIVER:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to fire the %s\n",
-              CG_KeyNameForCommand( "+attack" ),
-              BG_Weapon( ps->weapon )->humanName ) );
+    case WP_PAIN_SAW:
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Hold %s to activate the %s\n",
+            CG_KeyNameForCommand( "+attack" ),
+            BG_Weapon( ps->weapon )->humanName ) );
+      break;
 
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Hold %s to zoom\n",
-              CG_KeyNameForCommand( "+button5" ) ) );
-        break;
+    case WP_LUCIFER_CANNON:
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Hold and release %s to fire a charged shot\n",
+            CG_KeyNameForCommand( "+attack" ) ) );
 
-      case WP_PAIN_SAW:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Hold %s to activate the %s\n",
-              CG_KeyNameForCommand( "+attack" ),
-              BG_Weapon( ps->weapon )->humanName ) );
-        break;
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Press %s to fire the %s\n",
+            CG_KeyNameForCommand( "+button5" ),
+            BG_Weapon( ps->weapon )->humanName ) );
+      break;
 
-      case WP_LUCIFER_CANNON:
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Hold and release %s to fire a charged shot\n",
-              CG_KeyNameForCommand( "+attack" ) ) );
+    case WP_HBUILD:
+      CG_HumanCkitText( text, ps );
+      break;
 
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to fire the %s\n",
-              CG_KeyNameForCommand( "+button5" ),
-              BG_Weapon( ps->weapon )->humanName ) );
-        break;
-
-      case WP_HBUILD:
-        CG_HumanCkitText( text, ps );
-        break;
-
-      default:
-        break;
-    }
+    default:
+      break;
   }
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,

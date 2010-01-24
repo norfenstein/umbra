@@ -382,11 +382,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_INTERACTIVE;
       break;
 
-    case MN_H_ARMOURY:
-      cmd       = "menu tremulous_humanarmoury\n";
-      type      = DT_INTERACTIVE;
-      break;
-
     case MN_H_UNKNOWNITEM:
       shortMsg  = "Unknown item";
       type      = DT_ARMOURYEVOLVE;
@@ -590,42 +585,6 @@ void CG_Menu( int menu, int arg )
       longMsg   = "You already hold this item. It is not possible to carry multiple "
                   "items of the same type.";
       shortMsg  = "You already hold this item";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_NOARMOURYHERE:
-      longMsg   = "You must be near an Armoury in order to purchase "
-                  "weapons, upgrades or ammunition.";
-      shortMsg  = "You must be near an Armoury";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_NOENERGYAMMOHERE:
-      longMsg   = "You must be near a Reactor or an Armoury or Repeater "
-                  "in order to purchase energy ammunition.";
-      shortMsg  = "You must be near a Reactor or an Armoury or Repeater";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_NOROOMBSUITON:
-      longMsg   = "There is not enough room here to put on a Battle Suit. "
-                  "Make sure you have enough head room to climb in.";
-      shortMsg  = "Not enough room here to put on a Battle Suit";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_NOROOMBSUITOFF:
-      longMsg   = "There is not enough room here to take off your Battle Suit. "
-                  "Make sure you have enough head room to climb out.";
-      shortMsg  = "Not enough room here to take off your Battle Suit";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_ARMOURYBUILDTIMER:
-      longMsg   = "You are not allowed to buy or sell weapons until your "
-                  "build timer has expired.";
-      shortMsg  = "You can not buy or sell weapons until your build timer "
-                  "expires";
       type      = DT_ARMOURYEVOLVE;
       break;
 
