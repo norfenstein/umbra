@@ -1393,40 +1393,43 @@ void Cmd_Class_f( gentity_t *ent )
 
   if( ent->client->sess.spectatorState != SPECTATOR_NOT )
   {
+    int cost;
+
+    if( !BG_ClassIsAllowed( newClass ) )
+    {
+      G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTALLOWED, newClass );
+      return;
+    }
+
+    cost = BG_Class( newClass )->cost;
+
     if( ent->client->sess.spectatorState == SPECTATOR_FOLLOW )
       G_StopFollowing( ent );
-    if( ent->client->pers.teamSelection == TEAM_ALIENS )
+
+    if( cost > ent->client->pers.credit )
     {
-	  int cost;
+      G_TriggerMenuArgs( clientNum, MN_A_CANTEVOLVE, newClass );
+    }
+    else if( ent->client->pers.teamSelection == TEAM_ALIENS )
+    {
+      cost = cost * ALIEN_CREDITS_PER_KILL;
 
-      if( !BG_ClassIsAllowed( newClass ) )
+      // spawn from an egg
+      if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
       {
-        G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTALLOWED, newClass );
-        return;
+        ent->client->pers.classSelection = newClass;
+        ent->client->ps.stats[ STAT_CLASS ] = newClass;
+        G_AddCreditToClient( ent->client, -cost, qtrue );
       }
-
-      cost = BG_Class( newClass )->cost * ALIEN_CREDITS_PER_KILL;
-
-      if( cost <= ent->client->pers.credit )
-	  {
-        // spawn from an egg
-        if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
-        {
-          ent->client->pers.classSelection = newClass;
-          ent->client->ps.stats[ STAT_CLASS ] = newClass;
-          G_AddCreditToClient( ent->client, -cost, qtrue );
-        }
-	  }
-      else
-        G_TriggerMenuArgs( clientNum, MN_A_CANTEVOLVE, newClass );
     }
     else if( ent->client->pers.teamSelection == TEAM_HUMANS )
     {
       // spawn from a telenode
       if( G_PushSpawnQueue( &level.humanSpawnQueue, clientNum ) )
       {
-        ent->client->pers.classSelection = PCL_HUMAN;
-        ent->client->ps.stats[ STAT_CLASS ] = PCL_HUMAN;
+        ent->client->pers.classSelection = newClass;
+        ent->client->ps.stats[ STAT_CLASS ] = newClass;
+        G_AddCreditToClient( ent->client, -cost, qtrue );
       }
     }
     return;

@@ -1035,7 +1035,6 @@ Recalculate the quantity of building points available to the teams
 void G_CalculateBuildPoints( void )
 {
   int               i;
-  buildable_t       buildable;
 
   // BP queue updates
   while( level.alienBuildPointQueue > 0 &&

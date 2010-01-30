@@ -1942,8 +1942,8 @@ static void UI_OwnerDraw( float x, float y, float w, float h,
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
       break;
 
-    case UI_HITEMINFOPANE:
-      UI_DrawInfoPane( &uiInfo.humanItemList[ uiInfo.humanItemIndex ],
+    case UI_HCLASSINFOPANE:
+      UI_DrawInfoPane( &uiInfo.humanClassList[ uiInfo.humanClassIndex ],
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
       break;
 
@@ -2205,11 +2205,11 @@ static void UI_LoadTeams( void )
 
 /*
 ===============
-UI_AddClass
+UI_AddAlienClass
 ===============
 */
 
-static void UI_AddClass( class_t class )
+static void UI_AddAlienClass( class_t class )
 {
   uiInfo.alienClassList[ uiInfo.alienClassCount ].text =
     String_Alloc( BG_ClassConfig( class )->humanName );
@@ -2248,42 +2248,50 @@ static void UI_LoadAlienClasses( void )
 
     if( BG_ClassIsAllowed( i ) )
     {
-      UI_AddClass( i );
+      UI_AddAlienClass( i );
     }
   }
 }
 
 /*
 ===============
-UI_AddItem
+UI_AddHumanClass
 ===============
 */
-static void UI_AddItem( weapon_t weapon )
+static void UI_AddHumanClass( class_t class )
 {
-  uiInfo.humanItemList[ uiInfo.humanItemCount ].text =
-    String_Alloc( BG_Weapon( weapon )->humanName );
-  uiInfo.humanItemList[ uiInfo.humanItemCount ].cmd =
-    String_Alloc( va( "cmd class %s\n", BG_Weapon( weapon )->name ) );
-  uiInfo.humanItemList[ uiInfo.humanItemCount ].type = INFOTYPE_WEAPON;
-  uiInfo.humanItemList[ uiInfo.humanItemCount ].v.weapon = weapon;
+  uiInfo.humanClassList[ uiInfo.humanClassCount ].text =
+    String_Alloc( BG_ClassConfig( class )->humanName );
+  uiInfo.humanClassList[ uiInfo.humanClassCount ].cmd =
+    String_Alloc( va( "cmd class %s\n", BG_Class( class )->name ) );
+  uiInfo.humanClassList[ uiInfo.humanClassCount ].type = INFOTYPE_CLASS;
+  uiInfo.humanClassList[ uiInfo.humanClassCount ].v.pclass = class;
 
-  uiInfo.humanItemCount++;
+  uiInfo.humanClassCount++;
 }
 
 /*
 ===============
-UI_LoadHumanItems
+UI_LoadHumanClasses
 ===============
 */
-static void UI_LoadHumanItems( void )
+static void UI_LoadHumanClasses( void )
 {
-  uiInfo.humanItemCount = 0;
+  int i;
 
-  if( BG_WeaponIsAllowed( WP_MACHINEGUN ) )
-    UI_AddItem( WP_MACHINEGUN );
+  uiInfo.humanClassCount = 0;
 
-  if( BG_WeaponIsAllowed( WP_HBUILD ) )
-    UI_AddItem( WP_HBUILD );
+  for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
+  {
+    if ( i != PCL_HUMAN &&
+         i != PCL_HUMAN_BSUIT )
+      continue;
+
+    if( BG_ClassIsAllowed( i ) )
+    {
+      UI_AddHumanClass( i );
+    }
+  }
 }
 
 /*
@@ -2746,11 +2754,11 @@ static void UI_RunMenuScript( char **args )
       if( ( cmd = uiInfo.teamList[ uiInfo.teamIndex ].cmd ) )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
     }
-    else if( Q_stricmp( name, "LoadHumanItems" ) == 0 )
-      UI_LoadHumanItems( );
-    else if( Q_stricmp( name, "SpawnWithHumanItem" ) == 0 )
+    else if( Q_stricmp( name, "LoadHumanClasses" ) == 0 )
+      UI_LoadHumanClasses( );
+    else if( Q_stricmp( name, "SpawnAsHumanClass" ) == 0 )
     {
-      if( ( cmd = uiInfo.humanItemList[ uiInfo.humanItemIndex ].cmd ) )
+      if( ( cmd = uiInfo.humanClassList[ uiInfo.humanClassIndex ].cmd ) )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
     }
     else if( Q_stricmp( name, "LoadAlienClasses" ) == 0 )
@@ -3227,8 +3235,8 @@ static int UI_FeederCount( int feederID )
     return uiInfo.demoCount;
   else if( feederID == FEEDER_TREMTEAMS )
     return uiInfo.teamCount;
-  else if( feederID == FEEDER_TREMHUMANITEMS )
-    return uiInfo.humanItemCount;
+  else if( feederID == FEEDER_TREMHUMANCLASSES )
+    return uiInfo.humanClassCount;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     return uiInfo.alienClassCount;
   else if( feederID == FEEDER_TREMALIENUPGRADE )
@@ -3472,10 +3480,10 @@ static const char *UI_FeederItemText( int feederID, int index, int column, qhand
     if( index >= 0 && index < uiInfo.teamCount )
       return uiInfo.teamList[ index ].text;
   }
-  else if( feederID == FEEDER_TREMHUMANITEMS )
+  else if( feederID == FEEDER_TREMHUMANCLASSES )
   {
-    if( index >= 0 && index < uiInfo.humanItemCount )
-      return uiInfo.humanItemList[ index ].text;
+    if( index >= 0 && index < uiInfo.humanClassCount )
+      return uiInfo.humanClassList[ index ].text;
   }
   else if( feederID == FEEDER_TREMALIENCLASSES )
   {
@@ -3632,8 +3640,8 @@ static void UI_FeederSelection( int feederID, int index )
     uiInfo.demoIndex = index;
   else if( feederID == FEEDER_TREMTEAMS )
     uiInfo.teamIndex = index;
-  else if( feederID == FEEDER_TREMHUMANITEMS )
-    uiInfo.humanItemIndex = index;
+  else if( feederID == FEEDER_TREMHUMANCLASSES )
+    uiInfo.humanClassIndex = index;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     uiInfo.alienClassIndex = index;
   else if( feederID == FEEDER_TREMALIENUPGRADE )

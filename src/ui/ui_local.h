@@ -240,9 +240,9 @@ typedef struct
   int         alienClassCount;
   int         alienClassIndex;
 
-  menuItem_t  humanItemList[ 3 ];
-  int         humanItemCount;
-  int         humanItemIndex;
+  menuItem_t  humanClassList[ 3 ];
+  int         humanClassCount;
+  int         humanClassIndex;
 
   menuItem_t  alienUpgradeList[ 16 ];
   int         alienUpgradeCount;

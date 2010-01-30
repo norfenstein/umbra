@@ -329,6 +329,7 @@ gentity_t *G_SelectAlienSpawnPoint( vec3_t preference )
     if( spot->clientSpawnTime > 0 )
       continue;
 
+	//TODO remove for telefragging?
     if( G_CheckSpawnPoint( spot->s.number, spot->s.origin,
           spot->s.origin2, BA_A_SPAWN, NULL ) != NULL )
       continue;
@@ -378,6 +379,7 @@ gentity_t *G_SelectHumanSpawnPoint( vec3_t preference )
     if( spot->clientSpawnTime > 0 )
       continue;
 
+	//TODO remove for telefragging?
     if( G_CheckSpawnPoint( spot->s.number, spot->s.origin,
           spot->s.origin2, BA_H_SPAWN, NULL ) != NULL )
       continue;

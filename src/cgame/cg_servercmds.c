@@ -368,7 +368,7 @@ void CG_Menu( int menu, int arg )
       break;
 
     case MN_H_SPAWN:
-      cmd       = "menu tremulous_humanitem\n";
+      cmd       = "menu tremulous_humanclass\n";
       type      = DT_INTERACTIVE;
       break;
 

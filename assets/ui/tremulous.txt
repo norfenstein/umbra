@@ -3,7 +3,7 @@
 {
   loadMenu { "ui/tremulous_teamselect.menu" }
   loadMenu { "ui/tremulous_alienclass.menu" }
-  loadMenu { "ui/tremulous_humanitem.menu" }
+  loadMenu { "ui/tremulous_humanclass.menu" }
 
   loadMenu { "ui/tremulous_alienbuild.menu" }
   loadMenu { "ui/tremulous_humanbuild.menu" }
