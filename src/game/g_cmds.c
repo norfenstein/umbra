@@ -927,7 +927,7 @@ void Cmd_VSay_f( gentity_t *ent )
   weapon = WP_NONE;
   if( ent->client->sess.spectatorState == SPECTATOR_NOT )
   {
-    weapon = BG_PrimaryWeapon( ent->client->ps.stats );
+    weapon = ent->client->ps.weapon;
   }
 
   track = BG_VoiceTrackFind( cmd->tracks, ent->client->pers.teamSelection,
@@ -1642,13 +1642,6 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   {
     if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) )
       return;
-
-    //special case to allow switching between
-    //the blaster and the primary weapon
-    if( ent->client->ps.weapon != WP_BLASTER )
-      weapon = WP_BLASTER;
-    else
-      weapon = WP_NONE;
 
     G_ForceWeaponChange( ent, weapon );
   }

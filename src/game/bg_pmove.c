@@ -2805,6 +2805,20 @@ PM_FinishWeaponChange
 static void PM_FinishWeaponChange( void )
 {
   int   weapon;
+  int   oldSlot, newSlot;
+
+  //save the ammo/clips for the current weapon, and swap out the ammo/clips for new weapon
+  oldSlot = BG_WeaponSlotFromWeapon( pm->ps->stats[ STAT_CLASS ], pm->ps->weapon );
+  newSlot = BG_WeaponSlotFromWeapon( pm->ps->stats[ STAT_CLASS ], pm->ps->persistant[ PERS_NEWWEAPON ]);
+
+  if( oldSlot == STAT_WEAPON1 || oldSlot == STAT_WEAPON2 || oldSlot == STAT_WEAPON3 )
+    pm->ps->stats[ oldSlot ] = ( pm->ps->ammo << 4 ) + pm->ps->clips;
+
+  if( newSlot == STAT_WEAPON1 || newSlot == STAT_WEAPON2 || newSlot == STAT_WEAPON3 )
+  {
+    pm->ps->ammo = pm->ps->stats[ newSlot ] >> 4;
+    pm->ps->clips = pm->ps->stats[ newSlot ] & 15;
+  }
 
   PM_AddEvent( EV_CHANGE_WEAPON );
   weapon = pm->ps->persistant[ PERS_NEWWEAPON ];

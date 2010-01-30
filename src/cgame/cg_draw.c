@@ -636,7 +636,7 @@ static void CG_DrawPlayerAmmoValue( rectDef_t *rect, vec4_t color )
 {
   int value;
 
-  switch( BG_PrimaryWeapon( cg.snap->ps.stats ) )
+  switch( cg.snap->ps.weapon )
   {
     case WP_NONE:
     case WP_BLASTER:
@@ -741,7 +741,7 @@ static void CG_DrawPlayerBuildTimer( rectDef_t *rect, vec4_t color )
   if( ps->stats[ STAT_MISC ] <= 0 )
     return;
 
-  switch( BG_PrimaryWeapon( ps->stats ) )
+  switch( ps->weapon )
   {
     case WP_ABUILD:
     case WP_ABUILD2:
@@ -777,7 +777,7 @@ static void CG_DrawPlayerClipsValue( rectDef_t *rect, vec4_t color )
   int           value;
   playerState_t *ps = &cg.snap->ps;
 
-  switch( BG_PrimaryWeapon( ps->stats ) )
+  switch( ps->weapon )
   {
     case WP_NONE:
     case WP_BLASTER:
@@ -1241,20 +1241,22 @@ float CG_GetValue( int ownerDraw )
   centity_t *cent;
   playerState_t *ps;
   weapon_t weapon;
+  int ammo, clips;
 
   cent = &cg_entities[ cg.snap->ps.clientNum ];
   ps = &cg.snap->ps;
   weapon = BG_GetPlayerWeapon( ps );
+  BG_GetAmmoForWeapon( ps, weapon, &ammo, &clips );
 
   switch( ownerDraw )
   {
     case CG_PLAYER_AMMO_VALUE:
       if( weapon )
-        return ps->ammo;
+        return ammo;
       break;
     case CG_PLAYER_CLIPS_VALUE:
       if( weapon )
-        return ps->clips;
+        return clips;
       break;
     case CG_PLAYER_HEALTH:
       return ps->stats[ STAT_HEALTH ];
@@ -2237,10 +2239,12 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
   centity_t     *cent;
   playerState_t *ps;
   weapon_t      weapon;
+  int           ammo, clips;
 
   cent = &cg_entities[ cg.snap->ps.clientNum ];
   ps = &cg.snap->ps;
   weapon = BG_GetPlayerWeapon( ps );
+  BG_GetAmmoForWeapon( ps, weapon, &ammo, &clips );
 
   maxAmmo = BG_Weapon( weapon )->maxAmmo;
 
@@ -2253,9 +2257,9 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
 
   CG_RegisterWeapon( weapon );
 
-  if( ps->clips == 0 && !BG_Weapon( weapon )->infiniteAmmo )
+  if( clips == 0 && !BG_Weapon( weapon )->infiniteAmmo )
   {
-    float ammoPercent = (float)ps->ammo / (float)maxAmmo;
+    float ammoPercent = (float)ammo / (float)maxAmmo;
 
     if( ammoPercent < 0.33f )
     {

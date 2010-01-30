@@ -1528,14 +1528,25 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
     BG_AddUpgradeToInventory( UP_MEDKIT, client->ps.stats );
   }
 
-  if( client->sess.spectatorState == SPECTATOR_NOT )
-    weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 0 ];
-  else
+  if( client->sess.spectatorState != SPECTATOR_NOT )
     weapon = WP_NONE;
 
+  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 2 ];
   maxAmmo = BG_Weapon( weapon )->maxAmmo;
   maxClips = BG_Weapon( weapon )->maxClips;
-  client->ps.stats[ STAT_WEAPON ] = weapon;
+  client->ps.stats[ STAT_WEAPON3 ] = ( maxAmmo << 4 ) + maxClips;
+
+  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 1 ];
+  maxAmmo = BG_Weapon( weapon )->maxAmmo;
+  maxClips = BG_Weapon( weapon )->maxClips;
+  client->ps.stats[ STAT_WEAPON2 ] = ( maxAmmo << 4 ) + maxClips;
+
+  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 0 ];
+  maxAmmo = BG_Weapon( weapon )->maxAmmo;
+  maxClips = BG_Weapon( weapon )->maxClips;
+  client->ps.stats[ STAT_WEAPON1 ] = ( maxAmmo << 4 ) + maxClips;
+
+  client->ps.weapon = weapon;
   client->ps.ammo = maxAmmo;
   client->ps.clips = maxClips;
 
@@ -1645,19 +1656,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
     // fire the targets of the spawn point
     if( !spawn )
       G_UseTargets( spawnPoint, ent );
-
-    // select the highest weapon number available, after any
-    // spawn given items have fired
-    client->ps.weapon = 1;
-
-    for( i = WP_NUM_WEAPONS - 1; i > 0 ; i-- )
-    {
-      if( BG_InventoryContainsWeapon( i, client->ps.stats ) )
-      {
-        client->ps.weapon = i;
-        break;
-      }
-    }
   }
 
   // run a client frame to drop exactly to the floor,

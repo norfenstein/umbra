@@ -2919,6 +2919,27 @@ qboolean BG_InventoryContainsWeapon( int weapon, int stats[ ] )
 
 /*
 ========================
+BG_WeaponSlotFromWeapon
+
+Which STAT_WEAPON is a weapon for a given class?
+========================
+*/
+int BG_WeaponSlotFromWeapon( int class, int weapon )
+{
+  if ( weapon == BG_Class( class )->weapons[ 0 ] )
+    return STAT_WEAPON1;
+
+  if ( weapon == BG_Class( class )->weapons[ 1 ] )
+    return STAT_WEAPON2;
+
+  if ( weapon == BG_Class( class )->weapons[ 2 ] )
+    return STAT_WEAPON3;
+
+  return -1;
+}
+
+/*
+========================
 BG_AddUpgradeToInventory
 
 Give the player an upgrade
@@ -3183,6 +3204,35 @@ weapon_t BG_GetPlayerWeapon( playerState_t *ps )
     return ps->persistant[ PERS_NEWWEAPON ];
 
   return ps->weapon;
+}
+
+/*
+=================
+BG_GetPlayerWeaponAndAmmo
+
+Returns the weapon_t, ammo, and clips for the given weapon for a player
+=================
+*/
+void BG_GetAmmoForWeapon( playerState_t *ps, weapon_t weapon, int *ammo, int *clips )
+{
+  int weaponSlot;
+
+  *ammo = *clips = 0;
+
+  if( weapon == ps->weapon )
+  {
+	  *ammo = ps->ammo;
+	  *clips = ps->clips;
+  }
+  else
+  {
+    weaponSlot = BG_WeaponSlotFromWeapon( ps->stats[ STAT_CLASS ], weapon );
+    if( weaponSlot > 0 )
+    {
+      *ammo = ps->stats[ weaponSlot ] >> 4;
+      *clips = ps->stats[ weaponSlot ] & 15;
+    }
+  }
 }
 
 /*
@@ -3598,27 +3648,6 @@ qboolean BG_BuildableIsAllowed( buildable_t buildable )
   }
 
   return qtrue;
-}
-
-/*
-============
-BG_PrimaryWeapon
-============
-*/
-weapon_t BG_PrimaryWeapon( int stats[ ] )
-{
-  int i;
-
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( BG_InventoryContainsWeapon( i, stats ) && i != WP_BLASTER )
-      return i;
-  }
-
-  if( BG_InventoryContainsWeapon( WP_BLASTER, stats ) )
-    return WP_BLASTER;
-
-  return WP_NONE;
 }
 
 /*

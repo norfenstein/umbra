@@ -1377,6 +1377,7 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
   int           colinfo[ 64 ];
   int           numItems = 0, selectedItem = 0;
   int           length;
+  int           ammo, clips;
   qboolean      vertical;
   centity_t *cent;
   playerState_t *ps;
@@ -1412,7 +1413,9 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     if( !BG_InventoryContainsWeapon( i, cg.snap->ps.stats ) )
       continue;
 
-    if( !ps->ammo && !ps->clips && !BG_Weapon( i )->infiniteAmmo )
+    BG_GetAmmoForWeapon( &cg.snap->ps, i, &ammo, &clips );
+
+    if( !ammo && !clips && !BG_Weapon( i )->infiniteAmmo )
       colinfo[ numItems ] = 1;
     else
       colinfo[ numItems ] = 0;
