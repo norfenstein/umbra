@@ -1269,35 +1269,6 @@ qboolean BG_ClassHasAbility( class_t class, int ability )
 }
 
 /*
-==============
-BG_AlienCanEvolve
-==============
-*/
-qboolean BG_AlienCanEvolve( class_t class, int credits )
-{
-  int i, j, tclass;
-
-  for( i = 0; i < bg_numClasses; i++ )
-  {
-    if( bg_classList[ i ].number != class )
-      continue;
-
-    for( j = 0; j < 3; j++ )
-    {
-      tclass = bg_classList[ i ].children[ j ];
-      if( tclass != PCL_NONE && BG_ClassIsAllowed( tclass ) &&
-          credits >= BG_Class( tclass )->cost * ALIEN_CREDITS_PER_KILL )
-        return qtrue;
-    }
-
-    return qfalse;
-  }
-
-  Com_Printf( S_COLOR_YELLOW "WARNING: fallthrough in BG_AlienCanEvolve\n" );
-  return qfalse;
-}
-
-/*
 ======================
 BG_ParseClassFile
 
@@ -2594,9 +2565,6 @@ char *eventnames[ ] =
   "EV_ALIEN_ACIDTUBE",
 
   "EV_MEDKIT_USED",
-
-  "EV_ALIEN_EVOLVE",
-  "EV_ALIEN_EVOLVE_FAILED",
 
   "EV_DEBUG_LINE",
   "EV_STOPLOOPINGSOUND",

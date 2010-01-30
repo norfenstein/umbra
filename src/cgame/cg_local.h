@@ -1131,7 +1131,6 @@ typedef struct
   float         buildablesFraction;
 
   int           lastBuildAttempt;
-  int           lastEvolveAttempt;
 
   char          consoleText[ MAX_CONSOLE_TEXT ];
   consoleLine_t consoleLines[ MAX_CONSOLE_LINES ];
@@ -1273,10 +1272,7 @@ typedef struct
 
   qhandle_t   poisonCloudPS;
   qhandle_t   poisonCloudedPS;
-  qhandle_t   alienEvolvePS;
   qhandle_t   alienAcidTubePS;
-
-  sfxHandle_t alienEvolveSound;
 
   qhandle_t   humanBuildableDamagedPS;
   qhandle_t   humanBuildableDestroyedPS;
@@ -2070,7 +2066,7 @@ void          trap_GetDemoName( char *buffer, int size );
 typedef enum
 {
   DT_INTERACTIVE, // team, class, armoury
-  DT_ARMOURYEVOLVE, // Insufficient funds et al
+  DT_SPAWN, // Insufficient funds et al
   DT_BUILD, // build errors
   DT_COMMAND, // You must be living/human/spec etc.
 

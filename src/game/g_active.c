@@ -443,7 +443,7 @@ void SpectatorThink( gentity_t *ent, usercmd_t *ucmd )
     else if( client->pers.teamSelection == TEAM_ALIENS )
       G_TriggerMenu( client->ps.clientNum, MN_A_CLASS );
     else if( client->pers.teamSelection == TEAM_HUMANS )
-      G_TriggerMenu( client->ps.clientNum, MN_H_SPAWN );
+      G_TriggerMenu( client->ps.clientNum, MN_H_CLASS );
   }
 
   // We are either not following anyone or following a spectator

@@ -661,8 +661,6 @@ static void CG_RegisterSounds( void )
 
   cgs.media.medkitUseSound          = trap_S_RegisterSound( "sound/upgrades/medkit/medkit.wav", qfalse );
 
-  cgs.media.alienEvolveSound        = trap_S_RegisterSound( "sound/player/alienevolve.wav", qfalse );
-
   cgs.media.alienBuildableExplosion = trap_S_RegisterSound( "sound/buildables/alien/explosion.wav", qfalse );
   cgs.media.alienBuildableDamage    = trap_S_RegisterSound( "sound/buildables/alien/damage.wav", qfalse );
   cgs.media.alienBuildablePrebuild  = trap_S_RegisterSound( "sound/buildables/alien/prebuild.wav", qfalse );
@@ -783,7 +781,6 @@ static void CG_RegisterGraphics( void )
 
   cgs.media.poisonCloudPS             = CG_RegisterParticleSystem( "firstPersonPoisonCloudPS" );
   cgs.media.poisonCloudedPS           = CG_RegisterParticleSystem( "poisonCloudedPS" );
-  cgs.media.alienEvolvePS             = CG_RegisterParticleSystem( "alienEvolvePS" );
   cgs.media.alienAcidTubePS           = CG_RegisterParticleSystem( "alienAcidTubePS" );
 
   cgs.media.jetPackDescendPS          = CG_RegisterParticleSystem( "jetPackDescendPS" );

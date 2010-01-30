@@ -1397,7 +1397,7 @@ void Cmd_Class_f( gentity_t *ent )
 
     if( !BG_ClassIsAllowed( newClass ) )
     {
-      G_TriggerMenuArgs( ent->client->ps.clientNum, MN_A_CLASSNOTALLOWED, newClass );
+      G_TriggerMenuArgs( ent->client->ps.clientNum, MN_C_CLASSNOTALLOWED, newClass );
       return;
     }
 
@@ -1408,7 +1408,7 @@ void Cmd_Class_f( gentity_t *ent )
 
     if( cost > ent->client->pers.credit )
     {
-      G_TriggerMenuArgs( clientNum, MN_A_CANTEVOLVE, newClass );
+      G_TriggerMenuArgs( clientNum, MN_C_CANTSPAWN, newClass );
     }
     else if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
@@ -1439,7 +1439,7 @@ void Cmd_Class_f( gentity_t *ent )
     return;
 
   if( ent->client->pers.teamSelection == TEAM_HUMANS )
-    G_TriggerMenu( clientNum, MN_H_DEADTOCLASS );
+    G_TriggerMenu( clientNum, MN_C_DEADTOCLASS );
 }
 
 

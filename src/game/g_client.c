@@ -1565,13 +1565,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   // health will count down towards max_health
   ent->health = client->ps.stats[ STAT_HEALTH ] = client->ps.stats[ STAT_MAX_HEALTH ]; //* 1.25;
 
-  //if evolving scale health
-  if( ent == spawn )
-  {
-    ent->health *= ent->client->pers.evolveHealthFraction;
-    client->ps.stats[ STAT_HEALTH ] *= ent->client->pers.evolveHealthFraction;
-  }
-
   //clear the credits array
   for( i = 0; i < MAX_CLIENTS; i++ )
     ent->credits[ i ] = 0;
@@ -1588,30 +1581,22 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   if( client->sess.spectatorState == SPECTATOR_NOT &&
       client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
-    if( ent == spawn )
+    spawn_angles[ YAW ] += 180.0f;
+    AngleNormalize360( spawn_angles[ YAW ] );
+
+    if( spawnPoint->s.origin2[ 2 ] > 0.0f )
     {
-      //evolution particle system
-      G_AddPredictableEvent( ent, EV_ALIEN_EVOLVE, DirToByte( up ) );
+      vec3_t  forward, dir;
+
+      AngleVectors( spawn_angles, forward, NULL, NULL );
+      VectorScale( forward, F_VEL, forward );
+      VectorAdd( spawnPoint->s.origin2, forward, dir );
+      VectorNormalize( dir );
+
+      VectorScale( dir, UP_VEL, client->ps.velocity );
     }
-    else
-    {
-      spawn_angles[ YAW ] += 180.0f;
-      AngleNormalize360( spawn_angles[ YAW ] );
 
-      if( spawnPoint->s.origin2[ 2 ] > 0.0f )
-      {
-        vec3_t  forward, dir;
-
-        AngleVectors( spawn_angles, forward, NULL, NULL );
-        VectorScale( forward, F_VEL, forward );
-        VectorAdd( spawnPoint->s.origin2, forward, dir );
-        VectorNormalize( dir );
-
-        VectorScale( dir, UP_VEL, client->ps.velocity );
-      }
-
-      G_AddPredictableEvent( ent, EV_PLAYER_RESPAWN, 0 );
-    }
+    G_AddPredictableEvent( ent, EV_PLAYER_RESPAWN, 0 );
   }
   else if( client->sess.spectatorState == SPECTATOR_NOT &&
            client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )

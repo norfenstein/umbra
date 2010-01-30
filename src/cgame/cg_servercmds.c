@@ -367,7 +367,7 @@ void CG_Menu( int menu, int arg )
       type      = DT_INTERACTIVE;
       break;
 
-    case MN_H_SPAWN:
+    case MN_H_CLASS:
       cmd       = "menu tremulous_humanclass\n";
       type      = DT_INTERACTIVE;
       break;
@@ -380,11 +380,6 @@ void CG_Menu( int menu, int arg )
     case MN_H_BUILD:
       cmd       = "menu tremulous_humanbuild\n";
       type      = DT_INTERACTIVE;
-      break;
-
-    case MN_H_UNKNOWNITEM:
-      shortMsg  = "Unknown item";
-      type      = DT_ARMOURYEVOLVE;
       break;
 
     case MN_A_TEAMFULL:
@@ -574,30 +569,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_H_NOFUNDS:
-      longMsg   = "Insufficient funds. You do not have enough credits to perform "
-                  "this action.";
-      shortMsg  = "Insufficient funds";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_ITEMHELD:
-      longMsg   = "You already hold this item. It is not possible to carry multiple "
-                  "items of the same type.";
-      shortMsg  = "You already hold this item";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
-    case MN_H_DEADTOCLASS:
-      shortMsg  = "You must be dead to use the class command";
-      type      = DT_COMMAND;
-      break;
-
-    case MN_H_UNKNOWNSPAWNITEM:
-      shortMsg  = "Unknown starting item";
-      type      = DT_COMMAND;
-      break;
-
     //===============================
 
     case MN_A_ONEOVERMIND:
@@ -621,13 +592,6 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_A_TOOCLOSE:
-      longMsg   = "This location is too close to the enemy to evolve. Move away "
-                  "from the enemy's presence and try again.";
-      shortMsg  = "This location is too close to the enemy to evolve";
-      type      = DT_ARMOURYEVOLVE;
-      break;
-
     case MN_A_HOVEL_OCCUPIED:
       longMsg   = "This Hovel is already occupied by another builder.";
       shortMsg  = "This Hovel is already occupied by another builder";
@@ -648,28 +612,33 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_A_CANTEVOLVE:
-      shortMsg  = va( "You cannot evolve into a %s", 
+    case MN_C_CANTSPAWN:
+      shortMsg  = va( "You cannot afford a %s", 
                       BG_ClassConfig( arg )->humanName );
-      type      = DT_ARMOURYEVOLVE;
+      type      = DT_SPAWN;
       break;
 
-    case MN_A_UNKNOWNCLASS:
+    case MN_C_UNKNOWNCLASS:
       shortMsg  = "Unknown class";
-      type      = DT_ARMOURYEVOLVE;
+      type      = DT_SPAWN;
       break;
       
-    case MN_A_CLASSNOTALLOWED:
+    case MN_C_CLASSNOTALLOWED:
       shortMsg  = va( "The %s is not allowed",
                       BG_ClassConfig( arg )->humanName );
-      type      = DT_ARMOURYEVOLVE;
+      type      = DT_SPAWN;
+      break;
+
+    case MN_C_DEADTOCLASS:
+      shortMsg  = "You must be dead to use the class command";
+      type      = DT_COMMAND;
       break;
 
     default:
       Com_Printf( "cgame: debug: no such menu %d\n", menu );
   }
   
-  if( type == DT_ARMOURYEVOLVE && cg_disableUpgradeDialogs.integer )
+  if( type == DT_SPAWN && cg_disableUpgradeDialogs.integer )
     return;
 
   if( type == DT_BUILD && cg_disableBuildDialogs.integer )

@@ -299,7 +299,6 @@ typedef struct
   qboolean            disableBlueprintErrors; // should the buildable blueprint never be hidden from the players?
 
   class_t             classSelection;     // player class (copied to ent->client->ps.stats[ STAT_CLASS ] once spawned)
-  float               evolveHealthFraction;
   team_t              teamSelection;      // player team (copied to ps.stats[ STAT_TEAM ])
 
   int                 teamChangeTime;     // level.time of last team change

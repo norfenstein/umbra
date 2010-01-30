@@ -504,9 +504,6 @@ typedef enum
 
   EV_MEDKIT_USED,
 
-  EV_ALIEN_EVOLVE,
-  EV_ALIEN_EVOLVE_FAILED,
-
   EV_DEBUG_LINE,
   EV_STOPLOOPINGSOUND,
   EV_TAUNT,
@@ -535,7 +532,7 @@ typedef enum
   MN_PLAYERLIMIT,
   MN_WARMUP,
 
-  // cmd stuff
+  //cmd stuff
   MN_CMD_CHEAT,
   MN_CMD_CHEAT_TEAM,
   MN_CMD_TEAM,
@@ -543,17 +540,6 @@ typedef enum
   MN_CMD_ALIEN,
   MN_CMD_HUMAN,
   MN_CMD_LIVING,
-
-  //alien stuff
-  MN_A_CLASS,
-  MN_A_BUILD,
-  MN_A_HOVEL_OCCUPIED,
-  MN_A_HOVEL_BLOCKED,
-  MN_A_TOOCLOSE,
-  MN_A_TEAMCHANGEBUILDTIMER,
-  MN_A_CANTEVOLVE,
-  MN_A_UNKNOWNCLASS,
-  MN_A_CLASSNOTALLOWED,
 
   //shared build
   MN_B_NOROOM,
@@ -564,26 +550,34 @@ typedef enum
   MN_B_REVOKED,
   MN_B_SURRENDER,
 
+  //shared class
+  MN_C_CANTSPAWN,
+  MN_C_UNKNOWNCLASS,
+  MN_C_CLASSNOTALLOWED,
+  MN_C_DEADTOCLASS,
+
   //alien build
+  MN_A_NOBP,
   MN_A_ONEOVERMIND,
   MN_A_ONEHOVEL,
-  MN_A_NOBP,
   MN_A_HOVEL_EXIT,
-
-  //human stuff
-  MN_H_SPAWN,
-  MN_H_BUILD,
-  MN_H_UNKNOWNITEM,
-  MN_H_NOFUNDS,
-  MN_H_ITEMHELD,
-  MN_H_TEAMCHANGEBUILDTIMER,
-  MN_H_DEADTOCLASS,
-  MN_H_UNKNOWNSPAWNITEM,
 
   //human build
   MN_H_NOBP,
-  MN_H_NODCC,
   MN_H_ONEREACTOR,
+  MN_H_NODCC,
+
+  //alien stuff
+  MN_A_CLASS,
+  MN_A_BUILD,
+  MN_A_TEAMCHANGEBUILDTIMER,
+  MN_A_HOVEL_OCCUPIED,
+  MN_A_HOVEL_BLOCKED,
+
+  //human stuff
+  MN_H_CLASS,
+  MN_H_BUILD,
+  MN_H_TEAMCHANGEBUILDTIMER,
 } dynMenu_t;
 
 // animations
@@ -1089,7 +1083,6 @@ void                        BG_ClassBoundingBox( class_t class, vec3_t mins,
                                                  vec3_t maxs, vec3_t cmaxs,
                                                  vec3_t dmins, vec3_t dmaxs );
 qboolean                    BG_ClassHasAbility( class_t class, int ability );
-qboolean                    BG_AlienCanEvolve( class_t class, int credits );
 
 void                        BG_InitClassConfigs( void );
 

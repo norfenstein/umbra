@@ -303,8 +303,6 @@ static void CG_DrawProgressBar( rectDef_t *rect, vec4_t color, float scale,
 
 //=============== TA: was cg_newdraw.c
 
-#define NO_CREDITS_TIME 2000
-
 static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean padding )
 {
   int           value;
@@ -324,13 +322,6 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
   {
     if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS )
     {
-      if( !BG_AlienCanEvolve( cg.predictedPlayerState.stats[ STAT_CLASS ], value ) &&
-          cg.time - cg.lastEvolveAttempt <= NO_CREDITS_TIME &&
-          ( ( cg.time - cg.lastEvolveAttempt ) / 300 ) & 1 )
-      {
-        color[ 3 ] = 0.0f;
-      }
-
       value /= ALIEN_CREDITS_PER_KILL;
     }
 
@@ -2265,17 +2256,6 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
     {
       color[ 0 ] = 1.0f;
       color[ 1 ] = color[ 2 ] = 0.0f;
-    }
-  }
-
-  if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS &&
-      !BG_AlienCanEvolve( cg.predictedPlayerState.stats[ STAT_CLASS ],
-                          ps->persistant[ PERS_CREDIT ] ) )
-  {
-    if( cg.time - cg.lastEvolveAttempt <= NO_CREDITS_TIME )
-    {
-      if( ( ( cg.time - cg.lastEvolveAttempt ) / 300 ) % 2 )
-        color[ 3 ] = 0.0f;
     }
   }
 
