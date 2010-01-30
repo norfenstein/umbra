@@ -79,6 +79,7 @@ gentity_t *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
 
   if( spawn == BA_A_SPAWN )
   {
+    //TODO redefine the displacement based on the normal, allowing for for different BBOX dimensions
     VectorSet( cmins, -MAX_ALIEN_BBOX, -MAX_ALIEN_BBOX, -MAX_ALIEN_BBOX );
     VectorSet( cmaxs,  MAX_ALIEN_BBOX,  MAX_ALIEN_BBOX,  MAX_ALIEN_BBOX );
 
@@ -87,7 +88,7 @@ gentity_t *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
   }
   else if( spawn == BA_H_SPAWN )
   {
-    BG_ClassBoundingBox( PCL_HUMAN, cmins, cmaxs, NULL, NULL, NULL );
+    BG_ClassBoundingBox( PCL_HUMAN_BSUIT, cmins, cmaxs, NULL, NULL, NULL );
 
     VectorCopy( origin, localOrigin );
     localOrigin[ 2 ] += maxs[ 2 ] + fabs( cmins[ 2 ] ) + 1.0f;
@@ -523,12 +524,12 @@ void ASpawn_Think( gentity_t *self )
         // If it's part of the map, kill self. 
         if( ent->s.eType == ET_BUILDABLE )
         {
-          G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+          G_Damage( ent, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
           G_SetBuildableAnim( self, BANIM_SPAWN1, qtrue );
         }
         else if( ent->s.number == ENTITYNUM_WORLD || ent->s.eType == ET_MOVER )
         {
-          G_Damage( self, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+          G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
           return;
         }
 

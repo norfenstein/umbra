@@ -676,7 +676,7 @@ void G_Physics( gentity_t *ent, int msec );
 // g_buildable.c
 //
 
-#define MAX_ALIEN_BBOX  25
+#define MAX_ALIEN_BBOX  46
 
 typedef enum
 {
