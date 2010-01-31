@@ -359,61 +359,6 @@ static void CG_AlienLevel5Text( char *text, playerState_t *ps )
 
 /*
 ===============
-CG_HumanCkitText
-===============
-*/
-static void CG_HumanCkitText( char *text, playerState_t *ps )
-{
-  buildable_t   buildable = ps->stats[ STAT_BUILDABLE ] & ~SB_VALID_TOGGLEBIT;
-  entityState_t *es;
-
-  if( buildable > BA_NONE )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to place the %s\n",
-          CG_KeyNameForCommand( "+attack" ),
-          BG_Buildable( buildable )->humanName ) );
-
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to cancel placing the %s\n",
-          CG_KeyNameForCommand( "+button5" ),
-          BG_Buildable( buildable )->humanName ) );
-  }
-  else
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to build a structure\n",
-          CG_KeyNameForCommand( "+attack" ) ) );
-  }
-
-  if( ( es = CG_BuildableInRange( ps, NULL ) ) )
-  {
-    if( cgs.markDeconstruct )
-    {
-      if( es->eFlags & EF_B_MARKED )
-      {
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to unmark this structure\n",
-              CG_KeyNameForCommand( "deconstruct" ) ) );
-      }
-      else
-      {
-        Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to mark this structure\n",
-              CG_KeyNameForCommand( "deconstruct" ) ) );
-      }
-    }
-    else
-    {
-      Q_strcat( text, MAX_TUTORIAL_TEXT,
-          va( "Press %s to destroy this structure\n",
-            CG_KeyNameForCommand( "deconstruct" ) ) );
-    }
-  }
-}
-
-/*
-===============
 CG_HumanText
 ===============
 */
@@ -474,10 +419,6 @@ static void CG_HumanText( char *text, playerState_t *ps )
             BG_Weapon( ps->weapon )->humanName ) );
       break;
 
-    case WP_HBUILD:
-      CG_HumanCkitText( text, ps );
-      break;
-
     default:
       break;
   }
@@ -521,6 +462,132 @@ static void CG_HumanText( char *text, playerState_t *ps )
 
 /*
 ===============
+CG_HumanBuilderText
+===============
+*/
+static void CG_HumanBuilderText( char *text, playerState_t *ps )
+{
+  buildable_t   buildable = ps->stats[ STAT_BUILDABLE ] & ~SB_VALID_TOGGLEBIT;
+  entityState_t *es;
+
+  if( buildable > BA_NONE )
+  {
+    Q_strcat( text, MAX_TUTORIAL_TEXT,
+        va( "Press %s to place the %s\n",
+          CG_KeyNameForCommand( "+attack" ),
+          BG_Buildable( buildable )->humanName ) );
+
+    Q_strcat( text, MAX_TUTORIAL_TEXT,
+        va( "Press %s to cancel placing the %s\n",
+          CG_KeyNameForCommand( "+button5" ),
+          BG_Buildable( buildable )->humanName ) );
+  }
+  else
+  {
+    Q_strcat( text, MAX_TUTORIAL_TEXT,
+        va( "Press %s to build a structure\n",
+          CG_KeyNameForCommand( "+attack" ) ) );
+  }
+
+  if( ( es = CG_BuildableInRange( ps, NULL ) ) )
+  {
+    if( cgs.markDeconstruct )
+    {
+      if( es->eFlags & EF_B_MARKED )
+      {
+        Q_strcat( text, MAX_TUTORIAL_TEXT,
+            va( "Press %s to unmark this structure\n",
+              CG_KeyNameForCommand( "deconstruct" ) ) );
+      }
+      else
+      {
+        Q_strcat( text, MAX_TUTORIAL_TEXT,
+            va( "Press %s to mark this structure\n",
+              CG_KeyNameForCommand( "deconstruct" ) ) );
+      }
+    }
+    else
+    {
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+          va( "Press %s to destroy this structure\n",
+            CG_KeyNameForCommand( "deconstruct" ) ) );
+    }
+  }
+}
+
+/*
+===============
+CG_HumanLevel0Text
+===============
+*/
+static void CG_HumanLevel0Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel10Text
+===============
+*/
+static void CG_HumanLevel10Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel11Text
+===============
+*/
+static void CG_HumanLevel11Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel2Text
+===============
+*/
+static void CG_HumanLevel2Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel3Text
+===============
+*/
+static void CG_HumanLevel3Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel4Text
+===============
+*/
+static void CG_HumanLevel4Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+/*
+===============
+CG_HumanLevel5Text
+===============
+*/
+static void CG_HumanLevel5Text( char *text, playerState_t *ps )
+{
+  CG_HumanText( text, ps );
+}
+
+
+/*
+===============
 CG_SpectatorText
 ===============
 */
@@ -530,12 +597,12 @@ static void CG_SpectatorText( char *text, playerState_t *ps )
   {
     if( ps->pm_flags & PMF_QUEUED )
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-                va( "Press %s to leave spawn queue\n",
-                    CG_KeyNameForCommand( "+attack" ) ) );
+          va( "Press %s to leave spawn queue\n",
+            CG_KeyNameForCommand( "+attack" ) ) );
     else
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-                va( "Press %s to spawn\n",
-                    CG_KeyNameForCommand( "+attack" ) ) );
+          va( "Press %s to spawn\n",
+            CG_KeyNameForCommand( "+attack" ) ) );
   }
   else 
   {
@@ -548,27 +615,27 @@ static void CG_SpectatorText( char *text, playerState_t *ps )
   {
     if( !cg.chaseFollow )
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-                va( "Press %s to switch to chase-cam spectator mode\n",
-                    CG_KeyNameForCommand( "+button2" ) ) );
+          va( "Press %s to switch to chase-cam spectator mode\n",
+            CG_KeyNameForCommand( "+button2" ) ) );
     else
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-                va( "Press %s to return to free spectator mode\n",
-                    CG_KeyNameForCommand( "+button2" ) ) );
+          va( "Press %s to return to free spectator mode\n",
+            CG_KeyNameForCommand( "+button2" ) ) );
 
-      Q_strcat( text, MAX_TUTORIAL_TEXT,
-          va( "Press %s or ",
-            CG_KeyNameForCommand( "weapprev" ) ) );
-      Q_strcat( text, MAX_TUTORIAL_TEXT,
-          va( "%s to change player\n",
-            CG_KeyNameForCommand( "weapnext" ) ) );
-    }
+    Q_strcat( text, MAX_TUTORIAL_TEXT,
+        va( "Press %s or ",
+          CG_KeyNameForCommand( "weapprev" ) ) );
+    Q_strcat( text, MAX_TUTORIAL_TEXT,
+        va( "%s to change player\n",
+          CG_KeyNameForCommand( "weapnext" ) ) );
+  }
   else
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to follow a player\n",
-            CG_KeyNameForCommand( "+button2" ) ) );
-    }
+          CG_KeyNameForCommand( "+button2" ) ) );
   }
+}
 
 /*
 ===============
@@ -630,9 +697,36 @@ const char *CG_TutorialText( void )
           CG_AlienLevel5Text( text, ps );
           break;
 
-        case PCL_HUMAN:
-        case PCL_HUMAN_BSUIT:
-          CG_HumanText( text, ps );
+        case PCL_HUMAN_BUILDER:
+          CG_HumanBuilderText( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL0:
+          CG_HumanLevel0Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL1_0:
+          CG_HumanLevel10Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL1_1:
+          CG_HumanLevel11Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL2:
+          CG_HumanLevel2Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL3:
+          CG_HumanLevel3Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL4:
+          CG_HumanLevel4Text( text, ps );
+          break;
+
+        case PCL_HUMAN_LEVEL5:
+          CG_HumanLevel5Text( text, ps );
           break;
 
         default:

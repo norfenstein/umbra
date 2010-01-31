@@ -1530,7 +1530,6 @@ static void CG_DrawTeamOverlay( rectDef_t *rect, float scale, vec4_t color )
   float        fontScale = 0.30f;
   int          maxDisplayCount = 0;
   int          displayCount = 0;
-  weapon_t     curWeapon = WP_NONE;
 
   if( cg.predictedPlayerState.pm_type == PM_SPECTATOR )
     return;
@@ -1583,20 +1582,15 @@ static void CG_DrawTeamOverlay( rectDef_t *rect, float scale, vec4_t color )
     CG_DrawPic( x, y - iconSize + iconTopMargin, backgroundWidth,
                 iconSize, cgs.media.teamOverlayShader );
     trap_R_SetColor( tcolor );
-    if( ci->health <= 0 || !ci->curWeaponClass )
+    if( ci->health <= 0 || !ci->class )
     {
       dx = -iconSize;
       s = va( "%s^7", ci->name );
     }
     else
     {
-      if( ci->team == TEAM_HUMANS )
-        curWeapon = ci->curWeaponClass;
-      else if( ci->team == TEAM_ALIENS )
-        curWeapon = BG_Class( ci->curWeaponClass )->weapons[ 0 ];
-
       CG_DrawPic( x + leftMargin, y - iconSize + iconTopMargin, iconSize, iconSize,
-                  cg_weapons[ curWeapon ].weaponIcon );
+                  cg_weapons[ BG_Class( ci->class )->weapons[ 0 ] ].weaponIcon );
       if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_HUMANS )
       {
         if( ci->upgrade != UP_NONE )

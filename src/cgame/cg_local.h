@@ -732,7 +732,7 @@ typedef struct
   int         location;                   // location index for team mode
   int         health;                     // you only get this info about your teammates
   int         upgrade; 
-  int         curWeaponClass;             // sends current weapon for H, current class for A
+  int         class;
 
   int         handicap;
 

@@ -753,10 +753,7 @@ typedef enum
 {
   PCL_NONE,
 
-  //builder classes
   PCL_ALIEN_BUILDER,
-
-  //offensive classes
   PCL_ALIEN_LEVEL0,
   PCL_ALIEN_LEVEL1_0,
   PCL_ALIEN_LEVEL1_1,
@@ -765,9 +762,14 @@ typedef enum
   PCL_ALIEN_LEVEL4,
   PCL_ALIEN_LEVEL5,
 
-  //human class
-  PCL_HUMAN,
-  PCL_HUMAN_BSUIT,
+  PCL_HUMAN_BUILDER,
+  PCL_HUMAN_LEVEL0,
+  PCL_HUMAN_LEVEL1_0,
+  PCL_HUMAN_LEVEL1_1,
+  PCL_HUMAN_LEVEL2,
+  PCL_HUMAN_LEVEL3,
+  PCL_HUMAN_LEVEL4,
+  PCL_HUMAN_LEVEL5,
 
   PCL_NUM_CLASSES
 } class_t;

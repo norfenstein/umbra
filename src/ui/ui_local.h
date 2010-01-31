@@ -236,11 +236,11 @@ typedef struct
   int         teamCount;
   int         teamIndex;
 
-  menuItem_t  alienClassList[ 10 ];
+  menuItem_t  alienClassList[ 8 ];
   int         alienClassCount;
   int         alienClassIndex;
 
-  menuItem_t  humanClassList[ 3 ];
+  menuItem_t  humanClassList[ 8 ];
   int         humanClassCount;
   int         humanClassIndex;
 

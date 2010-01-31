@@ -97,7 +97,7 @@ static void CG_ParseTeamInfo( void )
 
     cgs.clientinfo[ client ].location = atoi( CG_Argv( i * 5 + 2 ) );
     cgs.clientinfo[ client ].health = atoi( CG_Argv( i * 5 + 3 ) );
-    cgs.clientinfo[ client ].curWeaponClass = atoi( CG_Argv( i * 5 + 4 ) );
+    cgs.clientinfo[ client ].class = atoi( CG_Argv( i * 5 + 4 ) );
     cgs.clientinfo[ client ].upgrade = atoi( CG_Argv( i * 5 + 5 ) );
   }
 }

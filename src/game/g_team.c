@@ -277,7 +277,7 @@ void TeamplayInfoMessage( gentity_t *ent )
   gentity_t *player;
   gclient_t *cl;
   upgrade_t upgrade = UP_NONE;
-  int       curWeaponClass = WP_NONE ; // sends weapon for humans, class for aliens
+  int       class = WP_NONE;
   char      *tmp;
 
   if( !g_allowTeamOverlay.integer )
@@ -311,29 +311,12 @@ void TeamplayInfoMessage( gentity_t *ent )
 
     if( cl->sess.spectatorState != SPECTATOR_NOT )
     {
-      curWeaponClass = WP_NONE;
+      class = WP_NONE;
       upgrade = UP_NONE;
     }
-    else if ( cl->pers.teamSelection == TEAM_HUMANS )
+    else
     {
-      curWeaponClass = cl->ps.weapon;
-
-      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, cl->ps.stats ) )
-        upgrade = UP_BATTLESUIT;
-      else if( BG_InventoryContainsUpgrade( UP_JETPACK, cl->ps.stats ) )
-        upgrade = UP_JETPACK;
-      else if( BG_InventoryContainsUpgrade( UP_BATTPACK, cl->ps.stats ) )
-        upgrade = UP_BATTPACK;
-      else if( BG_InventoryContainsUpgrade( UP_HELMET, cl->ps.stats ) )
-        upgrade = UP_HELMET;
-      else if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, cl->ps.stats ) )
-        upgrade = UP_LIGHTARMOUR;
-      else
-        upgrade = UP_NONE;
-    }
-    else if( cl->pers.teamSelection == TEAM_ALIENS )
-    {
-      curWeaponClass = cl->ps.stats[ STAT_CLASS ];
+      class = cl->ps.stats[ STAT_CLASS ];
       upgrade = UP_NONE;
     }
  
@@ -341,7 +324,7 @@ void TeamplayInfoMessage( gentity_t *ent )
       player->client->pers.location,
       player->client->ps.stats[ STAT_HEALTH ] < 1 ? 0 :
         player->client->ps.stats[ STAT_HEALTH ],
-      curWeaponClass, 
+      class, 
       upgrade );
 
     if( !strcmp( ent->client->pers.cinfo[ i ], tmp ) )

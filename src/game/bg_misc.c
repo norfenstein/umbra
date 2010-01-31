@@ -1070,8 +1070,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL5_VALUE                                   //int     value;
   },
   {
-    PCL_HUMAN,                                      //int     classnum;
-    "human_base",                                   //char    *classname;
+    PCL_HUMAN_BUILDER,                              //int     classnum;
+    "hbuilder",                                     //char    *classname;
     "",
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
@@ -1094,14 +1094,13 @@ static const classAttributes_t bg_classList[ ] =
     ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
-    PCL_HUMAN_BSUIT,                                //int     classnum;
-    "human_bsuit",                                  //char    *classname;
+    PCL_HUMAN_LEVEL0,                               //int     classnum;
+    "hlevel0",                                      //char    *classname;
     "",
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
-    SCA_TAKESFALLDAMAGE|
-      SCA_CANUSELADDERS,                            //int     abilities;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_MACHINEGUN, WP_BLASTER, WP_NONE },         //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
@@ -1116,6 +1115,151 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     0,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL1_0,                             //int     classnum;
+    "hlevel10",                                     //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    { WP_SHOTGUN, WP_BLASTER, WP_NONE },            //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    1,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL1_1,                             //int     classnum;
+    "hlevel11",                                     //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    { WP_SHOTGUN, WP_PAIN_SAW, WP_NONE },           //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    1,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL2,                               //int     classnum;
+    "hlevel2",                                      //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    { WP_LUCIFER_CANNON, WP_BLASTER, WP_NONE },     //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    2,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL3,                               //int     classnum;
+    "hlevel3",                                      //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    { WP_CHAINGUN, WP_MASS_DRIVER, WP_NONE },       //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    3,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL4,                               //int     classnum;
+    "hlevel4",                                      //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    { WP_LAS_GUN, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    4,                                              //int     cost;
+    ALIEN_CREDITS_PER_KILL                          //int     value;
+  },
+  {
+    PCL_HUMAN_LEVEL5,                               //int     classnum;
+    "hlevel5",                                      //char    *classname;
+    "",
+    100,                                            //int     health;
+    1.0f,                                           //float   fallDamage;
+    0.0f,                                           //float   regenRate;
+    SCA_TAKESFALLDAMAGE|
+      SCA_CANUSELADDERS,                            //int     abilities;
+    { WP_PULSE_RIFLE, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
+    110.0f,                                         //float   buildDist;
+    90,                                             //int     fov;
+    0.002f,                                         //float   bob;
+    1.0f,                                           //float   bobCycle;
+    100,                                            //int     steptime;
+    1.0f,                                           //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    100.0f,                                         //float   stopSpeed;
+    220.0f,                                         //float   jumpMagnitude;
+    1.0f,                                           //float   knockbackScale;
+    5,                                              //int     cost;
     ALIEN_CREDITS_PER_KILL                          //int     value;
   }
 };

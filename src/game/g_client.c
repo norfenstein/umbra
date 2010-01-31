@@ -1090,8 +1090,8 @@ void ClientUserinfoChanged( int clientNum )
     //model details to that of the spawning class or the info change will not be
     //registered and an axis appears instead of the player model. There is zero chance
     //the player can spawn with the battlesuit, hence this choice.
-    Com_sprintf( buffer, MAX_QPATH, "%s/%s",  BG_ClassConfig( PCL_HUMAN_BSUIT )->modelName,
-                                              BG_ClassConfig( PCL_HUMAN_BSUIT )->skinName );
+    Com_sprintf( buffer, MAX_QPATH, "%s/%s",  BG_ClassConfig( PCL_HUMAN_LEVEL5 )->modelName,
+                                              BG_ClassConfig( PCL_HUMAN_LEVEL5 )->skinName );
   }
   else
   {
@@ -1522,7 +1522,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
     client->pers.maxHealth = client->ps.stats[ STAT_MAX_HEALTH ] = 100;
 
   // clear entity values
-  if( ent->client->pers.classSelection == PCL_HUMAN )
+  if( ent->client->pers.teamSelection == TEAM_HUMANS )
   {
     BG_AddUpgradeToInventory( UP_MEDKIT, client->ps.stats );
   }

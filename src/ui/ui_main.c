@@ -2276,8 +2276,14 @@ static void UI_LoadHumanClasses( void )
 
   for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
   {
-    if ( i != PCL_HUMAN &&
-         i != PCL_HUMAN_BSUIT )
+    if ( i != PCL_HUMAN_BUILDER &&
+         i != PCL_HUMAN_LEVEL0 &&
+         i != PCL_HUMAN_LEVEL1_0 &&
+         i != PCL_HUMAN_LEVEL1_1 &&
+         i != PCL_HUMAN_LEVEL2 &&
+         i != PCL_HUMAN_LEVEL3 &&
+         i != PCL_HUMAN_LEVEL4 &&
+         i != PCL_HUMAN_LEVEL5 )
       continue;
 
     if( BG_ClassIsAllowed( i ) )
