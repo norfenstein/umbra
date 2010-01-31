@@ -863,7 +863,7 @@ static const classAttributes_t bg_classList[ ] =
   },
   {
     PCL_ALIEN_BUILDER,                              //int     classnum;
-    "builderupg",                                   //char    *classname;
+    "abuilder",                                     //char    *classname;
     "Similar to the base Granger, except that in addition to "
       "being able to build structures it has a spit attack "
       "that slows victims and the ability to crawl on walls.",
@@ -889,7 +889,7 @@ static const classAttributes_t bg_classList[ ] =
   },
   {
     PCL_ALIEN_LEVEL0,                               //int     classnum;
-    "level0",                                       //char    *classname;
+    "alevel0",                                      //char    *classname;
     "Has a lethal reflexive bite and the ability to crawl on "
       "walls and ceilings.",
     ALEVEL0_HEALTH,                                 //int     health;
@@ -913,8 +913,35 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL0_VALUE                                   //int     value;
   },
   {
+    PCL_ALIEN_LEVEL1_0,                             //int     classnum;
+    "alevel10",                                     //char    *classname;
+    "In addition to the basic Basilisk abilities, the Advanced "
+      "Basilisk sprays a poisonous gas which disorients any "
+      "nearby humans. Has a strong healing aura that "
+      "that accelerates the healing rate of nearby aliens.",
+    ALEVEL1_1_HEALTH,                               //int     health;
+    0.0f,                                           //float   fallDamage;
+    ALEVEL1_1_REGEN,                                //float   regenRate;
+    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
+    { WP_ALEVEL1_0, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
+    0.0f,                                           //float   buildDist;
+    120,                                            //int     fov;
+    0.001f,                                         //float   bob;
+    1.8f,                                           //float   bobCycle;
+    60,                                             //int     steptime;
+    ALEVEL1_1_SPEED,                                //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    300.0f,                                         //float   stopSpeed;
+    310.0f,                                         //float   jumpMagnitude;
+    1.1f,                                           //float   knockbackScale;
+    ALEVEL1_1_COST,                                 //int     cost;
+    ALEVEL1_1_VALUE                                 //int     value;
+  },
+  {
     PCL_ALIEN_LEVEL1_1,                             //int     classnum;
-    "level1upg",                                    //char    *classname;
+    "alevel11",                                     //char    *classname;
     "In addition to the basic Basilisk abilities, the Advanced "
       "Basilisk sprays a poisonous gas which disorients any "
       "nearby humans. Has a strong healing aura that "
@@ -940,8 +967,33 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_VALUE                                 //int     value;
   },
   {
+    PCL_ALIEN_LEVEL2,                               //int     classnum;
+    "alevel2",                                      //char    *classname;
+    "Has a lethal reflexive bite and the ability to crawl on "
+      "walls and ceilings.",
+    ALEVEL0_HEALTH,                                 //int     health;
+    0.0f,                                           //float   fallDamage;
+    ALEVEL0_REGEN,                                  //float   regenRate;
+    SCA_WALLCLIMBER|SCA_FOVWARPS|SCA_ALIENSENSE,    //int     abilities;
+    { WP_ALEVEL2, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    0.0f,                                           //float   buildDist;
+    140,                                            //int     fov;
+    0.0f,                                           //float   bob;
+    2.5f,                                           //float   bobCycle;
+    25,                                             //int     steptime;
+    ALEVEL0_SPEED,                                  //float   speed;
+    10.0f,                                          //float   acceleration;
+    1.0f,                                           //float   airAcceleration;
+    6.0f,                                           //float   friction;
+    400.0f,                                         //float   stopSpeed;
+    250.0f,                                         //float   jumpMagnitude;
+    2.0f,                                           //float   knockbackScale;
+    ALEVEL0_COST,                                   //int     cost;
+    ALEVEL0_VALUE                                   //int     value;
+  },
+  {
     PCL_ALIEN_LEVEL3,                               //int     classnum;
-    "level2upg",                                    //char    *classname;
+    "alevel3",                                      //char    *classname;
     "The Advanced Marauder has all the abilities of the basic Marauder "
       "with the addition of an area effect electric shock attack.",
     ALEVEL3_HEALTH,                                 //int     health;
@@ -966,7 +1018,7 @@ static const classAttributes_t bg_classList[ ] =
   },
   {
     PCL_ALIEN_LEVEL4,                               //int     classnum;
-    "level3upg",                                    //char    *classname;
+    "alevel4",                                      //char    *classname;
     "In addition to the basic Dragoon abilities, the Advanced "
       "Dragoon has 3 barbs which may be used to attack humans "
       "from a distance.",
@@ -992,7 +1044,7 @@ static const classAttributes_t bg_classList[ ] =
   },
   {
     PCL_ALIEN_LEVEL5,                               //int     classnum;
-    "level4",                                       //char    *classname;
+    "alevel5",                                      //char    *classname;
     "A large alien with a strong melee attack, this class can "
       "also charge at enemy humans and structures, inflicting "
       "great damage. Any humans or their structures caught under "
@@ -1466,7 +1518,7 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL0,           //int       weaponNum;
     0,                    //int       price;
-    "level0",             //char      *weaponName;
+    "alevel0",            //char      *weaponName;
     "Bite",               //char      *humanName;
     "",
     0,                    //int       maxAmmo;
@@ -1487,10 +1539,10 @@ static const weaponAttributes_t bg_weapons[ ] =
     TEAM_ALIENS           //team_t    team;
   },
   {
-    WP_ALEVEL1_1,         //int       weaponNum;
+    WP_ALEVEL1_0,         //int       weaponNum;
     0,                    //int       price;
-    "level1upg",          //char      *weaponName;
-    "Claws Upgrade",      //char      *humanName;
+    "alevel10",           //char      *weaponName;
+    "Claws",              //char      *humanName;
     "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
@@ -1510,9 +1562,55 @@ static const weaponAttributes_t bg_weapons[ ] =
     TEAM_ALIENS           //team_t    team;
   },
   {
+    WP_ALEVEL1_1,         //int       weaponNum;
+    0,                    //int       price;
+    "alevel11",           //char      *weaponName;
+    "Claws",              //char      *humanName;
+    "",
+    0,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    qtrue,                //int       infiniteAmmo;
+    qfalse,               //int       usesEnergy;
+    ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
+    ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
+    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  purchasable;
+    qtrue,                //qboolean  longRanged;
+    TEAM_ALIENS           //team_t    team;
+  },
+  {
+    WP_ALEVEL2,           //int       weaponNum;
+    0,                    //int       price;
+    "alevel2",            //char      *weaponName;
+    "Bite",               //char      *humanName;
+    "",
+    0,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    qtrue,                //int       infiniteAmmo;
+    qfalse,               //int       usesEnergy;
+    ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    ALEVEL0_BITE_K_SCALE, //float     knockbackScale;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  purchasable;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t    team;
+  },
+  {
     WP_ALEVEL3,           //int       weaponNum;
     0,                    //int       price;
-    "level2upg",          //char      *weaponName;
+    "alevel3",            //char      *weaponName;
     "Zap",                //char      *humanName;
     "",
     0,                    //int       maxAmmo;
@@ -1535,8 +1633,8 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL4,           //int       weaponNum;
     0,                    //int       price;
-    "level3upg",          //char      *weaponName;
-    "Pounce (upgrade)",   //char      *humanName;
+    "alevel4",            //char      *weaponName;
+    "Pounce",             //char      *humanName;
     "",
     3,                    //int       maxAmmo;
     0,                    //int       maxClips;
@@ -1558,7 +1656,7 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL5,           //int       weaponNum;
     0,                    //int       price;
-    "level4",             //char      *weaponName;
+    "alevel5",            //char      *weaponName;
     "Charge",             //char      *humanName;
     "",
     0,                    //int       maxAmmo;

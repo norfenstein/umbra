@@ -93,13 +93,15 @@ char *modNames[ ] =
 
   "MOD_ABUILDER_CLAW",
   "MOD_ALEVEL0_BITE",
+  "MOD_ALEVEL1_0_CLAW",
   "MOD_ALEVEL1_1_CLAW",
   "MOD_ALEVEL1_1_PCLOUD",
+  "MOD_ALEVEL2_BITE",
+  "MOD_ALEVEL3_CLAW",
+  "MOD_ALEVEL3_ZAP",
   "MOD_ALEVEL4_CLAW",
   "MOD_ALEVEL4_POUNCE",
   "MOD_ALEVEL4_BOUNCEBALL",
-  "MOD_ALEVEL3_CLAW",
-  "MOD_ALEVEL3_ZAP",
   "MOD_ALEVEL5_CLAW",
   "MOD_ALEVEL5_TRAMPLE",
   "MOD_ALEVEL5_CRUSH",
@@ -539,7 +541,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
       // if dretchpunt is enabled and this is a dretch, do dretchpunt instead of damage
       if( g_dretchPunt.integer &&
-          targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL0 )
+          ( targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL0 ||
+            targ->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL2 ) )
       {
         vec3_t dir, push;
 

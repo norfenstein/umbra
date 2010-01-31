@@ -277,11 +277,26 @@ static void CG_Obituary( entityState_t *ent )
         break;
       case MOD_ALEVEL0_BITE:
         message = "was bitten by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL0 )->humanName );
+        message2 = className;
+        break;
+      case MOD_ALEVEL1_0_CLAW:
+        message = "was swiped by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL1_0 )->humanName );
+        message2 = className;
         break;
       case MOD_ALEVEL1_1_CLAW:
         message = "was swiped by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL1_1 )->humanName );
+        message2 = className;
+        break;
+      case MOD_ALEVEL2_BITE:
+        message = "was bitten by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
         message2 = className;
         break;
       case MOD_ALEVEL3_CLAW:

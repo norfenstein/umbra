@@ -2231,7 +2231,9 @@ static void UI_LoadAlienClasses( void )
   {
     if ( i != PCL_ALIEN_BUILDER &&
          i != PCL_ALIEN_LEVEL0 &&
+         i != PCL_ALIEN_LEVEL1_0 &&
          i != PCL_ALIEN_LEVEL1_1 &&
+         i != PCL_ALIEN_LEVEL2 &&
          i != PCL_ALIEN_LEVEL3 &&
          i != PCL_ALIEN_LEVEL4 &&
          i != PCL_ALIEN_LEVEL5 )

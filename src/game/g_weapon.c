@@ -1549,6 +1549,10 @@ void FireWeapon( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
+    case WP_ALEVEL1_0:
+      meleeAttack( ent, ALEVEL1_1_CLAW_RANGE, ALEVEL1_1_CLAW_WIDTH, ALEVEL1_1_CLAW_WIDTH,
+                   ALEVEL1_1_CLAW_DMG, MOD_ALEVEL1_1_CLAW );
+      break;
     case WP_ALEVEL1_1:
       meleeAttack( ent, ALEVEL1_1_CLAW_RANGE, ALEVEL1_1_CLAW_WIDTH, ALEVEL1_1_CLAW_WIDTH,
                    ALEVEL1_1_CLAW_DMG, MOD_ALEVEL1_1_CLAW );

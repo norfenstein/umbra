@@ -253,10 +253,22 @@ static void CG_AlienLevel0Text( char *text, playerState_t *ps )
 
 /*
 ===============
-CG_AlienLevel1Text
+CG_AlienLevel10Text
 ===============
 */
-static void CG_AlienLevel1Text( char *text, playerState_t *ps )
+static void CG_AlienLevel10Text( char *text, playerState_t *ps )
+{
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to swipe\n",
+        CG_KeyNameForCommand( "+attack" ) ) );
+}
+
+/*
+===============
+CG_AlienLevel11Text
+===============
+*/
+static void CG_AlienLevel11Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       "Touch humans to grab them\n" );
@@ -282,6 +294,21 @@ CG_AlienLevel2Text
 static void CG_AlienLevel2Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
+      "Touch humans to damage them\n" );
+
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to walk on walls\n",
+        CG_KeyNameForCommand( "+movedown" ) ) );
+}
+
+/*
+===============
+CG_AlienLevel3Text
+===============
+*/
+static void CG_AlienLevel3Text( char *text, playerState_t *ps )
+{
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to bite\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
@@ -296,10 +323,10 @@ static void CG_AlienLevel2Text( char *text, playerState_t *ps )
 
 /*
 ===============
-CG_AlienLevel3Text
+CG_AlienLevel4Text
 ===============
 */
-static void CG_AlienLevel3Text( char *text, playerState_t *ps )
+static void CG_AlienLevel4Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to bite\n",
@@ -316,10 +343,10 @@ static void CG_AlienLevel3Text( char *text, playerState_t *ps )
 
 /*
 ===============
-CG_AlienLevel4Text
+CG_AlienLevel5Text
 ===============
 */
-static void CG_AlienLevel4Text( char *text, playerState_t *ps )
+static void CG_AlienLevel5Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to swipe\n",
@@ -579,20 +606,28 @@ const char *CG_TutorialText( void )
           CG_AlienLevel0Text( text, ps );
           break;
 
-        case PCL_ALIEN_LEVEL1_1:
-          CG_AlienLevel1Text( text, ps );
+        case PCL_ALIEN_LEVEL1_0:
+          CG_AlienLevel10Text( text, ps );
           break;
 
-        case PCL_ALIEN_LEVEL3:
+        case PCL_ALIEN_LEVEL1_1:
+          CG_AlienLevel11Text( text, ps );
+          break;
+
+        case PCL_ALIEN_LEVEL2:
           CG_AlienLevel2Text( text, ps );
           break;
 
-        case PCL_ALIEN_LEVEL4:
+        case PCL_ALIEN_LEVEL3:
           CG_AlienLevel3Text( text, ps );
           break;
 
-        case PCL_ALIEN_LEVEL5:
+        case PCL_ALIEN_LEVEL4:
           CG_AlienLevel4Text( text, ps );
+          break;
+
+        case PCL_ALIEN_LEVEL5:
+          CG_AlienLevel5Text( text, ps );
           break;
 
         case PCL_HUMAN:

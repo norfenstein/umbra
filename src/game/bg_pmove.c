@@ -3079,6 +3079,10 @@ static void PM_Weapon( void )
       //venom is only autohit
       return;
 
+    case WP_ALEVEL2:
+      //venom is only autohit
+      return;
+
     case WP_ALEVEL4:
       //pouncing has primary secondary AND autohit procedures
       // pounce is autohit
@@ -3219,6 +3223,12 @@ static void PM_Weapon( void )
         addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
         break;
 
+      case WP_ALEVEL2:
+        pm->ps->generic1 = WPM_PRIMARY;
+        PM_AddEvent( EV_FIRE_WEAPON );
+        addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
+        break;
+
       case WP_ALEVEL4:
         pm->ps->generic1 = WPM_SECONDARY;
         PM_AddEvent( EV_FIRE_WEAPON2 );
@@ -3262,6 +3272,15 @@ static void PM_Weapon( void )
     //       weapon.cfg
     switch( pm->ps->weapon )
     {
+      case WP_ALEVEL1_0:
+        if( attack1 )
+        {
+          num %= 6;
+          PM_ForceLegsAnim( NSPA_ATTACK1 );
+          PM_StartWeaponAnim( WANIM_ATTACK1 + num );
+        }
+        break;
+
       case WP_ALEVEL1_1:
         if( attack1 )
         {

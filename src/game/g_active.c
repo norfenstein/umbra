@@ -1546,6 +1546,18 @@ void ClientThink_real( gentity_t *ent )
       }
       break;
 
+    case WP_ALEVEL2:
+      if( !CheckVenomAttack( ent ) )
+      {
+        client->ps.weaponstate = WEAPON_READY;
+      }
+      else
+      {
+        client->ps.generic1 = WPM_PRIMARY;
+        G_AddEvent( ent, EV_FIRE_WEAPON, 0 );
+      }
+      break;
+
     case WP_ALEVEL1_1:
       CheckGrabAttack( ent );
       break;
