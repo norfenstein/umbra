@@ -400,7 +400,7 @@ void Cmd_Give_f( gentity_t *ent )
   {
     gclient_t *client = ent->client;
 
-    if( client->ps.weapon != WP_ALEVEL4_UPG &&
+    if( client->ps.weapon != WP_ALEVEL4 &&
         BG_Weapon( client->ps.weapon )->infiniteAmmo )
       return;
 
@@ -647,7 +647,6 @@ void Cmd_Team_f( gentity_t *ent )
   // guard against build timer exploit
   if( oldteam != TEAM_NONE && ent->client->sess.spectatorState == SPECTATOR_NOT &&
      ( ent->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ||
-       ent->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG ||
        BG_InventoryContainsWeapon( WP_HBUILD, ent->client->ps.stats ) ) &&
       ent->client->ps.stats[ STAT_MISC ] > 0 )
   {

@@ -667,8 +667,7 @@ void CG_OffsetFirstPersonView( void )
 #define ALEVEL4_FEEDBACK  20.0f
 
   //provide some feedback for pouncing
-  if( ( cg.predictedPlayerState.weapon == WP_ALEVEL4 ||
-        cg.predictedPlayerState.weapon == WP_ALEVEL4_UPG ) &&
+  if( cg.predictedPlayerState.weapon == WP_ALEVEL4 &&
       cg.predictedPlayerState.stats[ STAT_MISC ] > 0 )
   {
     float fraction1, fraction2;
@@ -678,7 +677,7 @@ void CG_OffsetFirstPersonView( void )
     VectorNormalize( forward );
 
     fraction1 = (float)cg.predictedPlayerState.stats[ STAT_MISC ] /
-                ALEVEL4_POUNCE_TIME_UPG;
+                ALEVEL4_POUNCE_TIME;
     if( fraction1 > 1.0f )
       fraction1 = 1.0f;
 

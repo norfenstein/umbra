@@ -597,7 +597,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
   
     client->time100 -= 100;
       
-    if( weapon == WP_ABUILD || weapon == WP_ABUILD2 ||
+    if( weapon == WP_ABUILD ||
         BG_InventoryContainsWeapon( WP_HBUILD, client->ps.stats ) )
     {
         // Update build timer
@@ -611,7 +611,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
     switch( weapon )
     {
       case WP_ABUILD:
-      case WP_ABUILD2:
       case WP_HBUILD:
       
         // Set validity bit on buildable
@@ -746,8 +745,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
   {
     client->time10000 -= 10000;
 
-    if( ent->client->ps.weapon == WP_ABUILD ||
-        ent->client->ps.weapon == WP_ABUILD2 )
+    if( ent->client->ps.weapon == WP_ABUILD )
     {
       AddScore( ent, ALIEN_BUILDER_SCOREINC );
     }
@@ -758,9 +756,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
   }
 
   // Regenerate Adv. Dragoon barbs
-  if( client->ps.weapon == WP_ALEVEL4_UPG )
+  if( client->ps.weapon == WP_ALEVEL4 )
   {
-    if( client->ps.ammo < BG_Weapon( WP_ALEVEL4_UPG )->maxAmmo )
+    if( client->ps.ammo < BG_Weapon( WP_ALEVEL4 )->maxAmmo )
     {
       if( ent->timestamp + ALEVEL4_BOUNCEBALL_REGEN < level.time )
       {
@@ -1407,9 +1405,6 @@ void ClientThink_real( gentity_t *ent )
           class_t class = boost->client->ps.stats[ STAT_CLASS ];
           if( class == PCL_ALIEN_LEVEL1_1 && modifier < ALEVEL1_1_REGEN_MOD )
             modifier = ALEVEL1_1_REGEN_MOD;
-          else if( class == PCL_ALIEN_LEVEL1_1_UPG &&
-                   modifier < ALEVEL1_1_UPG_REGEN_MOD )
-            modifier = ALEVEL1_1_UPG_REGEN_MOD;
         }
       }
 
@@ -1552,12 +1547,10 @@ void ClientThink_real( gentity_t *ent )
       break;
 
     case WP_ALEVEL1_1:
-    case WP_ALEVEL1_1_UPG:
       CheckGrabAttack( ent );
       break;
 
     case WP_ALEVEL4:
-    case WP_ALEVEL4_UPG:
       if( !CheckPounceAttack( ent ) )
       {
         client->ps.weaponstate = WEAPON_READY;

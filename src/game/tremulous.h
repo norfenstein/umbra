@@ -55,31 +55,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALEVEL1_1_CLAW_DMG           ADM(32)
 #define ALEVEL1_1_CLAW_RANGE         64.0f
-#define ALEVEL1_1_CLAW_U_RANGE       ALEVEL1_1_CLAW_RANGE + 3.0f
 #define ALEVEL1_1_CLAW_WIDTH         10.0f
-#define ALEVEL1_1_CLAW_REPEAT        600
-#define ALEVEL1_1_CLAW_U_REPEAT      500
+#define ALEVEL1_1_CLAW_REPEAT        500
 #define ALEVEL1_1_CLAW_K_SCALE       1.0f
-#define ALEVEL1_1_CLAW_U_K_SCALE     1.0f
 #define ALEVEL1_1_GRAB_RANGE         96.0f
-#define ALEVEL1_1_GRAB_U_RANGE       ALEVEL1_1_GRAB_RANGE + 3.0f
 #define ALEVEL1_1_GRAB_TIME          300
-#define ALEVEL1_1_GRAB_U_TIME        300
 #define ALEVEL1_1_PCLOUD_DMG         ADM(4)
 #define ALEVEL1_1_PCLOUD_RANGE       120.0f
 #define ALEVEL1_1_PCLOUD_REPEAT      2500
 #define ALEVEL1_1_PCLOUD_TIME        10000
-#define ALEVEL1_1_REGEN_MOD          2.0f
-#define ALEVEL1_1_UPG_REGEN_MOD      3.0f
+#define ALEVEL1_1_REGEN_MOD          3.0f
 
 #define ALEVEL3_CLAW_DMG             ADM(40)
 #define ALEVEL3_CLAW_RANGE           80.0f
-#define ALEVEL3_CLAW_U_RANGE         ALEVEL3_CLAW_RANGE + 2.0f
 #define ALEVEL3_CLAW_WIDTH           14.0f
-#define ALEVEL3_CLAW_REPEAT          500
+#define ALEVEL3_CLAW_REPEAT          400
 #define ALEVEL3_CLAW_K_SCALE         1.0f
-#define ALEVEL3_CLAW_U_REPEAT        400
-#define ALEVEL3_CLAW_U_K_SCALE       1.0f
 #define ALEVEL3_AREAZAP_DMG          ADM(60)
 #define ALEVEL3_AREAZAP_RANGE        200.0f
 #define ALEVEL3_AREAZAP_WIDTH        15.0f
@@ -90,23 +81,17 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALEVEL4_CLAW_DMG             ADM(80)
 #define ALEVEL4_CLAW_RANGE           80.0f
-#define ALEVEL4_CLAW_UPG_RANGE       ALEVEL4_CLAW_RANGE + 3.0f          
 #define ALEVEL4_CLAW_WIDTH           12.0f
-#define ALEVEL4_CLAW_REPEAT          900
+#define ALEVEL4_CLAW_REPEAT          800
 #define ALEVEL4_CLAW_K_SCALE         1.0f
-#define ALEVEL4_CLAW_U_REPEAT        800
-#define ALEVEL4_CLAW_U_K_SCALE       1.0f
 #define ALEVEL4_POUNCE_DMG           ADM(100)
 #define ALEVEL4_POUNCE_RANGE         40.0f
-#define ALEVEL4_POUNCE_UPG_RANGE     ALEVEL4_POUNCE_RANGE + 3.0f
 #define ALEVEL4_POUNCE_WIDTH         14.0f
 #define ALEVEL4_POUNCE_TIME          800      // msec for full Dragoon pounce
-#define ALEVEL4_POUNCE_TIME_UPG      800      // msec for full Adv. Dragoon pounce
 #define ALEVEL4_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
 #define ALEVEL4_POUNCE_REPEAT        400      // msec before a new pounce starts
 #define ALEVEL4_POUNCE_SPEED_MOD     0.75f    // walking speed modifier for pounce charging
-#define ALEVEL4_POUNCE_JUMP_MAG      700      // Dragoon pounce jump power
-#define ALEVEL4_POUNCE_JUMP_MAG_UPG  800      // Adv. Dragoon pounce jump power
+#define ALEVEL4_POUNCE_JUMP_MAG      800      // Dragoon pounce jump power
 #define ALEVEL4_BOUNCEBALL_DMG       ADM(110)
 #define ALEVEL4_BOUNCEBALL_REPEAT    1200
 #define ALEVEL4_BOUNCEBALL_SPEED     1000.0f
@@ -150,16 +135,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
 #define ABUILDER_SPEED               0.9f
-#define ABUILDER_VALUE               AVM(240)
-#define ABUILDER_HEALTH              AHM(50)
+#define ABUILDER_VALUE               AVM(300)
+#define ABUILDER_HEALTH              AHM(75)
 #define ABUILDER_REGEN               (0.04f * ABUILDER_HEALTH)
 #define ABUILDER_COST                0
-
-#define ABUILDER_UPG_SPEED           0.9f
-#define ABUILDER_UPG_VALUE           AVM(300)
-#define ABUILDER_UPG_HEALTH          AHM(75)
-#define ABUILDER_UPG_REGEN           (0.04f * ABUILDER_UPG_HEALTH)
-#define ABUILDER_UPG_COST            0
 
 #define ALEVEL0_SPEED                1.4f
 #define ALEVEL0_VALUE                AVM(180)
@@ -168,40 +147,22 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL0_COST                 0
 
 #define ALEVEL1_1_SPEED              1.25f
-#define ALEVEL1_1_VALUE              AVM(270)
-#define ALEVEL1_1_HEALTH             AHM(60)
+#define ALEVEL1_1_VALUE              AVM(330)
+#define ALEVEL1_1_HEALTH             AHM(80)
 #define ALEVEL1_1_REGEN              (0.03f * ALEVEL1_1_HEALTH)
-#define ALEVEL1_1_COST               1
-
-#define ALEVEL1_1_UPG_SPEED          1.25f
-#define ALEVEL1_1_UPG_VALUE          AVM(330)
-#define ALEVEL1_1_UPG_HEALTH         AHM(80)
-#define ALEVEL1_1_UPG_REGEN          (0.03f * ALEVEL1_1_UPG_HEALTH)
-#define ALEVEL1_1_UPG_COST           2
+#define ALEVEL1_1_COST               2
 
 #define ALEVEL3_SPEED                1.2f
-#define ALEVEL3_VALUE                AVM(420)
-#define ALEVEL3_HEALTH               AHM(150)
+#define ALEVEL3_VALUE                AVM(540)
+#define ALEVEL3_HEALTH               AHM(175)
 #define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
-#define ALEVEL3_COST                 2
-
-#define ALEVEL3_UPG_SPEED            1.2f
-#define ALEVEL3_UPG_VALUE            AVM(540)
-#define ALEVEL3_UPG_HEALTH           AHM(175)
-#define ALEVEL3_UPG_REGEN            (0.03f * ALEVEL3_UPG_HEALTH)
-#define ALEVEL3_UPG_COST             3
+#define ALEVEL3_COST                 3
 
 #define ALEVEL4_SPEED                1.1f
-#define ALEVEL4_VALUE                AVM(600)
-#define ALEVEL4_HEALTH               AHM(200)
+#define ALEVEL4_VALUE                AVM(720)
+#define ALEVEL4_HEALTH               AHM(250)
 #define ALEVEL4_REGEN                (0.03f * ALEVEL4_HEALTH)
-#define ALEVEL4_COST                 3
-
-#define ALEVEL4_UPG_SPEED            1.1f
-#define ALEVEL4_UPG_VALUE            AVM(720)
-#define ALEVEL4_UPG_HEALTH           AHM(250)
-#define ALEVEL4_UPG_REGEN            (0.03f * ALEVEL4_UPG_HEALTH)
-#define ALEVEL4_UPG_COST             4
+#define ALEVEL4_COST                 4
 
 #define ALEVEL5_SPEED                1.2f
 #define ALEVEL5_VALUE                AVM(960)

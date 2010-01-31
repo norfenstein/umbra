@@ -313,8 +313,7 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
   ps = &cg.snap->ps;
 
   //if the build timer pie is showing don't show this
-  if( ( cent->currentState.weapon == WP_ABUILD ||
-      cent->currentState.weapon == WP_ABUILD2 ) && ps->stats[ STAT_MISC ] )
+  if( cent->currentState.weapon == WP_ABUILD && ps->stats[ STAT_MISC ] )
     return;
 
   value = ps->persistant[ PERS_CREDIT ];
@@ -414,7 +413,6 @@ static void CG_DrawPlayerClipsRing( rectDef_t *rect, vec4_t backColor,
   switch( weapon )
   {
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       if( buildTime > MAXIMUM_BUILD_TIME )
         buildTime = MAXIMUM_BUILD_TIME;
@@ -591,7 +589,6 @@ static void CG_DrawPlayerAmmoValue( rectDef_t *rect, vec4_t color )
       return;
 
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       value = cg.snap->ps.persistant[ PERS_BP ];
       break;
@@ -692,7 +689,6 @@ static void CG_DrawPlayerBuildTimer( rectDef_t *rect, vec4_t color )
   switch( ps->weapon )
   {
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       break;
 
@@ -730,7 +726,6 @@ static void CG_DrawPlayerClipsValue( rectDef_t *rect, vec4_t color )
     case WP_NONE:
     case WP_BLASTER:
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       return;
 
@@ -835,11 +830,6 @@ static float CG_ChargeProgress( void )
   {
     min = ALEVEL4_POUNCE_TIME_MIN;
     max = ALEVEL4_POUNCE_TIME;
-  }
-  else if( cg.snap->ps.weapon == WP_ALEVEL4_UPG )
-  {
-    min = ALEVEL4_POUNCE_TIME_MIN;
-    max = ALEVEL4_POUNCE_TIME_UPG;
   }
   else if( cg.snap->ps.weapon == WP_ALEVEL5 )
   {
@@ -1613,16 +1603,6 @@ static void CG_DrawTeamOverlay( rectDef_t *rect, float scale, vec4_t color )
         {
           CG_DrawPic( x + iconSize + leftMargin, y - iconSize + iconTopMargin,
                       iconSize, iconSize, cg_upgrades[ ci->upgrade ].upgradeIcon );
-          dx = iconSize;
-        }
-      }
-      else
-      {
-        if( curWeapon == WP_ABUILD2 || curWeapon == WP_ALEVEL1_1_UPG ||
-            curWeapon == WP_ALEVEL3_UPG || curWeapon == WP_ALEVEL4_UPG )
-        {
-          CG_DrawPic( x + iconSize + leftMargin, y - iconSize + iconTopMargin,
-                      iconSize, iconSize, cgs.media.upgradeClassIconShader );
           dx = iconSize;
         }
       }

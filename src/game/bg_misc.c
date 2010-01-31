@@ -52,7 +52,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ASPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     ASPAWN_BT,             //int       buildTime;
@@ -85,7 +85,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     OVERMIND_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     OVERMIND_ATTACK_REPEAT,//int       nextthink;
     OVERMIND_BT,           //int       buildTime;
@@ -118,7 +118,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BARRICADE_SPLASHRADIUS,//int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     BARRICADE_BT,          //int       buildTime;
@@ -151,7 +151,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ACIDTUBE_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD )|( 1 << WP_ABUILD2 ),    //weapon_t  buildWeapon;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     200,                   //int       nextthink;
     ACIDTUBE_BT,           //int       buildTime;
@@ -183,8 +183,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TRAPPER_SPLASHDAMAGE,  //int       splashDamage;
     TRAPPER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
-    TEAM_ALIENS,            //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    TEAM_ALIENS,           //int       team;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     TRAPPER_BT,            //int       buildTime;
@@ -217,8 +217,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BOOSTER_SPLASHDAMAGE,  //int       splashDamage;
     BOOSTER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
-    TEAM_ALIENS,            //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    TEAM_ALIENS,           //int       team;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     BOOSTER_BT,            //int       buildTime;
@@ -249,8 +249,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HIVE_SPLASHDAMAGE,     //int       splashDamage;
     HIVE_SPLASHRADIUS,     //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
-    TEAM_ALIENS,            //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    TEAM_ALIENS,           //int       team;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     500,                   //int       nextthink;
     HIVE_BT,               //int       buildTime;
@@ -282,8 +282,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HOVEL_SPLASHDAMAGE,    //int       splashDamage;
     HOVEL_SPLASHRADIUS,    //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
-    TEAM_ALIENS,            //int       team;
-    ( 1 << WP_ABUILD2 ),   //weapon_t  buildWeapon;
+    TEAM_ALIENS,           //int       team;
+    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     150,                   //int       nextthink;
     HOVEL_BT,              //int       buildTime;
@@ -858,62 +858,34 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_NONE, PCL_NONE, PCL_NONE },               //int     children[ 3 ];
     0,                                              //int     cost;
     0                                               //int     value;
   },
   {
     PCL_ALIEN_BUILDER,                              //int     classnum;
-    "builder",                                      //char    *className;
-    "Responsible for building and maintaining all the alien structures. "
-      "Has a weak melee slash attack.",
-    ABUILDER_HEALTH,                                //int     health;
-    0.2f,                                           //float   fallDamage;
-    ABUILDER_REGEN,                                 //float   regenRate;
-    SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_ALIENSENSE,//int     abilities;
-    { WP_ABUILD, WP_NONE, WP_NONE },                //weapon_t  weapons[ 3 ];
-    95.0f,                                          //float   buildDist;
-    110,                                            //int     fov;
-    0.001f,                                         //float   bob;
-    2.0f,                                           //float   bobCycle;
-    150,                                            //int     steptime;
-    ABUILDER_SPEED,                                 //float   speed;
-    10.0f,                                          //float   acceleration;
-    1.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    100.0f,                                         //float   stopSpeed;
-    195.0f,                                         //float   jumpMagnitude;
-    1.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_BUILDER_UPG, PCL_ALIEN_LEVEL0, PCL_NONE },       //int     children[ 3 ];
-    ABUILDER_COST,                                  //int     cost;
-    ABUILDER_VALUE                                  //int     value;
-  },
-  {
-    PCL_ALIEN_BUILDER_UPG,                          //int     classnum;
     "builderupg",                                   //char    *classname;
     "Similar to the base Granger, except that in addition to "
       "being able to build structures it has a spit attack "
       "that slows victims and the ability to crawl on walls.",
-    ABUILDER_UPG_HEALTH,                            //int     health;
+    ABUILDER_HEALTH,                                //int     health;
     0.2f,                                           //float   fallDamage;
-    ABUILDER_UPG_REGEN,                             //float   regenRate;
+    ABUILDER_REGEN,                                 //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    { WP_ABUILD2, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { WP_ABUILD, WP_NONE, WP_NONE },                //weapon_t  weapons[ 3 ];
     105.0f,                                         //float   buildDist;
     110,                                            //int     fov;
     0.001f,                                         //float   bob;
     2.0f,                                           //float   bobCycle;
     100,                                            //int     steptime;
-    ABUILDER_UPG_SPEED,                             //float   speed;
+    ABUILDER_SPEED,                                 //float   speed;
     10.0f,                                          //float   acceleration;
     1.0f,                                           //float   airAcceleration;
     6.0f,                                           //float   friction;
     100.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL0, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
-    ABUILDER_UPG_COST,                              //int     cost;
-    ABUILDER_UPG_VALUE                              //int     value;
+    ABUILDER_COST,                                  //int     cost;
+    ABUILDER_VALUE                                  //int     value;
   },
   {
     PCL_ALIEN_LEVEL0,                               //int     classnum;
@@ -937,16 +909,15 @@ static const classAttributes_t bg_classList[ ] =
     400.0f,                                         //float   stopSpeed;
     250.0f,                                         //float   jumpMagnitude;
     2.0f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL1_1, PCL_NONE, PCL_NONE },     //int     children[ 3 ];
     ALEVEL0_COST,                                   //int     cost;
     ALEVEL0_VALUE                                   //int     value;
   },
   {
     PCL_ALIEN_LEVEL1_1,                             //int     classnum;
-    "level1",                                       //char    *classname;
-    "A support class able to crawl on walls and ceilings. Its melee "
-      "attack is most effective when combined with the ability to grab "
-      "and hold its victims in place. Provides a weak healing aura "
+    "level1upg",                                    //char    *classname;
+    "In addition to the basic Basilisk abilities, the Advanced "
+      "Basilisk sprays a poisonous gas which disorients any "
+      "nearby humans. Has a strong healing aura that "
       "that accelerates the healing rate of nearby aliens.",
     ALEVEL1_1_HEALTH,                               //int     health;
     0.0f,                                           //float   fallDamage;
@@ -964,44 +935,15 @@ static const classAttributes_t bg_classList[ ] =
     6.0f,                                           //float   friction;
     300.0f,                                         //float   stopSpeed;
     310.0f,                                         //float   jumpMagnitude;
-    1.2f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL3, PCL_ALIEN_LEVEL1_1_UPG, PCL_NONE },   //int     children[ 3 ];
+    1.1f,                                           //float   knockbackScale;
     ALEVEL1_1_COST,                                 //int     cost;
     ALEVEL1_1_VALUE                                 //int     value;
   },
   {
-    PCL_ALIEN_LEVEL1_1_UPG,                         //int     classnum;
-    "level1upg",                                    //char    *classname;
-    "In addition to the basic Basilisk abilities, the Advanced "
-      "Basilisk sprays a poisonous gas which disorients any "
-      "nearby humans. Has a strong healing aura that "
-      "that accelerates the healing rate of nearby aliens.",
-    ALEVEL1_1_UPG_HEALTH,                           //int     health;
-    0.0f,                                           //float   fallDamage;
-    ALEVEL1_1_UPG_REGEN,                            //float   regenRate;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
-    { WP_ALEVEL1_1_UPG, WP_NONE, WP_NONE },         //weapon_t  weapons[ 3 ];
-    0.0f,                                           //float   buildDist;
-    120,                                            //int     fov;
-    0.001f,                                         //float   bob;
-    1.8f,                                           //float   bobCycle;
-    60,                                             //int     steptime;
-    ALEVEL1_1_UPG_SPEED,                            //float   speed;
-    10.0f,                                          //float   acceleration;
-    1.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    300.0f,                                         //float   stopSpeed;
-    310.0f,                                         //float   jumpMagnitude;
-    1.1f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL3, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
-    ALEVEL1_1_UPG_COST,                             //int     cost;
-    ALEVEL1_1_UPG_VALUE                             //int     value;
-  },
-  {
     PCL_ALIEN_LEVEL3,                               //int     classnum;
-    "level2",                                       //char    *classname;
-    "Has a melee attack and the ability to jump off walls. This "
-      "allows the Marauder to gather great speed in enclosed areas.",
+    "level2upg",                                    //char    *classname;
+    "The Advanced Marauder has all the abilities of the basic Marauder "
+      "with the addition of an area effect electric shock attack.",
     ALEVEL3_HEALTH,                                 //int     health;
     0.0f,                                           //float   fallDamage;
     ALEVEL3_REGEN,                                  //float   regenRate;
@@ -1018,43 +960,16 @@ static const classAttributes_t bg_classList[ ] =
     6.0f,                                           //float   friction;
     100.0f,                                         //float   stopSpeed;
     380.0f,                                         //float   jumpMagnitude;
-    0.8f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL4, PCL_ALIEN_LEVEL3_UPG, PCL_NONE },   //int     children[ 3 ];
+    0.7f,                                           //float   knockbackScale;
     ALEVEL3_COST,                                   //int     cost;
     ALEVEL3_VALUE                                   //int     value;
   },
   {
-    PCL_ALIEN_LEVEL3_UPG,                           //int     classnum;
-    "level2upg",                                    //char    *classname;
-    "The Advanced Marauder has all the abilities of the basic Marauder "
-      "with the addition of an area effect electric shock attack.",
-    ALEVEL3_UPG_HEALTH,                             //int     health;
-    0.0f,                                           //float   fallDamage;
-    ALEVEL3_UPG_REGEN,                              //float   regenRate;
-    SCA_WALLJUMPER|SCA_FOVWARPS|SCA_ALIENSENSE,     //int     abilities;
-    { WP_ALEVEL3_UPG, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
-    0.0f,                                           //float   buildDist;
-    90,                                             //int     fov;
-    0.001f,                                         //float   bob;
-    1.5f,                                           //float   bobCycle;
-    80,                                             //int     steptime;
-    ALEVEL3_UPG_SPEED,                              //float   speed;
-    10.0f,                                          //float   acceleration;
-    2.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    100.0f,                                         //float   stopSpeed;
-    380.0f,                                         //float   jumpMagnitude;
-    0.7f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL4, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
-    ALEVEL3_UPG_COST,                               //int     cost;
-    ALEVEL3_UPG_VALUE                               //int     value;
-  },
-  {
     PCL_ALIEN_LEVEL4,                               //int     classnum;
-    "level3",                                       //char    *classname;
-    "Possesses a melee attack and the pounce ability, which may "
-      "be used as both an attack and a means to reach remote "
-      "locations inaccessible from the ground.",
+    "level3upg",                                    //char    *classname;
+    "In addition to the basic Dragoon abilities, the Advanced "
+      "Dragoon has 3 barbs which may be used to attack humans "
+      "from a distance.",
     ALEVEL4_HEALTH,                                 //int     health;
     0.0f,                                           //float   fallDamage;
     ALEVEL4_REGEN,                                  //float   regenRate;
@@ -1071,37 +986,9 @@ static const classAttributes_t bg_classList[ ] =
     6.0f,                                           //float   friction;
     200.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
-    0.5f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL5, PCL_ALIEN_LEVEL4_UPG, PCL_NONE },   //int     children[ 3 ];
+    0.4f,                                           //float   knockbackScale;
     ALEVEL4_COST,                                   //int     cost;
     ALEVEL4_VALUE                                   //int     value;
-  },
-  {
-    PCL_ALIEN_LEVEL4_UPG,                           //int     classnum;
-    "level3upg",                                    //char    *classname;
-    "In addition to the basic Dragoon abilities, the Advanced "
-      "Dragoon has 3 barbs which may be used to attack humans "
-      "from a distance.",
-    ALEVEL4_UPG_HEALTH,                             //int     health;
-    0.0f,                                           //float   fallDamage;
-    ALEVEL4_UPG_REGEN,                              //float   regenRate;
-    SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
-    { WP_ALEVEL4_UPG, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
-    0.0f,                                           //float   buildDist;
-    110,                                            //int     fov;
-    0.0005f,                                        //float   bob;
-    1.3f,                                           //float   bobCycle;
-    90,                                             //int     steptime;
-    ALEVEL4_UPG_SPEED,                              //float   speed;
-    10.0f,                                          //float   acceleration;
-    1.0f,                                           //float   airAcceleration;
-    6.0f,                                           //float   friction;
-    200.0f,                                         //float   stopSpeed;
-    270.0f,                                         //float   jumpMagnitude;
-    0.4f,                                           //float   knockbackScale;
-    { PCL_ALIEN_LEVEL5, PCL_NONE, PCL_NONE },       //int     children[ 3 ];
-    ALEVEL4_UPG_COST,                               //int     cost;
-    ALEVEL4_UPG_VALUE                               //int     value;
   },
   {
     PCL_ALIEN_LEVEL5,                               //int     classnum;
@@ -1127,7 +1014,6 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     170.0f,                                         //float   jumpMagnitude;
     0.1f,                                           //float   knockbackScale;
-    { PCL_NONE, PCL_NONE, PCL_NONE },               //int     children[ 3 ];
     ALEVEL5_COST,                                   //int     cost;
     ALEVEL5_VALUE                                   //int     value;
   },
@@ -1152,7 +1038,6 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_NONE, PCL_NONE, PCL_NONE },               //int     children[ 3 ];
     0,                                              //int     cost;
     ALIEN_CREDITS_PER_KILL                          //int     value;
   },
@@ -1178,7 +1063,6 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
-    { PCL_NONE, PCL_NONE, PCL_NONE },               //int     children[ 3 ];
     0,                                              //int     cost;
     ALIEN_CREDITS_PER_KILL                          //int     value;
   }
@@ -1605,29 +1489,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL1_1,         //int       weaponNum;
     0,                    //int       price;
-    "level1",             //char      *weaponName;
-    "Claws",              //char      *humanName;
-    "",
-    0,                    //int       maxAmmo;
-    0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
-    ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
-    0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
-    ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
-    qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
-    qfalse,               //qboolean  longRanged;
-    TEAM_ALIENS           //team_t    team;
-  },
-  {
-    WP_ALEVEL1_1_UPG,     //int       weaponNum;
-    0,                    //int       price;
     "level1upg",          //char      *weaponName;
     "Claws Upgrade",      //char      *humanName;
     "",
@@ -1635,11 +1496,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    ALEVEL1_1_CLAW_U_REPEAT,//int     repeatRate1;
+    ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL1_1_CLAW_U_K_SCALE,//float  knockbackScale;
+    ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1651,29 +1512,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL3,           //int       weaponNum;
     0,                    //int       price;
-    "level2",             //char      *weaponName;
-    "Bite",               //char      *humanName;
-    "",
-    0,                    //int       maxAmmo;
-    0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
-    ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
-    0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
-    ALEVEL3_CLAW_K_SCALE, //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
-    qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
-    qfalse,               //qboolean  longRanged;
-    TEAM_ALIENS           //team_t    team;
-  },
-  {
-    WP_ALEVEL3_UPG,       //int       weaponNum;
-    0,                    //int       price;
     "level2upg",          //char      *weaponName;
     "Zap",                //char      *humanName;
     "",
@@ -1681,11 +1519,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    ALEVEL3_CLAW_U_REPEAT, //int      repeatRate1;
+    ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL3_AREAZAP_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL3_CLAW_U_K_SCALE,//float    knockbackScale;
+    ALEVEL3_CLAW_K_SCALE, //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1697,29 +1535,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   {
     WP_ALEVEL4,           //int       weaponNum;
     0,                    //int       price;
-    "level3",             //char      *weaponName;
-    "Pounce",             //char      *humanName;
-    "",
-    0,                    //int       maxAmmo;
-    0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
-    ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
-    0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
-    ALEVEL4_CLAW_K_SCALE, //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
-    qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
-    qfalse,               //qboolean  longRanged;
-    TEAM_ALIENS           //team_t    team;
-  },
-  {
-    WP_ALEVEL4_UPG,       //int       weaponNum;
-    0,                    //int       price;
     "level3upg",          //char      *weaponName;
     "Pounce (upgrade)",   //char      *humanName;
     "",
@@ -1727,11 +1542,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     qfalse,               //int       usesEnergy;
-    ALEVEL4_CLAW_U_REPEAT,//int       repeatRate1;
+    ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     ALEVEL4_BOUNCEBALL_REPEAT,//int   repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL4_CLAW_U_K_SCALE,//float    knockbackScale;
+    ALEVEL4_CLAW_K_SCALE, //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qtrue,                //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2124,29 +1939,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ABUILD,            //int       weaponNum;
-    0,                    //int       price;
-    "abuild",             //char      *weaponName;
-    "Alien build weapon", //char      *humanName;
-    "",
-    0,                    //int       maxAmmo;
-    0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
-    ABUILDER_BUILD_REPEAT,//int       repeatRate1;
-    ABUILDER_CLAW_REPEAT, //int       repeatRate2;
-    0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
-    ABUILDER_CLAW_K_SCALE,//float     knockbackScale;
-    qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
-    qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
-    qfalse,               //qboolean  longRanged;
-    TEAM_ALIENS           //team_t    team;
-  },
-  {
-    WP_ABUILD2,           //int       weaponNum;
     0,                    //int       price;
     "abuildupg",          //char      *weaponName;
     "Alien build weapon2",//char      *humanName;

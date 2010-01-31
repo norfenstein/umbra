@@ -1137,7 +1137,6 @@ static qboolean CG_PlayerIsBuilder( buildable_t buildable )
   switch( cg.predictedPlayerState.weapon )
   {
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       return BG_Buildable( buildable )->team ==
              BG_Weapon( cg.predictedPlayerState.weapon )->team;

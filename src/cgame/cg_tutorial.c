@@ -227,16 +227,13 @@ static void CG_AlienBuilderText( char *text, playerState_t *ps )
           CG_KeyNameForCommand( "+button5" ) ) );
   }
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to launch a projectile\n",
-        CG_KeyNameForCommand( "+button2" ) ) );
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to launch a projectile\n",
+      CG_KeyNameForCommand( "+button2" ) ) );
 
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to walk on walls\n",
-        CG_KeyNameForCommand( "+movedown" ) ) );
-  }
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to walk on walls\n",
+      CG_KeyNameForCommand( "+movedown" ) ) );
 }
 
 /*
@@ -268,12 +265,9 @@ static void CG_AlienLevel1Text( char *text, playerState_t *ps )
       va( "Press %s to swipe\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL1_1_UPG )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to spray poisonous gas\n",
-          CG_KeyNameForCommand( "+button5" ) ) );
-  }
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to spray poisonous gas\n",
+        CG_KeyNameForCommand( "+button5" ) ) );
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to walk on walls\n",
@@ -291,12 +285,9 @@ static void CG_AlienLevel2Text( char *text, playerState_t *ps )
       va( "Press %s to bite\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL3_UPG )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to invoke an electrical attack\n",
-          CG_KeyNameForCommand( "+button5" ) ) );
-  }
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to invoke an electrical attack\n",
+        CG_KeyNameForCommand( "+button5" ) ) );
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Hold down %s then touch a wall to wall jump\n",
@@ -314,12 +305,9 @@ static void CG_AlienLevel3Text( char *text, playerState_t *ps )
       va( "Press %s to bite\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL4_UPG )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to launch a projectile\n",
-          CG_KeyNameForCommand( "+button2" ) ) );
-  }
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to launch a projectile\n",
+        CG_KeyNameForCommand( "+button2" ) ) );
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Hold down and release %s to pounce\n",
@@ -584,7 +572,6 @@ const char *CG_TutorialText( void )
       switch( ps->stats[ STAT_CLASS ] )
       {
         case PCL_ALIEN_BUILDER:
-        case PCL_ALIEN_BUILDER_UPG:
           CG_AlienBuilderText( text, ps );
           break;
 
@@ -593,17 +580,14 @@ const char *CG_TutorialText( void )
           break;
 
         case PCL_ALIEN_LEVEL1_1:
-        case PCL_ALIEN_LEVEL1_1_UPG:
           CG_AlienLevel1Text( text, ps );
           break;
 
         case PCL_ALIEN_LEVEL3:
-        case PCL_ALIEN_LEVEL3_UPG:
           CG_AlienLevel2Text( text, ps );
           break;
 
         case PCL_ALIEN_LEVEL4:
-        case PCL_ALIEN_LEVEL4_UPG:
           CG_AlienLevel3Text( text, ps );
           break;
 
@@ -632,8 +616,7 @@ const char *CG_TutorialText( void )
         }
         else if( es && es->modelindex == BA_A_HOVEL &&
                  ( es->eFlags & EF_B_SPAWNED ) &&
-                 ( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ||
-                   ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG ) )
+                 ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER )
         {
           Q_strcat( text, MAX_TUTORIAL_TEXT,
               va( "Press %s to enter the hovel\n",

@@ -829,8 +829,7 @@ void cancelBuildFire( gentity_t *ent )
     return;
   }
 
-  if( ent->client->ps.weapon == WP_ABUILD ||
-      ent->client->ps.weapon == WP_ABUILD2 )
+  if( ent->client->ps.weapon == WP_ABUILD )
     meleeAttack( ent, ABUILDER_CLAW_RANGE, ABUILDER_CLAW_WIDTH,
                  ABUILDER_CLAW_WIDTH, ABUILDER_CLAW_DMG, MOD_ABUILDER_CLAW );
 }
@@ -973,8 +972,6 @@ void CheckGrabAttack( gentity_t *ent )
 
   if( ent->client->ps.weapon == WP_ALEVEL1_1 )
     VectorMA( muzzle, ALEVEL1_1_GRAB_RANGE, forward, end );
-  else if( ent->client->ps.weapon == WP_ALEVEL1_1_UPG )
-    VectorMA( muzzle, ALEVEL1_1_GRAB_U_RANGE, forward, end );
 
   trap_Trace( &tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
   if( tr.surfaceFlags & SURF_NOIMPACT )
@@ -1006,8 +1003,6 @@ void CheckGrabAttack( gentity_t *ent )
 
     if( ent->client->ps.weapon == WP_ALEVEL1_1 )
       traceEnt->client->grabExpiryTime = level.time + ALEVEL1_1_GRAB_TIME;
-    else if( ent->client->ps.weapon == WP_ALEVEL1_1_UPG )
-      traceEnt->client->grabExpiryTime = level.time + ALEVEL1_1_GRAB_U_TIME;
   }
 }
 
@@ -1295,7 +1290,7 @@ qboolean CheckPounceAttack( gentity_t *ent )
 {
   trace_t tr;
   gentity_t *traceEnt;
-  int damage, timeMax, pounceRange, payload;
+  int damage, payload;
 
   if( ent->client->pmext.pouncePayload <= 0 )
     return qfalse;
@@ -1313,9 +1308,7 @@ qboolean CheckPounceAttack( gentity_t *ent )
   CalcMuzzlePoint( ent, forward, right, up, muzzle );
 
   // Trace from muzzle to see what we hit
-  pounceRange = ent->client->ps.weapon == WP_ALEVEL4 ? ALEVEL4_POUNCE_RANGE :
-                                                       ALEVEL4_POUNCE_UPG_RANGE;
-  G_WideTrace( &tr, ent, pounceRange, ALEVEL4_POUNCE_WIDTH,
+  G_WideTrace( &tr, ent, ALEVEL4_POUNCE_RANGE, ALEVEL4_POUNCE_WIDTH,
                ALEVEL4_POUNCE_WIDTH, &traceEnt );
   if( traceEnt == NULL )
     return qfalse;
@@ -1328,9 +1321,7 @@ qboolean CheckPounceAttack( gentity_t *ent )
     return qfalse;
     
   // Deal damage
-  timeMax = ent->client->ps.weapon == WP_ALEVEL4 ? ALEVEL4_POUNCE_TIME :
-                                                   ALEVEL4_POUNCE_TIME_UPG;
-  damage = payload * ALEVEL4_POUNCE_DMG / timeMax;
+  damage = payload * ALEVEL4_POUNCE_DMG / ALEVEL4_POUNCE_TIME;
   ent->client->pmext.pouncePayload = 0;
   G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage,
             0, MOD_ALEVEL4_POUNCE );
@@ -1480,11 +1471,11 @@ void FireWeapon3( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
-    case WP_ALEVEL4_UPG:
+    case WP_ALEVEL4:
       bounceBallFire( ent );
       break;
 
-    case WP_ABUILD2:
+    case WP_ABUILD:
       slowBlobFire( ent );
       break;
 
@@ -1515,7 +1506,7 @@ void FireWeapon2( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
-    case WP_ALEVEL1_1_UPG:
+    case WP_ALEVEL1_1:
       poisonCloud( ent );
       break;
 
@@ -1523,12 +1514,11 @@ void FireWeapon2( gentity_t *ent )
       LCChargeFire( ent, qtrue );
       break;
 
-    case WP_ALEVEL3_UPG:
+    case WP_ALEVEL3:
       areaZapFire( ent );
       break;
 
     case WP_ABUILD:
-    case WP_ABUILD2:
     case WP_HBUILD:
       cancelBuildFire( ent );
       break;
@@ -1563,25 +1553,13 @@ void FireWeapon( gentity_t *ent )
       meleeAttack( ent, ALEVEL1_1_CLAW_RANGE, ALEVEL1_1_CLAW_WIDTH, ALEVEL1_1_CLAW_WIDTH,
                    ALEVEL1_1_CLAW_DMG, MOD_ALEVEL1_1_CLAW );
       break;
-    case WP_ALEVEL1_1_UPG:
-      meleeAttack( ent, ALEVEL1_1_CLAW_U_RANGE, ALEVEL1_1_CLAW_WIDTH, ALEVEL1_1_CLAW_WIDTH,
-                   ALEVEL1_1_CLAW_DMG, MOD_ALEVEL1_1_CLAW );
+    case WP_ALEVEL3:
+      meleeAttack( ent, ALEVEL3_CLAW_RANGE, ALEVEL3_CLAW_WIDTH, ALEVEL3_CLAW_WIDTH,
+                   ALEVEL3_CLAW_DMG, MOD_ALEVEL3_CLAW );
       break;
     case WP_ALEVEL4:
       meleeAttack( ent, ALEVEL4_CLAW_RANGE, ALEVEL4_CLAW_WIDTH, ALEVEL4_CLAW_WIDTH,
                    ALEVEL4_CLAW_DMG, MOD_ALEVEL4_CLAW );
-      break;
-    case WP_ALEVEL4_UPG:
-      meleeAttack( ent, ALEVEL4_CLAW_UPG_RANGE, ALEVEL4_CLAW_WIDTH,
-                   ALEVEL4_CLAW_WIDTH, ALEVEL4_CLAW_DMG, MOD_ALEVEL4_CLAW );
-      break;
-    case WP_ALEVEL3:
-      meleeAttack( ent, ALEVEL3_CLAW_U_RANGE, ALEVEL3_CLAW_WIDTH, ALEVEL3_CLAW_WIDTH,
-                   ALEVEL3_CLAW_DMG, MOD_ALEVEL3_CLAW );
-      break;
-    case WP_ALEVEL3_UPG:
-      meleeAttack( ent, ALEVEL3_CLAW_RANGE, ALEVEL3_CLAW_WIDTH, ALEVEL3_CLAW_WIDTH,
-                   ALEVEL3_CLAW_DMG, MOD_ALEVEL3_CLAW );
       break;
     case WP_ALEVEL5:
       meleeAttack( ent, ALEVEL5_CLAW_RANGE, ALEVEL5_CLAW_WIDTH,
@@ -1636,7 +1614,6 @@ void FireWeapon( gentity_t *ent )
       break;
 
     case WP_ABUILD:
-    case WP_ABUILD2:
       buildFire( ent, MN_A_BUILD );
       break;
     case WP_HBUILD:

@@ -317,11 +317,8 @@ typedef enum
 
   WP_ALEVEL0,
   WP_ALEVEL1_1,
-  WP_ALEVEL1_1_UPG,
   WP_ALEVEL3,
-  WP_ALEVEL3_UPG,
   WP_ALEVEL4,
-  WP_ALEVEL4_UPG,
   WP_ALEVEL5,
 
   WP_BLASTER,
@@ -343,7 +340,6 @@ typedef enum
 
   //build weapons must remain in a block
   WP_ABUILD,
-  WP_ABUILD2,
   WP_HBUILD,
   //ok?
 
@@ -757,16 +753,12 @@ typedef enum
 
   //builder classes
   PCL_ALIEN_BUILDER,
-  PCL_ALIEN_BUILDER_UPG,
 
   //offensive classes
   PCL_ALIEN_LEVEL0,
   PCL_ALIEN_LEVEL1_1,
-  PCL_ALIEN_LEVEL1_1_UPG,
   PCL_ALIEN_LEVEL3,
-  PCL_ALIEN_LEVEL3_UPG,
   PCL_ALIEN_LEVEL4,
-  PCL_ALIEN_LEVEL4_UPG,
   PCL_ALIEN_LEVEL5,
 
   //human class
@@ -898,7 +890,6 @@ typedef struct
   float     jumpMagnitude;
   float     knockbackScale;
 
-  int       children[ 3 ];
   int       cost;
   int       value;
 } classAttributes_t;
