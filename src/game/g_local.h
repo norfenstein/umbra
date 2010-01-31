@@ -844,7 +844,7 @@ typedef struct zap_s
   qboolean      used;
 
   gentity_t     *creator;
-  gentity_t     *targets[ LEVEL2_AREAZAP_MAX_TARGETS ];
+  gentity_t     *targets[ ALEVEL3_AREAZAP_MAX_TARGETS ];
   int           numTargets;
 
   int           timeToLive;

@@ -401,15 +401,15 @@ static float PM_CmdScale( usercmd_t *cmd )
     }
   }
 
-  if( pm->ps->weapon == WP_ALEVEL4 && pm->ps->pm_flags & PMF_CHARGE )
+  if( pm->ps->weapon == WP_ALEVEL5 && pm->ps->pm_flags & PMF_CHARGE )
     modifier *= 1.0f + ( pm->ps->stats[ STAT_MISC ] *
-                         ( LEVEL4_TRAMPLE_SPEED - 1.0f ) /
-                         LEVEL4_TRAMPLE_DURATION );
+                         ( ALEVEL5_TRAMPLE_SPEED - 1.0f ) /
+                         ALEVEL5_TRAMPLE_DURATION );
 
   //slow player if charging up for a pounce
-  if( ( pm->ps->weapon == WP_ALEVEL3 || pm->ps->weapon == WP_ALEVEL3_UPG ) &&
+  if( ( pm->ps->weapon == WP_ALEVEL4 || pm->ps->weapon == WP_ALEVEL4_UPG ) &&
       cmd->buttons & BUTTON_ATTACK2 )
-    modifier *= LEVEL3_POUNCE_SPEED_MOD;
+    modifier *= ALEVEL4_POUNCE_SPEED_MOD;
 
   //slow the player if slow locked
   if( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )
@@ -496,7 +496,7 @@ PM_CheckCharge
 */
 static void PM_CheckCharge( void )
 {
-  if( pm->ps->weapon != WP_ALEVEL4 )
+  if( pm->ps->weapon != WP_ALEVEL5 )
     return;
 
   if( pm->cmd.buttons & BUTTON_ATTACK2 &&
@@ -521,8 +521,8 @@ static qboolean PM_CheckPounce( void )
 {
   int jumpMagnitude;
 
-  if( pm->ps->weapon != WP_ALEVEL3 &&
-      pm->ps->weapon != WP_ALEVEL3_UPG )
+  if( pm->ps->weapon != WP_ALEVEL4 &&
+      pm->ps->weapon != WP_ALEVEL4_UPG )
     return qfalse;
 
   // We were pouncing, but we've landed
@@ -530,7 +530,7 @@ static qboolean PM_CheckPounce( void )
       ( pm->ps->pm_flags & PMF_CHARGE ) )
   {
     pm->ps->pm_flags &= ~PMF_CHARGE;
-    pm->ps->weaponTime += LEVEL3_POUNCE_REPEAT;
+    pm->ps->weaponTime += ALEVEL4_POUNCE_REPEAT;
     return qfalse;
   }
 
@@ -543,7 +543,7 @@ static qboolean PM_CheckPounce( void )
 
   // Can't start a pounce
   if( ( pm->ps->pm_flags & PMF_CHARGE ) ||
-      pm->ps->stats[ STAT_MISC ] < LEVEL3_POUNCE_TIME_MIN ||
+      pm->ps->stats[ STAT_MISC ] < ALEVEL4_POUNCE_TIME_MIN ||
       pm->ps->groundEntityNum == ENTITYNUM_NONE )
     return qfalse;
 
@@ -552,12 +552,12 @@ static qboolean PM_CheckPounce( void )
   pml.walking = qfalse;
   pm->ps->pm_flags |= PMF_CHARGE;
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
-  if( pm->ps->weapon == WP_ALEVEL3 )
+  if( pm->ps->weapon == WP_ALEVEL4 )
     jumpMagnitude = pm->ps->stats[ STAT_MISC ] *
-                    LEVEL3_POUNCE_JUMP_MAG / LEVEL3_POUNCE_TIME;
+                    ALEVEL4_POUNCE_JUMP_MAG / ALEVEL4_POUNCE_TIME;
   else
     jumpMagnitude = pm->ps->stats[ STAT_MISC ] *
-                    LEVEL3_POUNCE_JUMP_MAG_UPG / LEVEL3_POUNCE_TIME_UPG;
+                    ALEVEL4_POUNCE_JUMP_MAG_UPG / ALEVEL4_POUNCE_TIME_UPG;
   VectorMA( pm->ps->velocity, jumpMagnitude, pml.forward, pm->ps->velocity );
   PM_AddEvent( EV_JUMP );
 
@@ -685,10 +685,10 @@ static qboolean PM_CheckWallJump( void )
             dir, pm->ps->velocity );
 
   //for a long run of wall jumps the velocity can get pretty large, this caps it
-  if( VectorLength( pm->ps->velocity ) > LEVEL2_WALLJUMP_MAXSPEED )
+  if( VectorLength( pm->ps->velocity ) > ALEVEL3_WALLJUMP_MAXSPEED )
   {
     VectorNormalize( pm->ps->velocity );
-    VectorScale( pm->ps->velocity, LEVEL2_WALLJUMP_MAXSPEED, pm->ps->velocity );
+    VectorScale( pm->ps->velocity, ALEVEL3_WALLJUMP_MAXSPEED, pm->ps->velocity );
   }
 
   PM_AddEvent( EV_JUMP );
@@ -731,13 +731,13 @@ static qboolean PM_CheckJump( void )
     return qfalse;
 
   //can't jump and pounce at the same time
-  if( ( pm->ps->weapon == WP_ALEVEL3 ||
-        pm->ps->weapon == WP_ALEVEL3_UPG ) &&
+  if( ( pm->ps->weapon == WP_ALEVEL4 ||
+        pm->ps->weapon == WP_ALEVEL4_UPG ) &&
       pm->ps->stats[ STAT_MISC ] > 0 )
     return qfalse;
 
   //can't jump and charge at the same time
-  if( ( pm->ps->weapon == WP_ALEVEL4 ) &&
+  if( ( pm->ps->weapon == WP_ALEVEL5 ) &&
       pm->ps->stats[ STAT_MISC ] > 0 )
     return qfalse;
 
@@ -2558,7 +2558,7 @@ static void PM_Footsteps( void )
     {
       bobmove = 0.4f; // faster speeds bob faster
 
-      if( pm->ps->weapon == WP_ALEVEL4 && pm->ps->pm_flags & PMF_CHARGE )
+      if( pm->ps->weapon == WP_ALEVEL5 && pm->ps->pm_flags & PMF_CHARGE )
         PM_ContinueLegsAnim( NSPA_CHARGE );
       else if( pm->ps->pm_flags & PMF_BACKWARDS_RUN )
       {
@@ -2826,12 +2826,12 @@ static void PM_Weapon( void )
   }
 
   // Charging for a pounce or canceling a pounce
-  if( pm->ps->weapon == WP_ALEVEL3 || pm->ps->weapon == WP_ALEVEL3_UPG )
+  if( pm->ps->weapon == WP_ALEVEL4 || pm->ps->weapon == WP_ALEVEL4_UPG )
   {
     int max;
     
-    max = pm->ps->weapon == WP_ALEVEL3 ? LEVEL3_POUNCE_TIME :
-                                         LEVEL3_POUNCE_TIME_UPG;
+    max = pm->ps->weapon == WP_ALEVEL4 ? ALEVEL4_POUNCE_TIME :
+                                         ALEVEL4_POUNCE_TIME_UPG;
     if( pm->cmd.buttons & BUTTON_ATTACK2 )
       pm->ps->stats[ STAT_MISC ] += pml.msec;
     else
@@ -2844,13 +2844,13 @@ static void PM_Weapon( void )
   }
 
   // Trample charge mechanics
-  if( pm->ps->weapon == WP_ALEVEL4 )
+  if( pm->ps->weapon == WP_ALEVEL5 )
   {
     // Charging up
     if( !( pm->ps->stats[ STAT_STATE ] & SS_CHARGING ) )
     {
       // Charge button held
-      if( pm->ps->stats[ STAT_MISC ] < LEVEL4_TRAMPLE_CHARGE_TRIGGER &&
+      if( pm->ps->stats[ STAT_MISC ] < ALEVEL5_TRAMPLE_CHARGE_TRIGGER &&
           ( pm->cmd.buttons & BUTTON_ATTACK2 ) )
       {
         pm->ps->stats[ STAT_STATE ] &= ~SS_CHARGING;
@@ -2877,13 +2877,13 @@ static void PM_Weapon( void )
       // Charge button released
       else if( !( pm->ps->stats[ STAT_STATE ] & SS_CHARGING ) )
       {
-        if( pm->ps->stats[ STAT_MISC ] > LEVEL4_TRAMPLE_CHARGE_MIN )
+        if( pm->ps->stats[ STAT_MISC ] > ALEVEL5_TRAMPLE_CHARGE_MIN )
         {
-          if( pm->ps->stats[ STAT_MISC ] > LEVEL4_TRAMPLE_CHARGE_MAX )
-            pm->ps->stats[ STAT_MISC ] = LEVEL4_TRAMPLE_CHARGE_MAX;
+          if( pm->ps->stats[ STAT_MISC ] > ALEVEL5_TRAMPLE_CHARGE_MAX )
+            pm->ps->stats[ STAT_MISC ] = ALEVEL5_TRAMPLE_CHARGE_MAX;
           pm->ps->stats[ STAT_MISC ] = pm->ps->stats[ STAT_MISC ] *
-                                       LEVEL4_TRAMPLE_DURATION /
-                                       LEVEL4_TRAMPLE_CHARGE_MAX;
+                                       ALEVEL5_TRAMPLE_DURATION /
+                                       ALEVEL5_TRAMPLE_CHARGE_MAX;
           pm->ps->stats[ STAT_STATE ] |= SS_CHARGING;
           PM_AddEvent( EV_LEV4_TRAMPLE_START );
         }
@@ -2895,14 +2895,14 @@ static void PM_Weapon( void )
     // Discharging
     else
     {
-      if( pm->ps->stats[ STAT_MISC ] < LEVEL4_TRAMPLE_CHARGE_MIN )
+      if( pm->ps->stats[ STAT_MISC ] < ALEVEL5_TRAMPLE_CHARGE_MIN )
         pm->ps->stats[ STAT_MISC ] = 0;
       else
         pm->ps->stats[ STAT_MISC ] -= pml.msec;
 
       // If the charger has stopped moving take a chunk of charge away
       if( VectorLength( pm->ps->velocity ) < 64.0f || pm->cmd.rightmove )
-        pm->ps->stats[ STAT_MISC ] -= LEVEL4_TRAMPLE_STOP_PENALTY * pml.msec;
+        pm->ps->stats[ STAT_MISC ] -= ALEVEL5_TRAMPLE_STOP_PENALTY * pml.msec;
     }
     
     // Charge is over
@@ -2940,7 +2940,7 @@ static void PM_Weapon( void )
     return;
 
   // no bite during pounce
-  if( ( pm->ps->weapon == WP_ALEVEL3 || pm->ps->weapon == WP_ALEVEL3_UPG )
+  if( ( pm->ps->weapon == WP_ALEVEL4 || pm->ps->weapon == WP_ALEVEL4_UPG )
       && ( pm->cmd.buttons & BUTTON_ATTACK )
       && ( pm->ps->pm_flags & PMF_CHARGE ) )
     return;
@@ -3089,8 +3089,8 @@ static void PM_Weapon( void )
       //venom is only autohit
       return;
 
-    case WP_ALEVEL3:
-    case WP_ALEVEL3_UPG:
+    case WP_ALEVEL4:
+    case WP_ALEVEL4_UPG:
       //pouncing has primary secondary AND autohit procedures
       // pounce is autohit
       if( !attack1 && !attack2 && !attack3 )
@@ -3178,7 +3178,7 @@ static void PM_Weapon( void )
     if( BG_Weapon( pm->ps->weapon )->hasThirdMode )
     {
       //hacky special case for slowblob
-      if( pm->ps->weapon == WP_ALEVEL3_UPG && !pm->ps->ammo )
+      if( pm->ps->weapon == WP_ALEVEL4_UPG && !pm->ps->ammo )
       {
         pm->ps->weaponTime += 200;
         return;
@@ -3230,8 +3230,8 @@ static void PM_Weapon( void )
         addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
         break;
 
-      case WP_ALEVEL3:
-      case WP_ALEVEL3_UPG:
+      case WP_ALEVEL4:
+      case WP_ALEVEL4_UPG:
         pm->ps->generic1 = WPM_SECONDARY;
         PM_AddEvent( EV_FIRE_WEAPON2 );
         addTime = BG_Weapon( pm->ps->weapon )->repeatRate2;
@@ -3274,8 +3274,8 @@ static void PM_Weapon( void )
     //       weapon.cfg
     switch( pm->ps->weapon )
     {
-      case WP_ALEVEL1_UPG:
-      case WP_ALEVEL1:
+      case WP_ALEVEL1_1_UPG:
+      case WP_ALEVEL1_1:
         if( attack1 )
         {
           num %= 6;
@@ -3284,13 +3284,13 @@ static void PM_Weapon( void )
         }
         break;
 
-      case WP_ALEVEL2_UPG:
+      case WP_ALEVEL3_UPG:
         if( attack2 )
         {
           PM_ForceLegsAnim( NSPA_ATTACK2 );
           PM_StartWeaponAnim( WANIM_ATTACK7 );
         }
-      case WP_ALEVEL2:
+      case WP_ALEVEL3:
         if( attack1 )
         {
           num %= 6;
@@ -3299,7 +3299,7 @@ static void PM_Weapon( void )
         }
         break;
 
-      case WP_ALEVEL4:
+      case WP_ALEVEL5:
         num %= 3;
         PM_ForceLegsAnim( NSPA_ATTACK1 + num );
         PM_StartWeaponAnim( WANIM_ATTACK1 + num );
@@ -3332,7 +3332,7 @@ static void PM_Weapon( void )
 
   // take an ammo away if not infinite
   if( !BG_Weapon( pm->ps->weapon )->infiniteAmmo ||
-      ( pm->ps->weapon == WP_ALEVEL3_UPG && attack3 ) )
+      ( pm->ps->weapon == WP_ALEVEL4_UPG && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )

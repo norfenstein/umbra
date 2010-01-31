@@ -173,7 +173,7 @@ static void CG_Obituary( entityState_t *ent )
           message = "blew himself up";
         break;
 
-      case MOD_LEVEL3_BOUNCEBALL:
+      case MOD_ALEVEL4_BOUNCEBALL:
         if( gender == GENDER_FEMALE )
           message = "sniped herself";
         else if( gender == GENDER_NEUTER )
@@ -275,58 +275,58 @@ static void CG_Obituary( entityState_t *ent )
         message = "should leave";
         message2 = "'s buildings alone";
         break;
-      case MOD_LEVEL0_BITE:
+      case MOD_ALEVEL0_BITE:
         message = "was bitten by";
         break;
-      case MOD_LEVEL1_CLAW:
+      case MOD_ALEVEL1_1_CLAW:
         message = "was swiped by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL1 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL1_1 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL2_CLAW:
+      case MOD_ALEVEL3_CLAW:
         message = "was clawed by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL2_ZAP:
+      case MOD_ALEVEL3_ZAP:
         message = "was zapped by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL3_CLAW:
+      case MOD_ALEVEL4_CLAW:
         message = "was chomped by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL3_POUNCE:
+      case MOD_ALEVEL4_POUNCE:
         message = "was pounced upon by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL3_BOUNCEBALL:
+      case MOD_ALEVEL4_BOUNCEBALL:
         message = "was sniped by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL4_CLAW:
+      case MOD_ALEVEL5_CLAW:
         message = "was mauled by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL5 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL4_TRAMPLE:
+      case MOD_ALEVEL5_TRAMPLE:
         message = "should have gotten out of the way of";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL5 )->humanName );
         message2 = className;
         break;
-      case MOD_LEVEL4_CRUSH:
+      case MOD_ALEVEL5_CRUSH:
         message = "was crushed under";
         message2 = "'s weight";
         break;
@@ -335,10 +335,10 @@ static void CG_Obituary( entityState_t *ent )
         message = "should have used a medkit against";
         message2 = "'s poison";
         break;
-      case MOD_LEVEL1_PCLOUD:
+      case MOD_ALEVEL1_1_PCLOUD:
         message = "was gassed by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL1 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL1_1 )->humanName );
         message2 = className;
         break;
 

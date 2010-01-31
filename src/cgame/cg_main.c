@@ -1476,9 +1476,9 @@ static const char *CG_FeederItemText( int feederID, int index, int column, qhand
             switch( sp->weapon )
             {
               case WP_ABUILD2:
-              case WP_ALEVEL1_UPG:
-              case WP_ALEVEL2_UPG:
+              case WP_ALEVEL1_1_UPG:
               case WP_ALEVEL3_UPG:
+              case WP_ALEVEL4_UPG:
                 *handle = cgs.media.upgradeClassIconShader;
                 break;
 

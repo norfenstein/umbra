@@ -92,17 +92,17 @@ char *modNames[ ] =
   "MOD_TRIGGER_HURT",
 
   "MOD_ABUILDER_CLAW",
-  "MOD_LEVEL0_BITE",
-  "MOD_LEVEL1_CLAW",
-  "MOD_LEVEL1_PCLOUD",
-  "MOD_LEVEL3_CLAW",
-  "MOD_LEVEL3_POUNCE",
-  "MOD_LEVEL3_BOUNCEBALL",
-  "MOD_LEVEL2_CLAW",
-  "MOD_LEVEL2_ZAP",
-  "MOD_LEVEL4_CLAW",
-  "MOD_LEVEL4_TRAMPLE",
-  "MOD_LEVEL4_CRUSH",
+  "MOD_ALEVEL0_BITE",
+  "MOD_ALEVEL1_1_CLAW",
+  "MOD_ALEVEL1_1_PCLOUD",
+  "MOD_ALEVEL4_CLAW",
+  "MOD_ALEVEL4_POUNCE",
+  "MOD_ALEVEL4_BOUNCEBALL",
+  "MOD_ALEVEL3_CLAW",
+  "MOD_ALEVEL3_ZAP",
+  "MOD_ALEVEL5_CLAW",
+  "MOD_ALEVEL5_TRAMPLE",
+  "MOD_ALEVEL5_CRUSH",
 
   "MOD_SLOWBLOB",
   "MOD_POISON",
@@ -517,8 +517,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   }
 
   // don't do friendly fire on movement attacks
-  if( ( mod == MOD_LEVEL4_TRAMPLE || mod == MOD_LEVEL3_POUNCE ||
-        mod == MOD_LEVEL4_CRUSH ) &&
+  if( ( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL4_POUNCE ||
+        mod == MOD_ALEVEL5_CRUSH ) &&
       targ->s.eType == ET_BUILDABLE && targ->buildableTeam == TEAM_ALIENS )
   {
     return;
@@ -533,8 +533,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ != attacker && OnSameTeam( targ, attacker ) )
     {
       // don't do friendly fire on movement attacks
-      if( mod == MOD_LEVEL4_TRAMPLE || mod == MOD_LEVEL3_POUNCE ||
-          mod == MOD_LEVEL4_CRUSH )
+      if( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL4_POUNCE ||
+          mod == MOD_ALEVEL5_CRUSH )
         return;
 
       // if dretchpunt is enabled and this is a dretch, do dretchpunt instead of damage
@@ -630,8 +630,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( attacker->client && attacker->client->ps.stats[ STAT_STATE ] & SS_BOOSTED )
     {
       if( targ->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-          mod != MOD_LEVEL2_ZAP && mod != MOD_POISON &&
-          mod != MOD_LEVEL1_PCLOUD &&
+          mod != MOD_ALEVEL3_ZAP && mod != MOD_POISON &&
+          mod != MOD_ALEVEL1_1_PCLOUD &&
           targ->client->poisonImmunityTime < level.time )
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;

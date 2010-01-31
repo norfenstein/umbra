@@ -2234,16 +2234,16 @@ static void UI_LoadAlienClasses( void )
 
   for( i = PCL_NONE + 1; i < PCL_NUM_CLASSES; i++ )
   {
-    if ( i != PCL_ALIEN_BUILDER0 &&
-         i != PCL_ALIEN_BUILDER0_UPG &&
+    if ( i != PCL_ALIEN_BUILDER &&
+         i != PCL_ALIEN_BUILDER_UPG &&
          i != PCL_ALIEN_LEVEL0 &&
-         i != PCL_ALIEN_LEVEL1 &&
-         i != PCL_ALIEN_LEVEL1_UPG &&
-         i != PCL_ALIEN_LEVEL2 &&
-         i != PCL_ALIEN_LEVEL2_UPG &&
+         i != PCL_ALIEN_LEVEL1_1 &&
+         i != PCL_ALIEN_LEVEL1_1_UPG &&
          i != PCL_ALIEN_LEVEL3 &&
          i != PCL_ALIEN_LEVEL3_UPG &&
-         i != PCL_ALIEN_LEVEL4 )
+         i != PCL_ALIEN_LEVEL4 &&
+         i != PCL_ALIEN_LEVEL4_UPG &&
+         i != PCL_ALIEN_LEVEL5 )
       continue;
 
     if( BG_ClassIsAllowed( i ) )

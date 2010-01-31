@@ -606,8 +606,8 @@ void AOvermind_Think( gentity_t *self )
       {
         builder = &g_entities[ level.sortedClients[ i ] ];
         if( builder->health > 0 &&
-          ( builder->client->pers.classSelection == PCL_ALIEN_BUILDER0 ||
-            builder->client->pers.classSelection == PCL_ALIEN_BUILDER0_UPG ) )
+          ( builder->client->pers.classSelection == PCL_ALIEN_BUILDER ||
+            builder->client->pers.classSelection == PCL_ALIEN_BUILDER_UPG ) )
         {
           haveBuilder = qtrue;
           break;
@@ -1066,8 +1066,8 @@ void AHovel_Use( gentity_t *self, gentity_t *other, gentity_t *activator )
       //this hovel is in use
       G_TriggerMenu( activator->client->ps.clientNum, MN_A_HOVEL_OCCUPIED );
     }
-    else if( ( ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0 ) ||
-               ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG ) ) &&
+    else if( ( ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ) ||
+               ( activator->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG ) ) &&
              activator->health > 0 && self->health > 0 )
     {
       if( AHovel_Blocked( self, activator, qfalse ) )
@@ -2876,7 +2876,7 @@ itemBuildError_t G_CanBuild( gentity_t *ent, buildable_t buildable, int distance
       vec3_t    builderMins, builderMaxs;
 
       //this assumes the adv builder is the biggest thing that'll use the hovel
-      BG_ClassBoundingBox( PCL_ALIEN_BUILDER0_UPG, builderMins, builderMaxs, NULL, NULL, NULL );
+      BG_ClassBoundingBox( PCL_ALIEN_BUILDER_UPG, builderMins, builderMaxs, NULL, NULL, NULL );
 
       if( APropHovel_Blocked( origin, angles, normal, ent ) )
         reason = IBE_HOVELEXIT;

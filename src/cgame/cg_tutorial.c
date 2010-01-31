@@ -227,7 +227,7 @@ static void CG_AlienBuilderText( char *text, playerState_t *ps )
           CG_KeyNameForCommand( "+button5" ) ) );
   }
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG )
+  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to launch a projectile\n",
@@ -268,7 +268,7 @@ static void CG_AlienLevel1Text( char *text, playerState_t *ps )
       va( "Press %s to swipe\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL1_UPG )
+  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL1_1_UPG )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to spray poisonous gas\n",
@@ -291,7 +291,7 @@ static void CG_AlienLevel2Text( char *text, playerState_t *ps )
       va( "Press %s to bite\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL2_UPG )
+  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL3_UPG )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to invoke an electrical attack\n",
@@ -314,7 +314,7 @@ static void CG_AlienLevel3Text( char *text, playerState_t *ps )
       va( "Press %s to bite\n",
         CG_KeyNameForCommand( "+attack" ) ) );
 
-  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL3_UPG )
+  if( ps->stats[ STAT_CLASS ] == PCL_ALIEN_LEVEL4_UPG )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to launch a projectile\n",
@@ -583,8 +583,8 @@ const char *CG_TutorialText( void )
     {
       switch( ps->stats[ STAT_CLASS ] )
       {
-        case PCL_ALIEN_BUILDER0:
-        case PCL_ALIEN_BUILDER0_UPG:
+        case PCL_ALIEN_BUILDER:
+        case PCL_ALIEN_BUILDER_UPG:
           CG_AlienBuilderText( text, ps );
           break;
 
@@ -592,22 +592,22 @@ const char *CG_TutorialText( void )
           CG_AlienLevel0Text( text, ps );
           break;
 
-        case PCL_ALIEN_LEVEL1:
-        case PCL_ALIEN_LEVEL1_UPG:
+        case PCL_ALIEN_LEVEL1_1:
+        case PCL_ALIEN_LEVEL1_1_UPG:
           CG_AlienLevel1Text( text, ps );
-          break;
-
-        case PCL_ALIEN_LEVEL2:
-        case PCL_ALIEN_LEVEL2_UPG:
-          CG_AlienLevel2Text( text, ps );
           break;
 
         case PCL_ALIEN_LEVEL3:
         case PCL_ALIEN_LEVEL3_UPG:
-          CG_AlienLevel3Text( text, ps );
+          CG_AlienLevel2Text( text, ps );
           break;
 
         case PCL_ALIEN_LEVEL4:
+        case PCL_ALIEN_LEVEL4_UPG:
+          CG_AlienLevel3Text( text, ps );
+          break;
+
+        case PCL_ALIEN_LEVEL5:
           CG_AlienLevel4Text( text, ps );
           break;
 
@@ -632,8 +632,8 @@ const char *CG_TutorialText( void )
         }
         else if( es && es->modelindex == BA_A_HOVEL &&
                  ( es->eFlags & EF_B_SPAWNED ) &&
-                 ( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0 ||
-                   ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER0_UPG ) )
+                 ( ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ||
+                   ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER_UPG ) )
         {
           Q_strcat( text, MAX_TUTORIAL_TEXT,
               va( "Press %s to enter the hovel\n",

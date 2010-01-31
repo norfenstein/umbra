@@ -817,22 +817,22 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-  bolt->s.weapon = WP_ALEVEL3_UPG;
+  bolt->s.weapon = WP_ALEVEL4_UPG;
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = LEVEL3_BOUNCEBALL_DMG;
-  bolt->splashDamage = LEVEL3_BOUNCEBALL_DMG;
-  bolt->splashRadius = LEVEL3_BOUNCEBALL_RADIUS;
-  bolt->methodOfDeath = MOD_LEVEL3_BOUNCEBALL;
-  bolt->splashMethodOfDeath = MOD_LEVEL3_BOUNCEBALL;
+  bolt->damage = ALEVEL4_BOUNCEBALL_DMG;
+  bolt->splashDamage = ALEVEL4_BOUNCEBALL_DMG;
+  bolt->splashRadius = ALEVEL4_BOUNCEBALL_RADIUS;
+  bolt->methodOfDeath = MOD_ALEVEL4_BOUNCEBALL;
+  bolt->splashMethodOfDeath = MOD_ALEVEL4_BOUNCEBALL;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
-  VectorScale( dir, LEVEL3_BOUNCEBALL_SPEED, bolt->s.pos.trDelta );
+  VectorScale( dir, ALEVEL4_BOUNCEBALL_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
   VectorCopy( start, bolt->r.currentOrigin );
 

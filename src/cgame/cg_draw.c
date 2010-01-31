@@ -831,27 +831,27 @@ static float CG_ChargeProgress( void )
   float progress;
   int min = 0, max = 0;
 
-  if( cg.snap->ps.weapon == WP_ALEVEL3 )
+  if( cg.snap->ps.weapon == WP_ALEVEL4 )
   {
-    min = LEVEL3_POUNCE_TIME_MIN;
-    max = LEVEL3_POUNCE_TIME;
+    min = ALEVEL4_POUNCE_TIME_MIN;
+    max = ALEVEL4_POUNCE_TIME;
   }
-  else if( cg.snap->ps.weapon == WP_ALEVEL3_UPG )
+  else if( cg.snap->ps.weapon == WP_ALEVEL4_UPG )
   {
-    min = LEVEL3_POUNCE_TIME_MIN;
-    max = LEVEL3_POUNCE_TIME_UPG;
+    min = ALEVEL4_POUNCE_TIME_MIN;
+    max = ALEVEL4_POUNCE_TIME_UPG;
   }
-  else if( cg.snap->ps.weapon == WP_ALEVEL4 )
+  else if( cg.snap->ps.weapon == WP_ALEVEL5 )
   {
     if( cg.predictedPlayerState.stats[ STAT_STATE ] & SS_CHARGING )
     {
       min = 0;
-      max = LEVEL4_TRAMPLE_DURATION;
+      max = ALEVEL5_TRAMPLE_DURATION;
     }
     else
     {
-      min = LEVEL4_TRAMPLE_CHARGE_MIN;
-      max = LEVEL4_TRAMPLE_CHARGE_MAX;
+      min = ALEVEL5_TRAMPLE_CHARGE_MIN;
+      max = ALEVEL5_TRAMPLE_CHARGE_MAX;
     }
   }
   else if( cg.snap->ps.weapon == WP_LUCIFER_CANNON )
@@ -1618,8 +1618,8 @@ static void CG_DrawTeamOverlay( rectDef_t *rect, float scale, vec4_t color )
       }
       else
       {
-        if( curWeapon == WP_ABUILD2 || curWeapon == WP_ALEVEL1_UPG ||
-            curWeapon == WP_ALEVEL2_UPG || curWeapon == WP_ALEVEL3_UPG )
+        if( curWeapon == WP_ABUILD2 || curWeapon == WP_ALEVEL1_1_UPG ||
+            curWeapon == WP_ALEVEL3_UPG || curWeapon == WP_ALEVEL4_UPG )
         {
           CG_DrawPic( x + iconSize + leftMargin, y - iconSize + iconTopMargin,
                       iconSize, iconSize, cgs.media.upgradeClassIconShader );

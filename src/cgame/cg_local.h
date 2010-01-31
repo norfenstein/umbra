@@ -673,7 +673,7 @@ typedef struct centity_s
   particleSystem_t      *entityPS;
   qboolean              entityPSMissing;
 
-  trailSystem_t         *level2ZapTS[ LEVEL2_AREAZAP_MAX_TARGETS ];
+  trailSystem_t         *level2ZapTS[ ALEVEL3_AREAZAP_MAX_TARGETS ];
   int                   level2ZapTime;
 
   trailSystem_t         *muzzleTS; //used for the tesla and reactor

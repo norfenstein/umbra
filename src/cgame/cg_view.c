@@ -627,20 +627,20 @@ void CG_OffsetFirstPersonView( void )
     bob2 = BG_Class( cg.predictedPlayerState.stats[ STAT_CLASS ] )->bob;
 
 
-#define LEVEL4_FEEDBACK  10.0f
+#define ALEVEL5_FEEDBACK  10.0f
 
   //give a charging player some feedback
-  if( ps->weapon == WP_ALEVEL4 )
+  if( ps->weapon == WP_ALEVEL5 )
   {
     if( ps->stats[ STAT_MISC ] > 0 )
     {
       float fraction = (float)ps->stats[ STAT_MISC ] /
-                       LEVEL4_TRAMPLE_CHARGE_MAX;
+                       ALEVEL5_TRAMPLE_CHARGE_MAX;
 
       if( fraction > 1.0f )
         fraction = 1.0f;
 
-      bob2 *= ( 1.0f + fraction * LEVEL4_FEEDBACK );
+      bob2 *= ( 1.0f + fraction * ALEVEL5_FEEDBACK );
     }
   }
 
@@ -664,11 +664,11 @@ void CG_OffsetFirstPersonView( void )
     angles[ ROLL ] += delta;
   }
 
-#define LEVEL3_FEEDBACK  20.0f
+#define ALEVEL4_FEEDBACK  20.0f
 
   //provide some feedback for pouncing
-  if( ( cg.predictedPlayerState.weapon == WP_ALEVEL3 ||
-        cg.predictedPlayerState.weapon == WP_ALEVEL3_UPG ) &&
+  if( ( cg.predictedPlayerState.weapon == WP_ALEVEL4 ||
+        cg.predictedPlayerState.weapon == WP_ALEVEL4_UPG ) &&
       cg.predictedPlayerState.stats[ STAT_MISC ] > 0 )
   {
     float fraction1, fraction2;
@@ -678,13 +678,13 @@ void CG_OffsetFirstPersonView( void )
     VectorNormalize( forward );
 
     fraction1 = (float)cg.predictedPlayerState.stats[ STAT_MISC ] /
-                LEVEL3_POUNCE_TIME_UPG;
+                ALEVEL4_POUNCE_TIME_UPG;
     if( fraction1 > 1.0f )
       fraction1 = 1.0f;
 
     fraction2 = -sin( fraction1 * M_PI / 2 );
 
-    VectorMA( origin, LEVEL3_FEEDBACK * fraction2, forward, origin );
+    VectorMA( origin, ALEVEL4_FEEDBACK * fraction2, forward, origin );
   }
 
 #define STRUGGLE_DIST 5.0f

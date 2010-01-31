@@ -35,103 +35,103 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_WDMG_MODIFIER         1.0f
 #define ADM(d)                      ((int)((float)d*ALIEN_WDMG_MODIFIER))
 
-#define ABUILDER_BUILD_REPEAT       500
-#define ABUILDER_CLAW_DMG           ADM(20)
-#define ABUILDER_CLAW_RANGE         64.0f
-#define ABUILDER_CLAW_WIDTH         4.0f
-#define ABUILDER_CLAW_REPEAT        1000
-#define ABUILDER_CLAW_K_SCALE       1.0f
-#define ABUILDER_BLOB_DMG           ADM(4)
-#define ABUILDER_BLOB_REPEAT        1000
-#define ABUILDER_BLOB_SPEED         800.0f
-#define ABUILDER_BLOB_SPEED_MOD     0.5f
-#define ABUILDER_BLOB_TIME          1000
+#define ABUILDER_BUILD_REPEAT        500
+#define ABUILDER_CLAW_DMG            ADM(20)
+#define ABUILDER_CLAW_RANGE          64.0f
+#define ABUILDER_CLAW_WIDTH          4.0f
+#define ABUILDER_CLAW_REPEAT         1000
+#define ABUILDER_CLAW_K_SCALE        1.0f
+#define ABUILDER_BLOB_DMG            ADM(4)
+#define ABUILDER_BLOB_REPEAT         1000
+#define ABUILDER_BLOB_SPEED          800.0f
+#define ABUILDER_BLOB_SPEED_MOD      0.5f
+#define ABUILDER_BLOB_TIME           1000
 
-#define LEVEL0_BITE_DMG             ADM(36)
-#define LEVEL0_BITE_RANGE           64.0f
-#define LEVEL0_BITE_WIDTH           6.0f
-#define LEVEL0_BITE_REPEAT          500
-#define LEVEL0_BITE_K_SCALE         1.0f
+#define ALEVEL0_BITE_DMG             ADM(36)
+#define ALEVEL0_BITE_RANGE           64.0f
+#define ALEVEL0_BITE_WIDTH           6.0f
+#define ALEVEL0_BITE_REPEAT          500
+#define ALEVEL0_BITE_K_SCALE         1.0f
 
-#define LEVEL1_CLAW_DMG             ADM(32)
-#define LEVEL1_CLAW_RANGE           64.0f
-#define LEVEL1_CLAW_U_RANGE         LEVEL1_CLAW_RANGE + 3.0f
-#define LEVEL1_CLAW_WIDTH           10.0f
-#define LEVEL1_CLAW_REPEAT          600
-#define LEVEL1_CLAW_U_REPEAT        500
-#define LEVEL1_CLAW_K_SCALE         1.0f
-#define LEVEL1_CLAW_U_K_SCALE       1.0f
-#define LEVEL1_GRAB_RANGE           96.0f
-#define LEVEL1_GRAB_U_RANGE         LEVEL1_GRAB_RANGE + 3.0f
-#define LEVEL1_GRAB_TIME            300
-#define LEVEL1_GRAB_U_TIME          300
-#define LEVEL1_PCLOUD_DMG           ADM(4)
-#define LEVEL1_PCLOUD_RANGE         120.0f
-#define LEVEL1_PCLOUD_REPEAT        2500
-#define LEVEL1_PCLOUD_TIME          10000
-#define LEVEL1_REGEN_MOD            2.0f
-#define LEVEL1_UPG_REGEN_MOD        3.0f
+#define ALEVEL1_1_CLAW_DMG           ADM(32)
+#define ALEVEL1_1_CLAW_RANGE         64.0f
+#define ALEVEL1_1_CLAW_U_RANGE       ALEVEL1_1_CLAW_RANGE + 3.0f
+#define ALEVEL1_1_CLAW_WIDTH         10.0f
+#define ALEVEL1_1_CLAW_REPEAT        600
+#define ALEVEL1_1_CLAW_U_REPEAT      500
+#define ALEVEL1_1_CLAW_K_SCALE       1.0f
+#define ALEVEL1_1_CLAW_U_K_SCALE     1.0f
+#define ALEVEL1_1_GRAB_RANGE         96.0f
+#define ALEVEL1_1_GRAB_U_RANGE       ALEVEL1_1_GRAB_RANGE + 3.0f
+#define ALEVEL1_1_GRAB_TIME          300
+#define ALEVEL1_1_GRAB_U_TIME        300
+#define ALEVEL1_1_PCLOUD_DMG         ADM(4)
+#define ALEVEL1_1_PCLOUD_RANGE       120.0f
+#define ALEVEL1_1_PCLOUD_REPEAT      2500
+#define ALEVEL1_1_PCLOUD_TIME        10000
+#define ALEVEL1_1_REGEN_MOD          2.0f
+#define ALEVEL1_1_UPG_REGEN_MOD      3.0f
 
-#define LEVEL2_CLAW_DMG             ADM(40)
-#define LEVEL2_CLAW_RANGE           80.0f
-#define LEVEL2_CLAW_U_RANGE         LEVEL2_CLAW_RANGE + 2.0f
-#define LEVEL2_CLAW_WIDTH           14.0f
-#define LEVEL2_CLAW_REPEAT          500
-#define LEVEL2_CLAW_K_SCALE         1.0f
-#define LEVEL2_CLAW_U_REPEAT        400
-#define LEVEL2_CLAW_U_K_SCALE       1.0f
-#define LEVEL2_AREAZAP_DMG          ADM(60)
-#define LEVEL2_AREAZAP_RANGE        200.0f
-#define LEVEL2_AREAZAP_WIDTH        15.0f
-#define LEVEL2_AREAZAP_REPEAT       1500
-#define LEVEL2_AREAZAP_TIME         1000
-#define LEVEL2_AREAZAP_MAX_TARGETS  5
-#define LEVEL2_WALLJUMP_MAXSPEED    1000.0f
+#define ALEVEL3_CLAW_DMG             ADM(40)
+#define ALEVEL3_CLAW_RANGE           80.0f
+#define ALEVEL3_CLAW_U_RANGE         ALEVEL3_CLAW_RANGE + 2.0f
+#define ALEVEL3_CLAW_WIDTH           14.0f
+#define ALEVEL3_CLAW_REPEAT          500
+#define ALEVEL3_CLAW_K_SCALE         1.0f
+#define ALEVEL3_CLAW_U_REPEAT        400
+#define ALEVEL3_CLAW_U_K_SCALE       1.0f
+#define ALEVEL3_AREAZAP_DMG          ADM(60)
+#define ALEVEL3_AREAZAP_RANGE        200.0f
+#define ALEVEL3_AREAZAP_WIDTH        15.0f
+#define ALEVEL3_AREAZAP_REPEAT       1500
+#define ALEVEL3_AREAZAP_TIME         1000
+#define ALEVEL3_AREAZAP_MAX_TARGETS  5
+#define ALEVEL3_WALLJUMP_MAXSPEED    1000.0f
 
-#define LEVEL3_CLAW_DMG             ADM(80)
-#define LEVEL3_CLAW_RANGE           80.0f
-#define LEVEL3_CLAW_UPG_RANGE       LEVEL3_CLAW_RANGE + 3.0f          
-#define LEVEL3_CLAW_WIDTH           12.0f
-#define LEVEL3_CLAW_REPEAT          900
-#define LEVEL3_CLAW_K_SCALE         1.0f
-#define LEVEL3_CLAW_U_REPEAT        800
-#define LEVEL3_CLAW_U_K_SCALE       1.0f
-#define LEVEL3_POUNCE_DMG           ADM(100)
-#define LEVEL3_POUNCE_RANGE         40.0f
-#define LEVEL3_POUNCE_UPG_RANGE     LEVEL3_POUNCE_RANGE + 3.0f
-#define LEVEL3_POUNCE_WIDTH         14.0f
-#define LEVEL3_POUNCE_TIME          800      // msec for full Dragoon pounce
-#define LEVEL3_POUNCE_TIME_UPG      800      // msec for full Adv. Dragoon pounce
-#define LEVEL3_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
-#define LEVEL3_POUNCE_REPEAT        400      // msec before a new pounce starts
-#define LEVEL3_POUNCE_SPEED_MOD     0.75f    // walking speed modifier for pounce charging
-#define LEVEL3_POUNCE_JUMP_MAG      700      // Dragoon pounce jump power
-#define LEVEL3_POUNCE_JUMP_MAG_UPG  800      // Adv. Dragoon pounce jump power
-#define LEVEL3_BOUNCEBALL_DMG       ADM(110)
-#define LEVEL3_BOUNCEBALL_REPEAT    1200
-#define LEVEL3_BOUNCEBALL_SPEED     1000.0f
-#define LEVEL3_BOUNCEBALL_RADIUS    75
-#define LEVEL3_BOUNCEBALL_REGEN     15000    // msec until new barb
+#define ALEVEL4_CLAW_DMG             ADM(80)
+#define ALEVEL4_CLAW_RANGE           80.0f
+#define ALEVEL4_CLAW_UPG_RANGE       ALEVEL4_CLAW_RANGE + 3.0f          
+#define ALEVEL4_CLAW_WIDTH           12.0f
+#define ALEVEL4_CLAW_REPEAT          900
+#define ALEVEL4_CLAW_K_SCALE         1.0f
+#define ALEVEL4_CLAW_U_REPEAT        800
+#define ALEVEL4_CLAW_U_K_SCALE       1.0f
+#define ALEVEL4_POUNCE_DMG           ADM(100)
+#define ALEVEL4_POUNCE_RANGE         40.0f
+#define ALEVEL4_POUNCE_UPG_RANGE     ALEVEL4_POUNCE_RANGE + 3.0f
+#define ALEVEL4_POUNCE_WIDTH         14.0f
+#define ALEVEL4_POUNCE_TIME          800      // msec for full Dragoon pounce
+#define ALEVEL4_POUNCE_TIME_UPG      800      // msec for full Adv. Dragoon pounce
+#define ALEVEL4_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
+#define ALEVEL4_POUNCE_REPEAT        400      // msec before a new pounce starts
+#define ALEVEL4_POUNCE_SPEED_MOD     0.75f    // walking speed modifier for pounce charging
+#define ALEVEL4_POUNCE_JUMP_MAG      700      // Dragoon pounce jump power
+#define ALEVEL4_POUNCE_JUMP_MAG_UPG  800      // Adv. Dragoon pounce jump power
+#define ALEVEL4_BOUNCEBALL_DMG       ADM(110)
+#define ALEVEL4_BOUNCEBALL_REPEAT    1200
+#define ALEVEL4_BOUNCEBALL_SPEED     1000.0f
+#define ALEVEL4_BOUNCEBALL_RADIUS    75
+#define ALEVEL4_BOUNCEBALL_REGEN     15000    // msec until new barb
 
-#define LEVEL4_CLAW_DMG             ADM(100)
-#define LEVEL4_CLAW_RANGE           100.0f
-#define LEVEL4_CLAW_WIDTH           14.0f
-#define LEVEL4_CLAW_HEIGHT          20.0f
-#define LEVEL4_CLAW_REPEAT          800
-#define LEVEL4_CLAW_K_SCALE         1.0f
+#define ALEVEL5_CLAW_DMG             ADM(100)
+#define ALEVEL5_CLAW_RANGE           100.0f
+#define ALEVEL5_CLAW_WIDTH           14.0f
+#define ALEVEL5_CLAW_HEIGHT          20.0f
+#define ALEVEL5_CLAW_REPEAT          800
+#define ALEVEL5_CLAW_K_SCALE         1.0f
 
-#define LEVEL4_TRAMPLE_DMG             ADM(111)
-#define LEVEL4_TRAMPLE_SPEED           2.0f
-#define LEVEL4_TRAMPLE_CHARGE_MIN      375   // minimum msec to start a charge
-#define LEVEL4_TRAMPLE_CHARGE_MAX      1000  // msec to maximum charge stored
-#define LEVEL4_TRAMPLE_CHARGE_TRIGGER  3000  // msec charge starts on its own
-#define LEVEL4_TRAMPLE_DURATION        3000  // msec trample lasts on full charge
-#define LEVEL4_TRAMPLE_STOP_PENALTY    1     // charge lost per msec when stopped
-#define LEVEL4_TRAMPLE_REPEAT          100   // msec before a trample will rehit a player
+#define ALEVEL5_TRAMPLE_DMG             ADM(111)
+#define ALEVEL5_TRAMPLE_SPEED           2.0f
+#define ALEVEL5_TRAMPLE_CHARGE_MIN      375   // minimum msec to start a charge
+#define ALEVEL5_TRAMPLE_CHARGE_MAX      1000  // msec to maximum charge stored
+#define ALEVEL5_TRAMPLE_CHARGE_TRIGGER  3000  // msec charge starts on its own
+#define ALEVEL5_TRAMPLE_DURATION        3000  // msec trample lasts on full charge
+#define ALEVEL5_TRAMPLE_STOP_PENALTY    1     // charge lost per msec when stopped
+#define ALEVEL5_TRAMPLE_REPEAT          100   // msec before a trample will rehit a player
 
-#define LEVEL4_CRUSH_DAMAGE_PER_V      0.5f  // damage per falling velocity
-#define LEVEL4_CRUSH_DAMAGE            120   // to players only
-#define LEVEL4_CRUSH_REPEAT            500   // player damage repeat
+#define ALEVEL5_CRUSH_DAMAGE_PER_V      0.5f  // damage per falling velocity
+#define ALEVEL5_CRUSH_DAMAGE            120   // to players only
+#define ALEVEL5_CRUSH_REPEAT            500   // player damage repeat
 
 /*
  * ALIEN classes
@@ -149,65 +149,65 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_VALUE_MODIFIER        1.0f
 #define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
 
-#define ABUILDER_SPEED              0.9f
-#define ABUILDER_VALUE              AVM(240)
-#define ABUILDER_HEALTH             AHM(50)
-#define ABUILDER_REGEN              (0.04f * ABUILDER_HEALTH)
-#define ABUILDER_COST               0
+#define ABUILDER_SPEED               0.9f
+#define ABUILDER_VALUE               AVM(240)
+#define ABUILDER_HEALTH              AHM(50)
+#define ABUILDER_REGEN               (0.04f * ABUILDER_HEALTH)
+#define ABUILDER_COST                0
 
-#define ABUILDER_UPG_SPEED          0.9f
-#define ABUILDER_UPG_VALUE          AVM(300)
-#define ABUILDER_UPG_HEALTH         AHM(75)
-#define ABUILDER_UPG_REGEN          (0.04f * ABUILDER_UPG_HEALTH)
-#define ABUILDER_UPG_COST           0
+#define ABUILDER_UPG_SPEED           0.9f
+#define ABUILDER_UPG_VALUE           AVM(300)
+#define ABUILDER_UPG_HEALTH          AHM(75)
+#define ABUILDER_UPG_REGEN           (0.04f * ABUILDER_UPG_HEALTH)
+#define ABUILDER_UPG_COST            0
 
-#define LEVEL0_SPEED                1.4f
-#define LEVEL0_VALUE                AVM(180)
-#define LEVEL0_HEALTH               AHM(25)
-#define LEVEL0_REGEN                (0.05f * LEVEL0_HEALTH)
-#define LEVEL0_COST                 0
+#define ALEVEL0_SPEED                1.4f
+#define ALEVEL0_VALUE                AVM(180)
+#define ALEVEL0_HEALTH               AHM(25)
+#define ALEVEL0_REGEN                (0.05f * ALEVEL0_HEALTH)
+#define ALEVEL0_COST                 0
 
-#define LEVEL1_SPEED                1.25f
-#define LEVEL1_VALUE                AVM(270)
-#define LEVEL1_HEALTH               AHM(60)
-#define LEVEL1_REGEN                (0.03f * LEVEL1_HEALTH)
-#define LEVEL1_COST                 1
+#define ALEVEL1_1_SPEED              1.25f
+#define ALEVEL1_1_VALUE              AVM(270)
+#define ALEVEL1_1_HEALTH             AHM(60)
+#define ALEVEL1_1_REGEN              (0.03f * ALEVEL1_1_HEALTH)
+#define ALEVEL1_1_COST               1
 
-#define LEVEL1_UPG_SPEED            1.25f
-#define LEVEL1_UPG_VALUE            AVM(330)
-#define LEVEL1_UPG_HEALTH           AHM(80)
-#define LEVEL1_UPG_REGEN            (0.03f * LEVEL1_UPG_HEALTH)
-#define LEVEL1_UPG_COST             2
+#define ALEVEL1_1_UPG_SPEED          1.25f
+#define ALEVEL1_1_UPG_VALUE          AVM(330)
+#define ALEVEL1_1_UPG_HEALTH         AHM(80)
+#define ALEVEL1_1_UPG_REGEN          (0.03f * ALEVEL1_1_UPG_HEALTH)
+#define ALEVEL1_1_UPG_COST           2
 
-#define LEVEL2_SPEED                1.2f
-#define LEVEL2_VALUE                AVM(420)
-#define LEVEL2_HEALTH               AHM(150)
-#define LEVEL2_REGEN                (0.03f * LEVEL2_HEALTH)
-#define LEVEL2_COST                 2
+#define ALEVEL3_SPEED                1.2f
+#define ALEVEL3_VALUE                AVM(420)
+#define ALEVEL3_HEALTH               AHM(150)
+#define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
+#define ALEVEL3_COST                 2
 
-#define LEVEL2_UPG_SPEED            1.2f
-#define LEVEL2_UPG_VALUE            AVM(540)
-#define LEVEL2_UPG_HEALTH           AHM(175)
-#define LEVEL2_UPG_REGEN            (0.03f * LEVEL2_UPG_HEALTH)
-#define LEVEL2_UPG_COST             3
+#define ALEVEL3_UPG_SPEED            1.2f
+#define ALEVEL3_UPG_VALUE            AVM(540)
+#define ALEVEL3_UPG_HEALTH           AHM(175)
+#define ALEVEL3_UPG_REGEN            (0.03f * ALEVEL3_UPG_HEALTH)
+#define ALEVEL3_UPG_COST             3
 
-#define LEVEL3_SPEED                1.1f
-#define LEVEL3_VALUE                AVM(600)
-#define LEVEL3_HEALTH               AHM(200)
-#define LEVEL3_REGEN                (0.03f * LEVEL3_HEALTH)
-#define LEVEL3_COST                 3
+#define ALEVEL4_SPEED                1.1f
+#define ALEVEL4_VALUE                AVM(600)
+#define ALEVEL4_HEALTH               AHM(200)
+#define ALEVEL4_REGEN                (0.03f * ALEVEL4_HEALTH)
+#define ALEVEL4_COST                 3
 
-#define LEVEL3_UPG_SPEED            1.1f
-#define LEVEL3_UPG_VALUE            AVM(720)
-#define LEVEL3_UPG_HEALTH           AHM(250)
-#define LEVEL3_UPG_REGEN            (0.03f * LEVEL3_UPG_HEALTH)
-#define LEVEL3_UPG_COST             4
+#define ALEVEL4_UPG_SPEED            1.1f
+#define ALEVEL4_UPG_VALUE            AVM(720)
+#define ALEVEL4_UPG_HEALTH           AHM(250)
+#define ALEVEL4_UPG_REGEN            (0.03f * ALEVEL4_UPG_HEALTH)
+#define ALEVEL4_UPG_COST             4
 
-#define LEVEL4_SPEED                1.2f
-#define LEVEL4_VALUE                AVM(960)
-#define LEVEL4_HEALTH               AHM(350)
-#define LEVEL4_REGEN                (0.025f * LEVEL4_HEALTH)
-#define LEVEL4_COST                 4
+#define ALEVEL5_SPEED                1.2f
+#define ALEVEL5_VALUE                AVM(960)
+#define ALEVEL5_HEALTH               AHM(350)
+#define ALEVEL5_REGEN                (0.025f * ALEVEL5_HEALTH)
+#define ALEVEL5_COST                 4
 
 /*
  * ALIEN buildables
@@ -650,7 +650,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define DEFAULT_FREEKILL_PERIOD     "120" //seconds
 #define FREEKILL_ALIEN              ALIEN_CREDITS_PER_KILL
-#define FREEKILL_HUMAN              LEVEL0_VALUE
+#define FREEKILL_HUMAN              ALEVEL0_VALUE
 
 #define DEFAULT_ALIEN_BUILDPOINTS   "100"
 #define DEFAULT_ALIEN_QUEUE_TIME    "8000"

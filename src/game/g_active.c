@@ -287,7 +287,7 @@ void ClientImpacts( gentity_t *ent, pmove_t *pm )
       other->client->unlaggedCalc.used = qfalse;
 
     // tyrant impact attacks
-    if( ent->client->ps.weapon == WP_ALEVEL4 )
+    if( ent->client->ps.weapon == WP_ALEVEL5 )
     {
       G_ChargeAttack( ent, other );
       G_CrushAttack( ent, other );
@@ -758,11 +758,11 @@ void ClientTimerActions( gentity_t *ent, int msec )
   }
 
   // Regenerate Adv. Dragoon barbs
-  if( client->ps.weapon == WP_ALEVEL3_UPG )
+  if( client->ps.weapon == WP_ALEVEL4_UPG )
   {
-    if( client->ps.ammo < BG_Weapon( WP_ALEVEL3_UPG )->maxAmmo )
+    if( client->ps.ammo < BG_Weapon( WP_ALEVEL4_UPG )->maxAmmo )
     {
-      if( ent->timestamp + LEVEL3_BOUNCEBALL_REGEN < level.time )
+      if( ent->timestamp + ALEVEL4_BOUNCEBALL_REGEN < level.time )
       {
         client->ps.ammo++;
         ent->timestamp = level.time;
@@ -1405,11 +1405,11 @@ void ClientThink_real( gentity_t *ent )
               ent->client->pers.teamSelection && boost->health > 0 )
         {
           class_t class = boost->client->ps.stats[ STAT_CLASS ];
-          if( class == PCL_ALIEN_LEVEL1 && modifier < LEVEL1_REGEN_MOD )
-            modifier = LEVEL1_REGEN_MOD;
-          else if( class == PCL_ALIEN_LEVEL1_UPG &&
-                   modifier < LEVEL1_UPG_REGEN_MOD )
-            modifier = LEVEL1_UPG_REGEN_MOD;
+          if( class == PCL_ALIEN_LEVEL1_1 && modifier < ALEVEL1_1_REGEN_MOD )
+            modifier = ALEVEL1_1_REGEN_MOD;
+          else if( class == PCL_ALIEN_LEVEL1_1_UPG &&
+                   modifier < ALEVEL1_1_UPG_REGEN_MOD )
+            modifier = ALEVEL1_1_UPG_REGEN_MOD;
         }
       }
 
@@ -1551,13 +1551,13 @@ void ClientThink_real( gentity_t *ent )
       }
       break;
 
-    case WP_ALEVEL1:
-    case WP_ALEVEL1_UPG:
+    case WP_ALEVEL1_1:
+    case WP_ALEVEL1_1_UPG:
       CheckGrabAttack( ent );
       break;
 
-    case WP_ALEVEL3:
-    case WP_ALEVEL3_UPG:
+    case WP_ALEVEL4:
+    case WP_ALEVEL4_UPG:
       if( !CheckPounceAttack( ent ) )
       {
         client->ps.weaponstate = WEAPON_READY;
