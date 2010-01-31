@@ -1125,9 +1125,6 @@ void ClientUserinfoChanged( int clientNum )
   else
     client->ps.persistant[ PERS_STATE ] &= ~PS_WALLCLIMBINGTOGGLE;
 
-  // always sprint
-  s = Info_ValueForKey( userinfo, "cg_sprintToggle" );
-
   if( atoi( s ) )
     client->ps.persistant[ PERS_STATE ] |= PS_SPRINTTOGGLE;
   else

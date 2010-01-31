@@ -36,7 +36,6 @@ static bind_t bindings[ ] =
   { "+button2",       "Activate Upgrade",       { -1, -1 } },
   { "+speed",         "Run/Walk",               { -1, -1 } },
   { "+button6",       "Dodge",                  { -1, -1 } },
-  { "+button8",       "Sprint",                 { -1, -1 } },
   { "+moveup",        "Jump",                   { -1, -1 } },
   { "+movedown",      "Crouch",                 { -1, -1 } },
   { "+attack",        "Primary Attack",         { -1, -1 } },
@@ -499,10 +498,6 @@ static void CG_HumanText( char *text, playerState_t *ps )
         va( "Press %s to use this structure\n",
           CG_KeyNameForCommand( "+button7" ) ) );
   }
-
-  Q_strcat( text, MAX_TUTORIAL_TEXT,
-      va( "Press %s and any direction to sprint\n",
-        CG_KeyNameForCommand( "+button8" ) ) );
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s and back or strafe to dodge\n",

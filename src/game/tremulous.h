@@ -623,10 +623,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * HUMAN misc
  */
 
-#define HUMAN_SPRINT_MODIFIER       1.2f
-#define HUMAN_JOG_MODIFIER          1.0f
-#define HUMAN_BACK_MODIFIER         0.8f
-#define HUMAN_SIDE_MODIFIER         0.9f
 #define HUMAN_DODGE_SIDE_MODIFIER   2.9f
 #define HUMAN_DODGE_SLOWED_MODIFIER 0.9f
 #define HUMAN_DODGE_UP_MODIFIER     0.5f
