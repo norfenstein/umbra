@@ -1617,44 +1617,6 @@ static void UI_DrawInfoPane( menuItem_t *item, rectDef_t *rect, float text_x, fl
 
       break;
 
-    case INFOTYPE_WEAPON:
-      value = BG_Weapon( item->v.weapon )->price;
-
-      if( value == 0 )
-      {
-        s = va( "%s\n\n%s\n\nCredits: Free",
-                BG_Weapon( item->v.weapon )->humanName,
-                BG_Weapon( item->v.weapon )->info );
-      }
-      else
-      {
-        s = va( "%s\n\n%s\n\nCredits: %d",
-                BG_Weapon( item->v.weapon )->humanName,
-                BG_Weapon( item->v.weapon )->info,
-                value );
-      }
-
-      break;
-
-    case INFOTYPE_UPGRADE:
-      value = BG_Upgrade( item->v.upgrade )->price;
-
-      if( value == 0 )
-      {
-        s = va( "%s\n\n%s\n\nCredits: Free",
-                BG_Upgrade( item->v.upgrade )->humanName,
-                BG_Upgrade( item->v.upgrade )->info );
-      }
-      else
-      {
-        s = va( "%s\n\n%s\n\nCredits: %d",
-                BG_Upgrade( item->v.upgrade )->humanName,
-                BG_Upgrade( item->v.upgrade )->info,
-                value );
-      }
-
-      break;
-
     case INFOTYPE_BUILDABLE:
       value = BG_Buildable( item->v.buildable )->buildPoints;
 

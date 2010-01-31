@@ -991,12 +991,10 @@ typedef struct
 
   char      *name;
   char      *humanName;
-  char      *info;
 
   int       maxAmmo;
   int       maxClips;
   qboolean  infiniteAmmo;
-  qboolean  usesEnergy;
 
   int       repeatRate1;
   int       repeatRate2;

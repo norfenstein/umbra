@@ -315,7 +315,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_SPLASHDAMAGE,   //int       splashDamage;
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
@@ -348,8 +348,8 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MGTURRET_SPLASHDAMAGE, //int       splashDamage;
     MGTURRET_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
-    ( 1 << WP_HBUILD ),   //weapon_t  buildWeapon;
+    TEAM_HUMANS,           //int       team;
+    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     50,                    //int       nextthink;
     MGTURRET_BT,           //int       buildTime;
@@ -381,7 +381,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TESLAGEN_SPLASHDAMAGE, //int       splashDamage;
     TESLAGEN_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     150,                   //int       nextthink;
@@ -414,7 +414,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
@@ -447,7 +447,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     DC_SPLASHDAMAGE,       //int       splashDamage;
     DC_SPLASHRADIUS,       //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
@@ -481,7 +481,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_SPLASHDAMAGE, //int       splashDamage;
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
@@ -514,12 +514,12 @@ static const buildableAttributes_t bg_buildableList[ ] =
     REACTOR_SPLASHDAMAGE,  //int       splashDamage;
     REACTOR_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
+    TEAM_HUMANS,           //int       team;
     ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
-    REACTOR_ATTACK_DCC_REPEAT, //int       nextthink;
+    REACTOR_ATTACK_DCC_REPEAT,//int       nextthink;
     REACTOR_BT,            //int       buildTime;
-    qtrue,                 //qboolean  usable;
+    qfalse,                //qboolean  usable;
     0,                     //int       turretRange;
     0,                     //int       turretFireSpeed;
     WP_NONE,               //weapon_t  turretProjType;
@@ -552,7 +552,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     REPEATER_BT,           //int       buildTime;
-    qtrue,                 //qboolean  usable;
+    qfalse,                //qboolean  usable;
     0,                     //int       turretRange;
     0,                     //int       turretFireSpeed;
     WP_NONE,               //weapon_t  turretProjType;
@@ -1664,11 +1664,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel0",            //char      *weaponName;
     "Bite",               //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1687,11 +1685,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel10",           //char      *weaponName;
     "Claws",              //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
     0,                    //int       repeatRate3;
@@ -1710,11 +1706,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel11",           //char      *weaponName;
     "Claws",              //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
     0,                    //int       repeatRate3;
@@ -1733,11 +1727,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel2",            //char      *weaponName;
     "Bite",               //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1756,11 +1748,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel3",            //char      *weaponName;
     "Zap",                //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL3_AREAZAP_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
@@ -1779,11 +1769,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel4",            //char      *weaponName;
     "Pounce",             //char      *humanName;
-    "",
     3,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     ALEVEL4_BOUNCEBALL_REPEAT,//int   repeatRate3;
@@ -1802,11 +1790,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel5",            //char      *weaponName;
     "Charge",             //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ALEVEL5_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1825,11 +1811,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "blaster",            //char      *weaponName;
     "Blaster",            //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     BLASTER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1848,12 +1832,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     RIFLE_PRICE,          //int       price;
     "rifle",              //char      *weaponName;
     "Rifle",              //char      *humanName;
-    "Basic weapon. Cased projectile weapon, with a slow clip based "
-      "reload system.",
     RIFLE_CLIPSIZE,       //int       maxAmmo;
     RIFLE_MAXCLIPS,       //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     RIFLE_REPEAT,         //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1872,13 +1853,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     PAINSAW_PRICE,        //int       price;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *humanName;
-    "Similar to a chainsaw, but instead of a chain it has an "
-      "electric arc capable of dealing a great deal of damage at "
-      "close range.",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1897,13 +1874,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     SHOTGUN_PRICE,        //int       price;
     "shotgun",            //char      *weaponName;
     "Shotgun",            //char      *humanName;
-    "Close range weapon that is useful against larger foes. "
-      "It has a slow repeat rate, but can be devastatingly "
-      "effective.",
     SHOTGUN_SHELLS,       //int       maxAmmo;
     SHOTGUN_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     SHOTGUN_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1922,12 +1895,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     LASGUN_PRICE,         //int       price;
     "lgun",               //char      *weaponName;
     "Las Gun",            //char      *humanName;
-    "Slightly more powerful than the basic rifle, rapidly fires "
-      "small packets of energy.",
     LASGUN_AMMO,          //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
     LASGUN_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1946,13 +1916,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     MDRIVER_PRICE,        //int       price;
     "mdriver",            //char      *weaponName;
     "Mass Driver",        //char      *humanName;
-    "A portable particle accelerator which causes minor nuclear "
-      "reactions at the point of impact. It has a very large "
-      "payload, but fires slowly.",
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
     MDRIVER_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
     MDRIVER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1971,13 +1937,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     CHAINGUN_PRICE,       //int       price;
     "chaingun",           //char      *weaponName;
     "Chaingun",           //char      *humanName;
-    "Belt drive, cased projectile weapon. It has a high repeat "
-      "rate but a wide firing angle and is therefore relatively "
-      "inaccurate.",
     CHAINGUN_BULLETS,     //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     CHAINGUN_REPEAT,      //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1996,13 +1958,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     FLAMER_PRICE,         //int       price;
     "flamer",             //char      *weaponName;
     "Flame Thrower",      //char      *humanName;
-    "Sprays fire at its target. It is powered by compressed "
-      "gas. The relatively low rate of fire means this weapon is most "
-      "effective against static targets.",
     FLAMER_GAS,           //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     FLAMER_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2021,11 +1979,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     PRIFLE_PRICE,         //int       price;
     "prifle",             //char      *weaponName;
     "Pulse Rifle",        //char      *humanName;
-    "An energy weapon that fires rapid pulses of concentrated energy.",
     PRIFLE_CLIPS,         //int       maxAmmo;
     PRIFLE_MAXCLIPS,      //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
     PRIFLE_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2044,13 +2000,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     LCANNON_PRICE,        //int       price;
     "lcannon",            //char      *weaponName;
     "Lucifer Cannon",     //char      *humanName;
-    "Blaster technology scaled up to deliver devastating power. "
-      "Primary fire must be charged before firing. It has a quick "
-      "secondary attack that does not require charging.",
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
     LCANNON_REPEAT,       //int       repeatRate1;
     LCANNON_SECONDARY_REPEAT, //int   repeatRate2;
     0,                    //int       repeatRate3;
@@ -2069,11 +2021,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     GRENADE_PRICE,        //int       price;
     "grenade",            //char      *weaponName;
     "Grenade",            //char      *humanName;
-    "",
     1,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2092,11 +2042,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2115,11 +2063,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "hive",               //char      *weaponName;
     "Hive",               //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2138,11 +2084,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "teslagen",           //char      *weaponName;
     "Tesla Generator",    //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qtrue,                //int       usesEnergy;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2161,11 +2105,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "mgturret",           //char      *weaponName;
     "Machinegun Turret",  //char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     0,                    //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2184,11 +2126,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "abuildupg",          //char      *weaponName;
     "Alien build weapon2",//char      *humanName;
-    "",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     ABUILDER_BUILD_REPEAT,//int       repeatRate1;
     ABUILDER_CLAW_REPEAT, //int       repeatRate2;
     ABUILDER_BLOB_REPEAT, //int       repeatRate3;
@@ -2207,12 +2147,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     HBUILD_PRICE,         //int       price;
     "ckit",               //char      *weaponName;
     "Construction Kit",   //char      *humanName;
-    "Used for building structures. This includes "
-      "spawns, power and basic defense.",
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
-    qfalse,               //int       usesEnergy;
     HBUILD_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;

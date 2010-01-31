@@ -1049,12 +1049,6 @@ void trigger_ammo_touch( gentity_t *self, gentity_t *other, trace_t *trace )
   if( other->client->ps.weaponstate != WEAPON_READY )
     return;
 
-  if( BG_Weapon( other->client->ps.weapon )->usesEnergy && self->spawnflags & 2 )
-    return;
-
-  if( !BG_Weapon( other->client->ps.weapon )->usesEnergy && self->spawnflags & 4 )
-    return;
-
   if( self->spawnflags & 1 )
     self->timestamp = level.time + 1000;
   else

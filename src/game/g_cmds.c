@@ -406,10 +406,6 @@ void Cmd_Give_f( gentity_t *ent )
 
     client->ps.ammo = BG_Weapon( client->ps.weapon )->maxAmmo;
     client->ps.clips = BG_Weapon( client->ps.weapon )->maxClips;
-
-    if( BG_Weapon( client->ps.weapon )->usesEnergy &&
-        BG_InventoryContainsUpgrade( UP_BATTPACK, client->ps.stats ) )
-      client->ps.ammo = (int)( (float)client->ps.ammo * BATTPACK_MODIFIER );
   }
 }
 
@@ -1776,7 +1772,6 @@ Cmd_Reload_f
 void Cmd_Reload_f( gentity_t *ent )
 {
   playerState_t *ps = &ent->client->ps;
-  int ammo;
 
   // weapon doesn't ever need reloading
   if( BG_Weapon( ps->weapon )->infiniteAmmo )
@@ -1785,14 +1780,8 @@ void Cmd_Reload_f( gentity_t *ent )
   if( ps->clips <= 0 )
     return;
 
-  if( BG_Weapon( ps->weapon )->usesEnergy &&
-      BG_InventoryContainsUpgrade( UP_BATTPACK, ps->stats ) )
-    ammo = BG_Weapon( ps->weapon )->maxAmmo * BATTPACK_MODIFIER;
-  else
-    ammo = BG_Weapon( ps->weapon )->maxAmmo;
-
   // don't reload when full
-  if( ps->ammo >= ammo )
+  if( ps->ammo >= BG_Weapon( ps->weapon )->maxAmmo)
     return;
 
   // the animation, ammo refilling etc. is handled by PM_Weapon

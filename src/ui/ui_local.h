@@ -168,9 +168,7 @@ typedef enum
 {
   INFOTYPE_TEXT,
   INFOTYPE_BUILDABLE,
-  INFOTYPE_CLASS,
-  INFOTYPE_WEAPON,
-  INFOTYPE_UPGRADE
+  INFOTYPE_CLASS
 } infoType_t;
 
 typedef struct

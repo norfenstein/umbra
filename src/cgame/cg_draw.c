@@ -655,15 +655,6 @@ static void CG_DrawUsableBuildable( rectDef_t *rect, qhandle_t shader, vec4_t co
   if( es->eType == ET_BUILDABLE && BG_Buildable( es->modelindex )->usable &&
       cg.predictedPlayerState.stats[ STAT_TEAM ] == BG_Buildable( es->modelindex )->team )
   {
-    //hack to prevent showing the usable buildable when you aren't carrying an energy weapon
-    if( ( es->modelindex == BA_H_REACTOR || es->modelindex == BA_H_REPEATER ) &&
-        ( !BG_Weapon( cg.snap->ps.weapon )->usesEnergy ||
-          BG_Weapon( cg.snap->ps.weapon )->infiniteAmmo ) )
-    {
-      cg.nearUsableBuildable = qfalse;
-      return;
-    }
-
     trap_R_SetColor( color );
     CG_DrawPic( rect->x, rect->y, rect->w, rect->h, shader );
     trap_R_SetColor( NULL );
