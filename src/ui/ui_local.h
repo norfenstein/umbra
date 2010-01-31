@@ -244,10 +244,6 @@ typedef struct
   int         humanClassCount;
   int         humanClassIndex;
 
-  menuItem_t  alienUpgradeList[ 16 ];
-  int         alienUpgradeCount;
-  int         alienUpgradeIndex;
-
   menuItem_t  alienBuildList[ 32 ];
   int         alienBuildCount;
   int         alienBuildIndex;

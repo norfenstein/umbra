@@ -1937,11 +1937,6 @@ static void UI_OwnerDraw( float x, float y, float w, float h,
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
       break;
 
-    case UI_AUPGRADEINFOPANE:
-      UI_DrawInfoPane( &uiInfo.alienUpgradeList[ uiInfo.alienUpgradeIndex ],
-                       &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
-      break;
-
     case UI_HCLASSINFOPANE:
       UI_DrawInfoPane( &uiInfo.humanClassList[ uiInfo.humanClassIndex ],
                        &rect, text_x, text_y, scale, textalign, textvalign, foreColor, textStyle );
@@ -2764,11 +2759,6 @@ static void UI_RunMenuScript( char **args )
       if( ( cmd = uiInfo.alienClassList[ uiInfo.alienClassIndex ].cmd ) )
         trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
     }
-    else if( Q_stricmp( name, "UpgradeToNewClass" ) == 0 )
-    {
-      if( ( cmd = uiInfo.alienUpgradeList[ uiInfo.alienUpgradeIndex ].cmd ) )
-        trap_Cmd_ExecuteText( EXEC_APPEND, cmd );
-    }
     else if( Q_stricmp( name, "LoadAlienBuilds" ) == 0 )
       UI_LoadAlienBuilds( );
     else if( Q_stricmp( name, "BuildAlienBuildable" ) == 0 )
@@ -3235,8 +3225,6 @@ static int UI_FeederCount( int feederID )
     return uiInfo.humanClassCount;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     return uiInfo.alienClassCount;
-  else if( feederID == FEEDER_TREMALIENUPGRADE )
-    return uiInfo.alienUpgradeCount;
   else if( feederID == FEEDER_TREMALIENBUILD )
     return uiInfo.alienBuildCount;
   else if( feederID == FEEDER_TREMHUMANBUILD )
@@ -3486,11 +3474,6 @@ static const char *UI_FeederItemText( int feederID, int index, int column, qhand
     if( index >= 0 && index < uiInfo.alienClassCount )
       return uiInfo.alienClassList[ index ].text;
   }
-  else if( feederID == FEEDER_TREMALIENUPGRADE )
-  {
-    if( index >= 0 && index < uiInfo.alienUpgradeCount )
-      return uiInfo.alienUpgradeList[ index ].text;
-  }
   else if( feederID == FEEDER_TREMALIENBUILD )
   {
     if( index >= 0 && index < uiInfo.alienBuildCount )
@@ -3640,8 +3623,6 @@ static void UI_FeederSelection( int feederID, int index )
     uiInfo.humanClassIndex = index;
   else if( feederID == FEEDER_TREMALIENCLASSES )
     uiInfo.alienClassIndex = index;
-  else if( feederID == FEEDER_TREMALIENUPGRADE )
-    uiInfo.alienUpgradeIndex = index;
   else if( feederID == FEEDER_TREMALIENBUILD )
     uiInfo.alienBuildIndex = index;
   else if( feederID == FEEDER_TREMHUMANBUILD )

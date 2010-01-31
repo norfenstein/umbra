@@ -107,7 +107,6 @@ enum
   FEEDER_TREMTEAMS,            // teams
   FEEDER_TREMALIENCLASSES,     // alien classes
   FEEDER_TREMHUMANCLASSES,     // human classes
-  FEEDER_TREMALIENUPGRADE,     // alien upgrade
   FEEDER_TREMALIENBUILD,       // alien buildables
   FEEDER_TREMHUMANBUILD,       // human buildables
   FEEDER_IGNORE_LIST,          // ignored players
@@ -209,7 +208,6 @@ enum
 
   UI_TEAMINFOPANE,
   UI_ACLASSINFOPANE,
-  UI_AUPGRADEINFOPANE,
   UI_HCLASSINFOPANE,
   UI_ABUILDINFOPANE,
   UI_HBUILDINFOPANE,
