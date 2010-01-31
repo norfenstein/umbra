@@ -112,7 +112,7 @@
       aspectBias ALIGN_LEFT
       visible MENU_TRUE
       decoration
-      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.8
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
       backColor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.2
       background "ui/assets/human/bolt.tga"
       ownerdraw CG_PLAYER_STAMINA_BOLT
@@ -138,7 +138,7 @@
       aspectBias ALIGN_LEFT
       visible MENU_TRUE
       decoration
-      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.8
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
       backColor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.2
       background "ui/assets/human/stamina1.tga"
       ownerdraw CG_PLAYER_STAMINA_1
@@ -152,7 +152,7 @@
       aspectBias ALIGN_LEFT
       visible MENU_TRUE
       decoration
-      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.8
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
       backColor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.2
       background "ui/assets/human/stamina2.tga"
       ownerdraw CG_PLAYER_STAMINA_2
@@ -166,7 +166,7 @@
       aspectBias ALIGN_LEFT
       visible MENU_TRUE
       decoration
-      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.8
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
       backColor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.2
       background "ui/assets/human/stamina3.tga"
       ownerdraw CG_PLAYER_STAMINA_3
@@ -180,7 +180,7 @@
       aspectBias ALIGN_LEFT
       visible MENU_TRUE
       decoration
-      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.8
+      forecolor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.5
       backColor COMMON_HUD_R COMMON_HUD_G COMMON_HUD_B 0.2
       background "ui/assets/human/stamina4.tga"
       ownerdraw CG_PLAYER_STAMINA_4

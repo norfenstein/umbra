@@ -469,7 +469,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     "medistat",            //char      *buildName;
     "Medistation",         //char      *humanName;
     "A structure that automatically restores "
-      "the health and stamina of any human that stands on it. "
+      "the health of any human that stands on it. "
       "It may only be used by one person at a time. This structure "
       "also issues medkits.",
     "team_human_medistat", //char      *entityName;

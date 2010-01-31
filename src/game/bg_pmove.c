@@ -408,8 +408,7 @@ static float PM_CmdScale( usercmd_t *cmd )
       pm->ps->stats[ STAT_STATE ] &= ~SS_SPEEDBOOST;
 
     // Walk overrides sprint. We keep the state that we want to be sprinting
-    //  (above), but don't apply the modifier, and in g_active we skip taking
-    //  the stamina too.
+    //  (above), but don't apply the modifier
     if( sprint && !( cmd->buttons & BUTTON_WALKING ) )
       modifier *= HUMAN_SPRINT_MODIFIER;
     else
@@ -425,14 +424,6 @@ static float PM_CmdScale( usercmd_t *cmd )
       //can't move that fast sideways
       modifier *= HUMAN_SIDE_MODIFIER;
     }
-
-    //must have have stamina to jump
-    if( pm->ps->stats[ STAT_STAMINA ] < STAMINA_SLOW_LEVEL + STAMINA_JUMP_TAKE )
-      cmd->upmove = 0;
-
-    //slow down once stamina depletes
-    if( pm->ps->stats[ STAT_STAMINA ] <= STAMINA_SLOW_LEVEL )
-      modifier *= (float)( pm->ps->stats[ STAT_STAMINA ] + STAMINA_MAX ) / (float)(STAMINA_SLOW_LEVEL + STAMINA_MAX);
 
     if( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED )
     {
@@ -792,10 +783,6 @@ static qboolean PM_CheckJump( void )
       pm->ps->stats[ STAT_MISC ] > 0 )
     return qfalse;
 
-  if( ( pm->ps->stats[ STAT_TEAM ] == TEAM_HUMANS ) &&
-      ( pm->ps->stats[ STAT_STAMINA ] < STAMINA_SLOW_LEVEL + STAMINA_JUMP_TAKE ) )
-    return qfalse;
-
   //no bunny hopping off a dodge
   if( pm->ps->stats[ STAT_TEAM ] == TEAM_HUMANS && 
       pm->ps->pm_time )
@@ -833,10 +820,6 @@ static qboolean PM_CheckJump( void )
   pml.groundPlane = qfalse;   // jumping away
   pml.walking = qfalse;
   pm->ps->pm_flags |= PMF_JUMP_HELD;
-
-  // take some stamina off
-  if( pm->ps->stats[ STAT_TEAM ] == TEAM_HUMANS )
-    pm->ps->stats[ STAT_STAMINA ] -= STAMINA_JUMP_TAKE;
 
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
 
@@ -945,8 +928,7 @@ static qboolean PM_CheckDodge( void )
   }
 
   // Reasons why we can't start a dodge or sprint
-  if( pm->ps->pm_type != PM_NORMAL || pm->ps->stats[ STAT_STAMINA ] < STAMINA_SLOW_LEVEL + STAMINA_DODGE_TAKE ||
-      ( pm->ps->pm_flags & PMF_DUCKED ) )
+  if( pm->ps->pm_type != PM_NORMAL || ( pm->ps->pm_flags & PMF_DUCKED ) )
     return qfalse;
 
   // Can't dodge forward
@@ -1013,7 +995,6 @@ static qboolean PM_CheckDodge( void )
   pml.walking = qfalse;
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
   pm->ps->pm_flags |= PMF_CHARGE;
-  pm->ps->stats[ STAT_STAMINA ] -= STAMINA_DODGE_TAKE;
   pm->ps->legsAnim = ( ( pm->ps->legsAnim & ANIM_TOGGLEBIT ) ^
                        ANIM_TOGGLEBIT ) | LEGS_JUMP;
   PM_AddEvent( EV_JUMP );
