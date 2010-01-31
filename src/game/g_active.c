@@ -846,7 +846,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence )
         VectorAdd( client->ps.origin, mins, point );
 
         ent->pain_debounce_time = level.time + 200; // no normal pain sound
-        G_Damage( ent, NULL, NULL, dir, point, damage, DAMAGE_NO_LOCDAMAGE, MOD_FALLING );
+        G_Damage( ent, NULL, NULL, dir, point, damage, 0, MOD_FALLING );
         break;
 
       case EV_FIRE_WEAPON:

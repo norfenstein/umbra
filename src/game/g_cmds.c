@@ -2359,39 +2359,27 @@ void Cmd_Test_f( gentity_t *humanPlayer )
 =================
 Cmd_Damage_f
 
-Deals damage to you (for testing), arguments: [damage] [dx] [dy] [dz]
-The dx/dy arguments describe the damage point's offset from the entity origin
+Deals damage to you (for testing)
 =================
 */
 void Cmd_Damage_f( gentity_t *ent )
 {
-  vec3_t point;
   char arg[ 16 ];
-  float dx = 0.0f, dy = 0.0f, dz = 100.0f;
   int damage = 100;
-  qboolean nonloc = qtrue;
 
-  if( trap_Argc() > 1 )
+  if( trap_Argc( ) > 2 )
+  {
+    trap_SendServerCommand( ent-g_entities, "print \"usage: damage [amount=100] \n\"" );
+    return;
+  }
+
+  if( trap_Argc() == 2 )
   {
     trap_Argv( 1, arg, sizeof( arg ) );
     damage = atoi( arg );
   }
-  if( trap_Argc() > 4 )
-  {
-    trap_Argv( 2, arg, sizeof( arg ) );
-    dx = atof( arg );
-    trap_Argv( 3, arg, sizeof( arg ) );
-    dy = atof( arg );
-    trap_Argv( 4, arg, sizeof( arg ) );
-    dz = atof( arg );
-    nonloc = qfalse;
-  }
-  VectorCopy( ent->s.origin, point );
-  point[ 0 ] += dx;
-  point[ 1 ] += dy;
-  point[ 2 ] += dz;
-  G_Damage( ent, NULL, NULL, NULL, point, damage,
-            ( nonloc ? DAMAGE_NO_LOCDAMAGE : 0 ), MOD_TARGET_LASER );
+
+  G_Damage( ent, NULL, NULL, NULL, NULL, damage, 0, MOD_TARGET_LASER );
 }
 
 /*

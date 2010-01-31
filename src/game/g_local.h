@@ -456,18 +456,6 @@ int       G_GetPosInSpawnQueue( spawnQueue_t *sq, int clientNum );
 void      G_PrintSpawnQueue( spawnQueue_t *sq );
 
 
-#define MAX_DAMAGE_REGION_TEXT    8192
-#define MAX_DAMAGE_REGIONS 16
-
-// store locational damage regions
-typedef struct damageRegion_s
-{
-  char      name[ 32 ];
-  float     area, modifier, minHeight, maxHeight;
-  int       minAngle, maxAngle;
-  qboolean  crouch;
-} damageRegion_t;
-
 //status of the warning of certain events
 typedef enum
 {
@@ -805,14 +793,11 @@ void      body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, 
 void      AddScore( gentity_t *ent, int score );
 void      G_LogDestruction( gentity_t *self, gentity_t *actor, int mod );
 
-void      G_InitDamageLocations( void );
-
 // damage flags
 #define DAMAGE_RADIUS         0x00000001  // damage was indirect
 #define DAMAGE_NO_ARMOR       0x00000002  // armour does not protect from this damage
 #define DAMAGE_NO_KNOCKBACK   0x00000004  // do not affect velocity, just view angles
 #define DAMAGE_NO_PROTECTION  0x00000008  // armor, shields, invulnerability, and godmode have no effect
-#define DAMAGE_NO_LOCDAMAGE   0x00000010  // do not apply locational damage
 
 //
 // g_missile.c

@@ -1173,7 +1173,7 @@ static void G_CreateNewZap( gentity_t *creator, gentity_t *target )
     if( !zap->used )
     {
       G_Damage( target, creator, creator, forward, target->s.origin,
-                LEVEL2_AREAZAP_DMG, DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE,
+                LEVEL2_AREAZAP_DMG, DAMAGE_NO_KNOCKBACK,
                 MOD_LEVEL2_ZAP );        
 
       zap->used = qtrue;
@@ -1194,7 +1194,7 @@ static void G_CreateNewZap( gentity_t *creator, gentity_t *target )
           zap->numTargets++;
           G_Damage( zap->targets[ j ], target, zap->creator, forward,
                     target->s.origin, LEVEL2_AREAZAP_DMG,
-                    DAMAGE_NO_KNOCKBACK | DAMAGE_NO_LOCDAMAGE, MOD_LEVEL2_ZAP );        
+                    DAMAGE_NO_KNOCKBACK, MOD_LEVEL2_ZAP );        
         }
       }
 
@@ -1333,7 +1333,7 @@ qboolean CheckPounceAttack( gentity_t *ent )
   damage = payload * LEVEL3_POUNCE_DMG / timeMax;
   ent->client->pmext.pouncePayload = 0;
   G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage,
-            DAMAGE_NO_LOCDAMAGE, MOD_LEVEL3_POUNCE );
+            0, MOD_LEVEL3_POUNCE );
 
   return qtrue;
 }
@@ -1384,7 +1384,7 @@ void G_ChargeAttack( gentity_t *ent, gentity_t *victim )
            LEVEL4_TRAMPLE_DURATION;
 
   G_Damage( victim, ent, ent, forward, victim->s.origin, damage,
-            DAMAGE_NO_LOCDAMAGE, MOD_LEVEL4_TRAMPLE );
+            0, MOD_LEVEL4_TRAMPLE );
 
   ent->client->ps.weaponTime += LEVEL4_TRAMPLE_REPEAT;
 
@@ -1434,7 +1434,7 @@ void G_CrushAttack( gentity_t *ent, gentity_t *victim )
   // Crush the victim over a period of time
   VectorSubtract( victim->s.origin, ent->client->ps.origin, dir );
   G_Damage( victim, ent, ent, dir, victim->s.origin, damage,
-            DAMAGE_NO_LOCDAMAGE, MOD_LEVEL4_CRUSH );
+            0, MOD_LEVEL4_CRUSH );
 }
 
 //======================================================================
