@@ -2257,62 +2257,6 @@ static void UI_LoadHumanClasses( void )
 
 /*
 ===============
-UI_ParseCarriageList
-===============
-*/
-static void UI_ParseCarriageList( void )
-{
-  int  i;
-  char carriageCvar[ MAX_TOKEN_CHARS ];
-  char *iterator;
-  char buffer[ MAX_TOKEN_CHARS ];
-  char *bufPointer;
-
-  trap_Cvar_VariableStringBuffer( "ui_carriage", carriageCvar, sizeof( carriageCvar ) );
-  iterator = carriageCvar;
-
-  uiInfo.weapons = 0;
-  uiInfo.upgrades = 0;
-
-  //simple parser to give rise to weapon/upgrade list
-
-  while( iterator && iterator[ 0 ] != '$' )
-  {
-    bufPointer = buffer;
-
-    if( iterator[ 0 ] == 'W' )
-    {
-      iterator++;
-
-      while( iterator[ 0 ] != ' ' )
-        *bufPointer++ = *iterator++;
-
-      *bufPointer++ = '\n';
-
-      i = atoi( buffer );
-
-      uiInfo.weapons |= ( 1 << i );
-    }
-    else if( iterator[ 0 ] == 'U' )
-    {
-      iterator++;
-
-      while( iterator[ 0 ] != ' ' )
-        *bufPointer++ = *iterator++;
-
-      *bufPointer++ = '\n';
-
-      i = atoi( buffer );
-
-      uiInfo.upgrades |= ( 1 << i );
-    }
-
-    iterator++;
-  }
-}
-
-/*
-===============
 UI_LoadAlienBuilds
 ===============
 */
@@ -2320,14 +2264,11 @@ static void UI_LoadAlienBuilds( void )
 {
   int     i, j = 0;
 
-  UI_ParseCarriageList( );
-
   uiInfo.alienBuildCount = 0;
 
   for( i = BA_NONE + 1; i < BA_NUM_BUILDABLES; i++ )
   {
     if( BG_Buildable( i )->team == TEAM_ALIENS &&
-        BG_Buildable( i )->buildWeapon & uiInfo.weapons &&
         BG_BuildableIsAllowed( i ) )
     {
       uiInfo.alienBuildList[ j ].text =
@@ -2353,14 +2294,11 @@ static void UI_LoadHumanBuilds( void )
 {
   int     i, j = 0;
 
-  UI_ParseCarriageList( );
-
   uiInfo.humanBuildCount = 0;
 
   for( i = BA_NONE + 1; i < BA_NUM_BUILDABLES; i++ )
   {
     if( BG_Buildable( i )->team == TEAM_HUMANS &&
-        BG_Buildable( i )->buildWeapon & uiInfo.weapons &&
         BG_BuildableIsAllowed( i ) )
     {
       uiInfo.humanBuildList[ j ].text =

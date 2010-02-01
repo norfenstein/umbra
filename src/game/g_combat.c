@@ -144,7 +144,7 @@ float G_RewardAttackers( gentity_t *self )
   // Only give credits for killing players and buildables
   if( self->client )
   {
-    value = BG_GetValueOfPlayer( &self->client->ps );
+    value = BG_Class( self->client->ps.stats[ STAT_CLASS ] )->value;
     team = self->client->pers.teamSelection;
     maxHealth = self->client->ps.stats[ STAT_MAX_HEALTH ];
   }

@@ -258,19 +258,7 @@ void ScoreboardMessage( gentity_t *ent )
           cl->pers.teamSelection == ent->client->pers.teamSelection ) )
     {
       weapon = cl->ps.weapon;
-
-      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, cl->ps.stats ) )
-        upgrade = UP_BATTLESUIT;
-      else if( BG_InventoryContainsUpgrade( UP_JETPACK, cl->ps.stats ) )
-        upgrade = UP_JETPACK;
-      else if( BG_InventoryContainsUpgrade( UP_BATTPACK, cl->ps.stats ) )
-        upgrade = UP_BATTPACK;
-      else if( BG_InventoryContainsUpgrade( UP_HELMET, cl->ps.stats ) )
-        upgrade = UP_HELMET;
-      else if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, cl->ps.stats ) )
-        upgrade = UP_LIGHTARMOUR;
-      else
-        upgrade = UP_NONE;
+      upgrade = UP_NONE;
     }
     else
     {
@@ -1662,7 +1650,6 @@ void Cmd_Build_f( gentity_t *ent )
   buildable_t   buildable;
   float         dist;
   vec3_t        origin;
-  team_t        team;
 
   if( ent->client->pers.denyBuild )
   {
@@ -1686,10 +1673,8 @@ void Cmd_Build_f( gentity_t *ent )
     return;
   }
 
-  team = ent->client->ps.stats[ STAT_TEAM ];
-
   if( buildable != BA_NONE &&
-      ( ( 1 << ent->client->ps.weapon ) & BG_Buildable( buildable )->buildWeapon ) &&
+      BG_Buildable( buildable )->team == ent->client->ps.stats[ STAT_TEAM ] &&
       !( ent->client->ps.stats[ STAT_STATE ] & SS_HOVELING ) &&
       BG_BuildableIsAllowed( buildable ) )
   {

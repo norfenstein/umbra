@@ -204,7 +204,7 @@ static int GetClientMass( gentity_t *ent )
     entMass = BG_Class( ent->client->pers.classSelection )->health;
   else if( ent->client->pers.teamSelection == TEAM_HUMANS )
   {
-    if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, ent->client->ps.stats ) )
+    if( ent->client->pers.classSelection == PCL_HUMAN_LEVEL5 )
       entMass *= 2;
   }
   else
@@ -691,19 +691,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
     //client is poisoned
     if( client->ps.stats[ STAT_STATE ] & SS_POISONED )
     {
-      int damage = ALIEN_POISON_DMG;
-
-      if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, client->ps.stats ) )
-        damage -= BSUIT_POISON_PROTECTION;
-
-      if( BG_InventoryContainsUpgrade( UP_HELMET, client->ps.stats ) )
-        damage -= HELMET_POISON_PROTECTION;
-
-      if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, client->ps.stats ) )
-        damage -= LIGHTARMOUR_POISON_PROTECTION;
-
       G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
-        0, damage, 0, MOD_POISON );
+        0, ALIEN_POISON_DMG, 0, MOD_POISON );
     }
 
     // turn off life support when a team admits defeat
@@ -1324,7 +1313,7 @@ void ClientThink_real( gentity_t *ent )
 
   // Check if poison cloud has worn off
   if( ( client->ps.eFlags & EF_POISONCLOUDED ) &&
-      BG_PlayerPoisonCloudTime( &client->ps ) - level.time +
+      ALEVEL1_1_PCLOUD_TIME - level.time +
       client->lastPoisonCloudedTime <= 0 )
     client->ps.eFlags &= ~EF_POISONCLOUDED;
 

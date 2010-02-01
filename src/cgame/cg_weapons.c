@@ -1336,10 +1336,7 @@ CG_WeaponSelectable
 */
 static qboolean CG_WeaponSelectable( weapon_t weapon )
 {
-  if( !BG_InventoryContainsWeapon( weapon, cg.snap->ps.stats ) )
-    return qfalse;
-
-  return qtrue;
+  return weapon != WP_NONE && BG_InventoryContainsWeapon( weapon, cg.snap->ps.stats );
 }
 
 
@@ -1350,10 +1347,7 @@ CG_UpgradeSelectable
 */
 static qboolean CG_UpgradeSelectable( upgrade_t upgrade )
 {
-  if( !BG_InventoryContainsUpgrade( upgrade, cg.snap->ps.stats ) )
-    return qfalse;
-
-  return BG_Upgrade( upgrade )->usable;
+  return upgrade != UP_NONE && BG_InventoryContainsUpgrade( upgrade, cg.snap->ps.stats );
 }
 
 
@@ -1434,8 +1428,6 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     if( !BG_InventoryContainsUpgrade( i, cg.snap->ps.stats ) )
       continue;
     colinfo[ numItems ] = 0;
-    if( !BG_Upgrade( i )->usable )
-      colinfo[ numItems ] = 2;
 
     if( i == cg.weaponSelect - 32 )
       selectedItem = numItems;
@@ -1478,9 +1470,6 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
          break;
        case 1:
          color = colorRed;
-         break;
-       case 2:
-         color = colorMdGrey;
          break;
       }
       color[3] = 0.5;

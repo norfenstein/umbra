@@ -629,7 +629,7 @@ CG_DrawHumanScanner
 */
 static void CG_DrawHumanScanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
 {
-  if( BG_InventoryContainsUpgrade( UP_HELMET, cg.snap->ps.stats ) )
+  if( BG_ClassHasAbility( cg.snap->ps.stats[ STAT_CLASS ], SCA_SCANNER ) )
     CG_Scanner( rect, shader, color );
 }
 

@@ -200,7 +200,6 @@ vmCvar_t  cg_unlagged;
 vmCvar_t  cg_debugVoices;
 
 vmCvar_t  ui_currentClass;
-vmCvar_t  ui_carriage;
 vmCvar_t  ui_dialog;
 vmCvar_t  ui_voteActive;
 vmCvar_t  ui_alienTeamVoteActive;
@@ -315,7 +314,6 @@ static cvarTable_t cvarTable[ ] =
 
   // communication cvars set by the cgame to be read by ui
   { &ui_currentClass, "ui_currentClass", "0", CVAR_ROM },
-  { &ui_carriage, "ui_carriage", "", CVAR_ROM },
   { &ui_dialog, "ui_dialog", "Text not set", CVAR_ROM },
   { &ui_voteActive, "ui_voteActive", "0", CVAR_ROM },
   { &ui_humanTeamVoteActive, "ui_humanTeamVoteActive", "0", CVAR_ROM },
@@ -375,41 +373,6 @@ void CG_RegisterCvars( void )
 
 
 /*
-===============
-CG_SetUIVars
-
-Set some cvars used by the UI
-===============
-*/
-static void CG_SetUIVars( void )
-{
-  int   i;
-  char  carriageCvar[ MAX_TOKEN_CHARS ];
-
-  if( !cg.snap )
-    return;
-
-  *carriageCvar = 0;
-
-  //determine what the player is carrying
-  for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-  {
-    if( BG_InventoryContainsWeapon( i, cg.snap->ps.stats ) &&
-        BG_Weapon( i )->purchasable )
-      strcat( carriageCvar, va( "W%d ", i ) );
-  }
-  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-  {
-    if( BG_InventoryContainsUpgrade( i, cg.snap->ps.stats ) &&
-        BG_Upgrade( i )->purchasable )
-      strcat( carriageCvar, va( "U%d ", i ) );
-  }
-  strcat( carriageCvar, "$" );
-
-  trap_Cvar_Set( "ui_carriage", carriageCvar );
-}
-
-/*
 =================
 CG_UpdateCvars
 =================
@@ -422,11 +385,6 @@ void CG_UpdateCvars( void )
   for( i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++ )
     if( cv->vmCvar )
       trap_Cvar_Update( cv->vmCvar );
-
-  // check for modications here
-
-  CG_SetUIVars( );
-
 }
 
 

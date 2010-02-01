@@ -181,8 +181,6 @@ typedef struct
     const char  *text;
     buildable_t buildable;
     class_t     pclass;
-    weapon_t    weapon;
-    upgrade_t   upgrade;
   } v;
 }
 menuItem_t;
@@ -253,9 +251,6 @@ typedef struct
   menuItem_t  helpList[ MAX_HELP_INFOPANES ];
   int         helpCount;
   int         helpIndex;
-
-  int         weapons;
-  int         upgrades;
 
   serverStatus_t serverStatus;
 

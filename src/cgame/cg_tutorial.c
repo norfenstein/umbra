@@ -430,14 +430,10 @@ static void CG_HumanText( char *text, playerState_t *ps )
       va( "%s to select an upgrade\n",
           CG_KeyNameForCommand( "weapnext" ) ) );
 
-  if( upgrade == UP_NONE ||
-      ( upgrade > UP_NONE && BG_Upgrade( upgrade )->usable ) )
-  {
-    Q_strcat( text, MAX_TUTORIAL_TEXT,
-        va( "Press %s to use the %s\n",
-            CG_KeyNameForCommand( "+button2" ),
-            name ) );
-  }
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to use the %s\n",
+          CG_KeyNameForCommand( "+button2" ),
+          name ) );
 
   if( ps->stats[ STAT_HEALTH ] <= 35 &&
       BG_InventoryContainsUpgrade( UP_MEDKIT, ps->stats ) )

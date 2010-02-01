@@ -1936,7 +1936,6 @@ void CG_Player( centity_t *cent )
   float         scale;
   vec3_t        tempAxis[ 3 ], tempAxis2[ 3 ];
   vec3_t        angles;
-  int           held = es->modelindex;
   vec3_t        surfNormal = { 0.0f, 0.0f, 1.0f };
 
   // the client number is stored in clientNum.  It can't be derived

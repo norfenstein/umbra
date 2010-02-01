@@ -131,9 +131,9 @@ static void CG_DrawBlips( rectDef_t *rect, vec3_t origin, vec4_t colour )
   Vector4Copy( colour, localColour );
 
   RotatePointAroundVector( drawOrigin, up, origin, -entityPositions.vangles[ 1 ] - 90 );
-  drawOrigin[ 0 ] /= ( 2 * HELMET_RANGE / rect->w );
-  drawOrigin[ 1 ] /= ( 2 * HELMET_RANGE / rect->h );
-  drawOrigin[ 2 ] /= ( 2 * HELMET_RANGE / rect->w );
+  drawOrigin[ 0 ] /= ( 2 * SCANNER_RANGE / rect->w );
+  drawOrigin[ 1 ] /= ( 2 * SCANNER_RANGE / rect->h );
+  drawOrigin[ 2 ] /= ( 2 * SCANNER_RANGE / rect->w );
 
   alphaMod = FAR_ALPHA +
     ( ( drawOrigin[ 1 ] + ( rect->h / 2.0f ) ) / rect->h ) * ( NEAR_ALPHA - FAR_ALPHA );
@@ -275,7 +275,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanBuildablePos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] < 0 ) )
       CG_DrawBlips( rect, relOrigin, hIbelow );
   }
 
@@ -285,7 +285,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] < 0 ) )
       CG_DrawBlips( rect, relOrigin, aIbelow );
   }
 
@@ -295,7 +295,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanClientPos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] < 0 ) )
       CG_DrawBlips( rect, relOrigin, hIbelow );
   }
 
@@ -305,7 +305,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] < 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] < 0 ) )
       CG_DrawBlips( rect, relOrigin, aIbelow );
   }
 
@@ -322,7 +322,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanBuildablePos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] > 0 ) )
       CG_DrawBlips( rect, relOrigin, hIabove );
   }
 
@@ -332,7 +332,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienBuildablePos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] > 0 ) )
       CG_DrawBlips( rect, relOrigin, aIabove );
   }
 
@@ -342,7 +342,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.humanClientPos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] > 0 ) )
       CG_DrawBlips( rect, relOrigin, hIabove );
   }
 
@@ -352,7 +352,7 @@ void CG_Scanner( rectDef_t *rect, qhandle_t shader, vec4_t color )
     VectorClear( relOrigin );
     VectorSubtract( entityPositions.alienClientPos[ i ], origin, relOrigin );
 
-    if( VectorLength( relOrigin ) < HELMET_RANGE && ( relOrigin[ 2 ] > 0 ) )
+    if( VectorLength( relOrigin ) < SCANNER_RANGE && ( relOrigin[ 2 ] > 0 ) )
       CG_DrawBlips( rect, relOrigin, aIabove );
   }
 }

@@ -52,7 +52,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ASPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     ASPAWN_BT,             //int       buildTime;
@@ -85,7 +84,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     OVERMIND_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     OVERMIND_ATTACK_REPEAT,//int       nextthink;
     OVERMIND_BT,           //int       buildTime;
@@ -118,7 +116,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BARRICADE_SPLASHRADIUS,//int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     BARRICADE_BT,          //int       buildTime;
@@ -151,7 +148,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ACIDTUBE_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     200,                   //int       nextthink;
     ACIDTUBE_BT,           //int       buildTime;
@@ -184,7 +180,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TRAPPER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     TRAPPER_BT,            //int       buildTime;
@@ -218,7 +213,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BOOSTER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     BOOSTER_BT,            //int       buildTime;
@@ -250,7 +244,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HIVE_SPLASHRADIUS,     //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     500,                   //int       nextthink;
     HIVE_BT,               //int       buildTime;
@@ -283,7 +276,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HOVEL_SPLASHRADIUS,    //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
-    ( 1 << WP_ABUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     150,                   //int       nextthink;
     HOVEL_BT,              //int       buildTime;
@@ -316,7 +308,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     HSPAWN_BT,             //int       buildTime;
@@ -349,7 +340,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MGTURRET_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     50,                    //int       nextthink;
     MGTURRET_BT,           //int       buildTime;
@@ -382,7 +372,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TESLAGEN_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     150,                   //int       nextthink;
     TESLAGEN_BT,           //int       buildTime;
@@ -415,7 +404,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     ARMOURY_BT,            //int       buildTime;
@@ -448,7 +436,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     DC_SPLASHRADIUS,       //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     DC_BT,                 //int       buildTime;
@@ -482,7 +469,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     MEDISTAT_BT,           //int       buildTime;
@@ -515,7 +501,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     REACTOR_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
     BANIM_IDLE1,           //int       idleAnim;
     REACTOR_ATTACK_DCC_REPEAT,//int       nextthink;
     REACTOR_BT,            //int       buildTime;
@@ -547,8 +532,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     REPEATER_SPLASHDAMAGE, //int       splashDamage;
     REPEATER_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
-    TEAM_HUMANS,            //int       team;
-    ( 1 << WP_HBUILD ),    //weapon_t  buildWeapon;
+    TEAM_HUMANS,           //int       team;
     BANIM_IDLE1,           //int       idleAnim;
     100,                   //int       nextthink;
     REPEATER_BT,           //int       buildTime;
@@ -1124,7 +1108,7 @@ static const classAttributes_t bg_classList[ ] =
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
-    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS|SCA_SCANNER,//int     abilities;
     { WP_SHOTGUN, WP_BLASTER, WP_NONE },            //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
@@ -1675,7 +1659,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1696,7 +1679,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1717,7 +1699,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1738,7 +1719,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1759,7 +1739,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1780,7 +1759,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1801,7 +1779,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -1822,7 +1799,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1843,7 +1819,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1864,7 +1839,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1885,7 +1859,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1906,7 +1879,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1927,7 +1899,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qtrue,                //qboolean  canZoom;
     20.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1948,7 +1919,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1969,7 +1939,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -1990,7 +1959,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -2011,7 +1979,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qtrue,                //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -2032,7 +1999,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -2053,7 +2019,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -2074,7 +2039,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -2095,7 +2059,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -2116,7 +2079,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   },
@@ -2137,7 +2099,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
@@ -2158,7 +2119,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  purchasable;
     qfalse,               //qboolean  longRanged;
     TEAM_HUMANS           //team_t    team;
   }
@@ -2204,89 +2164,24 @@ const weaponAttributes_t *BG_Weapon( weapon_t weapon )
 static const upgradeAttributes_t bg_upgrades[ ] =
 {
   {
-    UP_LIGHTARMOUR,         //int   upgradeNum;
-    LIGHTARMOUR_PRICE,      //int   price;
-    "larmour",              //char  *upgradeName;
-    "Light Armour",         //char  *humanName;
-    "Protective armour that helps to defend against light alien melee "
-      "attacks.",
-    "icons/iconu_larmour",
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
-    TEAM_HUMANS             //team_t  team;
-  },
-  {
-    UP_HELMET,              //int   upgradeNum;
-    HELMET_PRICE,           //int   price;
-    "helmet",               //char  *upgradeName;
-    "Helmet",               //char  *humanName;
-    "In addition to protecting your head, the helmet provides a "
-      "scanner indicating the presence of any friendly or hostile "
-      "lifeforms and structures in your immediate vicinity.",
-    "icons/iconu_helmet",
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
-    TEAM_HUMANS             //team_t  team;
-  },
-  {
     UP_MEDKIT,              //int   upgradeNum;
-    MEDKIT_PRICE,           //int   price;
     "medkit",               //char  *upgradeName;
     "Medkit",               //char  *humanName;
-    "",
     "icons/iconu_atoxin",
-    qfalse,                 //qboolean purchasable
-    qtrue,                  //qboolean usable
-    TEAM_HUMANS             //team_t  team;
-  },
-  {
-    UP_BATTPACK,            //int   upgradeNum;
-    BATTPACK_PRICE,         //int   price;
-    "battpack",             //char  *upgradeName;
-    "Battery Pack",         //char  *humanName;
-    "Back-mounted battery pack that permits storage of one and a half "
-      "times the normal energy capacity for energy weapons.",
-    "icons/iconu_battpack",
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
     TEAM_HUMANS             //team_t  team;
   },
   {
     UP_JETPACK,             //int   upgradeNum;
-    JETPACK_PRICE,          //int   price;
     "jetpack",              //char  *upgradeName;
     "Jet Pack",             //char  *humanName;
-    "Back-mounted jet pack that enables the user to fly to remote "
-      "locations. It is very useful against alien spawns in hard "
-      "to reach spots.",
     "icons/iconu_jetpack",
-    qtrue,                  //qboolean purchasable
-    qtrue,                  //qboolean usable
-    TEAM_HUMANS             //team_t  team;
-  },
-  {
-    UP_BATTLESUIT,          //int   upgradeNum;
-    BSUIT_PRICE,            //int   price;
-    "bsuit",                //char  *upgradeName;
-    "Battlesuit",           //char  *humanName;
-    "A full body armour that is highly effective at repelling alien attacks. "
-      "It allows the user to enter hostile situations with a greater degree "
-      "of confidence.",
-    "icons/iconu_bsuit",
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
     TEAM_HUMANS             //team_t  team;
   },
   {
     UP_GRENADE,             //int   upgradeNum;
-    GRENADE_PRICE,          //int   price;
     "gren",                 //char  *upgradeName;
     "Grenade",              //char  *humanName;
-    "A small incendinary device ideal for damaging tightly packed "
-      "alien structures. Has a five second timer.",
     0,
-    qtrue,                  //qboolean purchasable
-    qtrue,                  //qboolean usable
     TEAM_HUMANS             //team_t  team;
   }
 };
@@ -2812,15 +2707,9 @@ Check if a weapon has full ammo
 */
 qboolean BG_WeaponIsFull( weapon_t weapon, int stats[ ], int ammo, int clips )
 {
-  int maxAmmo, maxClips;
-
-  maxAmmo = BG_Weapon( weapon )->maxAmmo;
-  maxClips = BG_Weapon( weapon )->maxClips;
-
-  if( BG_InventoryContainsUpgrade( UP_BATTPACK, stats ) )
-    maxAmmo = (int)( (float)maxAmmo * BATTPACK_MODIFIER );
-
-  return ( maxAmmo == ammo ) && ( maxClips == clips );
+  return
+    BG_Weapon( weapon )->maxAmmo == ammo &&
+    BG_Weapon( weapon )->maxClips == clips;
 }
 
 /*
@@ -3139,38 +3028,6 @@ void BG_PositionBuildableRelativeToPlayer( const playerState_t *ps,
 }
 
 /*
-===============
-BG_GetValueOfPlayer
-
-Returns the credit value of a player
-===============
-*/
-int BG_GetValueOfPlayer( playerState_t *ps )
-{
-  int i, worth = 0;
-  
-  worth = BG_Class( ps->stats[ STAT_CLASS ] )->value;
-
-  // Humans have worth from their equipment as well
-  if( ps->stats[ STAT_TEAM ] == TEAM_HUMANS )
-  {
-    for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
-    {
-      if( BG_InventoryContainsUpgrade( i, ps->stats ) )
-        worth += BG_Upgrade( i )->price;
-    }
-
-    for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
-    {
-      if( BG_InventoryContainsWeapon( i, ps->stats ) )
-        worth += BG_Weapon( i )->price;
-    }
-  }
-      
-  return worth;
-}
-
-/*
 =================
 BG_PlayerCanChangeWeapon
 =================
@@ -3183,25 +3040,6 @@ qboolean BG_PlayerCanChangeWeapon( playerState_t *ps )
     return qfalse;
 
   return ps->weaponTime <= 0 || ps->weaponstate != WEAPON_FIRING;
-}
-
-/*
-=================
-BG_PlayerPoisonCloudTime
-=================
-*/
-int BG_PlayerPoisonCloudTime( playerState_t *ps )
-{
-  int time = ALEVEL1_1_PCLOUD_TIME;
-
-  if( BG_InventoryContainsUpgrade( UP_BATTLESUIT, ps->stats ) )
-    time -= BSUIT_PCLOUD_PROTECTION;
-  if( BG_InventoryContainsUpgrade( UP_HELMET, ps->stats ) )
-    time -= HELMET_PCLOUD_PROTECTION;
-  if( BG_InventoryContainsUpgrade( UP_LIGHTARMOUR, ps->stats ) )
-    time -= LIGHTARMOUR_PCLOUD_PROTECTION;
-    
-  return time;
 }
 
 /*

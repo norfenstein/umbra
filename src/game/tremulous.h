@@ -192,11 +192,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CREEP_BASESIZE              700
 #define CREEP_TIMEOUT               1000
 #define CREEP_MODIFIER              0.5f
-#define CREEP_ARMOUR_MODIFIER       0.75f
 #define CREEP_SCALEDOWN_TIME        3000
 
 #define PCLOUD_MODIFIER             0.5f
-#define PCLOUD_ARMOUR_MODIFIER      0.75f
 
 #define ASPAWN_BP                   10
 #define ASPAWN_BT                   15000
@@ -445,35 +443,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * HUMAN upgrades
  */
 
-#define LIGHTARMOUR_PRICE           70
-#define LIGHTARMOUR_POISON_PROTECTION 1
-#define LIGHTARMOUR_PCLOUD_PROTECTION 1000
-
-#define HELMET_PRICE                90
-#define HELMET_RANGE                1000.0f
-#define HELMET_POISON_PROTECTION    1
-#define HELMET_PCLOUD_PROTECTION    1000
-
 #define MEDKIT_PRICE                0
 
-#define BATTPACK_PRICE              100
-#define BATTPACK_MODIFIER           1.5f //modifier for extra energy storage available
+#define SCANNER_RANGE               1000.0f
 
-#define JETPACK_PRICE               120
 #define JETPACK_FLOAT_SPEED         128.0f //up movement speed
 #define JETPACK_SINK_SPEED          192.0f //down movement speed
 #define JETPACK_DISABLE_TIME        1000 //time to disable the jetpack when player damaged
 #define JETPACK_DISABLE_CHANCE      0.3f
-
-#define BSUIT_PRICE                 400
-#define BSUIT_POISON_PROTECTION     3
-#define BSUIT_PCLOUD_PROTECTION     3000
-
-#define MGCLIP_PRICE                0
-
-#define CGAMMO_PRICE                0
-
-#define GAS_PRICE                   0
 
 #define MEDKIT_POISON_IMMUNITY_TIME 0
 #define MEDKIT_STARTUP_TIME         4000

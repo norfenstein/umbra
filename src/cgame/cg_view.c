@@ -746,8 +746,7 @@ void CG_OffsetFirstPersonView( void )
   {
     float scale, fraction, pitchFraction;
     
-    scale = 1.0f - (float)( cg.time - cg.poisonedTime ) /
-            BG_PlayerPoisonCloudTime( &cg.predictedPlayerState );
+    scale = 1.0f - (float)( cg.time - cg.poisonedTime ) / ALEVEL1_1_PCLOUD_TIME;
     if( scale < 0.0f )
       scale = 0.0f;
 
@@ -963,8 +962,7 @@ static int CG_CalcFov( void )
       cg.predictedPlayerState.stats[ STAT_HEALTH ] > 0 &&
       !( cg.snap->ps.pm_flags & PMF_FOLLOW ) )
   {
-    float scale = 1.0f - (float)( cg.time - cg.poisonedTime ) /
-                  BG_PlayerPoisonCloudTime( &cg.predictedPlayerState );
+    float scale = 1.0f - (float)( cg.time - cg.poisonedTime ) / ALEVEL1_1_PCLOUD_TIME;
       
     phase = ( cg.time - cg.poisonedTime ) / 1000.0f * PCLOUD_ZOOM_FREQUENCY * M_PI * 2.0f;
     v = PCLOUD_ZOOM_AMPLITUDE * sin( phase ) * scale;

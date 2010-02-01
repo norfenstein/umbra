@@ -221,8 +221,9 @@ typedef enum
 #define SCA_TAKESFALLDAMAGE     0x00000002
 #define SCA_FOVWARPS            0x00000004
 #define SCA_ALIENSENSE          0x00000008
-#define SCA_CANUSELADDERS       0x00000010
-#define SCA_WALLJUMPER          0x00000020
+#define SCA_SCANNER             0x00000010
+#define SCA_CANUSELADDERS       0x00000020
+#define SCA_WALLJUMPER          0x00000040
 
 #define SS_WALLCLIMBING         0x00000001
 #define SS_CREEPSLOWED          0x00000002
@@ -351,12 +352,8 @@ typedef enum
 {
   UP_NONE,
 
-  UP_LIGHTARMOUR,
-  UP_HELMET,
   UP_MEDKIT,
-  UP_BATTPACK,
   UP_JETPACK,
-  UP_BATTLESUIT,
   UP_GRENADE,
 
   UP_NUM_UPGRADES
@@ -945,7 +942,6 @@ typedef struct
   int           meansOfDeath;
 
   team_t        team;
-  weapon_t      buildWeapon;
 
   int           idleAnim;
 
@@ -1005,7 +1001,6 @@ typedef struct
   qboolean  canZoom;
   float     zoomFov;
 
-  qboolean  purchasable;
   qboolean  longRanged;
 
   team_t    team;
@@ -1016,16 +1011,10 @@ typedef struct
 {
   upgrade_t number;
 
-  int       price;
-
   char      *name;
   char      *humanName;
-  char      *info;
 
   char      *icon;
-
-  qboolean  purchasable;
-  qboolean  usable;
 
   team_t    team;
 } upgradeAttributes_t;
@@ -1047,9 +1036,7 @@ void      BG_PositionBuildableRelativeToPlayer( const playerState_t *ps,
                                                 void (*trace)( trace_t *, const vec3_t, const vec3_t,
                                                                const vec3_t, const vec3_t, int, int ),
                                                 vec3_t outOrigin, vec3_t outAngles, trace_t *tr );
-int       BG_GetValueOfPlayer( playerState_t *ps );
 qboolean  BG_PlayerCanChangeWeapon( playerState_t *ps );
-int       BG_PlayerPoisonCloudTime( playerState_t *ps );
 weapon_t  BG_GetPlayerWeapon( playerState_t *ps );
 void      BG_GetAmmoForWeapon( playerState_t *ps, weapon_t weapon, int *ammo, int *clips );
 qboolean  BG_HasEnergyWeapon( playerState_t *ps );
