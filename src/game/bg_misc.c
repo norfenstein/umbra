@@ -1244,8 +1244,7 @@ static const classAttributes_t bg_classList[ ] =
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
-    SCA_TAKESFALLDAMAGE|
-      SCA_CANUSELADDERS,                            //int     abilities;
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_PULSE_RIFLE, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
@@ -2289,17 +2288,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     qtrue,                  //qboolean purchasable
     qtrue,                  //qboolean usable
     TEAM_HUMANS             //team_t  team;
-  },
-  {
-    UP_AMMO,                //int   upgradeNum;
-    0,                      //int   price;
-    "ammo",                 //char  *upgradeName;
-    "Ammunition",           //char  *humanName;
-    "Ammunition for the currently held weapon.",
-    0,
-    qtrue,                  //qboolean purchasable
-    qfalse,                 //qboolean usable
-    TEAM_HUMANS             //team_t  team;
   }
 };
 
@@ -2875,6 +2863,93 @@ int BG_WeaponSlotFromWeapon( int class, int weapon )
     return STAT_WEAPON3;
 
   return -1;
+}
+
+/*
+========================
+BG_AddClassItems
+
+Give items for a class
+========================
+*/
+void BG_AddClassItems( playerState_t *ps )
+{
+  int      maxAmmo, maxClips;
+  weapon_t weapon;
+  class_t  class = ps->stats[ STAT_CLASS ];
+
+  switch( class )
+  {
+    case PCL_ALIEN_BUILDER:
+    case PCL_ALIEN_LEVEL0:
+    case PCL_ALIEN_LEVEL1_0:
+    case PCL_ALIEN_LEVEL1_1:
+    case PCL_ALIEN_LEVEL2:
+    case PCL_ALIEN_LEVEL3:
+    case PCL_ALIEN_LEVEL4:
+    case PCL_ALIEN_LEVEL5:
+      break;
+
+    case PCL_HUMAN_BUILDER:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL0:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL1_0:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL1_1:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL2:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL3:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL4:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
+      BG_AddUpgradeToInventory( UP_JETPACK, ps->stats );
+      break;
+
+    case PCL_HUMAN_LEVEL5:
+      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
+      break;
+
+    default:
+      break;
+  }
+
+  weapon = BG_Class( class )->weapons[ 2 ];
+  maxAmmo = BG_Weapon( weapon )->maxAmmo;
+  maxClips = BG_Weapon( weapon )->maxClips;
+  ps->stats[ STAT_WEAPON3 ] = ( maxAmmo << 4 ) + maxClips;
+
+  weapon = BG_Class( class )->weapons[ 1 ];
+  maxAmmo = BG_Weapon( weapon )->maxAmmo;
+  maxClips = BG_Weapon( weapon )->maxClips;
+  ps->stats[ STAT_WEAPON2 ] = ( maxAmmo << 4 ) + maxClips;
+
+  weapon = BG_Class( class )->weapons[ 0 ];
+  maxAmmo = BG_Weapon( weapon )->maxAmmo;
+  maxClips = BG_Weapon( weapon )->maxClips;
+  ps->stats[ STAT_WEAPON1 ] = ( maxAmmo << 4 ) + maxClips;
+
+  ps->weapon = weapon;
+  ps->ammo = maxAmmo;
+  ps->clips = maxClips;
+
 }
 
 /*

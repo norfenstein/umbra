@@ -1390,8 +1390,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   int                 teamLocal;
   int                 eventSequence;
   char                userinfo[ MAX_INFO_STRING ];
-  int                 maxAmmo, maxClips;
-  weapon_t            weapon;
 
   index = ent - g_entities;
   client = ent->client;
@@ -1520,34 +1518,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   else
     client->pers.maxHealth = client->ps.stats[ STAT_MAX_HEALTH ] = 100;
 
-  // clear entity values
-  if( ent->client->pers.teamSelection == TEAM_HUMANS )
-  {
-    BG_AddUpgradeToInventory( UP_MEDKIT, client->ps.stats );
-  }
-
-  if( client->sess.spectatorState != SPECTATOR_NOT )
-    weapon = WP_NONE;
-
-  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 2 ];
-  maxAmmo = BG_Weapon( weapon )->maxAmmo;
-  maxClips = BG_Weapon( weapon )->maxClips;
-  client->ps.stats[ STAT_WEAPON3 ] = ( maxAmmo << 4 ) + maxClips;
-
-  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 1 ];
-  maxAmmo = BG_Weapon( weapon )->maxAmmo;
-  maxClips = BG_Weapon( weapon )->maxClips;
-  client->ps.stats[ STAT_WEAPON2 ] = ( maxAmmo << 4 ) + maxClips;
-
-  weapon = BG_Class( ent->client->pers.classSelection )->weapons[ 0 ];
-  maxAmmo = BG_Weapon( weapon )->maxAmmo;
-  maxClips = BG_Weapon( weapon )->maxClips;
-  client->ps.stats[ STAT_WEAPON1 ] = ( maxAmmo << 4 ) + maxClips;
-
-  client->ps.weapon = weapon;
-  client->ps.ammo = maxAmmo;
-  client->ps.clips = maxClips;
-
   // We just spawned, not changing weapons
   client->ps.persistant[ PERS_NEWWEAPON ] = 0;
 
@@ -1557,6 +1527,8 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   ent->client->ps.stats[ STAT_BUILDABLE ] = BA_NONE;
   ent->client->ps.stats[ STAT_STATE ] = 0;
   VectorSet( ent->client->ps.grapplePoint, 0.0f, 0.0f, 1.0f );
+
+  BG_AddClassItems( &client->ps );
 
   // health will count down towards max_health
   ent->health = client->ps.stats[ STAT_HEALTH ] = client->ps.stats[ STAT_MAX_HEALTH ]; //* 1.25;
@@ -1611,7 +1583,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
 
     // force the base weapon up
     if( client->pers.teamSelection == TEAM_HUMANS )
-      G_ForceWeaponChange( ent, weapon );
+      G_ForceWeaponChange( ent, client->ps.weapon );
 
     client->ps.weaponstate = WEAPON_READY;
   }

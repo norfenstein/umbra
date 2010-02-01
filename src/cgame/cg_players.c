@@ -1475,6 +1475,7 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
   refEntity_t   battpack;
   refEntity_t   flash;
   entityState_t *es = &cent->currentState;
+  class_t       class = ( es->misc >> 8 ) & 0xFF;
 
   held = es->modelindex;
   active = es->modelindex2;
@@ -1575,7 +1576,7 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
     cent->jetPackState = JPS_OFF;
   }
 
-  if( held & ( 1 << UP_BATTPACK ) )
+  if( class == PCL_HUMAN_LEVEL1_0 )
   {
     memset( &battpack, 0, sizeof( battpack ) );
     VectorCopy( torso->lightingOrigin, battpack.lightingOrigin );
@@ -2040,7 +2041,9 @@ void CG_Player( centity_t *cent )
   {
     legs.hModel = ci->legsModel;
 
-    if( held & ( 1 << UP_LIGHTARMOUR ) )
+    if( class == PCL_HUMAN_LEVEL2 ||
+        class == PCL_HUMAN_LEVEL3 ||
+        class == PCL_HUMAN_LEVEL4 )
       legs.customSkin = cgs.media.larmourLegsSkin;
     else
       legs.customSkin = ci->legsSkin;
@@ -2114,7 +2117,9 @@ void CG_Player( centity_t *cent )
     //
     torso.hModel = ci->torsoModel;
 
-    if( held & ( 1 << UP_LIGHTARMOUR ) )
+    if( class == PCL_HUMAN_LEVEL2 ||
+        class == PCL_HUMAN_LEVEL3 ||
+        class == PCL_HUMAN_LEVEL4 )
       torso.customSkin = cgs.media.larmourTorsoSkin;
     else
       torso.customSkin = ci->torsoSkin;
@@ -2136,7 +2141,9 @@ void CG_Player( centity_t *cent )
     //
     head.hModel = ci->headModel;
 
-    if( held & ( 1 << UP_HELMET ) )
+    if( class == PCL_HUMAN_LEVEL1_1 ||
+        class == PCL_HUMAN_LEVEL3 ||
+        class == PCL_HUMAN_LEVEL4 )
       head.customSkin = cgs.media.larmourHeadSkin;
     else
       head.customSkin = ci->headSkin;

@@ -219,11 +219,10 @@ typedef enum
 
 #define SCA_WALLCLIMBER         0x00000001
 #define SCA_TAKESFALLDAMAGE     0x00000002
-#define SCA_CANZOOM             0x00000004
-#define SCA_FOVWARPS            0x00000008
-#define SCA_ALIENSENSE          0x00000010
-#define SCA_CANUSELADDERS       0x00000020
-#define SCA_WALLJUMPER          0x00000040
+#define SCA_FOVWARPS            0x00000004
+#define SCA_ALIENSENSE          0x00000008
+#define SCA_CANUSELADDERS       0x00000010
+#define SCA_WALLJUMPER          0x00000020
 
 #define SS_WALLCLIMBING         0x00000001
 #define SS_CREEPSLOWED          0x00000002
@@ -359,8 +358,6 @@ typedef enum
   UP_JETPACK,
   UP_BATTLESUIT,
   UP_GRENADE,
-
-  UP_AMMO,
 
   UP_NUM_UPGRADES
 } upgrade_t;
@@ -1035,6 +1032,7 @@ typedef struct
 
 qboolean  BG_WeaponIsFull( weapon_t weapon, int stats[ ], int ammo, int clips );
 qboolean  BG_InventoryContainsWeapon( int weapon, int stats[ ] );
+void      BG_AddClassItems( playerState_t *ps );
 void      BG_AddUpgradeToInventory( int item, int stats[ ] );
 void      BG_RemoveUpgradeFromInventory( int item, int stats[ ] );
 qboolean  BG_InventoryContainsUpgrade( int item, int stats[ ] );
