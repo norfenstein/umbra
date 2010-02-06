@@ -856,6 +856,8 @@ void      G_ForceWeaponChange( gentity_t *ent, weapon_t weapon );
 void      G_GiveClientMaxAmmo( gentity_t *ent, qboolean buyingEnergyAmmo );
 void      CalcMuzzlePoint( gentity_t *ent, vec3_t forward, vec3_t right, vec3_t up, vec3_t muzzlePoint );
 void      SnapVectorTowards( vec3_t v, vec3_t to );
+void      G_HookFree( gentity_t *ent );
+void      G_HookThink( gentity_t *ent );
 qboolean  CheckVenomAttack( gentity_t *ent );
 void      CheckGrabAttack( gentity_t *ent );
 qboolean  CheckPounceAttack( gentity_t *ent );

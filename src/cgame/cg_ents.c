@@ -1091,6 +1091,7 @@ static void CG_AddCEntity( centity_t *cent )
     case ET_INVISIBLE:
     case ET_PUSH_TRIGGER:
     case ET_TELEPORT_TRIGGER:
+    case ET_GRAPPLE: //TODO
       break;
 
     case ET_GENERAL:

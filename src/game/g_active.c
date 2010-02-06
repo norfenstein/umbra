@@ -1521,29 +1521,20 @@ void ClientThink_real( gentity_t *ent )
   else
     BG_PlayerStateToEntityState( &ent->client->ps, &ent->s, qtrue );
 
+  // check autohit weapons
   switch( client->ps.weapon )
   {
     case WP_ALEVEL0:
-      if( !CheckVenomAttack( ent ) )
-      {
-        client->ps.weaponstate = WEAPON_READY;
-      }
-      else
-      {
-        client->ps.generic1 = WPM_PRIMARY;
-        G_AddEvent( ent, EV_FIRE_WEAPON, 0 );
-      }
-      break;
-
     case WP_ALEVEL2:
       if( !CheckVenomAttack( ent ) )
       {
         client->ps.weaponstate = WEAPON_READY;
       }
-      else
+
+      // Let go of the hook if we aren't firing
+      if( client->hook && !( client->buttons & BUTTON_ATTACK2 ) )
       {
-        client->ps.generic1 = WPM_PRIMARY;
-        G_AddEvent( ent, EV_FIRE_WEAPON, 0 );
+        G_HookFree( client->hook );
       }
       break;
 

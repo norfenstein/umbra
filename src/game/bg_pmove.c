@@ -1194,7 +1194,17 @@ static void PM_AirMove( void )
     PM_ClipVelocity( pm->ps->velocity, pml.groundTrace.plane.normal,
       pm->ps->velocity, OVERCLIP );
 
+#if 0
+  //ZOID:  If we are on the grapple, try stair-stepping
+  //this allows a player to use the grapple to pull himself
+  //over a ledge
+  if( pm->ps->pm_flags & PMF_GRAPPLE_PULL )
+    PM_StepSlideMove( qtrue, qfalse );
+  else
+    PM_SlideMove( qtrue );
+#else
   PM_StepSlideMove( qtrue, qfalse );
+#endif
 }
 
 /*
@@ -1430,6 +1440,36 @@ static void PM_WalkMove( void )
 
   //Com_Printf("velocity2 = %1.1f\n", VectorLength(pm->ps->velocity));
 
+}
+
+/*
+===================
+PM_GrappleMove
+
+===================
+*/
+static void PM_GrappleMove( void )
+{
+  vec3_t vel, v;
+  float vlen;
+
+  // turn off wallwalking while grappling TODO improve
+  pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
+
+  VectorScale( pml.forward, -16, v );
+  VectorAdd( pm->ps->grapplePoint, v, v );
+  VectorSubtract( v, pm->ps->origin, vel );
+  vlen = VectorLength( vel );
+  VectorNormalize( vel );
+
+  if( vlen <= 100 )
+    VectorScale( vel, 10 * vlen, vel );
+  else
+    VectorScale( vel, ALEVEL0_GRAPPLE_PULL_SPEED, vel );
+
+  VectorCopy( vel, pm->ps->velocity );
+
+  pml.groundPlane = qfalse;
 }
 
 
@@ -2144,7 +2184,8 @@ static void PM_GroundTrace( void )
       //toggle wall climbing if holding crouch
       if( pm->cmd.upmove < 0 && !( pm->ps->pm_flags & PMF_CROUCH_HELD ) )
       {
-        if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) )
+        if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) &&
+            !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) ) //don't start wallclimbing while grappling TODO improve this
           pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
         else if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
           pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
@@ -2156,7 +2197,8 @@ static void PM_GroundTrace( void )
     }
     else
     {
-      if( pm->cmd.upmove < 0 )
+      //don't start wallclimbing while grappling TODO improve this
+      if( pm->cmd.upmove < 0 && !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
         pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
       else if( pm->cmd.upmove >= 0 )
         pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
@@ -2201,8 +2243,9 @@ static void PM_GroundTrace( void )
     if( !PM_CorrectAllSolid( &trace ) )
       return;
 
-  //make sure that the surfNormal is reset to the ground
-  VectorCopy( refNormal, pm->ps->grapplePoint );
+  //make sure that the surfNormal is reset to the ground when not grappling
+  if( !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
+    VectorCopy( refNormal, pm->ps->grapplePoint );
 
   // if the trace didn't hit anything, we are in free fall
   if( trace.fraction == 1.0f )
@@ -3064,12 +3107,10 @@ static void PM_Weapon( void )
   switch( pm->ps->weapon )
   {
     case WP_ALEVEL0:
-      //venom is only autohit
-      return;
-
     case WP_ALEVEL2:
-      //venom is only autohit
-      return;
+      //venom is only autohit but grapple is secondary
+      if( !attack2 )
+        return;
 
     case WP_ALEVEL4:
       //pouncing has primary secondary AND autohit procedures
@@ -3714,6 +3755,12 @@ void PmoveSingle( pmove_t *pmove )
 
   if( pm->ps->pm_type == PM_JETPACK )
     PM_JetPackMove( );
+  else if( pm->ps->pm_flags & PMF_GRAPPLE_PULL )
+  {
+    PM_GrappleMove();
+    // We can wiggle a bit
+    PM_AirMove();
+  }
   else if( pm->ps->pm_flags & PMF_TIME_WATERJUMP )
     PM_WaterJumpMove( );
   else if( pm->waterlevel > 1 )

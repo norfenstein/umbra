@@ -52,6 +52,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL0_BITE_WIDTH           6.0f
 #define ALEVEL0_BITE_REPEAT          500
 #define ALEVEL0_BITE_K_SCALE         1.0f
+#define ALEVEL0_GRAPPLE_REPEAT       400
+#define ALEVEL0_GRAPPLE_SPEED        800
+#define ALEVEL0_GRAPPLE_PULL_SPEED   800
 
 #define ALEVEL1_1_CLAW_DMG           ADM(32)
 #define ALEVEL1_1_CLAW_RANGE         64.0f

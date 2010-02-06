@@ -140,6 +140,7 @@ typedef enum
 #define PMF_TIME_WALLJUMP   0x002000 // for limiting wall jumping
 #define PMF_CHARGE          0x004000 // keep track of pouncing
 #define PMF_WEAPON_SWITCH   0x008000 // force a weapon switch
+#define PMF_GRAPPLE_PULL    0x010000 // pull towards grapple location
 
 
 #define PMF_ALL_TIMES (PMF_TIME_WATERJUMP|PMF_TIME_LAND|PMF_TIME_KNOCKBACK|PMF_TIME_WALLJUMP)

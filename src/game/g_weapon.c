@@ -929,6 +929,54 @@ qboolean CheckVenomAttack( gentity_t *ent )
 }
 
 /*
+===============
+grappleFire
+===============
+*/
+void grappleFire( gentity_t *ent )
+{
+  if( !ent->client->fireHeld && !ent->client->hook )
+    fire_grapple( ent, muzzle, forward );
+
+  ent->client->fireHeld = qtrue;
+}
+
+/*
+===============
+G_HookFree
+===============
+*/
+void G_HookFree( gentity_t *ent )
+{
+  ent->parent->client->hook = NULL;
+  ent->parent->client->ps.pm_flags &= ~PMF_GRAPPLE_PULL;
+  G_FreeEntity( ent );
+}
+
+/*
+===============
+G_HookThink
+===============
+*/
+void G_HookThink( gentity_t *ent )
+{
+  if( ent->enemy )
+  {
+    vec3_t v, oldorigin;
+
+    VectorCopy( ent->r.currentOrigin, oldorigin );
+    v[0] = ent->enemy->r.currentOrigin[0] + ( ent->enemy->r.mins[0] + ent->enemy->r.maxs[0] ) * 0.5;
+    v[1] = ent->enemy->r.currentOrigin[1] + ( ent->enemy->r.mins[1] + ent->enemy->r.maxs[1] ) * 0.5;
+    v[2] = ent->enemy->r.currentOrigin[2] + ( ent->enemy->r.mins[2] + ent->enemy->r.maxs[2] ) * 0.5;
+    SnapVectorTowards( v, oldorigin );	// save net bandwidth
+
+    G_SetOrigin( ent, v );
+  }
+
+  VectorCopy( ent->r.currentOrigin, ent->parent->client->ps.grapplePoint );
+}
+
+/*
 ======================================================================
 
 ALEVEL1_1
@@ -1488,6 +1536,11 @@ void FireWeapon2( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
+    case WP_ALEVEL0:
+    case WP_ALEVEL2:
+      grappleFire( ent );
+      break;
+
     case WP_ALEVEL1_1:
       poisonCloud( ent );
       break;

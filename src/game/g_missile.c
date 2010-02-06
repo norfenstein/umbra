@@ -184,6 +184,53 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
         return;
     }
   }
+  else if( !strcmp( ent->classname, "hook" ) )
+  {
+    gentity_t *nent;
+    vec3_t v;
+
+    nent = G_Spawn();
+    if( other->takedamage && other->client )
+    {
+      G_AddEvent( nent, EV_MISSILE_HIT, DirToByte( trace->plane.normal ) );
+      nent->s.otherEntityNum = other->s.number;
+
+      ent->enemy = other;
+
+      v[0] = other->r.currentOrigin[0] + ( other->r.mins[0] + other->r.maxs[0] ) * 0.5;
+      v[1] = other->r.currentOrigin[1] + ( other->r.mins[1] + other->r.maxs[1] ) * 0.5;
+      v[2] = other->r.currentOrigin[2] + ( other->r.mins[2] + other->r.maxs[2] ) * 0.5;
+
+      SnapVectorTowards( v, ent->s.pos.trBase );	// save net bandwidth
+    }
+    else
+    {
+      VectorCopy( trace->endpos, v );
+      G_AddEvent( nent, EV_MISSILE_MISS, DirToByte( trace->plane.normal ) );
+      ent->enemy = NULL;
+    }
+
+    SnapVectorTowards( v, ent->s.pos.trBase );	// save net bandwidth
+
+    nent->freeAfterEvent = qtrue;
+    // change over to a normal entity right at the point of impact
+    nent->s.eType = ET_GENERAL;
+    ent->s.eType = ET_GRAPPLE;
+
+    G_SetOrigin( ent, v );
+    G_SetOrigin( nent, v );
+
+    ent->think = G_HookThink;
+    ent->nextthink = level.time + FRAMETIME;
+
+    ent->parent->client->ps.pm_flags |= PMF_GRAPPLE_PULL;
+    VectorCopy( ent->r.currentOrigin, ent->parent->client->ps.grapplePoint );
+
+    trap_LinkEntity( ent );
+    trap_LinkEntity( nent );
+
+    return;
+  }
 
   // impact damage
   if( other->takedamage )
@@ -307,9 +354,14 @@ void G_RunMissile( gentity_t *ent )
 
   if( impact )
   {
+    // Never explode or bounce on sky
     if( tr.surfaceFlags & SURF_NOIMPACT )
     {
-      // Never explode or bounce on sky
+      // If grapple, reset owner
+      if( ent->parent && ent->parent->client && ent->parent->client->hook == ent )
+      {
+        ent->parent->client->hook = NULL;
+      }
       G_FreeEntity( ent );
       return;
     }
@@ -330,6 +382,45 @@ void G_RunMissile( gentity_t *ent )
 
 
 //=============================================================================
+
+/*
+=================
+fire_grapple
+=================
+*/
+gentity_t *fire_grapple( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t	*hook;
+
+  VectorNormalize (dir);
+
+  hook = G_Spawn();
+  hook->classname = "hook";
+  hook->nextthink = level.time + 10000;
+  hook->think = G_HookFree;
+  hook->s.eType = ET_MISSILE;
+  hook->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  hook->s.weapon = WP_ALEVEL0;
+  hook->r.ownerNum = self->s.number;
+  hook->methodOfDeath = MOD_UNKNOWN; //doesn't do damage so will never kill
+  hook->clipmask = MASK_SHOT;
+  hook->parent = self;
+  hook->target_ent = NULL;
+
+  hook->s.pos.trType = TR_LINEAR;
+  hook->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
+  hook->s.otherEntityNum = self->s.number; // use to match beam in client
+  VectorCopy( start, hook->s.pos.trBase );
+  VectorScale( dir, ALEVEL0_GRAPPLE_SPEED, hook->s.pos.trDelta );
+  SnapVector( hook->s.pos.trDelta );			// save net bandwidth
+  VectorCopy( start, hook->r.currentOrigin );
+
+  self->client->hook = hook;
+
+  return hook;
+}
+
+
 
 /*
 =================
