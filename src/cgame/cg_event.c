@@ -691,17 +691,13 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
 
       break;
 
-    case EV_LEV1_GRAB:
-      trap_S_StartSound( NULL, es->number, CHAN_VOICE, cgs.media.alienL1Grab );
+    case EV_ALEV5_TRAMPLE_PREPARE:
+      trap_S_StartSound( NULL, es->number, CHAN_VOICE, cgs.media.alienL5ChargePrepare );
       break;
 
-    case EV_LEV4_TRAMPLE_PREPARE:
-      trap_S_StartSound( NULL, es->number, CHAN_VOICE, cgs.media.alienL4ChargePrepare );
-      break;
-
-    case EV_LEV4_TRAMPLE_START:
-      //FIXME: stop cgs.media.alienL4ChargePrepare playing here
-      trap_S_StartSound( NULL, es->number, CHAN_VOICE, cgs.media.alienL4ChargeStart );
+    case EV_ALEV5_TRAMPLE_START:
+      //FIXME: stop cgs.media.alienL5ChargePrepare playing here
+      trap_S_StartSound( NULL, es->number, CHAN_VOICE, cgs.media.alienL5ChargeStart );
       break;
 
     case EV_TAUNT:

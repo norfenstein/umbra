@@ -906,7 +906,7 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_HEALTH,                               //int     health;
     0.0f,                                           //float   fallDamage;
     ALEVEL1_1_REGEN,                                //float   regenRate;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
+    SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
     { WP_ALEVEL1_0, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
@@ -933,7 +933,7 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_HEALTH,                               //int     health;
     0.0f,                                           //float   fallDamage;
     ALEVEL1_1_REGEN,                                //float   regenRate;
-    SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
+    SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
     { WP_ALEVEL1_1, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
@@ -2397,9 +2397,8 @@ char *eventnames[ ] =
   "EV_TESLATRAIL",
   "EV_BULLET",        // otherEntity is the shooter
 
-  "EV_LEV1_GRAB",
-  "EV_LEV4_TRAMPLE_PREPARE",
-  "EV_LEV4_TRAMPLE_START",
+  "EV_ALEV5_TRAMPLE_PREPARE",
+  "EV_ALEV5_TRAMPLE_START",
 
   "EV_PAIN",
   "EV_DEATH1",

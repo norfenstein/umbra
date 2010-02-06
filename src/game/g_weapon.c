@@ -979,66 +979,6 @@ void G_HookThink( gentity_t *ent )
 /*
 ======================================================================
 
-ALEVEL1_1
-
-======================================================================
-*/
-
-/*
-===============
-CheckGrabAttack
-===============
-*/
-void CheckGrabAttack( gentity_t *ent )
-{
-  trace_t   tr;
-  vec3_t    end, dir;
-  gentity_t *traceEnt;
-
-  // set aiming directions
-  AngleVectors( ent->client->ps.viewangles, forward, right, up );
-
-  CalcMuzzlePoint( ent, forward, right, up, muzzle );
-
-  if( ent->client->ps.weapon == WP_ALEVEL1_1 )
-    VectorMA( muzzle, ALEVEL1_1_GRAB_RANGE, forward, end );
-
-  trap_Trace( &tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
-  if( tr.surfaceFlags & SURF_NOIMPACT )
-    return;
-
-  traceEnt = &g_entities[ tr.entityNum ];
-
-  if( !traceEnt->takedamage )
-    return;
-
-  if( traceEnt->client )
-  {
-    if( traceEnt->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-      return;
-
-    if( traceEnt->client->ps.stats[ STAT_HEALTH ] <= 0 )
-      return;
-
-    if( !( traceEnt->client->ps.stats[ STAT_STATE ] & SS_GRABBED ) )
-    {
-      AngleVectors( traceEnt->client->ps.viewangles, dir, NULL, NULL );
-      traceEnt->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
-
-      //event for client side grab effect
-      G_AddPredictableEvent( ent, EV_LEV1_GRAB, 0 );
-    }
-
-    traceEnt->client->ps.stats[ STAT_STATE ] |= SS_GRABBED;
-
-    if( ent->client->ps.weapon == WP_ALEVEL1_1 )
-      traceEnt->client->grabExpiryTime = level.time + ALEVEL1_1_GRAB_TIME;
-  }
-}
-
-/*
-======================================================================
-
 ALEVEL3
 
 ======================================================================

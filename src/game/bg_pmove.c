@@ -2905,7 +2905,7 @@ static void PM_Weapon( void )
                                        ALEVEL5_TRAMPLE_DURATION /
                                        ALEVEL5_TRAMPLE_CHARGE_MAX;
           pm->ps->stats[ STAT_STATE ] |= SS_CHARGING;
-          PM_AddEvent( EV_LEV4_TRAMPLE_START );
+          PM_AddEvent( EV_ALEV5_TRAMPLE_START );
         }
         else
           pm->ps->stats[ STAT_MISC ] -= pml.msec;

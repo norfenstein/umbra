@@ -1243,9 +1243,8 @@ typedef struct
   sfxHandle_t humanBuildablePrebuild;
   sfxHandle_t humanBuildableDamage[ 4 ];
 
-  sfxHandle_t alienL1Grab;
-  sfxHandle_t alienL4ChargePrepare;
-  sfxHandle_t alienL4ChargeStart;
+  sfxHandle_t alienL5ChargePrepare;
+  sfxHandle_t alienL5ChargeStart;
 
   qhandle_t   cursor;
   qhandle_t   selectCursor;

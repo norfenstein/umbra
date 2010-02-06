@@ -406,7 +406,6 @@ struct gclient_s
   int                 lastPoisonTime;
   int                 poisonImmunityTime;
   gentity_t           *lastPoisonClient;
-  int                 grabExpiryTime;
   int                 lastLockTime;
   int                 lastSlowTime;
   int                 lastMedKitTime;
@@ -858,7 +857,6 @@ void      SnapVectorTowards( vec3_t v, vec3_t to );
 void      G_HookFree( gentity_t *ent );
 void      G_HookThink( gentity_t *ent );
 qboolean  CheckVenomAttack( gentity_t *ent );
-void      CheckGrabAttack( gentity_t *ent );
 qboolean  CheckPounceAttack( gentity_t *ent );
 void      CheckCkitRepair( gentity_t *ent );
 void      G_ChargeAttack( gentity_t *ent, gentity_t *victim );

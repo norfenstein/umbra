@@ -1281,17 +1281,12 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_DEAD;
   else if( client->ps.stats[ STAT_STATE ] & SS_HOVELING )
     client->ps.pm_type = PM_FREEZE;
-  else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
-           client->ps.stats[ STAT_STATE ] & SS_GRABBED )
+  else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED )
     client->ps.pm_type = PM_GRABBED;
   else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
     client->ps.pm_type = PM_JETPACK;
   else
     client->ps.pm_type = PM_NORMAL;
-
-  if( ( client->ps.stats[ STAT_STATE ] & SS_GRABBED ) &&
-      client->grabExpiryTime < level.time )
-    client->ps.stats[ STAT_STATE ] &= ~SS_GRABBED;
 
   if( ( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) &&
       client->lastLockTime + LOCKBLOB_LOCKTIME < level.time )
@@ -1379,15 +1374,6 @@ void ClientThink_real( gentity_t *ent )
         {
           modifier = BOOSTER_REGEN_MOD;
           continue;
-        }
-
-        if( boost->s.eType == ET_PLAYER && boost->client &&
-            boost->client->pers.teamSelection ==
-              ent->client->pers.teamSelection && boost->health > 0 )
-        {
-          class_t class = boost->client->ps.stats[ STAT_CLASS ];
-          if( class == PCL_ALIEN_LEVEL1_1 && modifier < ALEVEL1_1_REGEN_MOD )
-            modifier = ALEVEL1_1_REGEN_MOD;
         }
       }
 
@@ -1530,10 +1516,6 @@ void ClientThink_real( gentity_t *ent )
       {
         G_HookFree( client->hook );
       }
-      break;
-
-    case WP_ALEVEL1_1:
-      CheckGrabAttack( ent );
       break;
 
     case WP_ALEVEL4:

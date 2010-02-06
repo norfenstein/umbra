@@ -271,15 +271,8 @@ CG_AlienLevel11Text
 static void CG_AlienLevel11Text( char *text, playerState_t *ps )
 {
   Q_strcat( text, MAX_TUTORIAL_TEXT,
-      "Touch humans to grab them\n" );
-
-  Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to swipe\n",
         CG_KeyNameForCommand( "+attack" ) ) );
-
-  Q_strcat( text, MAX_TUTORIAL_TEXT,
-      va( "Press %s to walk on walls\n",
-        CG_KeyNameForCommand( "+movedown" ) ) );
 }
 
 /*
