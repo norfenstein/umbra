@@ -284,7 +284,6 @@ typedef enum
 #define EF_FIRING2          0x00000400    // alt fire
 #define EF_FIRING3          0x00000800    // third fire
 #define EF_MOVER_STOP       0x00001000    // will push otherwise
-#define EF_POISONCLOUDED    0x00002000    // player hit with basilisk gas
 #define EF_CONNECTION       0x00004000    // draw a connection trouble sprite
 #define EF_BLOBLOCKED       0x00020000    // caught by a trapper
 #define EF_WARN_CHARGE      0x00040000    // Lucifer Cannon is about to overcharge
@@ -833,7 +832,6 @@ typedef enum
   MOD_ALEVEL0_BITE,
   MOD_ALEVEL1_0_CLAW,
   MOD_ALEVEL1_1_CLAW,
-  MOD_ALEVEL1_1_PCLOUD,
   MOD_ALEVEL2_BITE,
   MOD_ALEVEL3_CLAW,
   MOD_ALEVEL3_ZAP,

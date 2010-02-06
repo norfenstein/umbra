@@ -529,12 +529,6 @@ static void CG_StepOffset( void )
   }
 }
 
-#define PCLOUD_ROLL_AMPLITUDE     25.0f
-#define PCLOUD_ROLL_FREQUENCY     0.4f
-#define PCLOUD_ZOOM_AMPLITUDE     15
-#define PCLOUD_ZOOM_FREQUENCY     0.625f // 2.5s / 4
-#define PCLOUD_DISORIENT_DURATION 2500
-
 
 /*
 ===============
@@ -740,26 +734,6 @@ void CG_OffsetFirstPersonView( void )
       cg.upMoveTime = cg.time;
   }
 
-  if( ( cg.predictedPlayerEntity.currentState.eFlags & EF_POISONCLOUDED ) &&
-      ( cg.time - cg.poisonedTime < PCLOUD_DISORIENT_DURATION) &&
-      !( cg.snap->ps.pm_flags & PMF_FOLLOW ) )
-  {
-    float scale, fraction, pitchFraction;
-    
-    scale = 1.0f - (float)( cg.time - cg.poisonedTime ) / ALEVEL1_1_PCLOUD_TIME;
-    if( scale < 0.0f )
-      scale = 0.0f;
-
-    fraction = sin( ( cg.time - cg.poisonedTime ) / 500.0f * M_PI * PCLOUD_ROLL_FREQUENCY ) *
-               scale;
-    pitchFraction = sin( ( cg.time - cg.poisonedTime ) / 200.0f * M_PI * PCLOUD_ROLL_FREQUENCY ) *
-                    scale;
-
-    angles[ ROLL ] += fraction * PCLOUD_ROLL_AMPLITUDE;
-    angles[ YAW ] += fraction * PCLOUD_ROLL_AMPLITUDE;
-    angles[ PITCH ] += pitchFraction * PCLOUD_ROLL_AMPLITUDE / 2.0f;
-  }
-
   // this *feels* more realisitic for humans
   if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_HUMANS &&
       ( cg.predictedPlayerState.pm_type == PM_NORMAL ||
@@ -956,19 +930,6 @@ static int CG_CalcFov( void )
   }
   else
     inwater = qfalse;
-
-  if( ( cg.predictedPlayerEntity.currentState.eFlags & EF_POISONCLOUDED ) &&
-      ( cg.time - cg.poisonedTime < PCLOUD_DISORIENT_DURATION) &&
-      cg.predictedPlayerState.stats[ STAT_HEALTH ] > 0 &&
-      !( cg.snap->ps.pm_flags & PMF_FOLLOW ) )
-  {
-    float scale = 1.0f - (float)( cg.time - cg.poisonedTime ) / ALEVEL1_1_PCLOUD_TIME;
-      
-    phase = ( cg.time - cg.poisonedTime ) / 1000.0f * PCLOUD_ZOOM_FREQUENCY * M_PI * 2.0f;
-    v = PCLOUD_ZOOM_AMPLITUDE * sin( phase ) * scale;
-    fov_x += v;
-    fov_y += v;
-  }
 
 
   // set it
@@ -1280,13 +1241,6 @@ static int CG_CalcViewValues( void )
       VectorMA( cg.refdef.vieworg, f, cg.predictedError, cg.refdef.vieworg );
     else
       cg.predictedErrorTime = 0;
-  }
-
-  //shut off the poison cloud effect if it's still on the go
-  if( cg.snap->ps.stats[ STAT_HEALTH ] <= 0 )
-  {
-    if( CG_IsParticleSystemValid( &cg.poisonCloudPS ) )
-      CG_DestroyParticleSystem( &cg.poisonCloudPS );
   }
 
   if( cg.renderingThirdPerson )

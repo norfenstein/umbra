@@ -387,10 +387,6 @@ static float PM_CmdScale( usercmd_t *cmd )
     {
       modifier *= CREEP_MODIFIER;
     }
-    if( pm->ps->eFlags & EF_POISONCLOUDED )
-    {
-      modifier *= PCLOUD_MODIFIER;
-    }
   }
 
   if( pm->ps->weapon == WP_ALEVEL5 && pm->ps->pm_flags & PMF_CHARGE )
@@ -901,8 +897,7 @@ static qboolean PM_CheckDodge( void )
   
   // Weaken dodge if slowed
   if( ( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )  ||
-      ( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED ) ||
-      ( pm->ps->eFlags & EF_POISONCLOUDED ) )
+      ( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED ) )
     sideModifier = HUMAN_DODGE_SLOWED_MODIFIER;
   else
     sideModifier = HUMAN_DODGE_SIDE_MODIFIER;

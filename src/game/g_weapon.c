@@ -1037,50 +1037,6 @@ void CheckGrabAttack( gentity_t *ent )
 }
 
 /*
-===============
-poisonCloud
-===============
-*/
-void poisonCloud( gentity_t *ent )
-{
-  int       entityList[ MAX_GENTITIES ];
-  vec3_t    range = { ALEVEL1_1_PCLOUD_RANGE, ALEVEL1_1_PCLOUD_RANGE, ALEVEL1_1_PCLOUD_RANGE };
-  vec3_t    mins, maxs;
-  int       i, num;
-  gentity_t *humanPlayer;
-  trace_t   tr;
-
-  VectorAdd( ent->client->ps.origin, range, maxs );
-  VectorSubtract( ent->client->ps.origin, range, mins );
-
-  G_UnlaggedOn( ent, ent->client->ps.origin, ALEVEL1_1_PCLOUD_RANGE );
-  num = trap_EntitiesInBox( mins, maxs, entityList, MAX_GENTITIES );
-  for( i = 0; i < num; i++ )
-  {
-    humanPlayer = &g_entities[ entityList[ i ] ];
-
-    if( humanPlayer->client &&
-        humanPlayer->client->pers.teamSelection == TEAM_HUMANS )
-    {
-      trap_Trace( &tr, muzzle, NULL, NULL, humanPlayer->s.origin,
-                  humanPlayer->s.number, CONTENTS_SOLID );
-
-      //can't see target from here
-      if( tr.entityNum == ENTITYNUM_WORLD )
-        continue;
-
-      humanPlayer->client->ps.eFlags |= EF_POISONCLOUDED;
-      humanPlayer->client->lastPoisonCloudedTime = level.time;
-
-      trap_SendServerCommand( humanPlayer->client->ps.clientNum,
-                              "poisoncloud" );
-    }
-  }
-  G_UnlaggedOff( );
-}
-
-
-/*
 ======================================================================
 
 ALEVEL3
@@ -1539,10 +1495,6 @@ void FireWeapon2( gentity_t *ent )
     case WP_ALEVEL0:
     case WP_ALEVEL2:
       grappleFire( ent );
-      break;
-
-    case WP_ALEVEL1_1:
-      poisonCloud( ent );
       break;
 
     case WP_LUCIFER_CANNON:

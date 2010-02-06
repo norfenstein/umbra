@@ -1005,23 +1005,6 @@ static void CG_ServerCloseMenus_f( void )
 
 /*
 =================
-CG_PoisonCloud_f
-=================
-*/
-static void CG_PoisonCloud_f( void )
-{
-  cg.poisonedTime = cg.time;
-
-  if( CG_IsParticleSystemValid( &cg.poisonCloudPS ) )
-  {
-    cg.poisonCloudPS = CG_SpawnNewParticleSystem( cgs.media.poisonCloudPS );
-    CG_SetAttachmentCent( &cg.poisonCloudPS->attachment, &cg.predictedPlayerEntity );
-    CG_AttachToCent( &cg.poisonCloudPS->attachment );
-  }
-}
-
-/*
-=================
 CG_PTRRequest_f
 =================
 */
@@ -1074,7 +1057,6 @@ static consoleCommand_t svcommands[ ] =
   { "cp", CG_CenterPrint_f },
   { "cs", CG_ConfigStringModified },
   { "map_restart", CG_MapRestart },
-  { "poisoncloud", CG_PoisonCloud_f },
   { "print", CG_Print_f },
   { "ptrcconfirm", CG_PTRConfirm_f },
   { "ptrcissue", CG_PTRIssue_f },

@@ -1311,12 +1311,6 @@ void ClientThink_real( gentity_t *ent )
       client->ps.stats[ STAT_STATE ] |= SS_BOOSTEDWARNING;
   }
 
-  // Check if poison cloud has worn off
-  if( ( client->ps.eFlags & EF_POISONCLOUDED ) &&
-      ALEVEL1_1_PCLOUD_TIME - level.time +
-      client->lastPoisonCloudedTime <= 0 )
-    client->ps.eFlags &= ~EF_POISONCLOUDED;
-
   if( client->ps.stats[ STAT_STATE ] & SS_POISONED &&
       client->lastPoisonTime + ALIEN_POISON_TIME < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;

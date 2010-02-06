@@ -350,12 +350,6 @@ static void CG_Obituary( entityState_t *ent )
         message = "should have used a medkit against";
         message2 = "'s poison";
         break;
-      case MOD_ALEVEL1_1_PCLOUD:
-        message = "was gassed by";
-        Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL1_1 )->humanName );
-        message2 = className;
-        break;
 
 
       case MOD_TELEFRAG:

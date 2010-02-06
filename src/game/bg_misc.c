@@ -1671,11 +1671,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
-    ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
+    0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
-    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -1691,11 +1691,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
-    ALEVEL1_1_PCLOUD_REPEAT,//int     repeatRate2;
+    0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
-    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;

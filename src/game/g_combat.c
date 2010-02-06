@@ -95,7 +95,6 @@ char *modNames[ ] =
   "MOD_ALEVEL0_BITE",
   "MOD_ALEVEL1_0_CLAW",
   "MOD_ALEVEL1_1_CLAW",
-  "MOD_ALEVEL1_1_PCLOUD",
   "MOD_ALEVEL2_BITE",
   "MOD_ALEVEL3_CLAW",
   "MOD_ALEVEL3_ZAP",
@@ -639,7 +638,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     {
       if( targ->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
           mod != MOD_ALEVEL3_ZAP && mod != MOD_POISON &&
-          mod != MOD_ALEVEL1_1_PCLOUD &&
           targ->client->poisonImmunityTime < level.time )
       {
         targ->client->ps.stats[ STAT_STATE ] |= SS_POISONED;

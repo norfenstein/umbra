@@ -406,7 +406,6 @@ struct gclient_s
   int                 lastPoisonTime;
   int                 poisonImmunityTime;
   gentity_t           *lastPoisonClient;
-  int                 lastPoisonCloudedTime;
   int                 grabExpiryTime;
   int                 lastLockTime;
   int                 lastSlowTime;
