@@ -658,10 +658,10 @@ void CG_OffsetFirstPersonView( void )
     angles[ ROLL ] += delta;
   }
 
-#define ALEVEL4_FEEDBACK  20.0f
+#define ALEVEL1_1_FEEDBACK  10.0f
 
   //provide some feedback for pouncing
-  if( cg.predictedPlayerState.weapon == WP_ALEVEL4 &&
+  if( cg.predictedPlayerState.weapon == WP_ALEVEL1_1 &&
       cg.predictedPlayerState.stats[ STAT_MISC ] > 0 )
   {
     float fraction1, fraction2;
@@ -671,13 +671,13 @@ void CG_OffsetFirstPersonView( void )
     VectorNormalize( forward );
 
     fraction1 = (float)cg.predictedPlayerState.stats[ STAT_MISC ] /
-                ALEVEL4_POUNCE_TIME;
+                ALEVEL1_1_POUNCE_TIME;
     if( fraction1 > 1.0f )
       fraction1 = 1.0f;
 
     fraction2 = -sin( fraction1 * M_PI / 2 );
 
-    VectorMA( origin, ALEVEL4_FEEDBACK * fraction2, forward, origin );
+    VectorMA( origin, ALEVEL1_1_FEEDBACK * fraction2, forward, origin );
   }
 
 #define STRUGGLE_DIST 5.0f

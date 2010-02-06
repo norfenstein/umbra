@@ -61,6 +61,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL1_1_CLAW_WIDTH         10.0f
 #define ALEVEL1_1_CLAW_REPEAT        500
 #define ALEVEL1_1_CLAW_K_SCALE       1.0f
+#define ALEVEL1_1_POUNCE_TIME        750      // msec for full Dragoon pounce
+#define ALEVEL1_1_POUNCE_TIME_MIN    200      // msec before which pounce cancels  
+#define ALEVEL1_1_POUNCE_SPEED_MOD   0.75f    // walking speed modifier for pounce charging
+#define ALEVEL1_1_POUNCE_JUMP_MAG    800      // pounce jump power
 
 #define ALEVEL3_CLAW_DMG             ADM(40)
 #define ALEVEL3_CLAW_RANGE           80.0f
@@ -80,14 +84,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL4_CLAW_WIDTH           12.0f
 #define ALEVEL4_CLAW_REPEAT          800
 #define ALEVEL4_CLAW_K_SCALE         1.0f
-#define ALEVEL4_POUNCE_DMG           ADM(100)
-#define ALEVEL4_POUNCE_RANGE         40.0f
-#define ALEVEL4_POUNCE_WIDTH         14.0f
-#define ALEVEL4_POUNCE_TIME          800      // msec for full Dragoon pounce
-#define ALEVEL4_POUNCE_TIME_MIN      200      // msec before which pounce cancels  
-#define ALEVEL4_POUNCE_REPEAT        400      // msec before a new pounce starts
-#define ALEVEL4_POUNCE_SPEED_MOD     0.75f    // walking speed modifier for pounce charging
-#define ALEVEL4_POUNCE_JUMP_MAG      800      // Dragoon pounce jump power
 #define ALEVEL4_BOUNCEBALL_DMG       ADM(110)
 #define ALEVEL4_BOUNCEBALL_REPEAT    1200
 #define ALEVEL4_BOUNCEBALL_SPEED     1000.0f
@@ -146,25 +142,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL1_1_VALUE              AVM(330)
 #define ALEVEL1_1_HEALTH             AHM(80)
 #define ALEVEL1_1_REGEN              (0.03f * ALEVEL1_1_HEALTH)
-#define ALEVEL1_1_COST               2
+#define ALEVEL1_1_COST               0
 
 #define ALEVEL3_SPEED                1.2f
 #define ALEVEL3_VALUE                AVM(540)
 #define ALEVEL3_HEALTH               AHM(175)
 #define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
-#define ALEVEL3_COST                 3
+#define ALEVEL3_COST                 0
 
 #define ALEVEL4_SPEED                1.1f
 #define ALEVEL4_VALUE                AVM(720)
 #define ALEVEL4_HEALTH               AHM(250)
 #define ALEVEL4_REGEN                (0.03f * ALEVEL4_HEALTH)
-#define ALEVEL4_COST                 4
+#define ALEVEL4_COST                 0
 
 #define ALEVEL5_SPEED                1.2f
 #define ALEVEL5_VALUE                AVM(960)
 #define ALEVEL5_HEALTH               AHM(350)
 #define ALEVEL5_REGEN                (0.025f * ALEVEL5_HEALTH)
-#define ALEVEL5_COST                 4
+#define ALEVEL5_COST                 0
 
 /*
  * ALIEN buildables

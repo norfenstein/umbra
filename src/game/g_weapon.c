@@ -1207,54 +1207,6 @@ ALEVEL4
 ======================================================================
 */
 
-/*
-===============
-CheckPounceAttack
-===============
-*/
-qboolean CheckPounceAttack( gentity_t *ent )
-{
-  trace_t tr;
-  gentity_t *traceEnt;
-  int damage, payload;
-
-  if( ent->client->pmext.pouncePayload <= 0 )
-    return qfalse;
-
-  // In case the goon lands on his target, he get's one shot after landing
-  payload = ent->client->pmext.pouncePayload;
-  if( !( ent->client->ps.pm_flags & PMF_CHARGE ) )
-    ent->client->pmext.pouncePayload = 0;
-    
-  if( ent->client->ps.weaponTime > 0 )
-    return qfalse;
-
-  // Calculate muzzle point
-  AngleVectors( ent->client->ps.viewangles, forward, right, up );
-  CalcMuzzlePoint( ent, forward, right, up, muzzle );
-
-  // Trace from muzzle to see what we hit
-  G_WideTrace( &tr, ent, ALEVEL4_POUNCE_RANGE, ALEVEL4_POUNCE_WIDTH,
-               ALEVEL4_POUNCE_WIDTH, &traceEnt );
-  if( traceEnt == NULL )
-    return qfalse;
-
-  // Send blood impact
-  if( traceEnt->takedamage )
-    WideBloodSpurt( ent, traceEnt, &tr );
-
-  if( !traceEnt->takedamage )
-    return qfalse;
-    
-  // Deal damage
-  damage = payload * ALEVEL4_POUNCE_DMG / ALEVEL4_POUNCE_TIME;
-  ent->client->pmext.pouncePayload = 0;
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage,
-            0, MOD_ALEVEL4_POUNCE );
-
-  return qtrue;
-}
-
 void bounceBallFire( gentity_t *ent )
 {
   gentity_t *m;

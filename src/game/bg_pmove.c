@@ -395,9 +395,9 @@ static float PM_CmdScale( usercmd_t *cmd )
                          ALEVEL5_TRAMPLE_DURATION );
 
   //slow player if charging up for a pounce
-  if( ( pm->ps->weapon == WP_ALEVEL4 ) &&
+  if( ( pm->ps->weapon == WP_ALEVEL1_1 ) &&
       cmd->buttons & BUTTON_ATTACK2 )
-    modifier *= ALEVEL4_POUNCE_SPEED_MOD;
+    modifier *= ALEVEL1_1_POUNCE_SPEED_MOD;
 
   //slow the player if slow locked
   if( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )
@@ -509,7 +509,7 @@ static qboolean PM_CheckPounce( void )
 {
   int jumpMagnitude;
 
-  if( pm->ps->weapon != WP_ALEVEL4 )
+  if( pm->ps->weapon != WP_ALEVEL1_1 )
     return qfalse;
 
   // We were pouncing, but we've landed
@@ -517,7 +517,6 @@ static qboolean PM_CheckPounce( void )
       ( pm->ps->pm_flags & PMF_CHARGE ) )
   {
     pm->ps->pm_flags &= ~PMF_CHARGE;
-    pm->ps->weaponTime += ALEVEL4_POUNCE_REPEAT;
     return qfalse;
   }
 
@@ -530,7 +529,7 @@ static qboolean PM_CheckPounce( void )
 
   // Can't start a pounce
   if( ( pm->ps->pm_flags & PMF_CHARGE ) ||
-      pm->ps->stats[ STAT_MISC ] < ALEVEL4_POUNCE_TIME_MIN ||
+      pm->ps->stats[ STAT_MISC ] < ALEVEL1_1_POUNCE_TIME_MIN ||
       pm->ps->groundEntityNum == ENTITYNUM_NONE )
     return qfalse;
 
@@ -540,7 +539,7 @@ static qboolean PM_CheckPounce( void )
   pm->ps->pm_flags |= PMF_CHARGE;
   pm->ps->groundEntityNum = ENTITYNUM_NONE;
   jumpMagnitude = pm->ps->stats[ STAT_MISC ] *
-                  ALEVEL4_POUNCE_JUMP_MAG / ALEVEL4_POUNCE_TIME;
+                  ALEVEL1_1_POUNCE_JUMP_MAG / ALEVEL1_1_POUNCE_TIME;
   VectorMA( pm->ps->velocity, jumpMagnitude, pml.forward, pm->ps->velocity );
   PM_AddEvent( EV_JUMP );
 
@@ -714,7 +713,7 @@ static qboolean PM_CheckJump( void )
     return qfalse;
 
   //can't jump and pounce at the same time
-  if( pm->ps->weapon == WP_ALEVEL4  &&
+  if( pm->ps->weapon == WP_ALEVEL1_1  &&
       pm->ps->stats[ STAT_MISC ] > 0 )
     return qfalse;
 
@@ -2850,15 +2849,15 @@ static void PM_Weapon( void )
   }
 
   // Charging for a pounce or canceling a pounce
-  if( pm->ps->weapon == WP_ALEVEL4 )
+  if( pm->ps->weapon == WP_ALEVEL1_1 )
   {
     if( pm->cmd.buttons & BUTTON_ATTACK2 )
       pm->ps->stats[ STAT_MISC ] += pml.msec;
     else
       pm->ps->stats[ STAT_MISC ] -= pml.msec;
 
-    if( pm->ps->stats[ STAT_MISC ] > ALEVEL4_POUNCE_TIME )
-      pm->ps->stats[ STAT_MISC ] = ALEVEL4_POUNCE_TIME;
+    if( pm->ps->stats[ STAT_MISC ] > ALEVEL1_1_POUNCE_TIME )
+      pm->ps->stats[ STAT_MISC ] = ALEVEL1_1_POUNCE_TIME;
     else if( pm->ps->stats[ STAT_MISC ] < 0 )
       pm->ps->stats[ STAT_MISC ] = 0;
   }
@@ -2957,12 +2956,6 @@ static void PM_Weapon( void )
 
   // don't allow attack until all buttons are up
   if( pm->ps->pm_flags & PMF_RESPAWNED )
-    return;
-
-  // no bite during pounce
-  if( pm->ps->weapon == WP_ALEVEL4
-      && ( pm->cmd.buttons & BUTTON_ATTACK )
-      && ( pm->ps->pm_flags & PMF_CHARGE ) )
     return;
 
   // pump weapon delays (repeat times etc)
@@ -3107,9 +3100,8 @@ static void PM_Weapon( void )
       if( !attack2 )
         return;
 
-    case WP_ALEVEL4:
+    case WP_ALEVEL1_1:
       //pouncing has primary secondary AND autohit procedures
-      // pounce is autohit
       if( !attack1 && !attack2 && !attack3 )
         return;
       break;
@@ -3251,12 +3243,6 @@ static void PM_Weapon( void )
         pm->ps->generic1 = WPM_PRIMARY;
         PM_AddEvent( EV_FIRE_WEAPON );
         addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
-        break;
-
-      case WP_ALEVEL4:
-        pm->ps->generic1 = WPM_SECONDARY;
-        PM_AddEvent( EV_FIRE_WEAPON2 );
-        addTime = BG_Weapon( pm->ps->weapon )->repeatRate2;
         break;
 
       default:
