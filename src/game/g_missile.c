@@ -147,16 +147,6 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
     }
   }
-  else if( !strcmp( ent->classname, "slowblob" ) )
-  {
-    if( other->client && other->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-    {
-      other->client->ps.stats[ STAT_STATE ] |= SS_SLOWLOCKED;
-      other->client->lastSlowTime = level.time;
-      AngleVectors( other->client->ps.viewangles, dir, NULL, NULL );
-      other->client->ps.stats[ STAT_VIEWLOCK ] = DirToByte( dir );
-    }
-  }
   else if( !strcmp( ent->classname, "hive" ) )
   {
     if( other->s.eType == ET_BUILDABLE && other->s.modelindex == BA_A_HIVE )
@@ -814,17 +804,17 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
 
 /*
 =================
-fire_slowBlob
+fire_spit
 =================
 */
-gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
+gentity_t *fire_spit( gentity_t *self, vec3_t start, vec3_t dir )
 {
   gentity_t *bolt;
 
   VectorNormalize ( dir );
 
   bolt = G_Spawn( );
-  bolt->classname = "slowblob";
+  bolt->classname = "lockblob";
   bolt->pointAgainstWorld = qtrue;
   bolt->nextthink = level.time + 15000;
   bolt->think = G_ExplodeMissile;
@@ -834,18 +824,18 @@ gentity_t *fire_slowBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = ABUILDER_BLOB_DMG;
+  bolt->damage = 0;
   bolt->splashDamage = 0;
   bolt->splashRadius = 0;
-  bolt->methodOfDeath = MOD_SLOWBLOB;
-  bolt->splashMethodOfDeath = MOD_SLOWBLOB;
+  bolt->methodOfDeath = MOD_UNKNOWN;
+  bolt->splashMethodOfDeath = MOD_UNKNOWN;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
 
   bolt->s.pos.trType = TR_GRAVITY;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
-  VectorScale( dir, ABUILDER_BLOB_SPEED, bolt->s.pos.trDelta );
+  VectorScale( dir, ALEVEL1_1_SPIT_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
   VectorCopy( start, bolt->r.currentOrigin );
 

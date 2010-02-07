@@ -131,9 +131,6 @@ static void CG_Obituary( entityState_t *ent )
     case MOD_REACTOR:
       message = "got too close to the reactor";
       break;
-    case MOD_SLOWBLOB:
-      message = "should have visited a medical station";
-      break;
     case MOD_SWARM:
       message = "was hunted down by the swarm";
       break;

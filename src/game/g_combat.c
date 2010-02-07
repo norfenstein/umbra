@@ -105,7 +105,6 @@ char *modNames[ ] =
   "MOD_ALEVEL5_TRAMPLE",
   "MOD_ALEVEL5_CRUSH",
 
-  "MOD_SLOWBLOB",
   "MOD_POISON",
   "MOD_SWARM",
 

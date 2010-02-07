@@ -41,11 +41,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ABUILDER_CLAW_WIDTH          4.0f
 #define ABUILDER_CLAW_REPEAT         1000
 #define ABUILDER_CLAW_K_SCALE        1.0f
-#define ABUILDER_BLOB_DMG            ADM(4)
-#define ABUILDER_BLOB_REPEAT         1000
-#define ABUILDER_BLOB_SPEED          800.0f
-#define ABUILDER_BLOB_SPEED_MOD      0.5f
-#define ABUILDER_BLOB_TIME           1000
 
 #define ALEVEL0_BITE_DMG             ADM(36)
 #define ALEVEL0_BITE_RANGE           64.0f
@@ -65,6 +60,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL1_1_POUNCE_TIME_MIN    200      // msec before which pounce cancels  
 #define ALEVEL1_1_POUNCE_SPEED_MOD   0.75f    // walking speed modifier for pounce charging
 #define ALEVEL1_1_POUNCE_JUMP_MAG    700      // pounce jump power
+#define ALEVEL1_1_SPIT_REPEAT        1000
+#define ALEVEL1_1_SPIT_SPEED         800.0f
+#define ALEVEL1_1_SPIT_TIME          1000
 
 #define ALEVEL3_CLAW_DMG             ADM(40)
 #define ALEVEL3_CLAW_RANGE           80.0f

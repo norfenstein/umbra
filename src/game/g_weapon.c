@@ -851,11 +851,11 @@ void buildFire( gentity_t *ent, dynMenu_t menu )
   G_TriggerMenu( ent->client->ps.clientNum, menu );
 }
 
-void slowBlobFire( gentity_t *ent )
+void spitFire( gentity_t *ent )
 {
   gentity_t *m;
 
-  m = fire_slowBlob( ent, muzzle, forward );
+  m = fire_spit( ent, muzzle, forward );
 
 //  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
 }
@@ -1405,8 +1405,8 @@ void FireWeapon3( gentity_t *ent )
       bounceBallFire( ent );
       break;
 
-    case WP_ABUILD:
-      slowBlobFire( ent );
+    case WP_ALEVEL1_1:
+      spitFire( ent );
       break;
 
     default:

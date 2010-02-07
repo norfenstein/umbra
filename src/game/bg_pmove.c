@@ -399,10 +399,6 @@ static float PM_CmdScale( usercmd_t *cmd )
       cmd->buttons & BUTTON_ATTACK2 )
     modifier *= ALEVEL1_1_POUNCE_SPEED_MOD;
 
-  //slow the player if slow locked
-  if( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )
-    modifier *= ABUILDER_BLOB_SPEED_MOD;
-
   if( pm->ps->pm_type == PM_GRABBED )
     modifier = 0.0f;
 
@@ -895,8 +891,7 @@ static qboolean PM_CheckDodge( void )
     jump *= ( 0.5f * M_SQRT2 );
   
   // Weaken dodge if slowed
-  if( ( pm->ps->stats[ STAT_STATE ] & SS_SLOWLOCKED )  ||
-      ( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED ) )
+  if( pm->ps->stats[ STAT_STATE ] & SS_CREEPSLOWED )
     sideModifier = HUMAN_DODGE_SLOWED_MODIFIER;
   else
     sideModifier = HUMAN_DODGE_SIDE_MODIFIER;
@@ -3101,7 +3096,6 @@ static void PM_Weapon( void )
         return;
 
     case WP_ALEVEL1_1:
-      //pouncing has primary secondary AND autohit procedures
       if( !attack1 && !attack2 && !attack3 )
         return;
       break;
@@ -3186,7 +3180,7 @@ static void PM_Weapon( void )
   {
     if( BG_Weapon( pm->ps->weapon )->hasThirdMode )
     {
-      //hacky special case for slowblob
+      //hacky special case for bounceball
       if( pm->ps->weapon == WP_ALEVEL4 && !pm->ps->ammo )
       {
         pm->ps->weaponTime += 200;

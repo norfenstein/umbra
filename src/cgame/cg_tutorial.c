@@ -228,10 +228,6 @@ static void CG_AlienBuilderText( char *text, playerState_t *ps )
   }
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
-      va( "Press %s to launch a projectile\n",
-      CG_KeyNameForCommand( "+button2" ) ) );
-
-  Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to walk on walls\n",
       CG_KeyNameForCommand( "+movedown" ) ) );
 }
@@ -273,6 +269,14 @@ static void CG_AlienLevel11Text( char *text, playerState_t *ps )
   Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Press %s to swipe\n",
         CG_KeyNameForCommand( "+attack" ) ) );
+
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Press %s to launch a projectile\n",
+      CG_KeyNameForCommand( "+button2" ) ) );
+
+  Q_strcat( text, MAX_TUTORIAL_TEXT,
+      va( "Hold down and release %s to pounce\n",
+        CG_KeyNameForCommand( "+button5" ) ) );
 }
 
 /*
