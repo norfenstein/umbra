@@ -563,6 +563,7 @@ static void CG_RegisterSounds( void )
   cgs.media.alienOvermindDying    = trap_S_RegisterSound( "sound/announcements/overminddying.wav", qtrue );
   cgs.media.alienOvermindSpawns   = trap_S_RegisterSound( "sound/announcements/overmindspawns.wav", qtrue );
 
+  cgs.media.alienL4Grab           = trap_S_RegisterSound( "sound/player/level1/grab.wav", qtrue );
   cgs.media.alienL5ChargePrepare  = trap_S_RegisterSound( "sound/player/level4/charge_prepare.wav", qtrue );
   cgs.media.alienL5ChargeStart    = trap_S_RegisterSound( "sound/player/level4/charge_start.wav", qtrue );
 

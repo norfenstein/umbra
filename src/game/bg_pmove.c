@@ -3543,7 +3543,7 @@ void PM_UpdateViewAngles( playerState_t *ps, const usercmd_t *cmd )
     ps->viewangles[ i ] = tempang[ i ];
 
   //pull the view into the lock point
-  if( ps->pm_type == PM_GRABBED )
+  if( ps->pm_type == PM_GRABBED && ps->stats[ STAT_STATE ] & SS_BLOBLOCKED )
   {
     vec3_t  dir, angles;
 

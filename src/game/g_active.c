@@ -1281,12 +1281,17 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_DEAD;
   else if( client->ps.stats[ STAT_STATE ] & SS_HOVELING )
     client->ps.pm_type = PM_FREEZE;
-  else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED )
+  else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
+           client->ps.stats[ STAT_STATE ] & SS_GRABBED )
     client->ps.pm_type = PM_GRABBED;
   else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
     client->ps.pm_type = PM_JETPACK;
   else
     client->ps.pm_type = PM_NORMAL;
+
+  if( ( client->ps.stats[ STAT_STATE ] & SS_GRABBED ) &&
+      client->grabExpiryTime < level.time )
+    client->ps.stats[ STAT_STATE ] &= ~SS_GRABBED;
 
   if( ( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ) &&
       client->lastLockTime + LOCKBLOB_LOCKTIME < level.time )
@@ -1516,6 +1521,10 @@ void ClientThink_real( gentity_t *ent )
       {
         G_HookFree( client->hook );
       }
+      break;
+ 
+    case WP_ALEVEL4:
+      CheckGrabAttack( ent );
       break;
 
     case WP_HBUILD:

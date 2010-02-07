@@ -1243,6 +1243,7 @@ typedef struct
   sfxHandle_t humanBuildablePrebuild;
   sfxHandle_t humanBuildableDamage[ 4 ];
 
+  sfxHandle_t alienL4Grab;
   sfxHandle_t alienL5ChargePrepare;
   sfxHandle_t alienL5ChargeStart;
 

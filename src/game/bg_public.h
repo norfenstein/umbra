@@ -228,16 +228,17 @@ typedef enum
 
 #define SS_WALLCLIMBING         0x00000001
 #define SS_CREEPSLOWED          0x00000002
-#define SS_BLOBLOCKED           0x00000004
-#define SS_POISONED             0x00000008
-#define SS_HOVELING             0x00000010
-#define SS_BOOSTED              0x00000020
-#define SS_BOOSTEDWARNING       0x00000040 // booster poison is running out
-#define SS_SLOWLOCKED           0x00000080
-#define SS_CHARGING             0x00000100
-#define SS_HEALING_ACTIVE       0x00000200 // medistat for humans, creep for aliens
-#define SS_HEALING_2X           0x00000400 // medkit or double healing rate
-#define SS_HEALING_3X           0x00000800 // triple healing rate
+#define SS_GRABBED              0x00000004
+#define SS_BLOBLOCKED           0x00000008
+#define SS_POISONED             0x00000010
+#define SS_HOVELING             0x00000020
+#define SS_BOOSTED              0x00000040
+#define SS_BOOSTEDWARNING       0x00000080 // booster poison is running out
+#define SS_SLOWLOCKED           0x00000100
+#define SS_CHARGING             0x00000200
+#define SS_HEALING_ACTIVE       0x00000400 // medistat for humans, creep for aliens
+#define SS_HEALING_2X           0x00000800 // medkit or double healing rate
+#define SS_HEALING_3X           0x00001000 // triple healing rate
 
 #define SB_VALID_TOGGLEBIT      0x00002000
 
@@ -469,6 +470,7 @@ typedef enum
   EV_TESLATRAIL,
   EV_BULLET,        // otherEntity is the shooter
 
+  EV_ALEV4_GRAB,
   EV_ALEV5_TRAMPLE_PREPARE,
   EV_ALEV5_TRAMPLE_START,
 
