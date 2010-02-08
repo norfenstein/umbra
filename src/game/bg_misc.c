@@ -1650,6 +1650,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
@@ -1670,6 +1671,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1690,6 +1692,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     0,                    //int       repeatRate2;
     ALEVEL1_1_SPIT_REPEAT,//int       repeatRate3;
@@ -1710,6 +1713,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
@@ -1730,6 +1734,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL3_AREAZAP_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
@@ -1750,6 +1755,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1770,6 +1776,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     3,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    ALEVEL5_BOUNCEBALL_REGEN,//int    ammoRegen;
     ALEVEL5_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
     ALEVEL5_BOUNCEBALL_REPEAT,//int   repeatRate3;
@@ -1790,6 +1797,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     BLASTER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1810,6 +1818,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     RIFLE_CLIPSIZE,       //int       maxAmmo;
     RIFLE_MAXCLIPS,       //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     RIFLE_REPEAT,         //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1830,6 +1839,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1850,6 +1860,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     SHOTGUN_SHELLS,       //int       maxAmmo;
     SHOTGUN_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     SHOTGUN_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1870,6 +1881,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     LASGUN_AMMO,          //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     LASGUN_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1890,6 +1902,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
     MDRIVER_MAXCLIPS,     //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     MDRIVER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1910,6 +1923,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     CHAINGUN_BULLETS,     //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     CHAINGUN_REPEAT,      //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1930,6 +1944,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     FLAMER_GAS,           //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     FLAMER_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1950,6 +1965,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     PRIFLE_CLIPS,         //int       maxAmmo;
     PRIFLE_MAXCLIPS,      //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     PRIFLE_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1970,6 +1986,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     LCANNON_REPEAT,       //int       repeatRate1;
     LCANNON_SECONDARY_REPEAT, //int   repeatRate2;
     0,                    //int       repeatRate3;
@@ -1990,6 +2007,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     1,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qfalse,               //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2010,6 +2028,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2030,6 +2049,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2050,6 +2070,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
@@ -2070,6 +2091,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     0,                    //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2090,6 +2112,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     ABUILDER_BUILD_REPEAT,//int       repeatRate1;
     ABUILDER_CLAW_REPEAT, //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -2110,6 +2133,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
+    0,                    //int       ammoRegen;
     HBUILD_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
