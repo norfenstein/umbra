@@ -170,7 +170,7 @@ static void CG_Obituary( entityState_t *ent )
           message = "blew himself up";
         break;
 
-      case MOD_ALEVEL4_BOUNCEBALL:
+      case MOD_ALEVEL5_BOUNCEBALL:
         if( gender == GENDER_FEMALE )
           message = "sniped herself";
         else if( gender == GENDER_NEUTER )
@@ -320,10 +320,10 @@ static void CG_Obituary( entityState_t *ent )
             BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
         message2 = className;
         break;
-      case MOD_ALEVEL4_BOUNCEBALL:
+      case MOD_ALEVEL5_BOUNCEBALL:
         message = "was sniped by";
         Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL4 )->humanName );
+            BG_ClassConfig( PCL_ALIEN_LEVEL5 )->humanName );
         message2 = className;
         break;
       case MOD_ALEVEL5_CLAW:

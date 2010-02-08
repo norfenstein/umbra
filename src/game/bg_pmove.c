@@ -3181,7 +3181,7 @@ static void PM_Weapon( void )
     if( BG_Weapon( pm->ps->weapon )->hasThirdMode )
     {
       //hacky special case for bounceball
-      if( pm->ps->weapon == WP_ALEVEL4 && !pm->ps->ammo )
+      if( pm->ps->weapon == WP_ALEVEL5 && !pm->ps->ammo )
       {
         pm->ps->weaponTime += 200;
         return;
@@ -3341,7 +3341,7 @@ static void PM_Weapon( void )
 
   // take an ammo away if not infinite
   if( !BG_Weapon( pm->ps->weapon )->infiniteAmmo ||
-      ( pm->ps->weapon == WP_ALEVEL4 && attack3 ) )
+      ( pm->ps->weapon == WP_ALEVEL5 && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )

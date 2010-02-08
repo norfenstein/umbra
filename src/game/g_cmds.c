@@ -380,7 +380,7 @@ void Cmd_Give_f( gentity_t *ent )
   {
     gclient_t *client = ent->client;
 
-    if( client->ps.weapon != WP_ALEVEL4 &&
+    if( client->ps.weapon != WP_ALEVEL5 &&
         BG_Weapon( client->ps.weapon )->infiniteAmmo )
       return;
 

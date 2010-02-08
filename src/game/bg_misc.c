@@ -1659,7 +1659,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  longRanged;
+    qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
   {
@@ -1719,7 +1719,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  longRanged;
+    qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
   {
@@ -1739,7 +1739,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  longRanged;
+    qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
   {
@@ -1747,19 +1747,19 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel4",            //char      *weaponName;
     "Pounce",             //char      *humanName;
-    3,                    //int       maxAmmo;
+    0,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
-    ALEVEL4_BOUNCEBALL_REPEAT,//int   repeatRate3;
+    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL4_CLAW_K_SCALE, //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
-    qtrue,                //qboolean  hasThirdMode;
+    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  longRanged;
+    qfalse,               //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
   {
@@ -1767,19 +1767,19 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel5",            //char      *weaponName;
     "Charge",             //char      *humanName;
-    0,                    //int       maxAmmo;
+    3,                    //int       maxAmmo;
     0,                    //int       maxClips;
     qtrue,                //int       infiniteAmmo;
     ALEVEL5_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
+    ALEVEL5_BOUNCEBALL_REPEAT,//int   repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL5_CLAW_K_SCALE, //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
+    qtrue,                //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
-    qfalse,               //qboolean  longRanged;
+    qtrue,                //qboolean  longRanged;
     TEAM_ALIENS           //team_t    team;
   },
   {

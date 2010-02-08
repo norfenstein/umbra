@@ -1207,15 +1207,6 @@ ALEVEL4
 ======================================================================
 */
 
-void bounceBallFire( gentity_t *ent )
-{
-  gentity_t *m;
-
-  m = fire_bounceBall( ent, muzzle, forward );
-
-//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
-}
-
 /*
 ===============
 CheckGrabAttack
@@ -1276,6 +1267,15 @@ ALEVEL5
 
 ======================================================================
 */
+
+void bounceBallFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_bounceBall( ent, muzzle, forward );
+
+//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
+}
 
 /*
 ===============
@@ -1401,7 +1401,7 @@ void FireWeapon3( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
-    case WP_ALEVEL4:
+    case WP_ALEVEL5:
       bounceBallFire( ent );
       break;
 

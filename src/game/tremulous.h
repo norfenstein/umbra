@@ -84,11 +84,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL4_CLAW_K_SCALE         1.0f
 #define ALEVEL4_GRAB_RANGE           80.0f
 #define ALEVEL4_GRAB_TIME            300
-#define ALEVEL4_BOUNCEBALL_DMG       ADM(110)
-#define ALEVEL4_BOUNCEBALL_REPEAT    1200
-#define ALEVEL4_BOUNCEBALL_SPEED     1000.0f
-#define ALEVEL4_BOUNCEBALL_RADIUS    75
-#define ALEVEL4_BOUNCEBALL_REGEN     15000    // msec until new barb
 
 #define ALEVEL5_CLAW_DMG             ADM(100)
 #define ALEVEL5_CLAW_RANGE           100.0f
@@ -96,6 +91,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL5_CLAW_HEIGHT          20.0f
 #define ALEVEL5_CLAW_REPEAT          800
 #define ALEVEL5_CLAW_K_SCALE         1.0f
+#define ALEVEL5_BOUNCEBALL_DMG       ADM(110)
+#define ALEVEL5_BOUNCEBALL_REPEAT    1200
+#define ALEVEL5_BOUNCEBALL_SPEED     1000.0f
+#define ALEVEL5_BOUNCEBALL_RADIUS    75
+#define ALEVEL5_BOUNCEBALL_REGEN     15000    // msec until new barb
 
 #define ALEVEL5_TRAMPLE_DMG             ADM(111)
 #define ALEVEL5_TRAMPLE_SPEED           2.0f
