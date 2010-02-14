@@ -326,9 +326,9 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
   trap_R_SetColor( color );
 
   if( padding )
-    CG_DrawFieldPadded( rect->x, rect->y, 3, rect->w / 3, rect->h, value );
+    CG_DrawFieldPadded( rect->x, rect->y, 4, rect->w / 4, rect->h, value );
   else
-    CG_DrawField( rect->x - rect->w, rect->y, 3, rect->w, rect->h, value );
+    CG_DrawField( rect->x, rect->y, 1, rect->w, rect->h, value );
 
   trap_R_SetColor( NULL );
 }
@@ -583,7 +583,6 @@ static void CG_DrawPlayerAmmoValue( rectDef_t *rect, vec4_t color )
   switch( cg.snap->ps.weapon )
   {
     case WP_NONE:
-    case WP_BLASTER:
       return;
 
     case WP_ABUILD:
@@ -592,6 +591,8 @@ static void CG_DrawPlayerAmmoValue( rectDef_t *rect, vec4_t color )
       break;
 
     default:
+      if( !BG_Weapon( cg.snap->ps.weapon )->maxAmmo )
+        return;
       value = cg.snap->ps.ammo;
       break;
   }
