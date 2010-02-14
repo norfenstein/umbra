@@ -671,9 +671,6 @@ typedef struct centity_s
   particleSystem_t      *entityPS;
   qboolean              entityPSMissing;
 
-  trailSystem_t         *level2ZapTS[ ALEVEL3_AREAZAP_MAX_TARGETS ];
-  int                   level2ZapTime;
-
   trailSystem_t         *muzzleTS; //used for the tesla and reactor
   int                   muzzleTSDeathTime;
 
@@ -1166,8 +1163,6 @@ typedef struct
   qhandle_t   charsetShader;
   qhandle_t   whiteShader;
   qhandle_t   outlineShader;
-
-  qhandle_t   level2ZapTS;
 
   qhandle_t   balloonShader;
   qhandle_t   connectionShader;

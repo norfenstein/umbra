@@ -302,12 +302,6 @@ static void CG_Obituary( entityState_t *ent )
             BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
         message2 = className;
         break;
-      case MOD_ALEVEL3_ZAP:
-        message = "was zapped by";
-        Com_sprintf( className, 64, "'s %s",
-            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
-        message2 = className;
-        break;
       case MOD_ALEVEL4_CLAW:
         message = "was chomped by";
         Com_sprintf( className, 64, "'s %s",
@@ -412,60 +406,6 @@ void CG_PainEvent( centity_t *cent, int health )
   // save pain time for programitic twitch animation
   cent->pe.painTime = cg.time;
   cent->pe.painDirection ^= 1;
-}
-
-/*
-=========================
-CG_Level2Zap
-=========================
-*/
-static void CG_Level2Zap( entityState_t *es )
-{
-  int           i;
-  centity_t     *source = NULL, *target = NULL;
-
-  if( es->misc < 0 || es->misc >= MAX_CLIENTS )
-    return;
-
-  source = &cg_entities[ es->misc ];
-  for( i = 0; i <= 2; i++ )
-  {
-    switch( i )
-    {
-      case 0:
-        if( es->time <= 0 )
-          continue;
-
-        target = &cg_entities[ es->time ];
-        break;
-
-      case 1:
-        if( es->time2 <= 0 )
-          continue;
-
-        target = &cg_entities[ es->time2 ];
-        break;
-
-      case 2:
-        if( es->constantLight <= 0 )
-          continue;
-
-        target = &cg_entities[ es->constantLight ];
-        break;
-    }
-
-    if( !CG_IsTrailSystemValid( &source->level2ZapTS[ i ] ) )
-      source->level2ZapTS[ i ] = CG_SpawnNewTrailSystem( cgs.media.level2ZapTS );
-
-    if( CG_IsTrailSystemValid( &source->level2ZapTS[ i ] ) )
-    {
-      CG_SetAttachmentCent( &source->level2ZapTS[ i ]->frontAttachment, source );
-      CG_SetAttachmentCent( &source->level2ZapTS[ i ]->backAttachment, target );
-      CG_AttachToCent( &source->level2ZapTS[ i ]->frontAttachment );
-      CG_AttachToCent( &source->level2ZapTS[ i ]->backAttachment );
-    }
-  }
-  source->level2ZapTime = cg.time;
 }
 
 /*
@@ -968,10 +908,6 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
     case EV_PLAYER_RESPAWN:
       if( es->number == cg.clientNum )
         cg.spawnTime = cg.time;
-      break;
-
-    case EV_LEV2_ZAP:
-      CG_Level2Zap( es );
       break;
 
     default:

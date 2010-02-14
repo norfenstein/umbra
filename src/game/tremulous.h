@@ -69,13 +69,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_CLAW_WIDTH           14.0f
 #define ALEVEL3_CLAW_REPEAT          400
 #define ALEVEL3_CLAW_K_SCALE         1.0f
-#define ALEVEL3_AREAZAP_DMG          ADM(60)
-#define ALEVEL3_AREAZAP_RANGE        200.0f
-#define ALEVEL3_AREAZAP_WIDTH        15.0f
-#define ALEVEL3_AREAZAP_REPEAT       1500
-#define ALEVEL3_AREAZAP_TIME         1000
-#define ALEVEL3_AREAZAP_MAX_TARGETS  5
-#define ALEVEL3_WALLJUMP_MAXSPEED    1000.0f
 
 #define ALEVEL4_CLAW_DMG             ADM(80)
 #define ALEVEL4_CLAW_RANGE           80.0f
@@ -142,6 +135,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_HEALTH               AHM(175)
 #define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
 #define ALEVEL3_COST                 0
+#define ALEVEL3_WALLJUMP_MAXSPEED    1000.0f
 
 #define ALEVEL4_SPEED                1.1f
 #define ALEVEL4_HEALTH               AHM(250)

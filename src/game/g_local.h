@@ -837,19 +837,6 @@ void TeleportPlayer( gentity_t *player, vec3_t origin, vec3_t angles );
 // g_weapon.c
 //
 
-typedef struct zap_s
-{
-  qboolean      used;
-
-  gentity_t     *creator;
-  gentity_t     *targets[ ALEVEL3_AREAZAP_MAX_TARGETS ];
-  int           numTargets;
-
-  int           timeToLive;
-
-  gentity_t     *effectChannel;
-} zap_t;
-
 void      G_ForceWeaponChange( gentity_t *ent, weapon_t weapon );
 void      G_GiveClientMaxAmmo( gentity_t *ent, qboolean buyingEnergyAmmo );
 void      CalcMuzzlePoint( gentity_t *ent, vec3_t forward, vec3_t right, vec3_t up, vec3_t muzzlePoint );
@@ -861,7 +848,6 @@ void      CheckGrabAttack( gentity_t *ent );
 void      CheckCkitRepair( gentity_t *ent );
 void      G_ChargeAttack( gentity_t *ent, gentity_t *victim );
 void      G_CrushAttack( gentity_t *ent, gentity_t *victim );
-void      G_UpdateZaps( int msec );
 
 
 //

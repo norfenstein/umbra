@@ -1703,11 +1703,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     0,                    //int       ammoRegen;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
-    ALEVEL3_AREAZAP_REPEAT,//int      repeatRate2;
+    0,//int      repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL3_CLAW_K_SCALE, //float     knockbackScale;
-    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -2423,8 +2423,7 @@ char *eventnames[ ] =
 
   "EV_MGTURRET_SPINUP", // trigger a sound
 
-  "EV_RPTUSE_SOUND",    // trigger a sound
-  "EV_LEV2_ZAP"
+  "EV_RPTUSE_SOUND"     // trigger a sound
 };
 
 /*

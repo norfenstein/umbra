@@ -504,8 +504,7 @@ typedef enum
 
   EV_MGTURRET_SPINUP, // turret spinup sound should play
 
-  EV_RPTUSE_SOUND,    // trigger a sound
-  EV_LEV2_ZAP
+  EV_RPTUSE_SOUND     // trigger a sound
 } entity_event_t;
 
 typedef enum
@@ -833,7 +832,6 @@ typedef enum
   MOD_ALEVEL1_1_CLAW,
   MOD_ALEVEL2_BITE,
   MOD_ALEVEL3_CLAW,
-  MOD_ALEVEL3_ZAP,
   MOD_ALEVEL4_CLAW,
   MOD_ALEVEL4_POUNCE,
   MOD_ALEVEL5_BOUNCEBALL,
@@ -1104,7 +1102,6 @@ typedef enum
   ET_ANIMMAPOBJ,
   ET_MODELDOOR,
   ET_LIGHTFLARE,
-  ET_LEV2_ZAP_CHAIN,
 
   ET_EVENTS       // any of the EV_* events can be added freestanding
               // by setting eType to ET_EVENTS + eventNum

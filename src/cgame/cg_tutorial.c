@@ -306,10 +306,6 @@ static void CG_AlienLevel3Text( char *text, playerState_t *ps )
         CG_KeyNameForCommand( "+attack" ) ) );
 
   Q_strcat( text, MAX_TUTORIAL_TEXT,
-      va( "Press %s to invoke an electrical attack\n",
-        CG_KeyNameForCommand( "+button5" ) ) );
-
-  Q_strcat( text, MAX_TUTORIAL_TEXT,
       va( "Hold down %s then touch a wall to wall jump\n",
         CG_KeyNameForCommand( "+moveup" ) ) );
 }
