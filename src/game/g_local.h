@@ -417,8 +417,6 @@ struct gclient_s
 
   vec3_t              hovelOrigin;          // player origin before entering hovel
 
-  int                 lastFlameBall;        // s.number of the last flame ball fired
-
   unlagged_t          unlaggedHist[ MAX_UNLAGGED_MARKERS ];
   unlagged_t          unlaggedBackup;
   unlagged_t          unlaggedCalc;

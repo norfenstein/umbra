@@ -143,15 +143,6 @@ static void CG_Obituary( entityState_t *ent )
   {
     switch( mod )
     {
-      case MOD_FLAMER_SPLASH:
-        if( gender == GENDER_FEMALE )
-          message = "toasted herself";
-        else if( gender == GENDER_NEUTER )
-          message = "toasted itself";
-        else
-          message = "toasted himself";
-        break;
-
       case MOD_LCANNON_SPLASH:
         if( gender == GENDER_FEMALE )
           message = "irradiated herself";
@@ -247,14 +238,6 @@ static void CG_Obituary( entityState_t *ent )
       case MOD_LASGUN:
         message = "was lasgunned by";
         break;
-      case MOD_FLAMER:
-        message = "was grilled by";
-        message2 = "'s flamer";
-        break;
-      case MOD_FLAMER_SPLASH:
-        message = "was toasted by";
-        message2 = "'s flamer";
-        break;
       case MOD_LCANNON:
         message = "felt the full force of";
         message2 = "'s lucifer cannon";
@@ -298,6 +281,12 @@ static void CG_Obituary( entityState_t *ent )
         break;
       case MOD_ALEVEL3_CLAW:
         message = "was clawed by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
+        message2 = className;
+        break;
+      case MOD_ALEVEL3_FLAME:
+        message = "was grilled by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL3 )->humanName );
         message2 = className;

@@ -3249,14 +3249,6 @@ static void PM_Weapon( void )
     //FIXME: this should be an option in the client weapon.cfg
     switch( pm->ps->weapon )
     {
-      case WP_FLAMER:
-        if( pm->ps->weaponstate == WEAPON_READY )
-        {
-          PM_StartTorsoAnim( TORSO_ATTACK );
-          PM_StartWeaponAnim( WANIM_ATTACK1 );
-        }
-        break;
-
       case WP_BLASTER:
         PM_StartTorsoAnim( TORSO_ATTACK2 );
         PM_StartWeaponAnim( WANIM_ATTACK1 );

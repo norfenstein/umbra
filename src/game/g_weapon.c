@@ -1228,6 +1228,7 @@ void FireWeapon2( gentity_t *ent )
       break;
 
     case WP_ALEVEL3:
+      flamerFire( ent );
       break;
 
     case WP_ABUILD:
@@ -1293,9 +1294,6 @@ void FireWeapon( gentity_t *ent )
       break;
     case WP_CHAINGUN:
       bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
-      break;
-    case WP_FLAMER:
-      flamerFire( ent );
       break;
     case WP_PULSE_RIFLE:
       pulseRifleFire( ent );

@@ -1703,11 +1703,11 @@ static const weaponAttributes_t bg_weapons[ ] =
     qtrue,                //int       infiniteAmmo;
     0,                    //int       ammoRegen;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
-    0,//int      repeatRate2;
+    ALEVEL3_FLAME_REPEAT, //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     ALEVEL3_CLAW_K_SCALE, //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -1896,27 +1896,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     CHAINGUN_K_SCALE,     //float     knockbackScale;
-    qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
-    qfalse,               //qboolean  canZoom;
-    90.0f,                //float     zoomFov;
-    qtrue,                //qboolean  longRanged;
-    TEAM_HUMANS           //team_t    team;
-  },
-  {
-    WP_FLAMER,            //int       weaponNum;
-    FLAMER_PRICE,         //int       price;
-    "flamer",             //char      *weaponName;
-    "Flame Thrower",      //char      *humanName;
-    FLAMER_GAS,           //int       maxAmmo;
-    0,                    //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
-    0,                    //int       ammoRegen;
-    FLAMER_REPEAT,        //int       repeatRate1;
-    0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
-    0,                    //int       reloadTime;
-    FLAMER_K_SCALE,       //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;

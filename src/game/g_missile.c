@@ -83,7 +83,7 @@ void G_ExplodeMissile( gentity_t *ent )
   ent->s.eType = ET_GENERAL;
 
   if( ent->s.weapon != WP_LOCKBLOB_LAUNCHER &&
-      ent->s.weapon != WP_FLAMER )
+      ent->s.weapon != WP_ALEVEL3 )
     G_AddEvent( ent, EV_MISSILE_MISS, DirToByte( dir ) );
 
   ent->freeAfterEvent = qtrue;
@@ -428,29 +428,29 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt = G_Spawn();
   bolt->classname = "flame";
   bolt->pointAgainstWorld = qfalse;
-  bolt->nextthink = level.time + FLAMER_LIFETIME;
+  bolt->nextthink = level.time + ALEVEL3_FLAME_LIFETIME;
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-  bolt->s.weapon = WP_FLAMER;
+  bolt->s.weapon = WP_ALEVEL3;
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = FLAMER_DMG;
-  bolt->splashDamage = FLAMER_SPLASHDAMAGE;
-  bolt->splashRadius = FLAMER_RADIUS;
-  bolt->methodOfDeath = MOD_FLAMER;
-  bolt->splashMethodOfDeath = MOD_FLAMER_SPLASH;
+  bolt->damage = ALEVEL3_FLAME_DMG;
+  bolt->splashDamage = 0;
+  bolt->splashRadius = 0;
+  bolt->methodOfDeath = MOD_ALEVEL3_FLAME;
+  bolt->splashMethodOfDeath = MOD_ALEVEL3_FLAME;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -FLAMER_SIZE;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = FLAMER_SIZE;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -ALEVEL3_FLAME_SIZE;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = ALEVEL3_FLAME_SIZE;
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
-  VectorScale( self->client->ps.velocity, FLAMER_LAG, pvel );
-  VectorMA( pvel, FLAMER_SPEED, dir, bolt->s.pos.trDelta );
+  VectorScale( self->client->ps.velocity, ALEVEL3_FLAME_LAG, pvel );
+  VectorMA( pvel, ALEVEL3_FLAME_SPEED, dir, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );
