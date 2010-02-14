@@ -35,15 +35,6 @@ void AddScore( gentity_t *ent, int score )
   if( !ent->client )
     return;
 
-  // make alien and human scores equivalent 
-  if ( ent->client->pers.teamSelection == TEAM_ALIENS )
-  {
-    score = rint( (double)score / 2.0 );
-  }
-
-  // scale values down to fit the scoreboard better
-  score = rint( (double)score / 50.0 );
-
   ent->client->ps.persistant[ PERS_SCORE ] += score;
   CalculateRanks( );
 }
@@ -127,64 +118,94 @@ Function to distribute rewards to entities that killed this one.
 Returns the total damage dealt.
 ==================
 */
-float G_RewardAttackers( gentity_t *self )
+void G_RewardAttackers( gentity_t *self )
 {
-  float value, totalDamage = 0;
+  float score;
   int team, i, maxHealth = 0;
+  qboolean isSpawn = qfalse;
 
-  // Total up all the damage done by every client
-  for( i = 0; i < MAX_CLIENTS; i++ )
-    totalDamage += (float)self->credits[ i ];
-
-  if( totalDamage <= 0.0f )
-    return 0.0f;
-
-  // Only give credits for killing players and buildables
   if( self->client )
   {
-    value = BG_Class( self->client->ps.stats[ STAT_CLASS ] )->value;
+    // players are worth 1 + cost score
+    score = ( 1 + BG_Class( self->client->ps.stats[ STAT_CLASS ] )->cost );
     team = self->client->pers.teamSelection;
     maxHealth = self->client->ps.stats[ STAT_MAX_HEALTH ];
   }
   else if( self->s.eType == ET_BUILDABLE )
   {
-    value = BG_Buildable( self->s.modelindex )->value;
+    const buildableAttributes_t *buildable = BG_Buildable( self->s.modelindex );
+
+    // buildables are worth buildPoints score
+    score = buildable->buildPoints;
+    isSpawn = buildable->number == BA_A_SPAWN || buildable->number == BA_H_SPAWN;
 
     // only give partial credits for a buildable not yet completed
     if( !self->spawned )
     {
-      value *= (float)( level.time - self->buildTime ) /
-          BG_Buildable( self->s.modelindex )->buildTime;
+      score *= (float)( level.time - self->buildTime ) /
+          buildable->buildTime;
     }
 
     team = self->buildableTeam;
-    maxHealth = BG_Buildable( self->s.modelindex )->health;
+    maxHealth = buildable->health;
   }
   else
-    return totalDamage;
+  {
+    return;
+  }
 
-  // Give credits and empty the array
+  // Distribute credits and score, and empty the damage accounts array
   for( i = 0; i < MAX_CLIENTS; i++ )
   {
     gentity_t *player = g_entities + i;
-    short num = value * self->credits[ i ] / totalDamage;
-
-    if( !player->client || !self->credits[ i ] ||
-        player->client->ps.stats[ STAT_TEAM ] == team )
+    float frags = 0;
+    float fraction = (float)self->damageAccounts[ i ] / maxHealth;
+    
+    if( !player->client || !self->damageAccounts[ i ] )
       continue;
 
-    AddScore( player, num );
-
-    // killing buildables earns score, but not credits
     if( self->s.eType != ET_BUILDABLE )
     {
-      G_AddCreditToClient( player->client, num, qtrue );
+      if( fraction > 0 )
+      {
+        // frags earned are equal to: 1 - killer's cost * 0.2 + target's cost * 0.2
+        frags = 1.0 - ( 1 + (float)BG_Class( player->client->ps.stats[ STAT_CLASS ] )->cost ) * 0.2 +
+                      ( 1 + (float)BG_Class( self->client->ps.stats[ STAT_CLASS ] )->cost ) * 0.2;
+      }
+      else
+      {
+        // teamkills deduct the full cost of the target
+        frags = BG_Class( self->client->ps.stats[ STAT_CLASS ] )->cost;
+      }
+    }
+    else if( isSpawn )
+    {
+      // spawns are always worth 1; all other buildables are worth 0
+      frags = 1;
     }
 
-    self->credits[ i ] = 0;
+    if( player->client->ps.stats[ STAT_TEAM ] == team &&
+        self != player &&
+        fraction > 0 )
+    {
+      // never reward for team kills
+      fraction = 0;
+    }
+
+    if( g_debugDamage.integer )
+      G_Printf( "%i: client:%i fraction: %f score:%f credits: %f\n",
+        level.time,
+        i,
+        fraction,
+        rint( score * fraction ),
+        rint( frags * fraction * CREDITS_PER_FRAG ) );
+
+    AddScore( player, rint( score * fraction ) );
+
+    G_AddCreditToClient( player->client, frags * rint( fraction * CREDITS_PER_FRAG ), qtrue );
+
+    self->damageAccounts[ i ] = 0;
   }
-  
-  return totalDamage;
 }
 
 /*
@@ -267,31 +288,23 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
   {
     attacker->client->lastkilled_client = self->s.number;
 
-    if( attacker == self || OnSameTeam( self, attacker ) )
+    if( OnSameTeam( self, attacker ) && attacker == self )
     {
-      //punish team kills and suicides
-      if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+      // suicides always subtract 1 frag and 1 score
+      G_AddCreditToClient( attacker->client, -CREDITS_PER_FRAG, qtrue );
+      AddScore( attacker, -1 );
+
+      // forgive teammates for friendly fire
+      for( i = 0; i < MAX_CLIENTS; i++ )
       {
-        G_AddCreditToClient( attacker->client, -ALIEN_TK_SUICIDE_PENALTY, qtrue );
-        AddScore( attacker, -ALIEN_TK_SUICIDE_PENALTY );
-      }
-      else if( attacker->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-      {
-        G_AddCreditToClient( attacker->client, -HUMAN_TK_SUICIDE_PENALTY, qtrue );
-        AddScore( attacker, -HUMAN_TK_SUICIDE_PENALTY );
+        if( self->damageAccounts[ i ] < 0 )
+          self->damageAccounts[ i ] = 0;
       }
     }
   }
-  else if( attacker->s.eType != ET_BUILDABLE )
-  {
-    if( self->client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-      AddScore( self, -ALIEN_TK_SUICIDE_PENALTY );
-    else if( self->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-      AddScore( self, -HUMAN_TK_SUICIDE_PENALTY );
-  }
 
   // give credits for killing this player
-  totalDamage = G_RewardAttackers( self );
+  G_RewardAttackers( self );
 
   ScoreboardMessage( self );    // show scores
 
@@ -649,16 +662,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   if( take < 1 )
     take = 1;
 
-  if( g_debugDamage.integer )
-  {
-    G_Printf( "%i: client:%i health:%i damage:%i armor:%i\n", level.time, targ->s.number,
-      targ->health, take, asave );
-  }
-
   // do the damage
   if( take )
   {
-    targ->health = targ->health - take;
+    targ->health -= take;
 
     if( targ->client )
       targ->client->ps.stats[ STAT_HEALTH ] = targ->health;
@@ -667,8 +674,28 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     targ->nextRegenTime = level.time + ALIEN_REGEN_DAMAGE_TIME;
 
     // add to the attackers "account" on the target
-    if( attacker->client && attacker != targ && !OnSameTeam( targ, attacker ) )
-      targ->credits[ attacker->client->ps.clientNum ] += take;
+    if( attacker->client && attacker != targ )
+    {
+      int debit = take;
+
+      // don't record overflow damage
+      if( targ->health < 0 )
+        debit += targ->health;
+
+      if( OnSameTeam( targ, attacker ) ||
+          ( targ->s.eType == ET_BUILDABLE && targ->buildableTeam == attacker->client->pers.teamSelection ) )
+      {
+        // team damage is subtracted, and also clears any previous positive account damage
+        if( targ->damageAccounts[ attacker->client->ps.clientNum ] > 0 )
+          targ->damageAccounts[ attacker->client->ps.clientNum ] = 0;
+
+        targ->damageAccounts[ attacker->client->ps.clientNum ] -= debit;
+      }
+      else
+      {
+        targ->damageAccounts[ attacker->client->ps.clientNum ] += debit;
+      }
+    }
 
     if( targ->health <= 0 )
     {
@@ -684,6 +711,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     }
     else if( targ->pain )
       targ->pain( targ, attacker, take );
+  }
+
+  if( g_debugDamage.integer )
+  {
+    G_Printf( "%i: client:%i health:%i damage:%i armor:%i account:%i\n", level.time, targ->s.number,
+      targ->health, take, asave, targ->damageAccounts[ attacker->client->ps.clientNum ] );
   }
 }
 

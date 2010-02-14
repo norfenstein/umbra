@@ -317,22 +317,20 @@ static void CG_DrawPlayerCreditsValue( rectDef_t *rect, vec4_t color, qboolean p
     return;
 
   value = ps->persistant[ PERS_CREDIT ];
-  if( value > -1 )
+
+  if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS )
   {
-    if( cg.predictedPlayerState.stats[ STAT_TEAM ] == TEAM_ALIENS )
-    {
-      value /= ALIEN_CREDITS_PER_KILL;
-    }
-
-    trap_R_SetColor( color );
-
-    if( padding )
-      CG_DrawFieldPadded( rect->x, rect->y, 4, rect->w / 4, rect->h, value );
-    else
-      CG_DrawField( rect->x, rect->y, 1, rect->w, rect->h, value );
-
-    trap_R_SetColor( NULL );
+    value /= CREDITS_PER_FRAG;
   }
+
+  trap_R_SetColor( color );
+
+  if( padding )
+    CG_DrawFieldPadded( rect->x, rect->y, 3, rect->w / 3, rect->h, value );
+  else
+    CG_DrawField( rect->x - rect->w, rect->y, 3, rect->w, rect->h, value );
+
+  trap_R_SetColor( NULL );
 }
 
 static void CG_DrawPlayerCreditsFraction( rectDef_t *rect, vec4_t color, qhandle_t shader )
@@ -344,7 +342,7 @@ static void CG_DrawPlayerCreditsFraction( rectDef_t *rect, vec4_t color, qhandle
     return;
 
   fraction = ((float)(cg.predictedPlayerState.persistant[ PERS_CREDIT ] %
-    ALIEN_CREDITS_PER_KILL)) / ALIEN_CREDITS_PER_KILL;
+    CREDITS_PER_FRAG)) / CREDITS_PER_FRAG;
 
   CG_AdjustFrom640( &rect->x, &rect->y, &rect->w, &rect->h );
   height = rect->h * fraction;

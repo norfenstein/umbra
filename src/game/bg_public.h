@@ -890,7 +890,6 @@ typedef struct
   float     knockbackScale;
 
   int       cost;
-  int       value;
 } classAttributes_t;
 
 typedef struct
@@ -958,8 +957,6 @@ typedef struct
   qboolean      dccTest;
   qboolean      transparentTest;
   qboolean      uniqueTest;
-  
-  int       value;
 } buildableAttributes_t;
 
 typedef struct

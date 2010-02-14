@@ -212,9 +212,9 @@ struct gentity_s
                                         // every single frame.. so only do it periodically
   int               clientSpawnTime;    // the time until this spawn can spawn a client
 
-  int               credits[ MAX_CLIENTS ];     // human credits for each client
-  qboolean          creditsHash[ MAX_CLIENTS ]; // track who has claimed credit
-  int               killedBy;                   // clientNum of killer
+  int               damageAccounts[ MAX_CLIENTS ]; // damage done by enemies (positive) and teammates (negative)
+  int               lastHeal;           // last client to have its damage account reduced
+  int               killedBy;           // clientNum of killer
 
   gentity_t         *targeted;          // true if the player is currently a valid target of a turret
   vec3_t            turretAim;          // aim vector for turrets
@@ -786,7 +786,7 @@ qboolean  G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, floa
                           gentity_t *ignore, int mod );
 qboolean  G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius,
                                    gentity_t *ignore, int mod, int team );
-float     G_RewardAttackers( gentity_t *self );
+void      G_RewardAttackers( gentity_t *self );
 void      body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int meansOfDeath );
 void      AddScore( gentity_t *ent, int score );
 void      G_LogDestruction( gentity_t *self, gentity_t *actor, int mod );
@@ -830,8 +830,8 @@ void trigger_teleporter_touch( gentity_t *self, gentity_t *other, trace_t *trace
 //
 // g_misc.c
 //
+void HealEntity( gentity_t *ent, int maxHealth, int amount );
 void TeleportPlayer( gentity_t *player, vec3_t origin, vec3_t angles );
-void ShineTorch( gentity_t *self );
 
 //
 // g_weapon.c

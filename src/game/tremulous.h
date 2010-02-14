@@ -123,41 +123,32 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_HLTH_MODIFIER         1.0f
 #define AHM(h)                      ((int)((float)h*ALIEN_HLTH_MODIFIER))
 
-#define ALIEN_VALUE_MODIFIER        1.0f
-#define AVM(h)                      ((int)((float)h*ALIEN_VALUE_MODIFIER))
-
 #define ABUILDER_SPEED               0.9f
-#define ABUILDER_VALUE               AVM(300)
 #define ABUILDER_HEALTH              AHM(75)
 #define ABUILDER_REGEN               (0.04f * ABUILDER_HEALTH)
 #define ABUILDER_COST                0
 
 #define ALEVEL0_SPEED                1.4f
-#define ALEVEL0_VALUE                AVM(180)
 #define ALEVEL0_HEALTH               AHM(25)
 #define ALEVEL0_REGEN                (0.05f * ALEVEL0_HEALTH)
 #define ALEVEL0_COST                 0
 
 #define ALEVEL1_1_SPEED              1.25f
-#define ALEVEL1_1_VALUE              AVM(330)
 #define ALEVEL1_1_HEALTH             AHM(80)
 #define ALEVEL1_1_REGEN              (0.03f * ALEVEL1_1_HEALTH)
 #define ALEVEL1_1_COST               0
 
 #define ALEVEL3_SPEED                1.2f
-#define ALEVEL3_VALUE                AVM(540)
 #define ALEVEL3_HEALTH               AHM(175)
 #define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
 #define ALEVEL3_COST                 0
 
 #define ALEVEL4_SPEED                1.1f
-#define ALEVEL4_VALUE                AVM(720)
 #define ALEVEL4_HEALTH               AHM(250)
 #define ALEVEL4_REGEN                (0.03f * ALEVEL4_HEALTH)
 #define ALEVEL4_COST                 0
 
 #define ALEVEL5_SPEED                1.2f
-#define ALEVEL5_VALUE                AVM(960)
 #define ALEVEL5_HEALTH               AHM(350)
 #define ALEVEL5_REGEN                (0.025f * ALEVEL5_HEALTH)
 #define ALEVEL5_COST                 0
@@ -178,8 +169,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALIEN_BHLTH_MODIFIER        1.0f
 #define ABHM(h)                     ((int)((float)h*ALIEN_BHLTH_MODIFIER))
-#define ALIEN_BVALUE_MODIFIER       90.0f
-#define ABVM(h)                     ((int)((float)h*ALIEN_BVALUE_MODIFIER))
 
 #define CREEP_BASESIZE              700
 #define CREEP_TIMEOUT               1000
@@ -193,7 +182,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ASPAWN_SPLASHDAMAGE         50
 #define ASPAWN_SPLASHRADIUS         100
 #define ASPAWN_CREEPSIZE            120
-#define ASPAWN_VALUE                ABVM(ASPAWN_BP)
 
 #define BARRICADE_BP                8
 #define BARRICADE_BT                20000
@@ -204,7 +192,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BARRICADE_CREEPSIZE         120
 #define BARRICADE_SHRINKPROP        0.25f
 #define BARRICADE_SHRINKTIMEOUT     500
-#define BARRICADE_VALUE             ABVM(BARRICADE_BP)
 
 #define BOOSTER_BP                  12
 #define BOOSTER_BT                  15000
@@ -214,7 +201,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BOOSTER_SPLASHRADIUS        100
 #define BOOSTER_CREEPSIZE           120
 #define BOOSTER_REGEN_MOD           3.0f
-#define BOOSTER_VALUE               ABVM(BOOSTER_BP)
 #define BOOST_TIME                  20000
 #define BOOST_WARN_TIME             15000
 
@@ -229,7 +215,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ACIDTUBE_RANGE              300.0f
 #define ACIDTUBE_REPEAT             300
 #define ACIDTUBE_REPEAT_ANIM        2000
-#define ACIDTUBE_VALUE              ABVM(ACIDTUBE_BP)
 
 #define HIVE_BP                     12
 #define HIVE_BT                     20000
@@ -245,7 +230,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HIVE_DMG                    80
 #define HIVE_SPEED                  320.0f
 #define HIVE_DIR_CHANGE_PERIOD      500
-#define HIVE_VALUE                  ABVM(HIVE_BP)
 
 #define TRAPPER_BP                  8
 #define TRAPPER_BT                  12000
@@ -256,7 +240,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TRAPPER_CREEPSIZE           30
 #define TRAPPER_RANGE               400
 #define TRAPPER_REPEAT              1000
-#define TRAPPER_VALUE               ABVM(TRAPPER_BP)
 #define LOCKBLOB_SPEED              650.0f
 #define LOCKBLOB_LOCKTIME           5000
 #define LOCKBLOB_DOT                0.85f // max angle = acos( LOCKBLOB_DOT )
@@ -271,7 +254,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OVERMIND_CREEPSIZE          120
 #define OVERMIND_ATTACK_RANGE       150.0f
 #define OVERMIND_ATTACK_REPEAT      1000
-#define OVERMIND_VALUE              ABVM(30)
 
 #define HOVEL_BP                    0
 #define HOVEL_BT                    15000
@@ -280,7 +262,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HOVEL_SPLASHDAMAGE          20
 #define HOVEL_SPLASHRADIUS          200
 #define HOVEL_CREEPSIZE             120
-#define HOVEL_VALUE                 ABVM(8)
 
 /*
  * ALIEN misc
@@ -300,11 +281,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ALIEN_REGEN_DAMAGE_TIME     2000 //msec since damage that regen starts again
 #define ALIEN_REGEN_NOCREEP_MOD     (1.0f/3.0f) //regen off creep
-
-#define ALIEN_MAX_FRAGS             9
-#define ALIEN_MAX_CREDITS           (ALIEN_MAX_FRAGS*ALIEN_CREDITS_PER_KILL)
-#define ALIEN_CREDITS_PER_KILL      400
-#define ALIEN_TK_SUICIDE_PENALTY    ALIEN_CREDITS_PER_KILL
 
 /*
  * HUMAN weapons
@@ -462,8 +438,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_BHLTH_MODIFIER        1.0f
 #define HBHM(h)                     ((int)((float)h*HUMAN_BHLTH_MODIFIER))
-#define HUMAN_BVALUE_MODIFIER       240.0f
-#define HBVM(h)                     ((int)((float)h*(float)HUMAN_BVALUE_MODIFIER)) // remember these are measured in credits not frags (c.f. ALIEN_CREDITS_PER_KILL)
 
 #define REACTOR_BASESIZE            1000
 #define REPEATER_BASESIZE           500
@@ -474,14 +448,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HSPAWN_HEALTH               HBHM(310)
 #define HSPAWN_SPLASHDAMAGE         50
 #define HSPAWN_SPLASHRADIUS         100
-#define HSPAWN_VALUE                HBVM(HSPAWN_BP)
 
 #define MEDISTAT_BP                 8
 #define MEDISTAT_BT                 10000
 #define MEDISTAT_HEALTH             HBHM(190)
 #define MEDISTAT_SPLASHDAMAGE       50
 #define MEDISTAT_SPLASHRADIUS       100
-#define MEDISTAT_VALUE              HBVM(MEDISTAT_BP)
 
 #define MGTURRET_BP                 8
 #define MGTURRET_BT                 10000
@@ -497,7 +469,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MGTURRET_SPREAD             200
 #define MGTURRET_DMG                HDM(8)
 #define MGTURRET_SPINUP_TIME        750 // time between target sighted and fire
-#define MGTURRET_VALUE              HBVM(MGTURRET_BP)
 
 #define TESLAGEN_BP                 10
 #define TESLAGEN_BT                 15000
@@ -508,7 +479,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_K_SCALE            4.0f
 #define TESLAGEN_RANGE              150
 #define TESLAGEN_DMG                HDM(10)
-#define TESLAGEN_VALUE              HBVM(TESLAGEN_BP)
 
 #define DC_BP                       8
 #define DC_BT                       10000
@@ -518,14 +488,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DC_ATTACK_PERIOD            10000 // how often to spam "under attack"
 #define DC_HEALRATE                 3
 #define DC_RANGE                    1000
-#define DC_VALUE                    HBVM(DC_BP)
 
 #define ARMOURY_BP                  10
 #define ARMOURY_BT                  10000
 #define ARMOURY_HEALTH              HBHM(420)
 #define ARMOURY_SPLASHDAMAGE        50
 #define ARMOURY_SPLASHRADIUS        100
-#define ARMOURY_VALUE               HBVM(ARMOURY_BP)
 
 #define REACTOR_BP                  0
 #define REACTOR_BT                  20000
@@ -538,14 +506,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REACTOR_ATTACK_DCC_REPEAT   1000
 #define REACTOR_ATTACK_DCC_RANGE    150.0f
 #define REACTOR_ATTACK_DCC_DAMAGE   40
-#define REACTOR_VALUE               HBVM(30)
 
 #define REPEATER_BP                 4
 #define REPEATER_BT                 10000
 #define REPEATER_HEALTH             HBHM(250)
 #define REPEATER_SPLASHDAMAGE       50
 #define REPEATER_SPLASHRADIUS       100
-#define REPEATER_VALUE              HBVM(REPEATER_BP)
 
 /*
  * HUMAN misc
@@ -560,30 +526,30 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define HUMAN_SPAWN_REPEAT_TIME     10000
 #define HUMAN_REGEN_DAMAGE_TIME     2000 //msec since damage before dcc repairs
 
-#define HUMAN_MAX_CREDITS           2000
-#define HUMAN_TK_SUICIDE_PENALTY    150
-
-#define HUMAN_BUILDER_SCOREINC      50       // builders receive this many points every 10 seconds
-#define ALIEN_BUILDER_SCOREINC      AVM(50)  // builders receive this many points every 10 seconds
-
 #define HUMAN_BUILDABLE_INACTIVE_TIME 90000
 
 /*
  * Misc
  */
 
-#define MIN_FALL_DISTANCE           30.0f //the fall distance at which fall damage kicks in
-#define MAX_FALL_DISTANCE           120.0f //the fall distance at which maximum damage is dealt
-#define AVG_FALL_DISTANCE           ((MIN_FALL_DISTANCE+MAX_FALL_DISTANCE)/2.0f)
+#define MAX_CREDITS                 1000
+#define MIN_CREDITS                 -1000
+#define CREDITS_PER_FRAG            100
 
 #define DEFAULT_FREEKILL_PERIOD     "120" //seconds
-#define FREEKILL_ALIEN              ALIEN_CREDITS_PER_KILL
-#define FREEKILL_HUMAN              ALEVEL0_VALUE
+#define FREEKILL_VALUE              1
+
+#define BUILDER_SCOREINC            0 // builders receive this many points every 10 seconds
+
+#define MIN_FALL_DISTANCE           30.0f  //the fall distance at which fall damage kicks in
+#define MAX_FALL_DISTANCE           120.0f //the fall distance at which maximum damage is dealt
+#define AVG_FALL_DISTANCE           ((MIN_FALL_DISTANCE+MAX_FALL_DISTANCE)/2.0f)
 
 #define DEFAULT_ALIEN_BUILDPOINTS   "100"
 #define DEFAULT_ALIEN_QUEUE_TIME    "8000"
 #define DEFAULT_HUMAN_BUILDPOINTS   "100"
 #define DEFAULT_HUMAN_QUEUE_TIME    "8000"
+                                         
                                          
 #define MAXIMUM_BUILD_TIME          20000 // used for pie timer
 

@@ -1818,12 +1818,11 @@ void HMedistat_Think( gentity_t *self )
     }
     else if( self->enemy && self->enemy->client ) //heal!
     {
-      self->enemy->health++;
+      HealEntity( self->enemy, self->enemy->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
 
       //if they're completely healed, give them a medkit
       if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
       {
-        self->enemy->health =  self->enemy->client->ps.stats[ STAT_MAX_HEALTH ];
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
           BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
       }
@@ -2301,21 +2300,13 @@ void G_BuildableThink( gentity_t *ent, int msec )
       if( ent->buildableTeam == TEAM_ALIENS && regenRate &&
         ( ent->lastDamageTime + ALIEN_REGEN_DAMAGE_TIME ) < level.time )
       {
-        ent->health += regenRate;
+        HealEntity( ent, maxHealth, regenRate );
       }
       else if( ent->buildableTeam == TEAM_HUMANS && ent->dcc &&
         ( ent->lastDamageTime + HUMAN_REGEN_DAMAGE_TIME ) < level.time )
       {
-        ent->health += DC_HEALRATE * ent->dcc;
+        HealEntity( ent, maxHealth, DC_HEALRATE * ent->dcc );
       }
-    }
-
-    if( ent->health >= maxHealth )
-    {
-      int i;
-      ent->health = maxHealth;
-      for( i = 0; i < MAX_CLIENTS; i++ )
-        ent->credits[ i ] = 0;
     }
   }
 

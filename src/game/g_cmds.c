@@ -344,19 +344,22 @@ void Cmd_Give_f( gentity_t *ent )
 
   if( give_all || Q_stricmp( name, "health" ) == 0 )
   {
+    int i;
+
     ent->health = ent->client->ps.stats[ STAT_MAX_HEALTH ];
     BG_AddUpgradeToInventory( UP_MEDKIT, ent->client->ps.stats );
+
+    //clear all damage accounts
+    for( i = 0; i < MAX_CLIENTS; i++ )
+      ent->damageAccounts[ i ] = 0;
   }
 
   if( give_all || Q_stricmpn( name, "funds", 5 ) == 0 )
   {
-    float credits = atof( name + 6 );
+    float credits = MAX_CREDITS;
 
-    if( ent->client->pers.teamSelection == TEAM_ALIENS )
-      credits *= ALIEN_CREDITS_PER_KILL;
-
-    if( give_all )
-      credits = ALIEN_MAX_CREDITS;
+    if( !give_all )
+      credits = atof( name + 6 ) * CREDITS_PER_FRAG;
 
     G_AddCreditToClient( ent->client, credits, qtrue );
   }
@@ -623,7 +626,7 @@ void Cmd_Team_f( gentity_t *ent )
   // guard against build timer exploit
   if( oldteam != TEAM_NONE && ent->client->sess.spectatorState == SPECTATOR_NOT &&
      ( ent->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ||
-       BG_InventoryContainsWeapon( WP_HBUILD, ent->client->ps.stats ) ) &&
+       ent->client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_BUILDER  ) &&
       ent->client->ps.stats[ STAT_MISC ] > 0 )
   {
     if( ent->client->pers.teamSelection == TEAM_ALIENS )
@@ -1373,19 +1376,17 @@ void Cmd_Class_f( gentity_t *ent )
       return;
     }
 
-    cost = BG_Class( newClass )->cost;
+    cost = BG_Class( newClass )->cost * CREDITS_PER_FRAG;
 
     if( ent->client->sess.spectatorState == SPECTATOR_FOLLOW )
       G_StopFollowing( ent );
 
-    if( cost > ent->client->pers.credit )
+    if( cost > 0 && cost > ent->client->pers.credit )
     {
       G_TriggerMenuArgs( clientNum, MN_C_CANTSPAWN, newClass );
     }
     else if( ent->client->pers.teamSelection == TEAM_ALIENS )
     {
-      cost = cost * ALIEN_CREDITS_PER_KILL;
-
       // spawn from an egg
       if( G_PushSpawnQueue( &level.alienSpawnQueue, clientNum ) )
       {

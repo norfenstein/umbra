@@ -196,21 +196,6 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
   ent->client->pers.joinedATeam = qtrue;
   ent->client->pers.teamChangeTime = level.time;
 
-  if( oldTeam == TEAM_HUMANS && newTeam == TEAM_ALIENS )
-  {
-    // Convert from human to alien credits
-    ent->client->pers.credit =
-      (int)( ent->client->pers.credit *
-             ALIEN_MAX_CREDITS / HUMAN_MAX_CREDITS + 0.5f );
-  }
-  else if( oldTeam == TEAM_ALIENS && newTeam == TEAM_HUMANS )
-  {
-    // Convert from alien to human credits
-    ent->client->pers.credit =
-      (int)( ent->client->pers.credit *
-             HUMAN_MAX_CREDITS / ALIEN_MAX_CREDITS + 0.5f );
-  }
-
   // Copy credits to ps for the client
   ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.credit;
 

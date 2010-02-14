@@ -86,20 +86,16 @@ G_AddCreditToClient
 */
 void G_AddCreditToClient( gclient_t *client, short credit, qboolean cap )
 {
-  int capAmount;
-
   if( !client )
     return;
 
   client->pers.credit += credit;
-  capAmount = client->pers.teamSelection == TEAM_ALIENS ?
-               ALIEN_MAX_CREDITS : HUMAN_MAX_CREDITS;
 
-  if( cap && client->pers.credit > capAmount )
-    client->pers.credit = capAmount;
+  if( cap && client->pers.credit > MAX_CREDITS )
+    client->pers.credit = MAX_CREDITS;
 
-  if( client->pers.credit < 0 )
-    client->pers.credit = 0;
+  if( client->pers.credit < MIN_CREDITS )
+    client->pers.credit = MIN_CREDITS;
 
   // Copy to ps so the client can access it
   client->ps.persistant[ PERS_CREDIT ] = client->pers.credit;
@@ -1533,9 +1529,12 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   // health will count down towards max_health
   ent->health = client->ps.stats[ STAT_HEALTH ] = client->ps.stats[ STAT_MAX_HEALTH ]; //* 1.25;
 
-  //clear the credits array
+  //clear all damage accounts
   for( i = 0; i < MAX_CLIENTS; i++ )
-    ent->credits[ i ] = 0;
+    ent->damageAccounts[ i ] = 0;
+  
+  //randomly assign a client for lastHeal
+  ent->lastHeal = rand( ) % MAX_CLIENTS;
 
   G_SetOrigin( ent, spawn_origin );
   VectorCopy( spawn_origin, client->ps.origin );

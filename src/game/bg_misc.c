@@ -65,7 +65,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    ASPAWN_VALUE,          //int       value;
   },
   {
     BA_A_OVERMIND,         //int       buildNum;
@@ -97,7 +96,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qtrue,                 //qboolean  uniqueTest;
-    OVERMIND_VALUE,        //int       value;
   },
   {
     BA_A_BARRICADE,        //int       buildNum;
@@ -129,7 +127,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    BARRICADE_VALUE,       //int       value;
   },
   {
     BA_A_ACIDTUBE,         //int       buildNum;
@@ -161,7 +158,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    ACIDTUBE_VALUE,        //int       value;
   },
   {
     BA_A_TRAPPER,          //int       buildNum;
@@ -193,7 +189,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    TRAPPER_VALUE,         //int       value;
   },
   {
     BA_A_BOOSTER,          //int       buildNum;
@@ -226,7 +221,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    BOOSTER_VALUE,         //int       value;
   },
   {
     BA_A_HIVE,             //int       buildNum;
@@ -257,7 +251,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    HIVE_VALUE,            //int       value;
   },
   {
     BA_A_HOVEL,            //int       buildNum;
@@ -289,7 +282,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qtrue,                 //qboolean  uniqueTest;
-    HOVEL_VALUE,           //int       value;
   },
   {
     BA_H_SPAWN,            //int       buildNum;
@@ -321,7 +313,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    HSPAWN_VALUE,          //int       value;
   },
   {
     BA_H_MGTURRET,         //int       buildNum;
@@ -353,7 +344,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    MGTURRET_VALUE,        //int       value;
   },
   {
     BA_H_TESLAGEN,         //int       buildNum;
@@ -385,7 +375,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    TESLAGEN_VALUE,        //int       value;
   },
   {
     BA_H_ARMOURY,          //int       buildNum;
@@ -417,7 +406,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    ARMOURY_VALUE,         //int       value;
   },
   {
     BA_H_DCC,              //int       buildNum;
@@ -449,7 +437,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    DC_VALUE,              //int       value;
   },
   {
     BA_H_MEDISTAT,         //int       buildNum;
@@ -482,7 +469,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qtrue,                 //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    MEDISTAT_VALUE,        //int       value;
   },
   {
     BA_H_REACTOR,          //int       buildNum;
@@ -514,7 +500,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qtrue,                 //qboolean  uniqueTest;
-    REACTOR_VALUE,         //int       value;
   },
   {
     BA_H_REPEATER,         //int       buildNum;
@@ -546,7 +531,6 @@ static const buildableAttributes_t bg_buildableList[ ] =
     qfalse,                //qboolean  dccTest;
     qfalse,                //qboolean  transparentTest;
     qfalse,                //qboolean  uniqueTest;
-    REPEATER_VALUE,        //int       value;
   }
 };
 
@@ -843,7 +827,6 @@ static const classAttributes_t bg_classList[ ] =
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     0,                                              //int     cost;
-    0                                               //int     value;
   },
   {
     PCL_ALIEN_BUILDER,                              //int     classnum;
@@ -869,7 +852,6 @@ static const classAttributes_t bg_classList[ ] =
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     ABUILDER_COST,                                  //int     cost;
-    ABUILDER_VALUE                                  //int     value;
   },
   {
     PCL_ALIEN_LEVEL0,                               //int     classnum;
@@ -894,7 +876,6 @@ static const classAttributes_t bg_classList[ ] =
     250.0f,                                         //float   jumpMagnitude;
     2.0f,                                           //float   knockbackScale;
     ALEVEL0_COST,                                   //int     cost;
-    ALEVEL0_VALUE                                   //int     value;
   },
   {
     PCL_ALIEN_LEVEL1_0,                             //int     classnum;
@@ -921,7 +902,6 @@ static const classAttributes_t bg_classList[ ] =
     310.0f,                                         //float   jumpMagnitude;
     1.1f,                                           //float   knockbackScale;
     ALEVEL1_1_COST,                                 //int     cost;
-    ALEVEL1_1_VALUE                                 //int     value;
   },
   {
     PCL_ALIEN_LEVEL1_1,                             //int     classnum;
@@ -948,7 +928,6 @@ static const classAttributes_t bg_classList[ ] =
     310.0f,                                         //float   jumpMagnitude;
     1.1f,                                           //float   knockbackScale;
     ALEVEL1_1_COST,                                 //int     cost;
-    ALEVEL1_1_VALUE                                 //int     value;
   },
   {
     PCL_ALIEN_LEVEL2,                               //int     classnum;
@@ -973,7 +952,6 @@ static const classAttributes_t bg_classList[ ] =
     250.0f,                                         //float   jumpMagnitude;
     2.0f,                                           //float   knockbackScale;
     ALEVEL0_COST,                                   //int     cost;
-    ALEVEL0_VALUE                                   //int     value;
   },
   {
     PCL_ALIEN_LEVEL3,                               //int     classnum;
@@ -998,7 +976,6 @@ static const classAttributes_t bg_classList[ ] =
     380.0f,                                         //float   jumpMagnitude;
     0.7f,                                           //float   knockbackScale;
     ALEVEL3_COST,                                   //int     cost;
-    ALEVEL3_VALUE                                   //int     value;
   },
   {
     PCL_ALIEN_LEVEL4,                               //int     classnum;
@@ -1024,7 +1001,6 @@ static const classAttributes_t bg_classList[ ] =
     270.0f,                                         //float   jumpMagnitude;
     0.4f,                                           //float   knockbackScale;
     ALEVEL4_COST,                                   //int     cost;
-    ALEVEL4_VALUE                                   //int     value;
   },
   {
     PCL_ALIEN_LEVEL5,                               //int     classnum;
@@ -1051,7 +1027,6 @@ static const classAttributes_t bg_classList[ ] =
     170.0f,                                         //float   jumpMagnitude;
     0.1f,                                           //float   knockbackScale;
     ALEVEL5_COST,                                   //int     cost;
-    ALEVEL5_VALUE                                   //int     value;
   },
   {
     PCL_HUMAN_BUILDER,                              //int     classnum;
@@ -1075,7 +1050,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     0,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL0,                               //int     classnum;
@@ -1099,7 +1073,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     0,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL1_0,                             //int     classnum;
@@ -1123,7 +1096,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     1,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL1_1,                             //int     classnum;
@@ -1147,7 +1119,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     1,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL2,                               //int     classnum;
@@ -1171,7 +1142,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     2,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL3,                               //int     classnum;
@@ -1195,7 +1165,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     3,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL4,                               //int     classnum;
@@ -1219,7 +1188,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     4,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   },
   {
     PCL_HUMAN_LEVEL5,                               //int     classnum;
@@ -1243,7 +1211,6 @@ static const classAttributes_t bg_classList[ ] =
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
     5,                                              //int     cost;
-    ALIEN_CREDITS_PER_KILL                          //int     value;
   }
 };
 

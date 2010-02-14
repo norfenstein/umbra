@@ -783,12 +783,9 @@ void CheckCkitRepair( gentity_t *ent )
     bHealth = BG_Buildable( traceEnt->s.modelindex )->health;
     if( traceEnt->health < bHealth )
     {
-      traceEnt->health += HBUILD_HEALRATE;
-      if( traceEnt->health >= bHealth )
-      {
-        traceEnt->health = bHealth;
+      HealEntity( traceEnt, bHealth, HBUILD_HEALRATE );
+      if( traceEnt->health == bHealth )
         G_AddEvent( ent, EV_BUILD_REPAIRED, 0 );
-      }
       else
         G_AddEvent( ent, EV_BUILD_REPAIR, 0 );
 

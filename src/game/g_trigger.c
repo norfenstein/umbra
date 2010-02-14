@@ -979,8 +979,6 @@ trigger_heal_touch
 */
 void trigger_heal_touch( gentity_t *self, gentity_t *other, trace_t *trace )
 {
-  int max;
-
   if( !other->client )
     return;
 
@@ -992,12 +990,7 @@ void trigger_heal_touch( gentity_t *self, gentity_t *other, trace_t *trace )
   else
     self->timestamp = level.time + FRAMETIME;
 
-  max = other->client->ps.stats[ STAT_MAX_HEALTH ];
-
-  other->health += self->damage;
-
-  if( other->health > max )
-    other->health = max;
+  HealEntity( other, other->client->ps.stats[ STAT_MAX_HEALTH ], self->damage );
 
   other->client->ps.stats[ STAT_HEALTH ] = other->health;
 }

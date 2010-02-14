@@ -657,7 +657,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
             ent->client->ps.pm_type != PM_DEAD )
         {
           ent->client->medKitHealthToRestore--;
-          ent->health++;
+          HealEntity( ent, ent->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
         }
         else
           ent->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
@@ -672,7 +672,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
           if( level.time > client->medKitIncrementTime )
           {
             ent->client->medKitHealthToRestore--;
-            ent->health++;
+            HealEntity( ent, ent->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
 
             client->medKitIncrementTime = level.time +
               ( remainingStartupTime / MEDKIT_STARTUP_SPEED );
@@ -722,10 +722,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
       // Give clients some credit periodically
       if( G_TimeTilSuddenDeath( ) > 0 )
       {
-        if( client->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
-          G_AddCreditToClient( client, FREEKILL_ALIEN, qtrue );
-        else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
-          G_AddCreditToClient( client, FREEKILL_HUMAN, qtrue );
+        G_AddCreditToClient( client, FREEKILL_VALUE, qtrue );
       }
     }
   }
@@ -734,14 +731,9 @@ void ClientTimerActions( gentity_t *ent, int msec )
   {
     client->time10000 -= 10000;
 
-    if( ent->client->ps.weapon == WP_ABUILD )
-    {
-      AddScore( ent, ALIEN_BUILDER_SCOREINC );
-    }
-    else if( ent->client->ps.weapon == WP_HBUILD )
-    {
-      AddScore( ent, HUMAN_BUILDER_SCOREINC );
-    }
+    if( ent->client->ps.stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER ||
+        ent->client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_BUILDER  )
+      AddScore( ent, BUILDER_SCOREINC );
   }
 
   // Regenerate ammo
@@ -1395,16 +1387,9 @@ void ClientThink_real( gentity_t *ent )
       // if recovery interval is less than frametime, compensate
       count = 1 + ( level.time - ent->nextRegenTime ) / interval;
 
-      ent->health += count;
       ent->nextRegenTime += count * interval;
 
-      // if at max health, clear damage counters
-      if( ent->health >= client->ps.stats[ STAT_MAX_HEALTH ] )
-      {
-        ent->health = client->ps.stats[ STAT_MAX_HEALTH ];
-        for( i = 0; i < MAX_CLIENTS; i++ )
-          ent->credits[ i ] = 0;
-      }
+      HealEntity( ent, client->ps.stats[ STAT_MAX_HEALTH ], count );
     }
   }
 

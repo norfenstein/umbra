@@ -61,6 +61,39 @@ void SP_light( gentity_t *self )
 }
 
 
+void HealEntity( gentity_t *ent, int maxHealth, int amount )
+{
+  int h, i, j;
+
+  if( amount <= 0 )
+    return;
+
+  if( ent->health + amount > maxHealth )
+    amount = maxHealth - ent->health;
+
+  ent->health += amount;
+
+  for( h = amount; h > 0; h-- )
+  {
+    for( i = 0, j = ent->lastHeal; i < MAX_CLIENTS; i++ )
+    {
+      if( ++j >= MAX_CLIENTS )
+        j -= MAX_CLIENTS;
+
+      if( !ent->damageAccounts[ j ] )
+        continue;
+
+      if( ent->damageAccounts[ j ] > 0 )
+        ent->damageAccounts[ j ]--;
+      else if( ent->damageAccounts[ j ] < 0 )
+        ent->damageAccounts[ j ]++;
+
+      ent->lastHeal = j;
+
+      break;
+    }
+  }
+}
 
 /*
 =================================================================================
