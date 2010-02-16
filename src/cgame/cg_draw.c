@@ -2169,7 +2169,7 @@ void CG_DrawWeaponIcon( rectDef_t *rect, vec4_t color )
 
   CG_RegisterWeapon( weapon );
 
-  if( clips == 0 && !BG_Weapon( weapon )->infiniteAmmo )
+  if( clips == 0 && BG_Weapon( weapon )->usesAmmo )
   {
     float ammoPercent = (float)ammo / (float)maxAmmo;
 

@@ -1616,7 +1616,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Bite",               //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
@@ -1637,7 +1637,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Claws",              //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1656,10 +1656,10 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel11",           //char      *weaponName;
     "Claws",              //char      *humanName;
-    0,                    //int       maxAmmo;
+    ALEVEL1_1_SPIT_AMMO,  //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    0,                    //int       ammoRegen;
+    ( 1 << WPM_TERTIARY ),//int       usesAmmo;
+    ALEVEL1_1_SPIT_REGEN, //int       ammoRegen;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     0,                    //int       repeatRate2;
     ALEVEL1_1_SPIT_REPEAT,//int       repeatRate3;
@@ -1679,7 +1679,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Bite",               //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
@@ -1698,10 +1698,10 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel3",            //char      *weaponName;
     "Zap",                //char      *humanName;
-    0,                    //int       maxAmmo;
+    ALEVEL3_FLAME_AMMO,   //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
-    0,                    //int       ammoRegen;
+    ( 1 << WPM_SECONDARY ),//int      usesAmmo;
+    ALEVEL3_FLAME_REGEN,  //int       ammoRegen;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL3_FLAME_REPEAT, //int       repeatRate2;
     0,                    //int       repeatRate3;
@@ -1721,7 +1721,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Pounce",             //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1740,9 +1740,9 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       price;
     "alevel5",            //char      *weaponName;
     "Charge",             //char      *humanName;
-    3,                    //int       maxAmmo;
+    ALEVEL5_BOUNCEBALL_AMMO,//int     maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    ( 1 << WPM_TERTIARY ),//int       usesAmmo;
     ALEVEL5_BOUNCEBALL_REGEN,//int    ammoRegen;
     ALEVEL5_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1763,7 +1763,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Blaster",            //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     BLASTER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1784,7 +1784,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Rifle",              //char      *humanName;
     RIFLE_CLIPSIZE,       //int       maxAmmo;
     RIFLE_MAXCLIPS,       //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     RIFLE_REPEAT,         //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1805,7 +1805,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Pain Saw",           //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1826,7 +1826,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Shotgun",            //char      *humanName;
     SHOTGUN_SHELLS,       //int       maxAmmo;
     SHOTGUN_MAXCLIPS,     //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     SHOTGUN_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1847,7 +1847,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Las Gun",            //char      *humanName;
     LASGUN_AMMO,          //int       maxAmmo;
     0,                    //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     LASGUN_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1868,7 +1868,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Mass Driver",        //char      *humanName;
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
     MDRIVER_MAXCLIPS,     //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     MDRIVER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1889,7 +1889,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Chaingun",           //char      *humanName;
     CHAINGUN_BULLETS,     //int       maxAmmo;
     0,                    //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     CHAINGUN_REPEAT,      //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1910,7 +1910,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Pulse Rifle",        //char      *humanName;
     PRIFLE_CLIPS,         //int       maxAmmo;
     PRIFLE_MAXCLIPS,      //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     PRIFLE_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1931,7 +1931,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Lucifer Cannon",     //char      *humanName;
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    ( 1 << WPM_PRIMARY )|( 1 << WPM_SECONDARY ),//int usesAmmo;
     0,                    //int       ammoRegen;
     LCANNON_REPEAT,       //int       repeatRate1;
     LCANNON_SECONDARY_REPEAT, //int   repeatRate2;
@@ -1952,7 +1952,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Grenade",            //char      *humanName;
     1,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qfalse,               //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -1973,7 +1973,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Lock Blob",          //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
@@ -1994,7 +1994,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Hive",               //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
@@ -2015,7 +2015,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Tesla Generator",    //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
@@ -2036,7 +2036,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Machinegun Turret",  //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     0,                    //int       repeatRate1;
     0,                    //int       repeatRate2;
@@ -2057,7 +2057,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Alien build weapon2",//char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     ABUILDER_BUILD_REPEAT,//int       repeatRate1;
     ABUILDER_CLAW_REPEAT, //int       repeatRate2;
@@ -2078,7 +2078,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Construction Kit",   //char      *humanName;
     0,                    //int       maxAmmo;
     0,                    //int       maxClips;
-    qtrue,                //int       infiniteAmmo;
+    0,                    //int       usesAmmo;
     0,                    //int       ammoRegen;
     HBUILD_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;

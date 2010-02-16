@@ -74,7 +74,7 @@ void G_GiveClientMaxAmmo( gentity_t *ent, qboolean buyingEnergyAmmo )
   for( i = WP_NONE + 1; i < WP_NUM_WEAPONS; i++ )
   {
     if( !BG_InventoryContainsWeapon( i, ent->client->ps.stats ) ||
-        BG_Weapon( i )->infiniteAmmo ||
+        !BG_Weapon( i )->usesAmmo ||
         BG_WeaponIsFull( i, ent->client->ps.stats,
                          ent->client->ps.ammo, ent->client->ps.clips ) )
       continue;

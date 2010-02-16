@@ -383,8 +383,7 @@ void Cmd_Give_f( gentity_t *ent )
   {
     gclient_t *client = ent->client;
 
-    if( client->ps.weapon != WP_ALEVEL5 &&
-        BG_Weapon( client->ps.weapon )->infiniteAmmo )
+    if( !BG_Weapon( client->ps.weapon )->usesAmmo )
       return;
 
     client->ps.ammo = BG_Weapon( client->ps.weapon )->maxAmmo;
@@ -1752,7 +1751,7 @@ void Cmd_Reload_f( gentity_t *ent )
   playerState_t *ps = &ent->client->ps;
 
   // weapon doesn't ever need reloading
-  if( BG_Weapon( ps->weapon )->infiniteAmmo )
+  if( !BG_Weapon( ps->weapon )->usesAmmo )
     return;
 
   if( ps->clips <= 0 )

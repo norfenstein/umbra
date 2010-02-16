@@ -1407,7 +1407,7 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
 
     BG_GetAmmoForWeapon( &cg.snap->ps, i, &ammo, &clips );
 
-    if( !ammo && !clips && !BG_Weapon( i )->infiniteAmmo )
+    if( !ammo && !clips && BG_Weapon( i )->usesAmmo )
       colinfo[ numItems ] = 1;
     else
       colinfo[ numItems ] = 0;

@@ -60,7 +60,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL1_1_POUNCE_TIME_MIN    200      // msec before which pounce cancels  
 #define ALEVEL1_1_POUNCE_SPEED_MOD   0.75f    // walking speed modifier for pounce charging
 #define ALEVEL1_1_POUNCE_JUMP_MAG    700      // pounce jump power
-#define ALEVEL1_1_SPIT_REPEAT        1000
+#define ALEVEL1_1_SPIT_REPEAT        400
+#define ALEVEL1_1_SPIT_AMMO          5
+#define ALEVEL1_1_SPIT_REGEN         600
 #define ALEVEL1_1_SPIT_SPEED         800.0f
 #define ALEVEL1_1_SPIT_TIME          1000
 
@@ -69,14 +71,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_CLAW_WIDTH           14.0f
 #define ALEVEL3_CLAW_REPEAT          400
 #define ALEVEL3_CLAW_K_SCALE         1.0f
-#define ALEVEL3_FLAME_AMMO           150
+#define ALEVEL3_FLAME_AMMO           10
 #define ALEVEL3_FLAME_REPEAT         200
 #define ALEVEL3_FLAME_DMG            ADM(20)
+#define ALEVEL3_FLAME_REGEN          400
 #define ALEVEL3_FLAME_SIZE           15        // missile bounding box
 #define ALEVEL3_FLAME_LIFETIME       700.0f
 #define ALEVEL3_FLAME_SPEED          300.0f
 #define ALEVEL3_FLAME_LAG            0.65f    // the amount of player velocity that is added to the fireball
-
 
 #define ALEVEL4_CLAW_DMG             ADM(80)
 #define ALEVEL4_CLAW_RANGE           80.0f
@@ -93,10 +95,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL5_CLAW_REPEAT          800
 #define ALEVEL5_CLAW_K_SCALE         1.0f
 #define ALEVEL5_BOUNCEBALL_DMG       ADM(110)
+#define ALEVEL5_BOUNCEBALL_AMMO      10
+#define ALEVEL5_BOUNCEBALL_REGEN     15000
 #define ALEVEL5_BOUNCEBALL_REPEAT    1200
 #define ALEVEL5_BOUNCEBALL_SPEED     1000.0f
 #define ALEVEL5_BOUNCEBALL_RADIUS    75
-#define ALEVEL5_BOUNCEBALL_REGEN     15000    // msec until new barb
 
 #define ALEVEL5_TRAMPLE_DMG             ADM(111)
 #define ALEVEL5_TRAMPLE_SPEED           2.0f

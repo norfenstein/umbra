@@ -977,7 +977,7 @@ typedef struct
 
   int       maxAmmo;
   int       maxClips;
-  qboolean  infiniteAmmo;
+  int       usesAmmo;
   int       ammoRegen;
 
   int       repeatRate1;

@@ -3041,7 +3041,7 @@ static void PM_Weapon( void )
   }
 
   // check for out of ammo
-  if( !pm->ps->ammo && !pm->ps->clips && !BG_Weapon( pm->ps->weapon )->infiniteAmmo )
+  if( !pm->ps->ammo && !pm->ps->clips && BG_Weapon( pm->ps->weapon )->usesAmmo )
   {
     if( attack1 ||
         ( BG_Weapon( pm->ps->weapon )->hasAltMode && attack2 ) ||
@@ -3071,7 +3071,7 @@ static void PM_Weapon( void )
   }
 
   // check for end of clip
-  if( !BG_Weapon( pm->ps->weapon )->infiniteAmmo &&
+  if( BG_Weapon( pm->ps->weapon )->usesAmmo &&
       ( pm->ps->ammo <= 0 || ( pm->ps->pm_flags & PMF_WEAPON_RELOAD ) ) &&
       pm->ps->clips > 0 )
   {
@@ -3332,8 +3332,9 @@ static void PM_Weapon( void )
     pm->ps->weaponstate = WEAPON_FIRING;
 
   // take an ammo away if not infinite
-  if( !BG_Weapon( pm->ps->weapon )->infiniteAmmo ||
-      ( pm->ps->weapon == WP_ALEVEL5 && attack3 ) )
+  if( ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_PRIMARY ) ) && attack1 && !attack2 && !attack3 ) ||
+      ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_SECONDARY ) ) && attack2 && !attack3 ) ||
+      ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) ) && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )
@@ -3591,7 +3592,8 @@ void PmoveSingle( pmove_t *pmove )
   // set the firing flag for continuous beam weapons
   if( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION &&
       ( pm->cmd.buttons & BUTTON_ATTACK ) &&
-      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) || BG_Weapon( pm->ps->weapon )->infiniteAmmo ) )
+      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) ||
+        !( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_PRIMARY ) ) ) )
     pm->ps->eFlags |= EF_FIRING;
   else
     pm->ps->eFlags &= ~EF_FIRING;
@@ -3599,7 +3601,8 @@ void PmoveSingle( pmove_t *pmove )
   // set the firing flag for continuous beam weapons
   if( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION &&
       ( pm->cmd.buttons & BUTTON_ATTACK2 ) &&
-      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) || BG_Weapon( pm->ps->weapon )->infiniteAmmo ) )
+      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) ||
+        !( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_SECONDARY ) ) ) )
     pm->ps->eFlags |= EF_FIRING2;
   else
     pm->ps->eFlags &= ~EF_FIRING2;
@@ -3607,7 +3610,8 @@ void PmoveSingle( pmove_t *pmove )
   // set the firing flag for continuous beam weapons
   if( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION &&
       ( pm->cmd.buttons & BUTTON_USE_HOLDABLE ) &&
-      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) || BG_Weapon( pm->ps->weapon )->infiniteAmmo ) )
+      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) ||
+        !( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) ) ) )
     pm->ps->eFlags |= EF_FIRING3;
   else
     pm->ps->eFlags &= ~EF_FIRING3;
