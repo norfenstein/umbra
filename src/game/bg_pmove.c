@@ -718,11 +718,6 @@ static qboolean PM_CheckJump( void )
       pm->ps->stats[ STAT_MISC ] > 0 )
     return qfalse;
 
-  //no bunny hopping off a dodge
-  if( pm->ps->stats[ STAT_TEAM ] == TEAM_HUMANS && 
-      pm->ps->pm_time )
-    return qfalse;
-
   if( pm->ps->pm_flags & PMF_RESPAWNED )
     return qfalse;    // don't allow jump until all buttons are up
 
@@ -851,9 +846,6 @@ static qboolean PM_CheckDodge( void )
   float jump, sideModifier;
   int i;
   
-  if( pm->ps->stats[ STAT_TEAM ] != TEAM_HUMANS )
-    return qfalse;
-
   // Landed a dodge
   if( ( pm->ps->pm_flags & PMF_CHARGE ) &&
       pm->ps->groundEntityNum != ENTITYNUM_NONE )
@@ -864,10 +856,6 @@ static qboolean PM_CheckDodge( void )
 
   // Reasons why we can't start a dodge
   if( pm->ps->pm_type != PM_NORMAL || ( pm->ps->pm_flags & PMF_DUCKED ) )
-    return qfalse;
-
-  // Can't dodge forward
-  if( pm->cmd.forwardmove > 0 )
     return qfalse;
 
   // Reasons why we can't start a dodge only
@@ -933,6 +921,24 @@ static qboolean PM_CheckDodge( void )
   PM_AddEvent( EV_JUMP );
 
   return qtrue;
+}
+
+/*
+==================
+PM_CheckBoost
+
+Checks the dodge key and starts class-specific movement
+==================
+*/
+static qboolean PM_CheckBoost( void )
+{
+  switch( pm->ps->stats[ STAT_CLASS ] )
+  {
+    case PCL_HUMAN_LEVEL1_1:
+      return PM_CheckDodge( );
+    default:
+      return qfalse;
+  }
 }
 
 //============================================================================
@@ -3718,7 +3724,7 @@ void PmoveSingle( pmove_t *pmove )
     PM_DeadMove( );
 
   PM_DropTimers( );
-  PM_CheckDodge( );
+  PM_CheckBoost( );
 
   if( pm->ps->pm_type == PM_JETPACK )
     PM_JetPackMove( );

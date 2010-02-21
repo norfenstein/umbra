@@ -1613,7 +1613,7 @@ void Cmd_ToggleItem_f( gentity_t *ent )
   upgrade = BG_UpgradeByName( s )->number;
   weapon = BG_WeaponByName( s )->number;
 
-  if( weapon != WP_NONE )
+  if( BG_InventoryContainsWeapon( weapon, ent->client->ps.stats ) && weapon != WP_NONE )
   {
     if( !BG_PlayerCanChangeWeapon( &ent->client->ps ) )
       return;
