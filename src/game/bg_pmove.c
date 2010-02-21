@@ -663,10 +663,10 @@ static qboolean PM_CheckWallJump( void )
             dir, pm->ps->velocity );
 
   //for a long run of wall jumps the velocity can get pretty large, this caps it
-  if( VectorLength( pm->ps->velocity ) > ALEVEL3_WALLJUMP_MAXSPEED )
+  if( VectorLength( pm->ps->velocity ) > ALEVEL3_MAXSPEED )
   {
     VectorNormalize( pm->ps->velocity );
-    VectorScale( pm->ps->velocity, ALEVEL3_WALLJUMP_MAXSPEED, pm->ps->velocity );
+    VectorScale( pm->ps->velocity, ALEVEL3_MAXSPEED, pm->ps->velocity );
   }
 
   PM_AddEvent( EV_JUMP );
@@ -832,6 +832,71 @@ static qboolean PM_CheckWaterJump( void )
   return qtrue;
 }
 
+/*
+=============
+PM_CheckImpulse
+=============
+*/
+static qboolean PM_CheckImpulse( void )
+{
+  vec3_t forward, right, dir = { 0.0f, 0.0f, 0.0f };
+
+  if( pm->ps->stats[ STAT_CLASS ] != PCL_ALIEN_LEVEL3 )
+    return qfalse;
+
+  // Can only impulse in the air, and only once
+  if( pm->ps->groundEntityNum != ENTITYNUM_NONE )
+  {
+    pm->ps->pm_flags &= ~PMF_CHARGE;
+    return qfalse;
+  }
+
+  if( !( pm->cmd.buttons & BUTTON_DODGE ) ||
+      pm->ps->pm_flags & PMF_CHARGE ||
+      pm->ps->pm_flags & PMF_TIME_WALLJUMP )
+    return qfalse;
+
+  VectorCopy( pml.forward, forward );
+  VectorCopy( pml.right, right );
+
+  if( pm->cmd.rightmove || pm->cmd.forwardmove )
+  {
+    if( pm->cmd.rightmove )
+    {
+      if( pm->cmd.rightmove < 0 )
+        VectorNegate( right, right );
+
+      VectorAdd( dir, right, dir );
+    }
+
+    if( pm->cmd.forwardmove )
+    {
+      if( pm->cmd.forwardmove < 0 )
+        VectorNegate( forward, forward );
+
+      VectorAdd( dir, forward, dir );
+    }
+  }
+  else
+  {
+    // Default to straight up
+    dir[ 2 ] = 1.0f;
+  }
+
+  pm->ps->pm_flags |= PMF_CHARGE;
+  VectorMA( pm->ps->velocity, BG_Class( pm->ps->stats[ STAT_CLASS ] )->jumpMagnitude, dir, pm->ps->velocity );
+
+  //put the brakes on
+  if( VectorLength( pm->ps->velocity ) > ALEVEL3_MAXSPEED )
+  {
+    VectorNormalize( pm->ps->velocity );
+    VectorScale( pm->ps->velocity, ALEVEL3_MAXSPEED, pm->ps->velocity );
+  }
+
+  PM_AddEvent( EV_JUMP );
+
+  return qtrue;
+}
 
 /*
 ==================
@@ -846,6 +911,9 @@ static qboolean PM_CheckDodge( void )
   float jump, sideModifier;
   int i;
   
+  if( pm->ps->stats[ STAT_CLASS ] != PCL_HUMAN_LEVEL1_1 )
+    return qfalse;
+
   // Landed a dodge
   if( ( pm->ps->pm_flags & PMF_CHARGE ) &&
       pm->ps->groundEntityNum != ENTITYNUM_NONE )
@@ -934,6 +1002,8 @@ static qboolean PM_CheckBoost( void )
 {
   switch( pm->ps->stats[ STAT_CLASS ] )
   {
+    case PCL_ALIEN_LEVEL3:
+      return PM_CheckImpulse( );
     case PCL_HUMAN_LEVEL1_1:
       return PM_CheckDodge( );
     default:

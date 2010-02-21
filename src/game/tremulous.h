@@ -149,7 +149,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_HEALTH               AHM(175)
 #define ALEVEL3_REGEN                (0.03f * ALEVEL3_HEALTH)
 #define ALEVEL3_COST                 0
-#define ALEVEL3_WALLJUMP_MAXSPEED    1000.0f
+#define ALEVEL3_MAXSPEED             2000.0f
 
 #define ALEVEL4_SPEED                1.1f
 #define ALEVEL4_HEALTH               AHM(250)
