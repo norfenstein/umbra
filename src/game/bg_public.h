@@ -979,6 +979,7 @@ typedef struct
   int       maxClips;
   int       usesAmmo;
   int       ammoRegen;
+  int       ammoRegenDelay;
 
   int       repeatRate1;
   int       repeatRate2;

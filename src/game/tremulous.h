@@ -62,7 +62,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL1_1_POUNCE_JUMP_MAG    700      // pounce jump power
 #define ALEVEL1_1_SPIT_REPEAT        400
 #define ALEVEL1_1_SPIT_AMMO          5
-#define ALEVEL1_1_SPIT_REGEN         600
+#define ALEVEL1_1_SPIT_REGEN         200
+#define ALEVEL1_1_SPIT_REGEN_DELAY   1200
 #define ALEVEL1_1_SPIT_SPEED         800.0f
 #define ALEVEL1_1_SPIT_TIME          1000
 
@@ -74,8 +75,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_FLAME_AMMO           10
 #define ALEVEL3_FLAME_REPEAT         200
 #define ALEVEL3_FLAME_DMG            ADM(20)
-#define ALEVEL3_FLAME_REGEN          400
-#define ALEVEL3_FLAME_SIZE           15        // missile bounding box
+#define ALEVEL3_FLAME_REGEN          100
+#define ALEVEL3_FLAME_REGEN_DELAY    3000
+#define ALEVEL3_FLAME_SIZE           15       // missile bounding box
 #define ALEVEL3_FLAME_LIFETIME       700.0f
 #define ALEVEL3_FLAME_SPEED          300.0f
 #define ALEVEL3_FLAME_LAG            0.65f    // the amount of player velocity that is added to the fireball
@@ -97,6 +99,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL5_BOUNCEBALL_DMG       ADM(110)
 #define ALEVEL5_BOUNCEBALL_AMMO      10
 #define ALEVEL5_BOUNCEBALL_REGEN     15000
+#define ALEVEL5_BOUNCEBALL_REGEN_DELAY 0
 #define ALEVEL5_BOUNCEBALL_REPEAT    1200
 #define ALEVEL5_BOUNCEBALL_SPEED     1000.0f
 #define ALEVEL5_BOUNCEBALL_RADIUS    75
@@ -344,7 +347,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_RANGE               (8192 * 12)
 
 #define LASGUN_PRICE                250
-#define LASGUN_AMMO                 200
+#define LASGUN_AMMO                 80
+#define LASGUN_REGEN                50
+#define LASGUN_REGEN_DELAY          500
 #define LASGUN_REPEAT               200
 #define LASGUN_K_SCALE              1.0f
 #define LASGUN_RELOAD               2000

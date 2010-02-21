@@ -2830,6 +2830,9 @@ static void PM_Weapon( void )
   qboolean      attack1 = pm->cmd.buttons & BUTTON_ATTACK;
   qboolean      attack2 = pm->cmd.buttons & BUTTON_ATTACK2;
   qboolean      attack3 = pm->cmd.buttons & BUTTON_USE_HOLDABLE;
+  qboolean      usesAmmo1 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_PRIMARY );
+  qboolean      usesAmmo2 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_SECONDARY );
+  qboolean      usesAmmo3 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY );
 
   // Ignore weapons in some cases
   if( pm->ps->persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT ||
@@ -3041,15 +3044,15 @@ static void PM_Weapon( void )
   }
 
   // check for out of ammo
-  if( !pm->ps->ammo && !pm->ps->clips && BG_Weapon( pm->ps->weapon )->usesAmmo )
+  if( !pm->ps->ammo && !pm->ps->clips &&
+      ( ( usesAmmo1 && attack1 ) ||
+        ( usesAmmo2 && attack2 && BG_Weapon( pm->ps->weapon )->hasAltMode ) ||
+        ( usesAmmo3 && attack3 && BG_Weapon( pm->ps->weapon )->hasThirdMode ) ) )
   {
-    if( attack1 ||
-        ( BG_Weapon( pm->ps->weapon )->hasAltMode && attack2 ) ||
-        ( BG_Weapon( pm->ps->weapon )->hasThirdMode && attack3 ) )
-    {
-      PM_AddEvent( EV_NOAMMO );
-      pm->ps->weaponTime += 500;
-    }
+    //TODO don't want the delay to interfere with ammo regen
+    //TODO and for some reason it clicks again once after ammo comes back
+    //PM_AddEvent( EV_NOAMMO );
+    //pm->ps->weaponTime += 500;
 
     if( pm->ps->weaponstate == WEAPON_FIRING )
       pm->ps->weaponstate = WEAPON_READY;
@@ -3180,13 +3183,6 @@ static void PM_Weapon( void )
   {
     if( BG_Weapon( pm->ps->weapon )->hasThirdMode )
     {
-      //hacky special case for bounceball
-      if( pm->ps->weapon == WP_ALEVEL5 && !pm->ps->ammo )
-      {
-        pm->ps->weaponTime += 200;
-        return;
-      }
-
       pm->ps->generic1 = WPM_TERTIARY;
       PM_AddEvent( EV_FIRE_WEAPON3 );
       addTime = BG_Weapon( pm->ps->weapon )->repeatRate3;
@@ -3332,9 +3328,9 @@ static void PM_Weapon( void )
     pm->ps->weaponstate = WEAPON_FIRING;
 
   // take an ammo away if not infinite
-  if( ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_PRIMARY ) ) && attack1 && !attack2 && !attack3 ) ||
-      ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_SECONDARY ) ) && attack2 && !attack3 ) ||
-      ( ( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) ) && attack3 ) )
+  if( ( usesAmmo1 && attack1 && !attack2 && !attack3 ) ||
+      ( usesAmmo2 && attack2 && !attack3 ) ||
+      ( usesAmmo3 && attack3 ) )
   {
     // Special case for lcannon
     if( pm->ps->weapon == WP_LUCIFER_CANNON && attack1 && !attack2 )

@@ -741,7 +741,8 @@ void ClientTimerActions( gentity_t *ent, int msec )
   {
     if( client->ps.ammo < BG_Weapon( client->ps.weapon )->maxAmmo )
     {
-      if( ent->timestamp + BG_Weapon( client->ps.weapon )->ammoRegen < level.time )
+      if( ent->lastAmmoTime + BG_Weapon( client->ps.weapon )->ammoRegenDelay < level.time &&
+          ent->timestamp + BG_Weapon( client->ps.weapon )->ammoRegen < level.time )
       {
         client->ps.ammo++;
         ent->timestamp = level.time;

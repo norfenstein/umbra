@@ -1180,6 +1180,9 @@ void FireWeapon3( gentity_t *ent )
     VectorCopy( ent->s.pos.trBase, muzzle );
   }
 
+  if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) )
+    ent->lastAmmoTime = level.time;
+
   // fire the specific weapon
   switch( ent->s.weapon )
   {
@@ -1214,6 +1217,9 @@ void FireWeapon2( gentity_t *ent )
     AngleVectors( ent->s.angles2, forward, right, up );
     VectorCopy( ent->s.pos.trBase, muzzle );
   }
+
+  if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_SECONDARY ) )
+    ent->lastAmmoTime = level.time;
 
   // fire the specific weapon
   switch( ent->s.weapon )
@@ -1258,6 +1264,9 @@ void FireWeapon( gentity_t *ent )
     AngleVectors( ent->turretAim, forward, right, up );
     VectorCopy( ent->s.pos.trBase, muzzle );
   }
+
+  if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_PRIMARY ) )
+    ent->lastAmmoTime = level.time;
 
   // fire the specific weapon
   switch( ent->s.weapon )
