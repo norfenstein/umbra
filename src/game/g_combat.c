@@ -88,7 +88,6 @@ char *modNames[ ] =
   "MOD_ALEVEL3_CLAW",
   "MOD_ALEVEL3_FLAME",
   "MOD_ALEVEL4_CLAW",
-  "MOD_ALEVEL4_POUNCE",
   "MOD_ALEVEL5_BOUNCEBALL",
   "MOD_ALEVEL5_CLAW",
   "MOD_ALEVEL5_TRAMPLE",
@@ -533,8 +532,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   }
 
   // don't do friendly fire on movement attacks
-  if( ( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL4_POUNCE ||
-        mod == MOD_ALEVEL5_CRUSH ) &&
+  if( ( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL5_CRUSH ) &&
       targ->s.eType == ET_BUILDABLE && targ->buildableTeam == TEAM_ALIENS )
   {
     return;
@@ -549,8 +547,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     if( targ != attacker && OnSameTeam( targ, attacker ) )
     {
       // don't do friendly fire on movement attacks
-      if( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL4_POUNCE ||
-          mod == MOD_ALEVEL5_CRUSH )
+      if( mod == MOD_ALEVEL5_TRAMPLE || mod == MOD_ALEVEL5_CRUSH )
         return;
 
       // if dretchpunt is enabled and this is a dretch, do dretchpunt instead of damage

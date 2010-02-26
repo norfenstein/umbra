@@ -396,7 +396,7 @@ static float PM_CmdScale( usercmd_t *cmd )
 
   //slow player if charging up for a pounce
   if( ( pm->ps->weapon == WP_ALEVEL1_1 ) &&
-      cmd->buttons & BUTTON_ATTACK2 )
+      cmd->buttons & BUTTON_DODGE )
     modifier *= ALEVEL1_1_POUNCE_SPEED_MOD;
 
   if( pm->ps->pm_type == PM_GRABBED )
@@ -517,7 +517,7 @@ static qboolean PM_CheckPounce( void )
   }
 
   // We're building up for a pounce
-  if( pm->cmd.buttons & BUTTON_ATTACK2 )
+  if( pm->cmd.buttons & BUTTON_DODGE )
   {
     pm->ps->pm_flags &= ~PMF_CHARGE;
     return qfalse;
@@ -2925,7 +2925,7 @@ static void PM_Weapon( void )
   // Charging for a pounce or canceling a pounce
   if( pm->ps->weapon == WP_ALEVEL1_1 )
   {
-    if( pm->cmd.buttons & BUTTON_ATTACK2 )
+    if( pm->cmd.buttons & BUTTON_DODGE )
       pm->ps->stats[ STAT_MISC ] += pml.msec;
     else
       pm->ps->stats[ STAT_MISC ] -= pml.msec;
@@ -3175,7 +3175,7 @@ static void PM_Weapon( void )
         return;
 
     case WP_ALEVEL1_1:
-      if( !attack1 && !attack2 && !attack3 )
+      if( !attack1 && !attack2 )
         return;
       break;
 

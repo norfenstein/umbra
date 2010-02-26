@@ -1190,10 +1190,6 @@ void FireWeapon3( gentity_t *ent )
       bounceBallFire( ent );
       break;
 
-    case WP_ALEVEL1_1:
-      spitFire( ent );
-      break;
-
     default:
       break;
   }
@@ -1224,23 +1220,28 @@ void FireWeapon2( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
+    case WP_ABUILD:
+    case WP_HBUILD:
+      cancelBuildFire( ent );
+      break;
+
     case WP_ALEVEL0:
     case WP_ALEVEL2:
       grappleFire( ent );
       break;
 
-    case WP_LUCIFER_CANNON:
-      LCChargeFire( ent, qtrue );
+    case WP_ALEVEL1_1:
+      spitFire( ent );
       break;
 
     case WP_ALEVEL3:
       flamerFire( ent );
       break;
 
-    case WP_ABUILD:
-    case WP_HBUILD:
-      cancelBuildFire( ent );
+    case WP_LUCIFER_CANNON:
+      LCChargeFire( ent, qtrue );
       break;
+
     default:
       break;
   }
