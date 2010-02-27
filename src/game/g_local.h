@@ -691,8 +691,6 @@ gentity_t         *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal
 
 qboolean          G_IsDCCBuilt( void );
 int               G_FindDCC( gentity_t *self );
-gentity_t         *G_Reactor( void );
-gentity_t         *G_Overmind( void );
 qboolean          G_FindCreep( gentity_t *self );
 
 void              G_BuildableThink( gentity_t *ent, int msec );

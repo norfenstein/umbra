@@ -300,7 +300,7 @@ static void PM_Friction( void )
     drop += speed * pm_waterfriction * pm->waterlevel * pml.frametime;
 
   // apply flying friction
-  if( pm->ps->pm_type == PM_JETPACK )
+  if( pm->ps->pm_type == PM_FLYING )
     drop += speed * pm_flightfriction * pml.frametime;
 
   if( pm->ps->pm_type == PM_SPECTATOR )
@@ -408,7 +408,7 @@ static float PM_CmdScale( usercmd_t *cmd )
       cmd->upmove = 0;
 
     //prevent speed distortions for non ducking classes
-    if( !( pm->ps->pm_flags & PMF_DUCKED ) && pm->ps->pm_type != PM_JETPACK && cmd->upmove < 0 )
+    if( !( pm->ps->pm_flags & PMF_DUCKED ) && pm->ps->pm_type != PM_FLYING && cmd->upmove < 0 )
       cmd->upmove = 0;
   }
 
@@ -1000,12 +1000,58 @@ Checks the dodge key and starts class-specific movement
 */
 static qboolean PM_CheckBoost( void )
 {
+  qboolean toggle = qfalse;
+
+  if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_DODGE_HELD ) )
+  {
+    toggle = qtrue;
+    pm->ps->pm_flags |= PMF_DODGE_HELD;
+  }
+  else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
+    pm->ps->pm_flags &= ~PMF_DODGE_HELD;
+
+  if( BG_ClassHasAbility( pm->ps->stats[ STAT_CLASS ], SCA_WALLCLIMBER ) )
+  {
+      if( pm->ps->persistant[ PERS_STATE ] & PS_WALLCLIMBINGTOGGLE )
+      {
+        if( toggle )
+        {
+          if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) &&
+              !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) ) //don't start wallclimbing while grappling TODO improve this
+            pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
+          else if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
+            pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
+        }
+      }
+      else
+      {
+        //don't start wallclimbing while grappling TODO improve this
+        if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
+          pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
+        else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
+          pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
+      }
+  }
+  else if( BG_ClassHasAbility( pm->ps->stats[ STAT_CLASS ], SCA_FLIGHT ) )
+  {
+    if( toggle )
+    {
+      if( !( pm->ps->stats[ STAT_STATE ] & SS_FLYING ) )
+        pm->ps->stats[ STAT_STATE ] |= SS_FLYING;
+      else if( pm->ps->stats[ STAT_STATE ] & SS_FLYING )
+        pm->ps->stats[ STAT_STATE ] &= ~SS_FLYING;
+    }
+
+  }
+
   switch( pm->ps->stats[ STAT_CLASS ] )
   {
     case PCL_ALIEN_LEVEL3:
       return PM_CheckImpulse( );
+
     case PCL_HUMAN_LEVEL1_1:
       return PM_CheckDodge( );
+
     default:
       return qfalse;
   }
@@ -2244,31 +2290,6 @@ static void PM_GroundTrace( void )
 
   if( BG_ClassHasAbility( pm->ps->stats[ STAT_CLASS ], SCA_WALLCLIMBER ) )
   {
-    if( pm->ps->persistant[ PERS_STATE ] & PS_WALLCLIMBINGTOGGLE )
-    {
-      //toggle wall climbing if holding crouch
-      if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_DODGE_HELD ) )
-      {
-        if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) &&
-            !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) ) //don't start wallclimbing while grappling TODO improve this
-          pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
-        else if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
-          pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
-
-        pm->ps->pm_flags |= PMF_DODGE_HELD;
-      }
-      else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
-        pm->ps->pm_flags &= ~PMF_DODGE_HELD;
-    }
-    else
-    {
-      //don't start wallclimbing while grappling TODO improve this
-      if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
-        pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
-      else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
-        pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
-    }
-
     if( pm->ps->pm_type == PM_DEAD )
       pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
 
@@ -2513,7 +2534,7 @@ static void PM_CheckDuck (void)
 
   // If the standing and crouching bboxes are the same the class can't crouch
   if( ( pm->cmd.upmove < 0 ) && !VectorCompare( PCmaxs, PCcmaxs ) &&
-      pm->ps->pm_type != PM_JETPACK )
+      pm->ps->pm_type != PM_FLYING )
   {
     // duck
     pm->ps->pm_flags |= PMF_DUCKED;
@@ -3796,7 +3817,7 @@ void PmoveSingle( pmove_t *pmove )
   PM_DropTimers( );
   PM_CheckBoost( );
 
-  if( pm->ps->pm_type == PM_JETPACK )
+  if( pm->ps->pm_type == PM_FLYING )
     PM_JetPackMove( );
   else if( pm->ps->pm_flags & PMF_GRAPPLE_PULL )
   {

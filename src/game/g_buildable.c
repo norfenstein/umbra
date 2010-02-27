@@ -211,50 +211,6 @@ qboolean G_IsDCCBuilt( void )
 
 /*
 ================
-G_Reactor
-G_Overmind
-
-Since there's only one of these and we quite often want to find them, cache the
-results, but check them for validity each time
-
-The code here will break if more than one reactor or overmind is allowed, even
-if one of them is dead/unspawned
-================
-*/
-static gentity_t *G_FindBuildable( buildable_t buildable ); 
-
-gentity_t *G_Reactor( void )
-{
-  static gentity_t *rc;
-
-  // If cache becomes invalid renew it
-  if( !rc || rc->s.eType != ET_BUILDABLE || rc->s.modelindex == BA_H_REACTOR )
-    rc = G_FindBuildable( BA_H_REACTOR );
-
-  // If we found it and it's alive, return it
-  if( rc && rc->spawned && rc->health > 0 )
-    return rc;
-
-  return NULL;
-}
-
-gentity_t *G_Overmind( void )
-{
-  static gentity_t *om;
-
-  // If cache becomes invalid renew it
-  if( !om || om->s.eType != ET_BUILDABLE || om->s.modelindex == BA_A_OVERMIND )
-    om = G_FindBuildable( BA_A_OVERMIND );
-
-  // If we found it and it's alive, return it
-  if( om && om->spawned && om->health > 0 )
-    return om;
-
-  return NULL;
-}
-
-/*
-================
 G_FindCreep
 
 attempt to find creep for self, return qtrue if successful

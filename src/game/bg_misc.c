@@ -887,7 +887,7 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_HEALTH,                               //int     health;
     0.0f,                                           //float   fallDamage;
     ALEVEL1_1_REGEN,                                //float   regenRate;
-    SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
+    SCA_FLIGHT|SCA_FOVWARPS|SCA_ALIENSENSE,         //int     abilities;
     { WP_ALEVEL1_0, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;

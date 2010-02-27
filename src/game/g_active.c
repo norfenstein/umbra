@@ -1277,8 +1277,8 @@ void ClientThink_real( gentity_t *ent )
   else if( client->ps.stats[ STAT_STATE ] & SS_BLOBLOCKED ||
            client->ps.stats[ STAT_STATE ] & SS_GRABBED )
     client->ps.pm_type = PM_GRABBED;
-  else if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) && BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
-    client->ps.pm_type = PM_JETPACK;
+  else if( client->ps.stats[ STAT_STATE ] & SS_FLYING )
+    client->ps.pm_type = PM_FLYING;
   else
     client->ps.pm_type = PM_NORMAL;
 
@@ -1420,18 +1420,13 @@ void ClientThink_real( gentity_t *ent )
     client->ps.stats[ STAT_STATE ] &= ~SS_CREEPSLOWED;
 
   //randomly disable the jet pack if damaged
-  if( BG_InventoryContainsUpgrade( UP_JETPACK, client->ps.stats ) &&
-      BG_UpgradeIsActive( UP_JETPACK, client->ps.stats ) )
+  if( client->ps.pm_type == PM_FLYING )
   {
     if( ent->lastDamageTime + JETPACK_DISABLE_TIME > level.time )
     {
       if( random( ) > JETPACK_DISABLE_CHANCE )
         client->ps.pm_type = PM_NORMAL;
     }
-
-    //switch jetpack off if no reactor
-    if( !G_Reactor( ) )
-      BG_DeactivateUpgrade( UP_JETPACK, client->ps.stats );
   }
 
   // set up for pmove

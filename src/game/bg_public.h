@@ -100,7 +100,7 @@ typedef enum
   PM_NORMAL,        // can accelerate and turn
   PM_NOCLIP,        // noclip movement
   PM_SPECTATOR,     // still run into walls
-  PM_JETPACK,       // jetpack physics
+  PM_FLYING,        // flight physics
   PM_GRABBED,       // like dead, but for when the player is still live
   PM_DEAD,          // no acceleration or turning, but free falling
   PM_FREEZE,        // stuck in place with no control
@@ -110,7 +110,7 @@ typedef enum
 // pmtype_t categories
 #define PM_Paralyzed( x ) ( (x) == PM_DEAD || (x) == PM_FREEZE ||\
                             (x) == PM_INTERMISSION )
-#define PM_Live( x )      ( (x) == PM_NORMAL || (x) == PM_JETPACK ||\
+#define PM_Live( x )      ( (x) == PM_NORMAL || (x) == PM_FLYING ||\
                             (x) == PM_GRABBED )
 
 typedef enum
@@ -225,6 +225,7 @@ typedef enum
 #define SCA_SCANNER             0x00000010
 #define SCA_CANUSELADDERS       0x00000020
 #define SCA_WALLJUMPER          0x00000040
+#define SCA_FLIGHT              0x00000080
 
 #define SS_WALLCLIMBING         0x00000001
 #define SS_CREEPSLOWED          0x00000002
@@ -238,6 +239,7 @@ typedef enum
 #define SS_HEALING_ACTIVE       0x00000200 // medistat for humans, creep for aliens
 #define SS_HEALING_2X           0x00000400 // medkit or double healing rate
 #define SS_HEALING_3X           0x00000800 // triple healing rate
+#define SS_FLYING               0x00001000
 
 #define SB_VALID_TOGGLEBIT      0x00002000
 
