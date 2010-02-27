@@ -126,7 +126,7 @@ typedef enum
 // pmove->pm_flags
 #define PMF_DUCKED          0x000001
 #define PMF_JUMP_HELD       0x000002
-#define PMF_CROUCH_HELD     0x000004
+#define PMF_DODGE_HELD      0x000004
 #define PMF_BACKWARDS_JUMP  0x000008 // go into backwards land
 #define PMF_BACKWARDS_RUN   0x000010 // coast down to backwards run
 #define PMF_TIME_LAND       0x000020 // pm_time is time before rejump

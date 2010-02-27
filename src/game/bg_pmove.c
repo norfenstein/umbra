@@ -2247,7 +2247,7 @@ static void PM_GroundTrace( void )
     if( pm->ps->persistant[ PERS_STATE ] & PS_WALLCLIMBINGTOGGLE )
     {
       //toggle wall climbing if holding crouch
-      if( pm->cmd.upmove < 0 && !( pm->ps->pm_flags & PMF_CROUCH_HELD ) )
+      if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_DODGE_HELD ) )
       {
         if( !( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING ) &&
             !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) ) //don't start wallclimbing while grappling TODO improve this
@@ -2255,17 +2255,17 @@ static void PM_GroundTrace( void )
         else if( pm->ps->stats[ STAT_STATE ] & SS_WALLCLIMBING )
           pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
 
-        pm->ps->pm_flags |= PMF_CROUCH_HELD;
+        pm->ps->pm_flags |= PMF_DODGE_HELD;
       }
-      else if( pm->cmd.upmove >= 0 )
-        pm->ps->pm_flags &= ~PMF_CROUCH_HELD;
+      else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
+        pm->ps->pm_flags &= ~PMF_DODGE_HELD;
     }
     else
     {
       //don't start wallclimbing while grappling TODO improve this
-      if( pm->cmd.upmove < 0 && !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
+      if( ( pm->cmd.buttons & BUTTON_DODGE ) && !( pm->ps->pm_flags & PMF_GRAPPLE_PULL ) )
         pm->ps->stats[ STAT_STATE ] |= SS_WALLCLIMBING;
-      else if( pm->cmd.upmove >= 0 )
+      else if( !( pm->cmd.buttons & BUTTON_DODGE ) )
         pm->ps->stats[ STAT_STATE ] &= ~SS_WALLCLIMBING;
     }
 
