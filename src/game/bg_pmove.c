@@ -483,7 +483,7 @@ static void PM_CheckCharge( void )
   if( pm->ps->weapon != WP_ALEVEL5 )
     return;
 
-  if( pm->cmd.buttons & BUTTON_ATTACK2 &&
+  if( pm->cmd.buttons & BUTTON_DODGE &&
       !( pm->ps->stats[ STAT_STATE ] & SS_CHARGING ) )
   {
     pm->ps->pm_flags &= ~PMF_CHARGE;
@@ -2944,7 +2944,7 @@ static void PM_Weapon( void )
     {
       // Charge button held
       if( pm->ps->stats[ STAT_MISC ] < ALEVEL5_TRAMPLE_CHARGE_TRIGGER &&
-          ( pm->cmd.buttons & BUTTON_ATTACK2 ) )
+          ( pm->cmd.buttons & BUTTON_DODGE ) )
       {
         pm->ps->stats[ STAT_STATE ] &= ~SS_CHARGING;
         if( pm->cmd.forwardmove > 0 )

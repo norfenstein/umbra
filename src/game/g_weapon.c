@@ -1081,6 +1081,7 @@ void G_ChargeAttack( gentity_t *ent, gentity_t *victim )
   if( !victim->takedamage )
     return;
 
+  ent->s.generic1 = WPM_NOTFIRING;
   WideBloodSpurt( ent, victim, NULL );
 
   damage = ALEVEL5_TRAMPLE_DMG * ent->client->ps.stats[ STAT_MISC ] /
@@ -1186,10 +1187,6 @@ void FireWeapon3( gentity_t *ent )
   // fire the specific weapon
   switch( ent->s.weapon )
   {
-    case WP_ALEVEL5:
-      bounceBallFire( ent );
-      break;
-
     default:
       break;
   }
@@ -1236,6 +1233,10 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_ALEVEL3:
       flamerFire( ent );
+      break;
+
+    case WP_ALEVEL5:
+      bounceBallFire( ent );
       break;
 
     case WP_LUCIFER_CANNON:
