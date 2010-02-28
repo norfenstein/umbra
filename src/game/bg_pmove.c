@@ -40,11 +40,14 @@ float pm_wadeScale = 0.70f;
 float pm_accelerate = 10.0f;
 float pm_airaccelerate = 1.0f;
 float pm_wateraccelerate = 4.0f;
-float pm_flyaccelerate = 4.0f;
+float pm_flightaccelerate = 4.0f;
+float pm_jetpackaccelerate = 2.0f;
+float pm_spectatoraccelerate = 4.0f;
 
 float pm_friction = 6.0f;
 float pm_waterfriction = 1.0f;
 float pm_flightfriction = 6.0f;
+float pm_jetpackfriction = 2.0f;
 float pm_spectatorfriction = 5.0f;
 
 int   c_pmove = 0;
@@ -302,8 +305,9 @@ static void PM_Friction( void )
   // apply flying friction
   if( pm->ps->pm_type == PM_FLYING )
     drop += speed * pm_flightfriction * pml.frametime;
-
-  if( pm->ps->pm_type == PM_SPECTATOR )
+  else if( pm->ps->pm_type == PM_JETPACK )
+    drop += speed * pm_jetpackfriction * pml.frametime;
+  else if( pm->ps->pm_type == PM_SPECTATOR )
     drop += speed * pm_spectatorfriction * pml.frametime;
 
   // scale the velocity
@@ -408,7 +412,8 @@ static float PM_CmdScale( usercmd_t *cmd )
       cmd->upmove = 0;
 
     //prevent speed distortions for non ducking classes
-    if( !( pm->ps->pm_flags & PMF_DUCKED ) && pm->ps->pm_type != PM_FLYING && cmd->upmove < 0 )
+    if( !( pm->ps->pm_flags & PMF_DUCKED ) && cmd->upmove < 0 &&
+        pm->ps->pm_type != PM_FLYING && pm->ps->pm_type != PM_JETPACK )
       cmd->upmove = 0;
   }
 
@@ -1161,53 +1166,6 @@ static void PM_WaterMove( void )
 
 /*
 ===================
-PM_JetPackMove
-
-Only with the jetpack
-===================
-*/
-static void PM_JetPackMove( void )
-{
-  int     i;
-  vec3_t  wishvel;
-  float   wishspeed;
-  vec3_t  wishdir;
-  float   scale;
-
-  //normal slowdown
-  PM_Friction( );
-
-  scale = PM_CmdScale( &pm->cmd );
-
-  // user intentions
-  for( i = 0; i < 2; i++ )
-    wishvel[ i ] = scale * pml.forward[ i ] * pm->cmd.forwardmove + scale * pml.right[ i ] * pm->cmd.rightmove;
-
-  if( pm->cmd.upmove > 0.0f )
-    wishvel[ 2 ] = JETPACK_FLOAT_SPEED;
-  else if( pm->cmd.upmove < 0.0f )
-    wishvel[ 2 ] = -JETPACK_SINK_SPEED;
-  else
-    wishvel[ 2 ] = 0.0f;
-
-  VectorCopy( wishvel, wishdir );
-  wishspeed = VectorNormalize( wishdir );
-
-  PM_Accelerate( wishdir, wishspeed, pm_flyaccelerate );
-
-  PM_StepSlideMove( qfalse, qfalse );
-
-  if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
-    PM_ContinueLegsAnim( LEGS_LAND );
-  else
-    PM_ContinueLegsAnim( NSPA_LAND );
-}
-
-
-
-
-/*
-===================
 PM_FlyMove
 
 Only with the flight powerup
@@ -1245,11 +1203,96 @@ static void PM_FlyMove( void )
   VectorCopy( wishvel, wishdir );
   wishspeed = VectorNormalize( wishdir );
 
-  PM_Accelerate( wishdir, wishspeed, pm_flyaccelerate );
+  PM_Accelerate( wishdir, wishspeed, pm_flightaccelerate );
 
   PM_StepSlideMove( qfalse, qfalse );
 }
 
+/*
+===================
+PM_JetPackMove
+
+Only with the jetpack
+===================
+*/
+static void PM_JetPackMove( void )
+{
+  int     i;
+  vec3_t  wishvel;
+  float   wishspeed;
+  vec3_t  wishdir;
+  float   scale;
+
+  //normal slowdown
+  PM_Friction( );
+
+  scale = PM_CmdScale( &pm->cmd );
+
+  // user intentions
+  for( i = 0; i < 2; i++ )
+    wishvel[ i ] = scale * pml.forward[ i ] * pm->cmd.forwardmove + scale * pml.right[ i ] * pm->cmd.rightmove;
+
+  if( pm->cmd.upmove > 0.0f )
+    wishvel[ 2 ] = JETPACK_ASCEND_SPEED;
+  else
+    wishvel[ 2 ] = 0.0f;
+
+  VectorCopy( wishvel, wishdir );
+  wishspeed = VectorNormalize( wishdir );
+
+  PM_Accelerate( wishdir, wishspeed, pm_jetpackaccelerate );
+
+  PM_StepSlideMove( qfalse, qfalse );
+
+  if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
+    PM_ContinueLegsAnim( LEGS_LAND );
+  else
+    PM_ContinueLegsAnim( NSPA_LAND );
+}
+
+/*
+===================
+PM_SpectatorMove
+
+Only as a spectator
+===================
+*/
+static void PM_SpectatorMove( void )
+{
+  int     i;
+  vec3_t  wishvel;
+  float   wishspeed;
+  vec3_t  wishdir;
+  float   scale;
+
+  // normal slowdown
+  PM_Friction( );
+
+  scale = PM_CmdScale( &pm->cmd );
+  //
+  // user intentions
+  //
+  if( !scale )
+  {
+    wishvel[ 0 ] = 0;
+    wishvel[ 1 ] = 0;
+    wishvel[ 2 ] = 0;
+  }
+  else
+  {
+    for( i = 0; i < 3; i++ )
+      wishvel[ i ] = scale * pml.forward[ i ] * pm->cmd.forwardmove + scale * pml.right[ i ] * pm->cmd.rightmove;
+
+    wishvel[ 2 ] += scale * pm->cmd.upmove;
+  }
+
+  VectorCopy( wishvel, wishdir );
+  wishspeed = VectorNormalize( wishdir );
+
+  PM_Accelerate( wishdir, wishspeed, pm_spectatoraccelerate );
+
+  PM_StepSlideMove( qfalse, qfalse );
+}
 
 /*
 ===================
@@ -2534,7 +2577,7 @@ static void PM_CheckDuck (void)
 
   // If the standing and crouching bboxes are the same the class can't crouch
   if( ( pm->cmd.upmove < 0 ) && !VectorCompare( PCmaxs, PCcmaxs ) &&
-      pm->ps->pm_type != PM_FLYING )
+      pm->ps->pm_type != PM_FLYING && pm->ps->pm_type != PM_JETPACK )
   {
     // duck
     pm->ps->pm_flags |= PMF_DUCKED;
@@ -3775,7 +3818,7 @@ void PmoveSingle( pmove_t *pmove )
     // update the viewangles
     PM_UpdateViewAngles( pm->ps, &pm->cmd );
     PM_CheckDuck( );
-    PM_FlyMove( );
+    PM_SpectatorMove( );
     PM_DropTimers( );
     return;
   }
@@ -3818,6 +3861,8 @@ void PmoveSingle( pmove_t *pmove )
   PM_CheckBoost( );
 
   if( pm->ps->pm_type == PM_FLYING )
+    PM_JetPackMove( );
+  if( pm->ps->pm_type == PM_JETPACK )
     PM_JetPackMove( );
   else if( pm->ps->pm_flags & PMF_GRAPPLE_PULL )
   {

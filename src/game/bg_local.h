@@ -70,11 +70,15 @@ extern  float pm_wadeScale;
 extern  float pm_accelerate;
 extern  float pm_airaccelerate;
 extern  float pm_wateraccelerate;
-extern  float pm_flyaccelerate;
+extern  float pm_flightaccelerate;
+extern  float pm_jetpackaccelerate;
+extern  float pm_spectatoraccelerate;
 
 extern  float pm_friction;
 extern  float pm_waterfriction;
 extern  float pm_flightfriction;
+extern  float pm_jetpackfriction;
+extern  float pm_spectatorfriction;
 
 extern  int   c_pmove;
 

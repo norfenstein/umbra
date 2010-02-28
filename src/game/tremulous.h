@@ -290,6 +290,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALIEN_REGEN_DAMAGE_TIME     2000 //msec since damage that regen starts again
 #define ALIEN_REGEN_NOCREEP_MOD     (1.0f/3.0f) //regen off creep
 
+#define FLIGHT_DISABLE_TIME         1000 //time to disable flight when player damaged
+#define FLIGHT_DISABLE_CHANCE       0.7f
+
 /*
  * HUMAN weapons
  *
@@ -347,9 +350,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_RANGE               (8192 * 12)
 
 #define LASGUN_PRICE                250
-#define LASGUN_AMMO                 80
+#define LASGUN_AMMO                 60
 #define LASGUN_REGEN                50
-#define LASGUN_REGEN_DELAY          500
+#define LASGUN_REGEN_DELAY          1000
 #define LASGUN_REPEAT               200
 #define LASGUN_K_SCALE              1.0f
 #define LASGUN_RELOAD               2000
@@ -411,10 +414,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define SCANNER_RANGE               1000.0f
 
-#define JETPACK_FLOAT_SPEED         128.0f //up movement speed
-#define JETPACK_SINK_SPEED          192.0f //down movement speed
-#define JETPACK_DISABLE_TIME        1000 //time to disable the jetpack when player damaged
-#define JETPACK_DISABLE_CHANCE      0.3f
+#define JETPACK_ASCEND_SPEED        540.0f //up movement speed
+#define JETPACK_SKI_AMMO_TIME       250 //msec between ammo deduction for skiing
+#define JETPACK_HOVER_AMMO_TIME     100 //msec between ammo deduction for hovering
+#define JETPACK_ASCEND_AMMO_TIME    5 //msec between ammo deduction for rising
 
 #define MEDKIT_POISON_IMMUNITY_TIME 0
 #define MEDKIT_STARTUP_TIME         4000

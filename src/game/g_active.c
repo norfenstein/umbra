@@ -736,6 +736,29 @@ void ClientTimerActions( gentity_t *ent, int msec )
       AddScore( ent, BUILDER_SCOREINC );
   }
 
+  // Take ammo for jetpack use
+  if( client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_LEVEL4 &&
+      client->buttons & BUTTON_DODGE &&
+      client->pers.cmd.upmove >= 0 &&
+      client->ps.ammo > 0 )
+  {
+    int ammoTime;
+
+    if( client->ps.groundEntityNum != ENTITYNUM_NONE )
+      ammoTime = JETPACK_SKI_AMMO_TIME;
+    else if( client->pers.cmd.upmove > 0 )
+      ammoTime = JETPACK_ASCEND_AMMO_TIME;
+    else
+      ammoTime = JETPACK_HOVER_AMMO_TIME;
+
+    if( ent->lastJetpackTime + ammoTime <= level.time )
+    {
+      client->ps.ammo--;
+      ent->lastJetpackTime = level.time;
+      ent->lastAmmoTime = level.time;
+    }
+  }
+
   // Regenerate ammo
   if( BG_Weapon( client->ps.weapon )->ammoRegen > 0 )
   {
@@ -1279,6 +1302,11 @@ void ClientThink_real( gentity_t *ent )
     client->ps.pm_type = PM_GRABBED;
   else if( client->ps.stats[ STAT_STATE ] & SS_FLYING )
     client->ps.pm_type = PM_FLYING;
+  else if( client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_LEVEL4 &&
+           client->buttons & BUTTON_DODGE &&
+           client->pers.cmd.upmove >= 0 &&
+           client->ps.ammo > 0 )
+    client->ps.pm_type = PM_JETPACK;
   else
     client->ps.pm_type = PM_NORMAL;
 
@@ -1419,12 +1447,12 @@ void ClientThink_real( gentity_t *ent )
   if( client->lastCreepSlowTime + CREEP_TIMEOUT < level.time )
     client->ps.stats[ STAT_STATE ] &= ~SS_CREEPSLOWED;
 
-  //randomly disable the jet pack if damaged
+  //randomly disable flight if damaged
   if( client->ps.pm_type == PM_FLYING )
   {
-    if( ent->lastDamageTime + JETPACK_DISABLE_TIME > level.time )
+    if( ent->lastDamageTime + FLIGHT_DISABLE_TIME > level.time )
     {
-      if( random( ) > JETPACK_DISABLE_CHANCE )
+      if( random( ) <= FLIGHT_DISABLE_CHANCE )
         client->ps.pm_type = PM_NORMAL;
     }
   }

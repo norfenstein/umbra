@@ -101,6 +101,7 @@ typedef enum
   PM_NOCLIP,        // noclip movement
   PM_SPECTATOR,     // still run into walls
   PM_FLYING,        // flight physics
+  PM_JETPACK,       // jetpack physics
   PM_GRABBED,       // like dead, but for when the player is still live
   PM_DEAD,          // no acceleration or turning, but free falling
   PM_FREEZE,        // stuck in place with no control
@@ -110,8 +111,8 @@ typedef enum
 // pmtype_t categories
 #define PM_Paralyzed( x ) ( (x) == PM_DEAD || (x) == PM_FREEZE ||\
                             (x) == PM_INTERMISSION )
-#define PM_Live( x )      ( (x) == PM_NORMAL || (x) == PM_FLYING ||\
-                            (x) == PM_GRABBED )
+#define PM_Live( x )      ( (x) == PM_NORMAL || (x) == PM_GRABBED ||\
+                            (x) == PM_FLYING || (x) == PM_JETPACK )
 
 typedef enum
 {
