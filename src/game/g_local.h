@@ -238,7 +238,7 @@ struct gentity_s
 
   int               lastDamageTime;
   int               nextRegenTime;
-  int               lastAmmoTime;
+  int               nextAmmoRegenTime;
   int               lastJetpackTime;
 
   qboolean          ownerClear;                     // used for missle tracking

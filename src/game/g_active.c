@@ -735,45 +735,6 @@ void ClientTimerActions( gentity_t *ent, int msec )
         ent->client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_BUILDER  )
       AddScore( ent, BUILDER_SCOREINC );
   }
-
-  // Take ammo for jetpack use
-  if( client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_LEVEL4 &&
-      client->buttons & BUTTON_DODGE &&
-      client->pers.cmd.upmove >= 0 &&
-      client->ps.ammo > 0 )
-  {
-    int ammoTime;
-
-    if( client->ps.groundEntityNum != ENTITYNUM_NONE )
-      ammoTime = JETPACK_SKI_AMMO_TIME;
-    else if( client->pers.cmd.upmove > 0 )
-      ammoTime = JETPACK_ASCEND_AMMO_TIME;
-    else
-      ammoTime = JETPACK_HOVER_AMMO_TIME;
-
-    if( ent->lastJetpackTime + ammoTime <= level.time )
-    {
-      client->ps.ammo--;
-      ent->lastJetpackTime = level.time;
-      ent->lastAmmoTime = level.time;
-    }
-  }
-
-  // Regenerate ammo
-  if( BG_Weapon( client->ps.weapon )->ammoRegen > 0 )
-  {
-    if( client->ps.ammo < BG_Weapon( client->ps.weapon )->maxAmmo )
-    {
-      if( ent->lastAmmoTime + BG_Weapon( client->ps.weapon )->ammoRegenDelay < level.time &&
-          ent->timestamp + BG_Weapon( client->ps.weapon )->ammoRegen < level.time )
-      {
-        client->ps.ammo++;
-        ent->timestamp = level.time;
-      }
-    }
-    else
-      ent->timestamp = level.time;
-   }
 }
 
 /*
@@ -1366,7 +1327,7 @@ void ClientThink_real( gentity_t *ent )
 
   // Replenish alien health
   if( level.surrenderTeam != client->pers.teamSelection &&
-      ent->nextRegenTime >= 0 && ent->nextRegenTime < level.time )
+      ent->nextRegenTime >= 0 && ent->nextRegenTime <= level.time )
   {
     float regenRate =
         BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->regenRate;
@@ -1420,6 +1381,67 @@ void ClientThink_real( gentity_t *ent )
 
       HealEntity( ent, client->ps.stats[ STAT_MAX_HEALTH ], count );
     }
+  }
+
+  // Take ammo for jetpack use
+  if( client->ps.stats[ STAT_CLASS ] == PCL_HUMAN_LEVEL4 &&
+      client->buttons & BUTTON_DODGE &&
+      client->pers.cmd.upmove >= 0 &&
+      client->ps.ammo > 0 )
+  {
+    int ammoTime, count;
+
+    if( client->ps.groundEntityNum != ENTITYNUM_NONE )
+      ammoTime = JETPACK_SKI_AMMO_TIME;
+    else if( client->pers.cmd.upmove > 0 )
+      ammoTime = JETPACK_ASCEND_AMMO_TIME;
+    else
+      ammoTime = JETPACK_HOVER_AMMO_TIME;
+
+    if( ent->lastJetpackTime > 0 )
+      count = ( level.time - ent->lastJetpackTime ) / ammoTime;
+    else
+    {
+      count = 1;
+      ent->lastJetpackTime = level.time;
+    }
+
+    if( count > 0 )
+    {
+      ent->lastJetpackTime += count * ammoTime;
+
+      if( client->ps.ammo < count )
+        client->ps.ammo = 0;
+      else
+        client->ps.ammo -= count;
+
+      if( BG_Weapon( ent->s.weapon )->ammoRegenDelay > 0 )
+        ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegenDelay;
+      else if( ent->nextAmmoRegenTime < level.time )
+        ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegen;
+    }
+  }
+  else
+    ent->lastJetpackTime = 0;
+
+  // Regenerate ammo
+  if( client->ps.ammo < BG_Weapon( client->ps.weapon )->maxAmmo &&
+      BG_Weapon( client->ps.weapon )->ammoRegen > 0 &&
+      ent->nextAmmoRegenTime >= 0 &&
+      ent->nextAmmoRegenTime <= level.time )
+  {
+    int ammoRegen = BG_Weapon( client->ps.weapon )->ammoRegen;
+    int maxAmmo = BG_Weapon( client->ps.weapon )->maxAmmo;
+    int count;
+
+    count = 1 + ( level.time - ent->nextAmmoRegenTime ) / ammoRegen;
+
+    ent->nextAmmoRegenTime += count * ammoRegen;
+
+    if( client->ps.ammo + count > maxAmmo )
+      client->ps.ammo = maxAmmo;
+    else
+      client->ps.ammo += count;
   }
 
   if( BG_InventoryContainsUpgrade( UP_GRENADE, client->ps.stats ) &&

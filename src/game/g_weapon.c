@@ -1182,7 +1182,12 @@ void FireWeapon3( gentity_t *ent )
   }
 
   if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) )
-    ent->lastAmmoTime = level.time;
+  {
+    if( BG_Weapon( ent->s.weapon )->ammoRegenDelay > 0 )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegenDelay;
+    else if( ent->nextAmmoRegenTime < level.time )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegen;
+  }
 
   // fire the specific weapon
   switch( ent->s.weapon )
@@ -1212,7 +1217,12 @@ void FireWeapon2( gentity_t *ent )
   }
 
   if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_SECONDARY ) )
-    ent->lastAmmoTime = level.time;
+  {
+    if( BG_Weapon( ent->s.weapon )->ammoRegenDelay > 0 )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegenDelay;
+    else if( ent->nextAmmoRegenTime < level.time )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegen;
+  }
 
   // fire the specific weapon
   switch( ent->s.weapon )
@@ -1268,7 +1278,12 @@ void FireWeapon( gentity_t *ent )
   }
 
   if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_PRIMARY ) )
-    ent->lastAmmoTime = level.time;
+  {
+    if( BG_Weapon( ent->s.weapon )->ammoRegenDelay > 0 )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegenDelay;
+    else if( ent->nextAmmoRegenTime < level.time )
+      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegen;
+  }
 
   // fire the specific weapon
   switch( ent->s.weapon )
