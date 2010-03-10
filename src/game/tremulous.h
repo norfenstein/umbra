@@ -414,10 +414,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define SCANNER_RANGE               1000.0f
 
-#define JETPACK_ASCEND_SPEED        540.0f //up movement speed
-#define JETPACK_SKI_AMMO_TIME       250 //msec between ammo deduction for skiing
-#define JETPACK_HOVER_AMMO_TIME     100 //msec between ammo deduction for hovering
-#define JETPACK_ASCEND_AMMO_TIME    20 //msec between ammo deduction for rising
+#define JETPACK_ASCEND_SPEED        540.0f
+#define JETPACK_SKI_CONTROL         0.1f
+#define JETPACK_SKI_MAXSPEED        800.0f
+#define JETPACK_SKI_AMMO_TIME       250 //msec between ammo deductions for skiing
+#define JETPACK_HOVER_AMMO_TIME     100 //msec between ammo deductions for hovering
+#define JETPACK_ASCEND_AMMO_TIME    20 //msec between ammo deductions for rising
 
 #define MEDKIT_POISON_IMMUNITY_TIME 0
 #define MEDKIT_STARTUP_TIME         4000

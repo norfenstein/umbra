@@ -42,6 +42,7 @@ float pm_airaccelerate = 1.0f;
 float pm_wateraccelerate = 4.0f;
 float pm_flightaccelerate = 4.0f;
 float pm_jetpackaccelerate = 2.0f;
+float pm_jetpackskiaccelerate = 0.65f;
 float pm_spectatoraccelerate = 4.0f;
 
 float pm_friction = 6.0f;
@@ -293,6 +294,10 @@ static void PM_Friction( void )
         float friction = BG_Class( pm->ps->stats[ STAT_CLASS ] )->friction;
 
         control = speed < stopSpeed ? stopSpeed : speed;
+
+        if( pm->ps->pm_type == PM_JETPACK && pm->ps->groundEntityNum != ENTITYNUM_NONE )
+          control *= JETPACK_SKI_CONTROL;
+
         drop += control * friction * pml.frametime;
       }
     }
@@ -306,7 +311,11 @@ static void PM_Friction( void )
   if( pm->ps->pm_type == PM_FLYING )
     drop += speed * pm_flightfriction * pml.frametime;
   else if( pm->ps->pm_type == PM_JETPACK )
-    drop += speed * pm_jetpackfriction * pml.frametime;
+  {
+    // don't apply friction when skiing
+    if( pm->ps->groundEntityNum == ENTITYNUM_NONE )
+      drop += speed * pm_jetpackfriction * pml.frametime;
+  }
   else if( pm->ps->pm_type == PM_SPECTATOR )
     drop += speed * pm_spectatorfriction * pml.frametime;
 
@@ -346,6 +355,7 @@ static void PM_Accelerate( vec3_t wishdir, float wishspeed, float accel )
   if( accelspeed > addspeed )
     accelspeed = addspeed;
 
+  //Com_Printf("accel: %f (%f)\n", accelspeed, pml.frametime);
   for( i = 0; i < 3; i++ )
     pm->ps->velocity[ i ] += accelspeed * wishdir[ i ];
 #else
@@ -1240,13 +1250,16 @@ static void PM_JetPackMove( void )
   VectorCopy( wishvel, wishdir );
   wishspeed = VectorNormalize( wishdir );
 
-  PM_Accelerate( wishdir, wishspeed, pm_jetpackaccelerate );
+  if( pm->ps->groundEntityNum == ENTITYNUM_NONE )
+    PM_Accelerate( wishdir, wishspeed, pm_jetpackaccelerate );
+  else
+  {
+    PM_Accelerate( wishdir, JETPACK_SKI_MAXSPEED, pm_jetpackskiaccelerate );
+  }
 
   PM_StepSlideMove( qfalse, qfalse );
 
-  if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
-    PM_ContinueLegsAnim( LEGS_LAND );
-  else
+  if( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL )
     PM_ContinueLegsAnim( NSPA_LAND );
 }
 
