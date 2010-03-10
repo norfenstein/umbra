@@ -972,8 +972,6 @@ typedef struct
 {
   weapon_t  number;
 
-  int       price;
-
   char      *name;
   char      *humanName;
 

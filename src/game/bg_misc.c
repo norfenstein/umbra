@@ -1611,7 +1611,6 @@ static const weaponAttributes_t bg_weapons[ ] =
 {
   {
     WP_ALEVEL0,           //int       weaponNum;
-    0,                    //int       price;
     "alevel0",            //char      *weaponName;
     "Bite",               //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1633,7 +1632,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL1_0,         //int       weaponNum;
-    0,                    //int       price;
     "alevel10",           //char      *weaponName;
     "Claws",              //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1655,7 +1653,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL1_1,         //int       weaponNum;
-    0,                    //int       price;
     "alevel11",           //char      *weaponName;
     "Claws",              //char      *humanName;
     ALEVEL1_1_SPIT_AMMO,  //int       maxAmmo;
@@ -1677,7 +1674,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL2,           //int       weaponNum;
-    0,                    //int       price;
     "alevel2",            //char      *weaponName;
     "Bite",               //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1699,7 +1695,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL3,           //int       weaponNum;
-    0,                    //int       price;
     "alevel3",            //char      *weaponName;
     "Zap",                //char      *humanName;
     ALEVEL3_FLAME_AMMO,   //int       maxAmmo;
@@ -1721,7 +1716,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL4,           //int       weaponNum;
-    0,                    //int       price;
     "alevel4",            //char      *weaponName;
     "Pounce",             //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1743,7 +1737,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ALEVEL5,           //int       weaponNum;
-    0,                    //int       price;
     "alevel5",            //char      *weaponName;
     "Charge",             //char      *humanName;
     ALEVEL5_BOUNCEBALL_AMMO,//int     maxAmmo;
@@ -1765,7 +1758,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_BLASTER,           //int       weaponNum;
-    0,                    //int       price;
     "blaster",            //char      *weaponName;
     "Blaster",            //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1787,7 +1779,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_MACHINEGUN,        //int       weaponNum;
-    RIFLE_PRICE,          //int       price;
     "rifle",              //char      *weaponName;
     "Rifle",              //char      *humanName;
     RIFLE_CLIPSIZE,       //int       maxAmmo;
@@ -1809,7 +1800,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_PAIN_SAW,          //int       weaponNum;
-    PAINSAW_PRICE,        //int       price;
     "psaw",               //char      *weaponName;
     "Pain Saw",           //char      *humanName;
     0,                    //int       maxAmmo;
@@ -1831,7 +1821,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_SHOTGUN,           //int       weaponNum;
-    SHOTGUN_PRICE,        //int       price;
     "shotgun",            //char      *weaponName;
     "Shotgun",            //char      *humanName;
     SHOTGUN_SHELLS,       //int       maxAmmo;
@@ -1853,7 +1842,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_LAS_GUN,           //int       weaponNum;
-    LASGUN_PRICE,         //int       price;
     "lgun",               //char      *weaponName;
     "Las Gun",            //char      *humanName;
     LASGUN_AMMO,          //int       maxAmmo;
@@ -1875,7 +1863,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_MASS_DRIVER,       //int       weaponNum;
-    MDRIVER_PRICE,        //int       price;
     "mdriver",            //char      *weaponName;
     "Mass Driver",        //char      *humanName;
     MDRIVER_CLIPSIZE,     //int       maxAmmo;
@@ -1897,7 +1884,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_CHAINGUN,          //int       weaponNum;
-    CHAINGUN_PRICE,       //int       price;
     "chaingun",           //char      *weaponName;
     "Chaingun",           //char      *humanName;
     CHAINGUN_BULLETS,     //int       maxAmmo;
@@ -1919,7 +1905,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_PULSE_RIFLE,       //int       weaponNum;
-    PRIFLE_PRICE,         //int       price;
     "prifle",             //char      *weaponName;
     "Pulse Rifle",        //char      *humanName;
     PRIFLE_CLIPS,         //int       maxAmmo;
@@ -1941,7 +1926,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_LUCIFER_CANNON,    //int       weaponNum;
-    LCANNON_PRICE,        //int       price;
     "lcannon",            //char      *weaponName;
     "Lucifer Cannon",     //char      *humanName;
     LCANNON_AMMO,         //int       maxAmmo;
@@ -1963,7 +1947,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_GRENADE,           //int       weaponNum;
-    GRENADE_PRICE,        //int       price;
     "grenade",            //char      *weaponName;
     "Grenade",            //char      *humanName;
     1,                    //int       maxAmmo;
@@ -1985,7 +1968,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_LOCKBLOB_LAUNCHER, //int       weaponNum;
-    0,                    //int       price;
     "lockblob",           //char      *weaponName;
     "Lock Blob",          //char      *humanName;
     0,                    //int       maxAmmo;
@@ -2007,7 +1989,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_HIVE,              //int       weaponNum;
-    0,                    //int       price;
     "hive",               //char      *weaponName;
     "Hive",               //char      *humanName;
     0,                    //int       maxAmmo;
@@ -2029,7 +2010,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_TESLAGEN,          //int       weaponNum;
-    0,                    //int       price;
     "teslagen",           //char      *weaponName;
     "Tesla Generator",    //char      *humanName;
     0,                    //int       maxAmmo;
@@ -2051,7 +2031,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_MGTURRET,          //int       weaponNum;
-    0,                    //int       price;
     "mgturret",           //char      *weaponName;
     "Machinegun Turret",  //char      *humanName;
     0,                    //int       maxAmmo;
@@ -2073,7 +2052,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_ABUILD,            //int       weaponNum;
-    0,                    //int       price;
     "abuildupg",          //char      *weaponName;
     "Alien build weapon2",//char      *humanName;
     0,                    //int       maxAmmo;
@@ -2095,7 +2073,6 @@ static const weaponAttributes_t bg_weapons[ ] =
   },
   {
     WP_HBUILD,            //int       weaponNum;
-    HBUILD_PRICE,         //int       price;
     "ckit",               //char      *weaponName;
     "Construction Kit",   //char      *humanName;
     0,                    //int       maxAmmo;

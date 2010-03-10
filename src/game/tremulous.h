@@ -298,7 +298,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * _REPEAT  - time between firings
  * _RELOAD  - time needed to reload
- * _PRICE   - amount in credits weapon costs
  *
  * HUMAN_WDMG_MODIFIER - overall damage modifier for coarse tuning
  *
@@ -319,11 +318,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RIFLE_REPEAT                90
 #define RIFLE_K_SCALE               1.0f
 #define RIFLE_RELOAD                2000
-#define RIFLE_PRICE                 0
 #define RIFLE_SPREAD                200
 #define RIFLE_DMG                   HDM(5)
 
-#define PAINSAW_PRICE               100
 #define PAINSAW_REPEAT              75
 #define PAINSAW_K_SCALE             1.0f
 #define PAINSAW_DAMAGE              HDM(11)
@@ -331,14 +328,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PAINSAW_WIDTH               0.0f
 #define PAINSAW_HEIGHT              8.0f
 
-#define GRENADE_PRICE               200
 #define GRENADE_REPEAT              0
 #define GRENADE_K_SCALE             1.0f
 #define GRENADE_DAMAGE              HDM(310)
 #define GRENADE_RANGE               192.0f
 #define GRENADE_SPEED               400.0f
 
-#define SHOTGUN_PRICE               150
 #define SHOTGUN_SHELLS              8
 #define SHOTGUN_PELLETS             14 //used to sync server and client side
 #define SHOTGUN_MAXCLIPS            3
@@ -349,7 +344,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_DMG                 HDM(4)
 #define SHOTGUN_RANGE               (8192 * 12)
 
-#define LASGUN_PRICE                250
 #define LASGUN_AMMO                 60
 #define LASGUN_REGEN                50
 #define LASGUN_REGEN_DELAY          1000
@@ -358,7 +352,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LASGUN_RELOAD               2000
 #define LASGUN_DAMAGE               HDM(9)
 
-#define MDRIVER_PRICE               350
 #define MDRIVER_CLIPSIZE            5
 #define MDRIVER_MAXCLIPS            4
 #define MDRIVER_DMG                 HDM(40)
@@ -366,14 +359,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MDRIVER_K_SCALE             1.0f
 #define MDRIVER_RELOAD              2000
 
-#define CHAINGUN_PRICE              400
 #define CHAINGUN_BULLETS            300
 #define CHAINGUN_REPEAT             80
 #define CHAINGUN_K_SCALE            1.0f
 #define CHAINGUN_SPREAD             900
 #define CHAINGUN_DMG                HDM(6)
 
-#define PRIFLE_PRICE                450
 #define PRIFLE_CLIPS                40
 #define PRIFLE_MAXCLIPS             5
 #define PRIFLE_REPEAT               100
@@ -383,7 +374,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define PRIFLE_SPEED                1200
 #define PRIFLE_SIZE                 5
 
-#define LCANNON_PRICE               600
 #define LCANNON_AMMO                80
 #define LCANNON_K_SCALE             1.0f
 #define LCANNON_REPEAT              500
@@ -402,15 +392,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LCANNON_CHARGE_TIME_WARN    2000
 #define LCANNON_CHARGE_AMMO         10       // ammo cost of a full charge shot
 
-#define HBUILD_PRICE                0
 #define HBUILD_REPEAT               1000
 #define HBUILD_HEALRATE             18
 
 /*
  * HUMAN upgrades
  */
-
-#define MEDKIT_PRICE                0
 
 #define SCANNER_RANGE               1000.0f
 
