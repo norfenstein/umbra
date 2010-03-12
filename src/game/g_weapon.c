@@ -366,6 +366,66 @@ void bulletFire( gentity_t *ent, float spread, int damage, int mod )
 /*
 ======================================================================
 
+SCATTERGUN
+
+======================================================================
+*/
+
+// this should match CG_ScattergunPattern
+void ScattergunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent )
+{
+  int        i;
+  float      r, u;
+  vec3_t    end;
+  vec3_t    forward, right, up;
+  trace_t    tr;
+  gentity_t  *traceEnt;
+
+  // derive the right and up vectors from the forward vector, because
+  // the client won't have any other information
+  VectorNormalize2( origin2, forward );
+  PerpendicularVector( right, forward );
+  CrossProduct( forward, right, up );
+
+  // generate the "random" spread pattern
+  for( i = 0; i < SHOTGUN_PELLETS; i++ )
+  {
+    r = Q_crandom( &seed ) * SCATTERGUN_SPREAD * 16;
+    u = Q_crandom( &seed ) * SCATTERGUN_SPREAD * 16;
+    VectorMA( origin, SCATTERGUN_RANGE, forward, end );
+    VectorMA( end, r, right, end );
+    VectorMA( end, u, up, end );
+
+    trap_Trace( &tr, origin, NULL, NULL, end, ent->s.number, MASK_SHOT );
+    traceEnt = &g_entities[ tr.entityNum ];
+
+    // send bullet impact
+    if( !( tr.surfaceFlags & SURF_NOIMPACT ) )
+    {
+      if( traceEnt->takedamage )
+        G_Damage( traceEnt, ent, ent, forward, tr.endpos, SCATTERGUN_DMG, 0, MOD_SCATTERGUN );
+    }
+  }
+}
+
+void scattergunShellFire( gentity_t *ent )
+{
+  gentity_t    *tent;
+
+  // send shotgun blast
+  tent = G_TempEntity( muzzle, EV_SCATTERGUN );
+  VectorScale( forward, 4096, tent->s.origin2 );
+  SnapVector( tent->s.origin2 );
+  tent->s.eventParm = rand() & 255;    // seed for spread pattern
+  tent->s.otherEntityNum = ent->s.number;
+  G_UnlaggedOn( ent, muzzle, SCATTERGUN_RANGE );
+  ScattergunPattern( tent->s.pos.trBase, tent->s.origin2, tent->s.eventParm, ent );
+  G_UnlaggedOff();
+}
+
+/*
+======================================================================
+
 SHOTGUN
 
 ======================================================================
@@ -407,7 +467,6 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent )
     }
   }
 }
-
 
 void shotgunFire( gentity_t *ent )
 {
@@ -1314,6 +1373,9 @@ void FireWeapon( gentity_t *ent )
       break;
     case WP_MACHINEGUN:
       bulletFire( ent, RIFLE_SPREAD, RIFLE_DMG, MOD_MACHINEGUN );
+      break;
+    case WP_SCATTERGUN:
+      scattergunShellFire( ent );
       break;
     case WP_SHOTGUN:
       shotgunFire( ent );

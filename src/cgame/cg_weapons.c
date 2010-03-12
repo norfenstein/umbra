@@ -2006,6 +2006,77 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 /*
 ============================================================================
 
+SCATTERGUN TRACING
+
+============================================================================
+*/
+
+/*
+================
+CG_ScattergunPattern
+
+Perform the same traces the server did to locate the
+hit splashes
+================
+*/
+static void CG_ScattergunPattern( vec3_t origin, vec3_t origin2, int seed, int otherEntNum )
+{
+  int       i;
+  float     r, u;
+  vec3_t    end;
+  vec3_t    forward, right, up;
+  trace_t   tr;
+
+  // derive the right and up vectors from the forward vector, because
+  // the client won't have any other information
+  VectorNormalize2( origin2, forward );
+  PerpendicularVector( right, forward );
+  CrossProduct( forward, right, up );
+
+  // generate the "random" spread pattern
+  for( i = 0; i < SCATTERGUN_PELLETS; i++ )
+  {
+    r = Q_crandom( &seed ) * SCATTERGUN_SPREAD * 16;
+    u = Q_crandom( &seed ) * SCATTERGUN_SPREAD * 16;
+    VectorMA( origin, 8192 * 16, forward, end );
+    VectorMA( end, r, right, end );
+    VectorMA( end, u, up, end );
+
+    CG_Trace( &tr, origin, NULL, NULL, end, otherEntNum, MASK_SHOT );
+
+    if( !( tr.surfaceFlags & SURF_NOIMPACT ) )
+    {
+      if( cg_entities[ tr.entityNum ].currentState.eType == ET_PLAYER ||
+          cg_entities[ tr.entityNum ].currentState.eType == ET_BUILDABLE )
+        CG_MissileHitEntity( WP_SCATTERGUN, WPM_PRIMARY, tr.endpos, tr.plane.normal, tr.entityNum, 0 );
+      else if( tr.surfaceFlags & SURF_METALSTEPS )
+        CG_MissileHitWall( WP_SCATTERGUN, WPM_PRIMARY, 0, tr.endpos, tr.plane.normal, IMPACTSOUND_METAL, 0 );
+      else
+        CG_MissileHitWall( WP_SCATTERGUN, WPM_PRIMARY, 0, tr.endpos, tr.plane.normal, IMPACTSOUND_DEFAULT, 0 );
+    }
+  }
+}
+
+/*
+==============
+CG_ScattergunFire
+==============
+*/
+void CG_ScattergunFire( entityState_t *es )
+{
+  vec3_t  v;
+
+  VectorSubtract( es->origin2, es->pos.trBase, v );
+  VectorNormalize( v );
+  VectorScale( v, 32, v );
+  VectorAdd( es->pos.trBase, v, v );
+
+  CG_ScattergunPattern( es->pos.trBase, es->origin2, es->eventParm, es->otherEntityNum );
+}
+
+/*
+============================================================================
+
 SHOTGUN TRACING
 
 ============================================================================

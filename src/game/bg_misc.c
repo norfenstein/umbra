@@ -1082,7 +1082,7 @@ static const classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS|SCA_SCANNER,//int     abilities;
-    { WP_SHOTGUN, WP_BLASTER, WP_NONE },            //weapon_t  weapons[ 3 ];
+    { WP_SCATTERGUN, WP_NONE, WP_NONE },            //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1820,6 +1820,27 @@ static const weaponAttributes_t bg_weapons[ ] =
     TEAM_HUMANS           //team_t    team;
   },
   {
+    WP_SCATTERGUN,        //int       weaponNum;
+    "scattergun",         //char      *weaponName;
+    "Scattergun",         //char      *humanName;
+    SCATTERGUN_SHELLS,    //int       maxAmmo;
+    0,                    //int       maxClips;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    SCATTERGUN_REPEAT,    //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    SCATTERGUN_K_SCALE,   //float     knockbackScale;
+    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qtrue,                //qboolean  longRanged;
+    TEAM_HUMANS           //team_t    team;
+  },
+  {
     WP_SHOTGUN,           //int       weaponNum;
     "shotgun",            //char      *weaponName;
     "Shotgun",            //char      *humanName;
@@ -2358,6 +2379,7 @@ char *eventnames[ ] =
   "EV_BULLET_HIT_FLESH",
   "EV_BULLET_HIT_WALL",
 
+  "EV_SCATTERGUN",
   "EV_SHOTGUN",
   "EV_MASS_DRIVER",
 

@@ -334,6 +334,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GRENADE_RANGE               192.0f
 #define GRENADE_SPEED               400.0f
 
+#define SCATTERGUN_SHELLS           24
+#define SCATTERGUN_PELLETS          24 //used to sync server and client side
+#define SCATTERGUN_REPEAT           1300
+#define SCATTERGUN_K_SCALE          2.0f
+#define SCATTERGUN_SPREAD           300
+#define SCATTERGUN_DMG              HDM(2)
+#define SCATTERGUN_RANGE            (8192 * 12)
+
 #define SHOTGUN_SHELLS              8
 #define SHOTGUN_PELLETS             14 //used to sync server and client side
 #define SHOTGUN_MAXCLIPS            3

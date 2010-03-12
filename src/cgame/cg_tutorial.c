@@ -367,6 +367,7 @@ static void CG_HumanText( char *text, playerState_t *ps )
   {
     case WP_BLASTER:
     case WP_MACHINEGUN:
+    case WP_SCATTERGUN:
     case WP_SHOTGUN:
     case WP_LAS_GUN:
     case WP_CHAINGUN:
