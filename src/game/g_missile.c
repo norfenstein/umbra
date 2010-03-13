@@ -508,6 +508,61 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
 
 /*
 =================
+fire_scattergun
+
+=================
+*/
+gentity_t *fire_scattergun( gentity_t *self, vec3_t start, vec3_t dir, int charge )
+{
+  gentity_t *bolt;
+  float scale = (float)charge / SCATTERGUN_BLAST_CHARGE_MAX;
+
+  VectorNormalize( dir );
+
+  bolt = G_Spawn( );
+  bolt->classname = "scattergun";
+  bolt->pointAgainstWorld = qtrue;
+  bolt->nextthink = level.time + SCATTERGUN_BLAST_LIFETIME;
+  bolt->think = G_ExplodeMissile;
+  bolt->s.eType = ET_MISSILE;
+  bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
+  bolt->s.weapon = WP_SCATTERGUN;
+  bolt->s.generic1 = self->s.generic1; //weaponMode
+  bolt->r.ownerNum = self->s.number;
+  bolt->parent = self;
+  bolt->damage = SCATTERGUN_BLAST_DAMAGE * scale;
+  bolt->splashDamage = SCATTERGUN_BLAST_DAMAGE * scale;
+  bolt->splashRadius = SCATTERGUN_BLAST_RADIUS;
+  bolt->methodOfDeath = MOD_SCATTERGUN;
+  bolt->splashMethodOfDeath = MOD_SCATTERGUN_SPLASH;
+  bolt->clipmask = MASK_SHOT;
+  bolt->target_ent = NULL;
+  
+  // Give the missile a small bounding box
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -SCATTERGUN_BLAST_SIZE;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = -bolt->r.mins[ 0 ];
+  
+  // Pass the missile charge through
+  //charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / LCANNON_DAMAGE;
+  bolt->s.torsoAnim = charge * 255;
+  if( bolt->s.torsoAnim < 0 )
+    bolt->s.torsoAnim = 0;
+
+  bolt->s.pos.trType = TR_LINEAR;
+  bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
+  VectorCopy( start, bolt->s.pos.trBase );
+  VectorScale( dir, SCATTERGUN_BLAST_SPEED, bolt->s.pos.trDelta );
+  SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
+
+  VectorCopy( start, bolt->r.currentOrigin );
+
+  return bolt;
+}
+
+//=============================================================================
+
+/*
+=================
 fire_pulseRifle
 
 =================

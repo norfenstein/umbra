@@ -427,8 +427,6 @@ struct gclient_s
   float               voiceEnthusiasm;
   char                lastVoiceCmd[ MAX_VOICE_CMD_LEN ];
 
-  int                 lcannonStartTime;
-
   int                 lastCrushTime;        // Tyrant crush
 };
 
@@ -802,6 +800,7 @@ void      G_RunMissile( gentity_t *ent );
 
 gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t aimdir );
 gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *fire_scattergun( gentity_t *self, vec3_t start, vec3_t dir, int charge );
 gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int damage, int radius, int speed );
 gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir );

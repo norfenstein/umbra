@@ -2872,8 +2872,8 @@ static void PM_BeginWeaponChange( int weapon )
   if( pm->ps->weaponstate == WEAPON_RELOADING )
     pm->ps->weaponTime = 0;
 
-  //special case to prevent storing a charged up lcannon
-  if( pm->ps->weapon == WP_LUCIFER_CANNON )
+  //special case to prevent storing charges
+  if( pm->ps->weapon == WP_LUCIFER_CANNON || pm->ps->weapon == WP_SCATTERGUN )
     pm->ps->stats[ STAT_MISC ] = 0;
 
   pm->ps->weaponstate = WEAPON_DROPPING;
@@ -3070,6 +3070,14 @@ static void PM_Weapon( void )
     }
   }
 
+  // Charging up a Scattergun
+  if( pm->ps->weapon == WP_SCATTERGUN && !pm->ps->weaponTime )
+  {
+    pm->ps->stats[ STAT_MISC ] += pml.msec;
+    if( pm->ps->stats[ STAT_MISC ] >= SCATTERGUN_BLAST_CHARGE_MAX )
+      pm->ps->stats[ STAT_MISC ] = SCATTERGUN_BLAST_CHARGE_MAX;
+  }
+
   // Charging up a Lucifer Cannon
   pm->ps->eFlags &= ~EF_WARN_CHARGE;
   if( pm->ps->weapon == WP_LUCIFER_CANNON )
@@ -3241,6 +3249,33 @@ static void PM_Weapon( void )
     case WP_ALEVEL1_1:
       if( !attack1 && !attack2 )
         return;
+      break;
+
+    case WP_SCATTERGUN:
+      attack3 = qfalse;
+
+      if( attack1 )
+      {
+        // Primary supercedes secondary
+        attack2 = qfalse;
+        pm->ps->stats[ STAT_MISC ] = 0;
+      }
+      else if( pm->ps->stats[ STAT_MISC ] == 0 || !attack2 )
+      {
+        // Idle
+        pm->ps->weaponTime = 0;
+        pm->ps->weaponstate = WEAPON_READY;
+        return;
+      }
+      else if( attack2 && pm->ps->stats[ STAT_MISC ] > 0 &&
+               pm->ps->stats[ STAT_MISC ] <= SCATTERGUN_BLAST_CHARGE_MIN )
+      {
+        // Not enough charge
+        pm->ps->stats[ STAT_MISC ] = 0;
+        pm->ps->weaponTime = 0;
+        pm->ps->weaponstate = WEAPON_READY;
+        return;
+      }
       break;
 
     case WP_LUCIFER_CANNON:

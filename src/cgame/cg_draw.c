@@ -839,6 +839,11 @@ static float CG_ChargeProgress( void )
     min = LCANNON_CHARGE_TIME_MIN;
     max = LCANNON_CHARGE_TIME_MAX;
   }
+  else if( cg.snap->ps.weapon == WP_SCATTERGUN )
+  {
+    min = SCATTERGUN_BLAST_CHARGE_MIN;
+    max = SCATTERGUN_BLAST_CHARGE_MAX;
+  }
 
   if( max - min <= 0.0f )
     return 0.0f;

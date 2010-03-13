@@ -1081,8 +1081,8 @@ static const classAttributes_t bg_classList[ ] =
     100,                                            //int     health;
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
-    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS|SCA_SCANNER,//int     abilities;
-    { WP_SCATTERGUN, WP_NONE, WP_NONE },            //weapon_t  weapons[ 3 ];
+    SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS|SCA_SCANNER,//int   abilities;
+    { WP_SCATTERGUN, WP_NONE, WP_NONE },            //weapon_t weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1829,7 +1829,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegen;
     0,                    //int       ammoRegenDelay;
     SCATTERGUN_REPEAT,    //int       repeatRate1;
-    0,                    //int       repeatRate2;
+    SCATTERGUN_BLAST_REPEAT,//int     repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     SCATTERGUN_K_SCALE,   //float     knockbackScale;

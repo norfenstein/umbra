@@ -423,6 +423,15 @@ void scattergunShellFire( gentity_t *ent )
   G_UnlaggedOff();
 }
 
+void scattergunCannonFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_scattergun( ent, muzzle, forward, ent->client->ps.stats[ STAT_MISC ] );
+
+  ent->client->ps.stats[ STAT_MISC ] = 0;
+}
+
 /*
 ======================================================================
 
@@ -1306,6 +1315,10 @@ void FireWeapon2( gentity_t *ent )
 
     case WP_ALEVEL5:
       bounceBallFire( ent );
+      break;
+
+    case WP_SCATTERGUN:
+      scattergunCannonFire( ent );
       break;
 
     case WP_LUCIFER_CANNON:
