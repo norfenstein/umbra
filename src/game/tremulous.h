@@ -263,14 +263,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define OVERMIND_ATTACK_RANGE       150.0f
 #define OVERMIND_ATTACK_REPEAT      1000
 
-#define HOVEL_BP                    0
-#define HOVEL_BT                    15000
-#define HOVEL_HEALTH                ABHM(375)
-#define HOVEL_REGEN                 20
-#define HOVEL_SPLASHDAMAGE          20
-#define HOVEL_SPLASHRADIUS          200
-#define HOVEL_CREEPSIZE             120
-
 /*
  * ALIEN misc
  *
@@ -351,13 +343,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SCATTERGUN_BLAST_CHARGE_MIN 500
 
 #define SHOTGUN_SHELLS              8
-#define SHOTGUN_PELLETS             14 //used to sync server and client side
+#define SHOTGUN_PELLETS             11 //used to sync server and client side
 #define SHOTGUN_MAXCLIPS            3
 #define SHOTGUN_REPEAT              1000
 #define SHOTGUN_K_SCALE             1.0f
 #define SHOTGUN_RELOAD              2000
 #define SHOTGUN_SPREAD              900
-#define SHOTGUN_DMG                 HDM(4)
+#define SHOTGUN_DMG                 HDM(5)
 #define SHOTGUN_RANGE               (8192 * 12)
 
 #define LASGUN_AMMO                 60
@@ -481,7 +473,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define TESLAGEN_SPLASHRADIUS       100
 #define TESLAGEN_REPEAT             250
 #define TESLAGEN_K_SCALE            4.0f
-#define TESLAGEN_RANGE              150
+#define TESLAGEN_RANGE              200
 #define TESLAGEN_DMG                HDM(10)
 
 #define DC_BP                       8

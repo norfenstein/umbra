@@ -305,8 +305,7 @@ void G_RunMissile( gentity_t *ent )
 
   if( tr.fraction < 1.0f )
   {
-    if( !ent->pointAgainstWorld || tr.contents & CONTENTS_BODY || 
-        ( tr.entityNum >= 0 && tr.entityNum != ENTITYNUM_WORLD ) )
+    if( !ent->pointAgainstWorld || tr.contents & CONTENTS_BODY )
     {
       // We hit an entity or we don't care
       impact = qtrue;

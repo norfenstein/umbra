@@ -716,26 +716,6 @@ const char *CG_TutorialText( void )
         default:
           break;
       }
-
-      if( ps->stats[ STAT_TEAM ] == TEAM_ALIENS )
-      {
-        entityState_t *es = CG_BuildableInRange( ps, NULL );
-
-        if( ps->stats[ STAT_STATE ] & SS_HOVELING )
-        {
-          Q_strcat( text, MAX_TUTORIAL_TEXT,
-              va( "Press %s to exit the hovel\n",
-                CG_KeyNameForCommand( "+button7" ) ) );
-        }
-        else if( es && es->modelindex == BA_A_HOVEL &&
-                 ( es->eFlags & EF_B_SPAWNED ) &&
-                 ps->stats[ STAT_CLASS ] == PCL_ALIEN_BUILDER )
-        {
-          Q_strcat( text, MAX_TUTORIAL_TEXT,
-              va( "Press %s to enter the hovel\n",
-                CG_KeyNameForCommand( "+button7" ) ) );
-        }
-      }
     }
 
     Q_strcat( text, MAX_TUTORIAL_TEXT, "Press ESC for the menu" );

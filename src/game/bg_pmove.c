@@ -2975,8 +2975,7 @@ static void PM_Weapon( void )
   qboolean      usesAmmo3 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY );
 
   // Ignore weapons in some cases
-  if( pm->ps->persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT ||
-      ( pm->ps->stats[ STAT_STATE ] & SS_HOVELING ) )
+  if( pm->ps->persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT )
     return;
 
   // Check for dead player

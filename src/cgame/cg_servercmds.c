@@ -91,7 +91,7 @@ static void CG_ParseTeamInfo( void )
     client = atoi( CG_Argv( i * 5 + 1 ) );
     if( client < 0 || client >= MAX_CLIENTS )
     {
-      CG_Error( "CG_ParseTeamInfo: bad client number: %d", client );
+      CG_Printf( "[skipnotify]CG_ParseTeamInfo: bad client number: %d\n", client );
       return;
     }
 
@@ -578,37 +578,10 @@ void CG_Menu( int menu, int arg )
       type      = DT_BUILD;
       break;
 
-    case MN_A_ONEHOVEL:
-      longMsg   = "There can only be one Hovel. Deconstruct the existing one if you "
-                  "wish to move it.";
-      shortMsg  = "There can only be one Hovel";
-      type      = DT_BUILD;
-      break;
-
     case MN_A_NOBP:
       longMsg   = "The Overmind cannot control any more structures. Deconstruct existing "
                   "structures to build more.";
       shortMsg  = "The Overmind cannot control any more structures";
-      type      = DT_BUILD;
-      break;
-
-    case MN_A_HOVEL_OCCUPIED:
-      longMsg   = "This Hovel is already occupied by another builder.";
-      shortMsg  = "This Hovel is already occupied by another builder";
-      type      = DT_COMMAND;
-      break;
-
-    case MN_A_HOVEL_BLOCKED:
-      longMsg   = "The exit to this Hovel is currently blocked. Please wait until it "
-                  "becomes clear then try again.";
-      shortMsg  = "The exit to this Hovel is currently blocked";
-      type      = DT_COMMAND;
-      break;
-
-    case MN_A_HOVEL_EXIT:
-      longMsg   = "The exit to this Hovel would always be blocked. Please choose "
-                  "a more suitable location.";
-      shortMsg  = "The exit to this Hovel would always be blocked";
       type      = DT_BUILD;
       break;
 
@@ -1003,37 +976,6 @@ static void CG_ServerCloseMenus_f( void )
   trap_SendConsoleCommand( "closemenus\n" );
 }
 
-/*
-=================
-CG_PTRRequest_f
-=================
-*/
-static void CG_PTRRequest_f( void )
-{
-  trap_SendClientCommand( va( "ptrcverify %d", CG_ReadPTRCode( ) ) );
-}
-
-/*
-=================
-CG_PTRIssue_f
-=================
-*/
-static void CG_PTRIssue_f( void )
-{
-  if( trap_Argc( ) == 2 )
-    CG_WritePTRCode( atoi( CG_Argv( 1 ) ) );
-}
-
-/*
-=================
-CG_PTRConfirm_f
-=================
-*/
-static void CG_PTRConfirm_f( void )
-{
-  trap_SendConsoleCommand( "menu ptrc_popmenu\n" );
-}
-
 static void CG_GameCmds_f( void )
 {
   int i;
@@ -1058,9 +1000,6 @@ static consoleCommand_t svcommands[ ] =
   { "cs", CG_ConfigStringModified },
   { "map_restart", CG_MapRestart },
   { "print", CG_Print_f },
-  { "ptrcconfirm", CG_PTRConfirm_f },
-  { "ptrcissue", CG_PTRIssue_f },
-  { "ptrcrequest", CG_PTRRequest_f },
   { "scores", CG_ParseScores },
   { "serverclosemenus", CG_ServerCloseMenus_f },
   { "servermenu", CG_ServerMenu_f },

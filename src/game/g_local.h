@@ -223,8 +223,6 @@ struct gentity_s
 
   vec4_t            animation;          // animated map objects
 
-  gentity_t         *builder;           // occupant of this hovel
-
   qboolean          nonSegModel;        // this entity uses a nonsegmented player model
 
   buildable_t       bTriggers[ BA_NUM_BUILDABLES ]; // which buildables are triggers
@@ -271,15 +269,29 @@ typedef struct
   clientList_t      ignoreList;
 } clientSession_t;
 
-// data to store details of clients that have abnormally disconnected
-typedef struct connectionRecord_s
+// namelog
+#define MAX_NAMELOG_NAMES 5
+#define MAX_NAMELOG_ADDRS 5
+typedef struct namelog_s
 {
-  int       clientNum;
-  team_t    clientTeam;
-  int       clientCredit;
+  struct namelog_s  *next;
+  char              name[ MAX_NAMELOG_NAMES ][ MAX_NAME_LENGTH ];
+  addr_t            ip[ MAX_NAMELOG_ADDRS ];
+  char              guid[ 33 ];
+  int               slot;
+  qboolean          banned;
 
-  int       ptrCode;
-} connectionRecord_t;
+  int               nameChangeTime;
+  int               nameChanges;
+  int               voteCount;
+
+  qboolean          muted;
+  qboolean          denyBuild;
+
+  int               score;
+  int               credits;
+  team_t            team;
+} namelog_t;
 
 // client data that stays across multiple respawns, but is cleared
 // on each level change or team change at ClientBegin()
@@ -288,14 +300,11 @@ typedef struct
   clientConnected_t   connected;
   usercmd_t           cmd;                // we would lose angles if not persistant
   qboolean            localClient;        // true if "ip" info key is "localhost"
-  qboolean            initialSpawn;       // the first spawn should be at a cool location
   qboolean            stickySpec;         // don't stop spectating a player after they get killed
   qboolean            pmoveFixed;         //
   char                netname[ MAX_NAME_LENGTH ];
-  int                 maxHealth;          // for handicapping
   int                 enterTime;          // level.time the client entered the game
   int                 location;           // player locations
-  int                 voteCount;          // to prevent people from constantly calling votes
   qboolean            teamInfo;           // send team overlay updates?
   float               flySpeed;           // for spectator/noclip moves
   qboolean            disableBlueprintErrors; // should the buildable blueprint never be hidden from the players?
@@ -303,21 +312,16 @@ typedef struct
   class_t             classSelection;     // player class (copied to ent->client->ps.stats[ STAT_CLASS ] once spawned)
   team_t              teamSelection;      // player team (copied to ps.stats[ STAT_TEAM ])
 
-  int                 teamChangeTime;     // level.time of last team change
-  qboolean            joinedATeam;        // used to tell when a PTR code is valid
-  connectionRecord_t  *connection;
+  namelog_t           *namelog;
   g_admin_admin_t     *admin;
 
   int                 aliveSeconds;       // time player has been alive in seconds
 
-  int                 nameChangeTime;
-  int                 nameChanges;
-
   // used to save persistant[] values while in SPECTATOR_FOLLOW mode
   int                 credit;
 
-  qboolean            voted[ NUM_TEAMS ];
-  qboolean            vote[ NUM_TEAMS ];
+  int                 voted;
+  int                 vote;
 
   // flood protection
   int                 floodDemerits;
@@ -325,9 +329,7 @@ typedef struct
 
   vec3_t              lastDeathLocation;
   char                guid[ 33 ];
-  char                ip[ 40 ];
-  qboolean            muted;
-  qboolean            denyBuild;
+  addr_t              ip;
   char                voice[ MAX_VOICE_NAME_LEN ];
   qboolean            useUnlagged;  
   // keep track of other players' info for tinfo
@@ -403,8 +405,6 @@ struct gclient_s
 
   char                *areabits;
 
-  gentity_t           *hovel;
-
   int                 lastPoisonTime;
   int                 poisonImmunityTime;
   gentity_t           *lastPoisonClient;
@@ -416,8 +416,6 @@ struct gclient_s
   int                 lastCreepSlowTime;    // time until creep can be removed
 
   qboolean            charging;
-
-  vec3_t              hovelOrigin;          // player origin before entering hovel
 
   unlagged_t          unlaggedHist[ MAX_UNLAGGED_MARKERS ];
   unlagged_t          unlaggedBackup;
@@ -591,8 +589,10 @@ typedef struct
 
   voice_t           *voices;
 
-  char              emoticons[ MAX_EMOTICONS ][ MAX_EMOTICON_NAME_LEN ];
+  emoticon_t        emoticons[ MAX_EMOTICONS ];
   int               emoticonCount;
+
+  namelog_t         *namelogs;
 } level_locals_t;
 
 #define CMD_CHEAT         0x0001
@@ -668,8 +668,6 @@ typedef enum
   IBE_ONEOVERMIND,
   IBE_NOALIENBP,
   IBE_SPWNWARN, // not currently used
-  IBE_ONEHOVEL,
-  IBE_HOVELEXIT,
 
   IBE_ONEREACTOR,
   IBE_TNODEWARN, // not currently used
@@ -684,7 +682,6 @@ typedef enum
   IBE_MAXERRORS
 } itemBuildError_t;
 
-qboolean          AHovel_Blocked( gentity_t *hovel, gentity_t *player, qboolean provideExit );
 gentity_t         *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
                     buildable_t spawn, vec3_t spawnOrigin );
 
@@ -713,25 +710,14 @@ int               G_GetBuildPoints( const vec3_t pos, team_t team, int dist );
 //
 // g_utils.c
 //
-#define ADDRLEN 16
-typedef struct
-{
-  enum
-  {
-    IPv4,
-    IPv6
-  } type;
-  byte addr[ ADDRLEN ];
-} addr_t;
-qboolean    G_AddressParse( const char *str, addr_t *addr, int *netmask );
-qboolean    G_AddressCompare( const addr_t *a, const addr_t *b, int netmask );
-qboolean    G_AdrCmpStr( const char *a, const char *b );
+//addr_t in g_admin.h for g_admin_ban_t
+qboolean    G_AddressParse( const char *str, addr_t *addr );
+qboolean    G_AddressCompare( const addr_t *a, const addr_t *b );
 
 int         G_ParticleSystemIndex( char *name );
 int         G_ShaderIndex( char *name );
 int         G_ModelIndex( char *name );
 int         G_SoundIndex( char *name );
-void        G_TeamCommand( team_t team, char *cmd );
 void        G_KillBox (gentity_t *ent);
 gentity_t   *G_Find (gentity_t *from, int fieldofs, const char *match);
 gentity_t   *G_PickTarget (char *targetname);
@@ -923,6 +909,7 @@ void G_RunClient( gentity_t *ent );
 // g_team.c
 //
 team_t    G_TeamFromString( char *str );
+void      G_TeamCommand( team_t team, char *cmd );
 qboolean  OnSameTeam( gentity_t *ent1, gentity_t *ent2 );
 void      G_LeaveTeam( gentity_t *self );
 void      G_ChangeTeam( gentity_t *ent, team_t newTeam );
@@ -952,15 +939,15 @@ qboolean  G_MapExists( char *name );
 void      G_ClearRotationStack( void );
 
 //
-// g_ptr.c
+// g_namelog.c
 //
-void                G_UpdatePTRConnection( gclient_t *client );
-connectionRecord_t  *G_GenerateNewConnection( gclient_t *client );
-qboolean            G_VerifyPTRC( int code );
-void                G_ResetPTRConnections( void );
-connectionRecord_t  *G_FindConnectionForCode( int code );
-void                G_DeletePTRConnection( connectionRecord_t *connection );
 
+void G_namelog_connect( gclient_t *client );
+void G_namelog_disconnect( gclient_t *client );
+void G_namelog_restore( gclient_t *client );
+void G_namelog_update_score( gclient_t *client );
+void G_namelog_update_name( gclient_t *client );
+void G_namelog_cleanup( void );
 
 //some maxs
 #define MAX_FILEPATH      144
