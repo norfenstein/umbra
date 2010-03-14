@@ -3258,7 +3258,6 @@ static void PM_Weapon( void )
       {
         // Primary supercedes secondary
         attack2 = qfalse;
-        pm->ps->stats[ STAT_MISC ] = 0;
       }
       else if( pm->ps->stats[ STAT_MISC ] == 0 || !attack2 )
       {

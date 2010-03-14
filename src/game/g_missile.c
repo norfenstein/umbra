@@ -533,20 +533,12 @@ gentity_t *fire_scattergun( gentity_t *self, vec3_t start, vec3_t dir, int charg
   bolt->damage = SCATTERGUN_BLAST_DAMAGE * scale;
   bolt->splashDamage = SCATTERGUN_BLAST_DAMAGE * scale;
   bolt->splashRadius = SCATTERGUN_BLAST_RADIUS;
-  bolt->methodOfDeath = MOD_SCATTERGUN;
-  bolt->splashMethodOfDeath = MOD_SCATTERGUN_SPLASH;
+  bolt->methodOfDeath = MOD_SCATTERGUN_BLAST;
+  bolt->splashMethodOfDeath = MOD_SCATTERGUN_BLAST;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
-  
-  // Give the missile a small bounding box
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -SCATTERGUN_BLAST_SIZE;
   bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = -bolt->r.mins[ 0 ];
-  
-  // Pass the missile charge through
-  //charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / LCANNON_DAMAGE;
-  bolt->s.torsoAnim = charge * 255;
-  if( bolt->s.torsoAnim < 0 )
-    bolt->s.torsoAnim = 0;
 
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame

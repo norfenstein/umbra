@@ -611,6 +611,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   take = damage;
   save = 0;
 
+  // air cannon does no damage
+  if( mod == MOD_SCATTERGUN_BLAST )
+    take = 0;
+  else if( take < 1 )
+    take = 1;
+
   // add to the damage inflicted on a player this frame
   // the total will be turned into screen blends and view angle kicks
   // at the end of the frame
@@ -652,9 +658,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
       }
     }
   }
-
-  if( take < 1 )
-    take = 1;
 
   // do the damage
   if( take )

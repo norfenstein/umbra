@@ -334,21 +334,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GRENADE_RANGE               192.0f
 #define GRENADE_SPEED               400.0f
 
-#define SCATTERGUN_SHELLS           24
+#define SCATTERGUN_SHELLS           30
 #define SCATTERGUN_PELLETS          24 //used to sync server and client side
 #define SCATTERGUN_REPEAT           1200
 #define SCATTERGUN_K_SCALE          2.0f
-#define SCATTERGUN_SPREAD           300
+#define SCATTERGUN_SPREAD           200
 #define SCATTERGUN_DMG              HDM(2)
 #define SCATTERGUN_RANGE            (8192 * 12)
 #define SCATTERGUN_BLAST_DAMAGE     100
-#define SCATTERGUN_BLAST_REPEAT     300
-#define SCATTERGUN_BLAST_SIZE       20
+#define SCATTERGUN_BLAST_REPEAT     500
+#define SCATTERGUN_BLAST_SIZE       12
 #define SCATTERGUN_BLAST_RADIUS     50
-#define SCATTERGUN_BLAST_SPEED      1500
-#define SCATTERGUN_BLAST_LIFETIME   500
+#define SCATTERGUN_BLAST_SPEED      2000
+#define SCATTERGUN_BLAST_LIFETIME   150
 #define SCATTERGUN_BLAST_CHARGE_MAX 1500
-#define SCATTERGUN_BLAST_CHARGE_MIN 200
+#define SCATTERGUN_BLAST_CHARGE_MIN 500
 
 #define SHOTGUN_SHELLS              8
 #define SHOTGUN_PELLETS             14 //used to sync server and client side
