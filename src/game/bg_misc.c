@@ -1028,7 +1028,7 @@ static const classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
-    { WP_MACHINEGUN, WP_BLASTER, WP_NONE },         //weapon_t  weapons[ 3 ];
+    { WP_MACHINEGUN, WP_HANDGUN, WP_NONE },         //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1097,7 +1097,7 @@ static const classAttributes_t bg_classList[ ] =
     1.0f,                                           //float   fallDamage;
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
-    { WP_LUCIFER_CANNON, WP_BLASTER, WP_NONE },     //weapon_t  weapons[ 3 ];
+    { WP_LUCIFER_CANNON, WP_HANDGUN, WP_NONE },     //weapon_t  weapons[ 3 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1739,6 +1739,27 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     BLASTER_K_SCALE,      //float     knockbackScale;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qtrue,                //qboolean  longRanged;
+    TEAM_HUMANS           //team_t    team;
+  },
+  {
+    WP_HANDGUN,           //int       weaponNum;
+    "handgun",            //char      *weaponName;
+    "Handgun",            //char      *humanName;
+    HANDGUN_CLIPSIZE,     //int       maxAmmo;
+    HANDGUN_MAXCLIPS,     //int       maxClips;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    HANDGUN_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    HANDGUN_RELOAD,       //int       reloadTime;
+    HANDGUN_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;

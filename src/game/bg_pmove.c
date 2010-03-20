@@ -2946,7 +2946,7 @@ static void PM_TorsoAnimation( void )
   {
     if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
     {
-      if( pm->ps->weapon == WP_BLASTER )
+      if( pm->ps->weapon == WP_BLASTER || pm->ps->weapon == WP_HANDGUN )
         PM_ContinueTorsoAnim( TORSO_STAND2 );
       else
         PM_ContinueTorsoAnim( TORSO_STAND );
@@ -3179,7 +3179,7 @@ static void PM_Weapon( void )
     pm->ps->weaponstate = WEAPON_READY;
     if( !( pm->ps->persistant[ PERS_STATE ] & PS_NONSEGMODEL ) )
     {
-      if( pm->ps->weapon == WP_BLASTER )
+      if( pm->ps->weapon == WP_BLASTER || pm->ps->weapon == WP_HANDGUN )
         PM_ContinueTorsoAnim( TORSO_STAND2 );
       else
         PM_ContinueTorsoAnim( TORSO_STAND );
@@ -3419,6 +3419,7 @@ static void PM_Weapon( void )
     switch( pm->ps->weapon )
     {
       case WP_BLASTER:
+      case WP_HANDGUN:
         PM_StartTorsoAnim( TORSO_ATTACK2 );
         PM_StartWeaponAnim( WANIM_ATTACK1 );
         break;

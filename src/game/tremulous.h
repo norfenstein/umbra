@@ -305,6 +305,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BLASTER_DMG                 HDM(10)
 #define BLASTER_SIZE                5
 
+#define HANDGUN_CLIPSIZE             13
+#define HANDGUN_MAXCLIPS             6
+#define HANDGUN_REPEAT               400
+#define HANDGUN_K_SCALE              1.0f
+#define HANDGUN_RELOAD               2000
+#define HANDGUN_SPREAD               150
+#define HANDGUN_DMG                  HDM(10)
+
 #define RIFLE_CLIPSIZE              30
 #define RIFLE_MAXCLIPS              6
 #define RIFLE_REPEAT                90

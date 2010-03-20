@@ -1382,6 +1382,9 @@ void FireWeapon( gentity_t *ent )
     case WP_BLASTER:
       blasterFire( ent );
       break;
+    case WP_HANDGUN:
+      bulletFire( ent, HANDGUN_SPREAD, HANDGUN_DMG, MOD_HANDGUN );
+      break;
     case WP_MACHINEGUN:
       bulletFire( ent, RIFLE_SPREAD, RIFLE_DMG, MOD_MACHINEGUN );
       break;
