@@ -1941,15 +1941,15 @@ static const weaponAttributes_t bg_weapons[ ] =
     "Lucifer Cannon",     //char      *humanName;
     LCANNON_AMMO,         //int       maxAmmo;
     0,                    //int       maxClips;
-    ( 1 << WPM_PRIMARY )|( 1 << WPM_SECONDARY ),//int usesAmmo;
+    ( 1 << WPM_PRIMARY ), //int       usesAmmo;
     0,                    //int       ammoRegen;
     0,                    //int       ammoRegenDelay;
     LCANNON_REPEAT,       //int       repeatRate1;
-    LCANNON_SECONDARY_REPEAT, //int   repeatRate2;
+    0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     LCANNON_RELOAD,       //int       reloadTime;
     LCANNON_K_SCALE,      //float     knockbackScale;
-    qtrue,                //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
@@ -3015,11 +3015,6 @@ BG_PlayerCanChangeWeapon
 */
 qboolean BG_PlayerCanChangeWeapon( playerState_t *ps )
 {
-  // Do not allow Lucifer Cannon "canceling" via weapon switch
-  if( ps->weapon == WP_LUCIFER_CANNON &&
-      ps->stats[ STAT_MISC ] > LCANNON_CHARGE_TIME_MIN )
-    return qfalse;
-
   return ps->weaponTime <= 0 || ps->weaponstate != WEAPON_FIRING;
 }
 

@@ -748,21 +748,33 @@ LUCIFER CANNON
 
 /*
 ===============
-LCChargeFire
+lcannonFire
 ===============
 */
-void LCChargeFire( gentity_t *ent, qboolean secondary )
+void lcannonFire( gentity_t *ent )
 {
   gentity_t *m;
+  vec3_t    dir;
 
-  if( secondary && ent->client->ps.stats[ STAT_MISC ] <= 0 )
-    m = fire_luciferCannon( ent, muzzle, forward, LCANNON_SECONDARY_DAMAGE,
-                            LCANNON_SECONDARY_RADIUS, LCANNON_SECONDARY_SPEED );
+  //fire "drunkenly" if not crouching
+  if( !( ent->client->ps.pm_flags & PMF_DUCKED ) )
+  {
+    //vec3_t reverse;
+
+    VectorMA( forward, crandom() * 0.1 - 0.05, up, dir );
+    VectorMA( dir, crandom() * 0.2, right, dir );
+
+    //VectorCopy( dir, reverse );
+    //VectorInverse( reverse );
+
+    //G_Damage( ent, ent, ent, reverse, muzzle, LCANNON_DAMAGE, 0, MOD_LCANNON);
+  }
   else
-    m = fire_luciferCannon( ent, muzzle, forward,
-                            ent->client->ps.stats[ STAT_MISC ] *
-                            LCANNON_DAMAGE / LCANNON_CHARGE_TIME_MAX,
-                            LCANNON_RADIUS, LCANNON_SPEED );
+  {
+    VectorCopy( forward, dir );
+  }
+
+  m = fire_luciferCannon( ent, muzzle, dir );
 
   ent->client->ps.stats[ STAT_MISC ] = 0;
 }
@@ -1319,10 +1331,6 @@ void FireWeapon2( gentity_t *ent )
       scattergunBlastFire( ent );
       break;
 
-    case WP_LUCIFER_CANNON:
-      LCChargeFire( ent, qtrue );
-      break;
-
     default:
       break;
   }
@@ -1404,7 +1412,7 @@ void FireWeapon( gentity_t *ent )
       massDriverFire( ent );
       break;
     case WP_LUCIFER_CANNON:
-      LCChargeFire( ent, qfalse );
+      lcannonFire( ent );
       break;
     case WP_LAS_GUN:
       lasGunFire( ent );

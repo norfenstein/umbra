@@ -788,7 +788,7 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t aimdir );
 gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_scattergun( gentity_t *self, vec3_t start, vec3_t dir, int charge );
 gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir );
-gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir, int damage, int radius, int speed );
+gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_paraLockBlob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_spit( gentity_t *self, vec3_t start, vec3_t dir );

@@ -604,8 +604,7 @@ fire_luciferCannon
 
 =================
 */
-gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir,
-  int damage, int radius, int speed )
+gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir )
 {
   gentity_t *bolt;
   float charge;
@@ -615,12 +614,7 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir,
   bolt = G_Spawn( );
   bolt->classname = "lcannon";
   bolt->pointAgainstWorld = qtrue;
-
-  if( damage == LCANNON_DAMAGE )
-    bolt->nextthink = level.time;
-  else
-    bolt->nextthink = level.time + 10000;
-
+  bolt->nextthink = level.time + 10000;
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -628,30 +622,20 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir,
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = damage;
-  bolt->splashDamage = damage / 2;
-  bolt->splashRadius = radius;
+  bolt->damage = LCANNON_DAMAGE;
+  bolt->splashDamage = LCANNON_DAMAGE;
+  bolt->splashRadius = LCANNON_RADIUS;
   bolt->methodOfDeath = MOD_LCANNON;
   bolt->splashMethodOfDeath = MOD_LCANNON_SPLASH;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
+  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -LCANNON_SIZE;
+  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] = -bolt->r.mins[ 0 ];
   
-  // Give the missile a small bounding box
-  bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] =
-    -LCANNON_SIZE;
-  bolt->r.maxs[ 0 ] = bolt->r.maxs[ 1 ] = bolt->r.maxs[ 2 ] =
-    -bolt->r.mins[ 0 ];
-  
-  // Pass the missile charge through
-  charge = (float)( damage - LCANNON_SECONDARY_DAMAGE ) / LCANNON_DAMAGE;
-  bolt->s.torsoAnim = charge * 255;
-  if( bolt->s.torsoAnim < 0 )
-    bolt->s.torsoAnim = 0;
-
   bolt->s.pos.trType = TR_LINEAR;
   bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;   // move a bit on the very first frame
   VectorCopy( start, bolt->s.pos.trBase );
-  VectorScale( dir, speed, bolt->s.pos.trDelta );
+  VectorScale( dir, LCANNON_SPEED, bolt->s.pos.trDelta );
   SnapVector( bolt->s.pos.trDelta );      // save net bandwidth
 
   VectorCopy( start, bolt->r.currentOrigin );

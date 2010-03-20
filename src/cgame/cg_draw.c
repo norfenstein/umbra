@@ -836,7 +836,7 @@ static float CG_ChargeProgress( void )
   }
   else if( cg.snap->ps.weapon == WP_LUCIFER_CANNON )
   {
-    min = LCANNON_CHARGE_TIME_MIN;
+    min = 0;
     max = LCANNON_CHARGE_TIME_MAX;
   }
   else if( cg.snap->ps.weapon == WP_SCATTERGUN )
