@@ -1465,7 +1465,7 @@ void Cmd_Destroy_f( gentity_t *ent )
       if( !deconstruct )
       {
         G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-                  traceEnt->health, 0, MOD_SUICIDE );
+                  traceEnt->health, 0, 0, MOD_SUICIDE );
       }
       else if( g_markDeconstruct.integer )
       {
@@ -2194,7 +2194,7 @@ void Cmd_Damage_f( gentity_t *ent )
     damage = atoi( arg );
   }
 
-  G_Damage( ent, NULL, NULL, NULL, NULL, damage, 0, MOD_TARGET_LASER );
+  G_Damage( ent, NULL, NULL, NULL, NULL, damage, 0, 0, MOD_TARGET_LASER );
 }
 
 /*

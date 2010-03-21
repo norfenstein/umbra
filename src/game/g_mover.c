@@ -328,7 +328,7 @@ qboolean G_MoverPush( gentity_t *pusher, vec3_t move, vec3_t amove, gentity_t **
     // bobbing entities are instant-kill and never get blocked
     if( pusher->s.pos.trType == TR_SINE || pusher->s.apos.trType == TR_SINE )
     {
-      G_Damage( check, pusher, pusher, NULL, NULL, 99999, 0, MOD_CRUSH );
+      G_Damage( check, pusher, pusher, NULL, NULL, 99999, 0, 0, MOD_CRUSH );
       continue;
     }
 
@@ -1134,7 +1134,7 @@ void Blocked_Door( gentity_t *ent, gentity_t *other )
   }
 
   if( ent->damage )
-    G_Damage( other, ent, ent, NULL, NULL, ent->damage, 0, MOD_CRUSH );
+    G_Damage( other, ent, ent, NULL, NULL, ent->damage, 0, 0, MOD_CRUSH );
 
   if( ent->spawnflags & 4 )
     return;   // crushers don't reverse
@@ -2217,7 +2217,7 @@ void Blocked_Train( gentity_t *self, gentity_t *other )
       //whatever is blocking the train isn't a client
 
       //KILL!!1!!!
-      G_Damage( other, self, self, NULL, NULL, 10000, 0, MOD_CRUSH );
+      G_Damage( other, self, self, NULL, NULL, 10000, 0, 0, MOD_CRUSH );
 
       //buildables need to be handled differently since even when
       //dealth fatal amounts of damage they won't instantly become non-solid
@@ -2247,7 +2247,7 @@ void Blocked_Train( gentity_t *self, gentity_t *other )
       return;
     }
 
-    G_Damage( other, self, self, NULL, NULL, 10000, 0, MOD_CRUSH );
+    G_Damage( other, self, self, NULL, NULL, 10000, 0, 0, MOD_CRUSH );
   }
 }
 

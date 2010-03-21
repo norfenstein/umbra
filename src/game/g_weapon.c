@@ -296,7 +296,7 @@ void meleeAttack( gentity_t *ent, float range, float width, float height,
     return;
 
   WideBloodSpurt( ent, traceEnt, &tr );
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, mod );
+  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, 0, mod );
 }
 
 /*
@@ -307,7 +307,7 @@ MACHINEGUN
 ======================================================================
 */
 
-void bulletFire( gentity_t *ent, float spread, int damage, int mod )
+void bulletFire( gentity_t *ent, float spread, int damage, int knockback, int mod )
 {
   trace_t   tr;
   vec3_t    end;
@@ -359,7 +359,7 @@ void bulletFire( gentity_t *ent, float spread, int damage, int mod )
   if( traceEnt->takedamage )
   {
     G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-      damage, 0, mod );
+      damage, knockback, 0, mod );
   }
 }
 
@@ -403,7 +403,7 @@ void ScattergunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent 
     if( !( tr.surfaceFlags & SURF_NOIMPACT ) )
     {
       if( traceEnt->takedamage )
-        G_Damage( traceEnt, ent, ent, forward, tr.endpos, SCATTERGUN_DMG, 0, MOD_SCATTERGUN );
+        G_Damage( traceEnt, ent, ent, forward, tr.endpos, SCATTERGUN_DMG, SCATTERGUN_KNOCKBACK, 0, MOD_SCATTERGUN );
     }
   }
 }
@@ -470,7 +470,7 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent )
     if( !( tr.surfaceFlags & SURF_NOIMPACT ) )
     {
       if( traceEnt->takedamage )
-        G_Damage( traceEnt, ent, ent, forward, tr.endpos,  SHOTGUN_DMG, 0, MOD_SHOTGUN );
+        G_Damage( traceEnt, ent, ent, forward, tr.endpos, SHOTGUN_DMG, SHOTGUN_KNOCKBACK, 0, MOD_SHOTGUN );
     }
   }
 }
@@ -537,7 +537,7 @@ void massDriverFire( gentity_t *ent )
   if( traceEnt->takedamage )
   {
     G_Damage( traceEnt, ent, ent, forward, tr.endpos,
-      MDRIVER_DMG, 0, MOD_MDRIVER );
+      MDRIVER_DMG, MDRIVER_KNOCKBACK, 0, MOD_MDRIVER );
   }
 }
 
@@ -696,7 +696,7 @@ void lasGunFire( gentity_t *ent )
   }
 
   if( traceEnt->takedamage )
-    G_Damage( traceEnt, ent, ent, forward, tr.endpos, LASGUN_DAMAGE, 0, MOD_LASGUN );
+    G_Damage( traceEnt, ent, ent, forward, tr.endpos, LASGUN_DAMAGE, LASGUN_KNOCKBACK, 0, MOD_LASGUN );
 }
 
 /*
@@ -735,7 +735,7 @@ void painSawFire( gentity_t *ent )
     tent->s.generic1 = ent->s.generic1; //weaponMode
   }
 
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, PAINSAW_DAMAGE, DAMAGE_NO_KNOCKBACK, MOD_PAINSAW );
+  G_Damage( traceEnt, ent, ent, forward, tr.endpos, PAINSAW_DAMAGE, PAINSAW_KNOCKBACK, 0, MOD_PAINSAW );
 }
 
 /*
@@ -819,7 +819,7 @@ void teslaFire( gentity_t *self )
     
     VectorSubtract( target, origin, dir );
     G_Damage( self->enemy, self, self, dir, tr.endpos,
-              TESLAGEN_DMG, 0, MOD_TESLAGEN );
+              TESLAGEN_DMG, TESLAGEN_KNOCKBACK, 0, MOD_TESLAGEN );
   }
 
   // Send tesla zap trail
@@ -998,7 +998,7 @@ qboolean CheckVenomAttack( gentity_t *ent )
   // send blood impact
   WideBloodSpurt( ent, traceEnt, &tr );
 
-  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, DAMAGE_NO_KNOCKBACK, MOD_ALEVEL0_BITE );
+  G_Damage( traceEnt, ent, ent, forward, tr.endpos, damage, 0, 0, MOD_ALEVEL0_BITE );
   ent->client->ps.weaponTime += ALEVEL0_BITE_REPEAT;
   return qtrue;
 }
@@ -1144,7 +1144,7 @@ G_ChargeAttack
 */
 void G_ChargeAttack( gentity_t *ent, gentity_t *victim )
 {
-  int       damage;
+  int       damage, knockback;
   vec3_t    forward, normal;
 
   if( ent->client->ps.stats[ STAT_MISC ] <= 0 ||
@@ -1165,8 +1165,11 @@ void G_ChargeAttack( gentity_t *ent, gentity_t *victim )
   damage = ALEVEL5_TRAMPLE_DMG * ent->client->ps.stats[ STAT_MISC ] /
            ALEVEL5_TRAMPLE_DURATION;
 
+  knockback = ALEVEL5_TRAMPLE_KNOCKBACK * ent->client->ps.stats[ STAT_MISC ] /
+           ALEVEL5_TRAMPLE_DURATION;
+
   G_Damage( victim, ent, ent, forward, victim->s.origin, damage,
-            0, MOD_ALEVEL5_TRAMPLE );
+            knockback, 0, MOD_ALEVEL5_TRAMPLE );
 
   ent->client->ps.weaponTime += ALEVEL5_TRAMPLE_REPEAT;
 
@@ -1215,8 +1218,8 @@ void G_CrushAttack( gentity_t *ent, gentity_t *victim )
 
   // Crush the victim over a period of time
   VectorSubtract( victim->s.origin, ent->client->ps.origin, dir );
-  G_Damage( victim, ent, ent, dir, victim->s.origin, damage,
-            0, MOD_ALEVEL5_CRUSH );
+  G_Damage( victim, ent, ent, dir, victim->s.origin,
+            damage, 0, 0, MOD_ALEVEL5_CRUSH );
 }
 
 //======================================================================
@@ -1391,10 +1394,10 @@ void FireWeapon( gentity_t *ent )
       blasterFire( ent );
       break;
     case WP_HANDGUN:
-      bulletFire( ent, HANDGUN_SPREAD, HANDGUN_DMG, MOD_HANDGUN );
+      bulletFire( ent, HANDGUN_SPREAD, HANDGUN_DMG, HANDGUN_KNOCKBACK, MOD_HANDGUN );
       break;
     case WP_MACHINEGUN:
-      bulletFire( ent, RIFLE_SPREAD, RIFLE_DMG, MOD_MACHINEGUN );
+      bulletFire( ent, RIFLE_SPREAD, RIFLE_DMG, RIFLE_KNOCKBACK, MOD_MACHINEGUN );
       break;
     case WP_SCATTERGUN:
       scattergunShellFire( ent );
@@ -1403,7 +1406,7 @@ void FireWeapon( gentity_t *ent )
       shotgunFire( ent );
       break;
     case WP_CHAINGUN:
-      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, MOD_CHAINGUN );
+      bulletFire( ent, CHAINGUN_SPREAD, CHAINGUN_DMG, CHAINGUN_KNOCKBACK, MOD_CHAINGUN );
       break;
     case WP_PULSE_RIFLE:
       pulseRifleFire( ent );
@@ -1434,7 +1437,7 @@ void FireWeapon( gentity_t *ent )
       teslaFire( ent );
       break;
     case WP_MGTURRET:
-      bulletFire( ent, MGTURRET_SPREAD, MGTURRET_DMG, MOD_MGTURRET );
+      bulletFire( ent, MGTURRET_SPREAD, MGTURRET_DMG, MGTURRET_KNOCKBACK, MOD_MGTURRET );
       break;
 
     case WP_ABUILD:

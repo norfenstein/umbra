@@ -138,7 +138,7 @@ void P_WorldEffects( gentity_t *ent )
         ent->pain_debounce_time = level.time + 200;
 
         G_Damage( ent, NULL, NULL, NULL, NULL,
-          ent->damage, DAMAGE_NO_ARMOR, MOD_WATER );
+          ent->damage, 0, DAMAGE_NO_ARMOR, MOD_WATER );
       }
     }
   }
@@ -160,13 +160,13 @@ void P_WorldEffects( gentity_t *ent )
       if( ent->watertype & CONTENTS_LAVA )
       {
         G_Damage( ent, NULL, NULL, NULL, NULL,
-          30 * waterlevel, 0, MOD_LAVA );
+          30 * waterlevel, 0, 0, MOD_LAVA );
       }
 
       if( ent->watertype & CONTENTS_SLIME )
       {
         G_Damage( ent, NULL, NULL, NULL, NULL,
-          10 * waterlevel, 0, MOD_SLIME );
+          10 * waterlevel, 0, 0, MOD_SLIME );
       }
     }
   }
@@ -691,7 +691,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
     if( client->ps.stats[ STAT_STATE ] & SS_POISONED )
     {
       G_Damage( ent, client->lastPoisonClient, client->lastPoisonClient, NULL,
-        0, ALIEN_POISON_DMG, 0, MOD_POISON );
+        0, ALIEN_POISON_DMG, 0, 0, MOD_POISON );
     }
 
     // turn off life support when a team admits defeat
@@ -700,12 +700,12 @@ void ClientTimerActions( gentity_t *ent, int msec )
     {
       G_Damage( ent, NULL, NULL, NULL, NULL,
         BG_Class( client->ps.stats[ STAT_CLASS ] )->regenRate,
-        DAMAGE_NO_ARMOR, MOD_SUICIDE );
+        DAMAGE_NO_ARMOR, 0, MOD_SUICIDE );
     }
     else if( client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
       level.surrenderTeam == TEAM_HUMANS )
     {
-      G_Damage( ent, NULL, NULL, NULL, NULL, 5, DAMAGE_NO_ARMOR, MOD_SUICIDE );
+      G_Damage( ent, NULL, NULL, NULL, NULL, 5, DAMAGE_NO_ARMOR, 0, MOD_SUICIDE );
     }
 
     // lose some voice enthusiasm
@@ -809,7 +809,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence )
         VectorAdd( client->ps.origin, mins, point );
 
         ent->pain_debounce_time = level.time + 200; // no normal pain sound
-        G_Damage( ent, NULL, NULL, dir, point, damage, 0, MOD_FALLING );
+        G_Damage( ent, NULL, NULL, dir, point, damage, damage, 0, MOD_FALLING );
         break;
 
       case EV_FIRE_WEAPON:

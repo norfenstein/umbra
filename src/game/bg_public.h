@@ -936,6 +936,7 @@ typedef struct
   int           regenRate;
 
   int           splashDamage;
+  int           splashKnockback;
   int           splashRadius;
 
   int           meansOfDeath;
@@ -990,7 +991,6 @@ typedef struct
   int       repeatRate2;
   int       repeatRate3;
   int       reloadTime;
-  float     knockbackScale;
 
   qboolean  hasAltMode;
   qboolean  hasThirdMode;

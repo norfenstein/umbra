@@ -417,27 +417,25 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 dflags    these flags are used to control how T_Damage works
   DAMAGE_RADIUS     damage was indirect (from a nearby explosion)
   DAMAGE_NO_ARMOR     armor does not protect from this damage
-  DAMAGE_NO_KNOCKBACK   do not affect velocity, just view angles
   DAMAGE_NO_PROTECTION  kills godmode, armor, everything
 ============
 */
 
 // team is the team that is immune to this damage
 void G_SelectiveDamage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
-         vec3_t dir, vec3_t point, int damage, int dflags, int mod, int team )
+         vec3_t dir, vec3_t point, int damage, int knockback, int dflags, int mod, int team )
 {
   if( targ->client && ( team != targ->client->ps.stats[ STAT_TEAM ] ) )
-    G_Damage( targ, inflictor, attacker, dir, point, damage, dflags, mod );
+    G_Damage( targ, inflictor, attacker, dir, point, damage, knockback, dflags, mod );
 }
 
 void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
-         vec3_t dir, vec3_t point, int damage, int dflags, int mod )
+         vec3_t dir, vec3_t point, int damage, int knockback, int dflags, int mod )
 {
   gclient_t *client;
   int     take;
   int     save;
   int     asave = 0;
-  int     knockback;
 
   // Can't deal damage sometimes
   if( !targ->takedamage || targ->health <= 0 || level.intermissionQueued )
@@ -464,17 +462,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     return;
 
   if( !dir )
-    dflags |= DAMAGE_NO_KNOCKBACK;
+    knockback = 0;
   else
     VectorNormalize( dir );
-
-  knockback = damage;
-
-  if( inflictor->s.weapon != WP_NONE )
-  {
-    knockback = (int)( (float)knockback *
-      BG_Weapon( inflictor->s.weapon )->knockbackScale );
-  }
 
   if( targ->client )
   {
@@ -491,9 +481,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     knockback = 200;
 
   if( targ->flags & FL_NO_KNOCKBACK )
-    knockback = 0;
-
-  if( dflags & DAMAGE_NO_KNOCKBACK )
     knockback = 0;
 
   // figure momentum add, even if the damage won't be taken
@@ -605,11 +592,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
   take = damage;
   save = 0;
 
-  // air cannon does no damage
-  if( mod == MOD_SCATTERGUN_BLAST )
+  if( take < 0 )
     take = 0;
-  else if( take < 1 )
-    take = 1;
 
   // add to the damage inflicted on a player this frame
   // the total will be turned into screen blends and view angle kicks
@@ -774,7 +758,7 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin )
 G_SelectiveRadiusDamage
 ============
 */
-qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
+qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
                                   float radius, gentity_t *ignore, int mod, int team )
 {
   float     points, dist;
@@ -823,7 +807,8 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
     if( dist >= radius )
       continue;
 
-    points = damage * ( 1.0 - dist / radius );
+    damage *= ( 1.0 - dist / radius );
+    knockback *= ( 1.0 - dist / radius );
 
     if( CanDamage( ent, origin ) && ent->client &&
         ent->client->ps.stats[ STAT_TEAM ] != team )
@@ -834,7 +819,7 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
       dir[ 2 ] += 24;
       hitClient = qtrue;
       G_Damage( ent, NULL, attacker, dir, origin,
-          (int)points, DAMAGE_RADIUS, mod );
+          (int)damage, (int)knockback, DAMAGE_RADIUS, mod );
     }
   }
 
@@ -847,10 +832,10 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
 G_RadiusDamage
 ============
 */
-qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
+qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
                          float radius, gentity_t *ignore, int mod )
 {
-  float     points, dist;
+  float     dist;
   gentity_t *ent;
   int       entityList[ MAX_GENTITIES ];
   int       numListedEntities;
@@ -896,7 +881,8 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
     if( dist >= radius )
       continue;
 
-    points = damage * ( 1.0 - dist / radius );
+    damage *= ( 1.0 - dist / radius );
+    knockback *= ( 1.0 - dist / radius );
 
     if( CanDamage( ent, origin ) )
     {
@@ -906,7 +892,7 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage,
       dir[ 2 ] += 24;
       hitClient = qtrue;
       G_Damage( ent, NULL, attacker, dir, origin,
-          (int)points, DAMAGE_RADIUS, mod );
+          (int)damage, (int)knockback, DAMAGE_RADIUS, mod );
     }
   }
 

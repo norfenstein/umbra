@@ -168,7 +168,9 @@ struct gentity_s
   qboolean          takedamage;
 
   int               damage;
+  int               knockback;
   int               splashDamage; // quad will increase this without increasing radius
+  int               splashKnockback;
   int               splashRadius;
   int               methodOfDeath;
   int               splashMethodOfDeath;
@@ -761,13 +763,13 @@ gentity_t   *G_ClosestEnt( vec3_t origin, gentity_t **entities, int numEntities 
 //
 qboolean  CanDamage( gentity_t *targ, vec3_t origin );
 void      G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
-                    vec3_t dir, vec3_t point, int damage, int dflags, int mod );
+                    vec3_t dir, vec3_t point, int damage, int knockback, int dflags, int mod );
 void      G_SelectiveDamage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_t dir,
-                             vec3_t point, int damage, int dflags, int mod, int team );
-qboolean  G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius,
-                          gentity_t *ignore, int mod );
-qboolean  G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius,
-                                   gentity_t *ignore, int mod, int team );
+                             vec3_t point, int damage, int knockback, int dflags, int mod, int team );
+qboolean  G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
+                          float radius, gentity_t *ignore, int mod );
+qboolean  G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
+                                   float radius, gentity_t *ignore, int mod, int team );
 void      G_RewardAttackers( gentity_t *self );
 void      body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int meansOfDeath );
 void      AddScore( gentity_t *ent, int score );
@@ -776,8 +778,7 @@ void      G_LogDestruction( gentity_t *self, gentity_t *actor, int mod );
 // damage flags
 #define DAMAGE_RADIUS         0x00000001  // damage was indirect
 #define DAMAGE_NO_ARMOR       0x00000002  // armour does not protect from this damage
-#define DAMAGE_NO_KNOCKBACK   0x00000004  // do not affect velocity, just view angles
-#define DAMAGE_NO_PROTECTION  0x00000008  // armor, shields, invulnerability, and godmode have no effect
+#define DAMAGE_NO_PROTECTION  0x00000004  // armor, shields, invulnerability, and godmode have no effect
 
 //
 // g_missile.c

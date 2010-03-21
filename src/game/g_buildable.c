@@ -367,9 +367,8 @@ void AGeneric_Blast( gentity_t *self )
   VectorCopy( self->s.origin2, dir );
 
   //do a bit of radius damage
-  G_SelectiveRadiusDamage( self->s.pos.trBase, self, self->splashDamage,
-                           self->splashRadius, self, self->splashMethodOfDeath,
-                           TEAM_ALIENS );
+  G_SelectiveRadiusDamage( self->s.pos.trBase, self, self->splashDamage, self->splashKnockback,
+                           self->splashRadius, self, self->splashMethodOfDeath, TEAM_ALIENS );
 
   //pretty events and item cleanup
   self->s.eFlags |= EF_NODRAW; //don't draw the model once it's destroyed
@@ -480,12 +479,12 @@ void ASpawn_Think( gentity_t *self )
         // If it's part of the map, kill self. 
         if( ent->s.eType == ET_BUILDABLE )
         {
-          G_Damage( ent, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
+          G_Damage( ent, NULL, NULL, NULL, NULL, self->health, 0, 0, MOD_SUICIDE );
           G_SetBuildableAnim( self, BANIM_SPAWN1, qtrue );
         }
         else if( ent->s.number == ENTITYNUM_WORLD || ent->s.eType == ET_MOVER )
         {
-          G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
+          G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, 0, MOD_SUICIDE );
           return;
         }
 
@@ -533,7 +532,7 @@ void AOvermind_Think( gentity_t *self )
   if( self->spawned && ( self->health > 0 ) )
   {
     //do some damage
-    if( G_SelectiveRadiusDamage( self->s.pos.trBase, self, self->splashDamage,
+    if( G_SelectiveRadiusDamage( self->s.pos.trBase, self, self->splashDamage, self->splashKnockback,
           self->splashRadius, self, MOD_OVERMIND, TEAM_ALIENS ) )
     {
       self->timestamp = level.time;
@@ -800,7 +799,7 @@ void AAcidTube_Think( gentity_t *self )
           G_AddEvent( self, EV_ALIEN_ACIDTUBE, DirToByte( self->s.origin2 ) );
         }
         
-        G_SelectiveRadiusDamage( self->s.pos.trBase, self, ACIDTUBE_DAMAGE,
+        G_SelectiveRadiusDamage( self->s.pos.trBase, self, ACIDTUBE_DAMAGE, ACIDTUBE_KNOCKBACK,
                                  ACIDTUBE_RANGE, self, MOD_ATUBE, TEAM_ALIENS );                           
         self->nextthink = level.time + ACIDTUBE_REPEAT;
         return;
@@ -1160,7 +1159,7 @@ void HSpawn_Blast( gentity_t *self )
   self->timestamp = level.time;
 
   //do some radius damage
-  G_RadiusDamage( self->s.pos.trBase, self, self->splashDamage,
+  G_RadiusDamage( self->s.pos.trBase, self, self->splashDamage, self->splashKnockback,
     self->splashRadius, self, self->splashMethodOfDeath );
 
   // begin freeing build points
@@ -1225,12 +1224,12 @@ void HSpawn_Think( gentity_t *self )
         // If it's part of the map, kill self. 
         if( ent->s.eType == ET_BUILDABLE )
         {
-          G_Damage( ent, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
+          G_Damage( ent, NULL, NULL, NULL, NULL, self->health, 0, 0, MOD_SUICIDE );
           G_SetBuildableAnim( self, BANIM_SPAWN1, qtrue );
         }
         else if( ent->s.number == ENTITYNUM_WORLD || ent->s.eType == ET_MOVER )
         {
-          G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, MOD_SUICIDE );
+          G_Damage( self, NULL, NULL, NULL, NULL, self->health, 0, 0, MOD_SUICIDE );
           return;
         }
 
@@ -1368,11 +1367,13 @@ void HReactor_Think( gentity_t *self )
       if( self->dcc )
         G_SelectiveRadiusDamage( self->s.pos.trBase, self,
                                  REACTOR_ATTACK_DCC_DAMAGE,
+                                 REACTOR_ATTACK_DCC_KNOCKBACK,
                                  REACTOR_ATTACK_DCC_RANGE, self,
                                  MOD_REACTOR, TEAM_HUMANS );
       else
         G_SelectiveRadiusDamage( self->s.pos.trBase, self,
                                  REACTOR_ATTACK_DAMAGE,
+                                 REACTOR_ATTACK_KNOCKBACK,
                                  REACTOR_ATTACK_RANGE, self,
                                  MOD_REACTOR, TEAM_HUMANS );
     }
@@ -2294,7 +2295,7 @@ void G_FreeMarkedBuildables( gentity_t *deconner, char *readable, int rsize,
     if( removalCounts[ bNum ] == 0 )
       totalListItems++;
 
-    G_Damage( ent, NULL, NULL, NULL, NULL, ent->health, 0, MOD_DECONSTRUCT );
+    G_Damage( ent, NULL, NULL, NULL, NULL, ent->health, 0, 0, MOD_DECONSTRUCT );
 
     removalCounts[ bNum ]++;
 
@@ -2717,6 +2718,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   built->health = 1;
 
   built->splashDamage = BG_Buildable( buildable )->splashDamage;
+  built->splashKnockback = BG_Buildable( buildable )->splashKnockback;
   built->splashRadius = BG_Buildable( buildable )->splashRadius;
   built->splashMethodOfDeath = BG_Buildable( buildable )->meansOfDeath;
 
@@ -3324,7 +3326,7 @@ void G_BaseSelfDestruct( team_t team )
       continue;
     if( ent->buildableTeam != team )
       continue;
-    G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, MOD_SUICIDE );
+    G_Damage( ent, NULL, NULL, NULL, NULL, 10000, 0, 0, MOD_SUICIDE );
   }
 }
 

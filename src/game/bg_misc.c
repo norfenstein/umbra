@@ -49,6 +49,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ASPAWN_HEALTH,         //int       health;
     ASPAWN_REGEN,          //int       regenRate;
     ASPAWN_SPLASHDAMAGE,   //int       splashDamage;
+    ASPAWN_SPLASHKNOCKBACK,//int       splashKnockback;
     ASPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -80,6 +81,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     OVERMIND_HEALTH,       //int       health;
     OVERMIND_REGEN,        //int       regenRate;
     OVERMIND_SPLASHDAMAGE, //int       splashDamage;
+    OVERMIND_SPLASHKNOCKBACK,//int     splashKnockback;
     OVERMIND_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -111,6 +113,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BARRICADE_HEALTH,      //int       health;
     BARRICADE_REGEN,       //int       regenRate;
     BARRICADE_SPLASHDAMAGE,//int       splashDamage;
+    BARRICADE_SPLASHKNOCKBACK,//int    splashKnockback;
     BARRICADE_SPLASHRADIUS,//int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -142,6 +145,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ACIDTUBE_HEALTH,       //int       health;
     ACIDTUBE_REGEN,        //int       regenRate;
     ACIDTUBE_SPLASHDAMAGE, //int       splashDamage;
+    ACIDTUBE_SPLASHKNOCKBACK,//int     splashKnockback;
     ACIDTUBE_SPLASHRADIUS, //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -173,6 +177,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TRAPPER_HEALTH,        //int       health;
     TRAPPER_REGEN,         //int       regenRate;
     TRAPPER_SPLASHDAMAGE,  //int       splashDamage;
+    TRAPPER_SPLASHKNOCKBACK,//int      splashKnockback;
     TRAPPER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -205,6 +210,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     BOOSTER_HEALTH,        //int       health;
     BOOSTER_REGEN,         //int       regenRate;
     BOOSTER_SPLASHDAMAGE,  //int       splashDamage;
+    BOOSTER_SPLASHKNOCKBACK,//int      splashKnockback;
     BOOSTER_SPLASHRADIUS,  //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -235,6 +241,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HIVE_HEALTH,           //int       health;
     HIVE_REGEN,            //int       regenRate;
     HIVE_SPLASHDAMAGE,     //int       splashDamage;
+    HIVE_SPLASHKNOCKBACK,  //int       splashKnockback;
     HIVE_SPLASHRADIUS,     //int       splashRadius;
     MOD_ASPAWN,            //int       meansOfDeath;
     TEAM_ALIENS,           //int       team;
@@ -266,6 +273,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     HSPAWN_HEALTH,         //int       health;
     0,                     //int       regenRate;
     HSPAWN_SPLASHDAMAGE,   //int       splashDamage;
+    HSPAWN_SPLASHKNOCKBACK,//int       splashKnockback;
     HSPAWN_SPLASHRADIUS,   //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -297,6 +305,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MGTURRET_HEALTH,       //int       health;
     0,                     //int       regenRate;
     MGTURRET_SPLASHDAMAGE, //int       splashDamage;
+    MGTURRET_SPLASHKNOCKBACK,//int     splashKnockback;
     MGTURRET_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -328,6 +337,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     TESLAGEN_HEALTH,       //int       health;
     0,                     //int       regenRate;
     TESLAGEN_SPLASHDAMAGE, //int       splashDamage;
+    TESLAGEN_SPLASHKNOCKBACK,//int     splashKnockback;
     TESLAGEN_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -359,6 +369,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     ARMOURY_HEALTH,        //int       health;
     0,                     //int       regenRate;
     ARMOURY_SPLASHDAMAGE,  //int       splashDamage;
+    ARMOURY_SPLASHKNOCKBACK,//int      splashKnockback;
     ARMOURY_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -390,6 +401,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     DC_HEALTH,             //int       health;
     0,                     //int       regenRate;
     DC_SPLASHDAMAGE,       //int       splashDamage;
+    DC_SPLASHKNOCKBACK,    //int       splashKnockback;
     DC_SPLASHRADIUS,       //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -422,6 +434,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     MEDISTAT_HEALTH,       //int       health;
     0,                     //int       regenRate;
     MEDISTAT_SPLASHDAMAGE, //int       splashDamage;
+    MEDISTAT_SPLASHKNOCKBACK,//int     splashKnockback;
     MEDISTAT_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -453,6 +466,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     REACTOR_HEALTH,        //int       health;
     0,                     //int       regenRate;
     REACTOR_SPLASHDAMAGE,  //int       splashDamage;
+    REACTOR_SPLASHKNOCKBACK,//int      splashKnockback;
     REACTOR_SPLASHRADIUS,  //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -484,6 +498,7 @@ static const buildableAttributes_t bg_buildableList[ ] =
     REPEATER_HEALTH,       //int       health;
     0,                     //int       regenRate;
     REPEATER_SPLASHDAMAGE, //int       splashDamage;
+    REPEATER_SPLASHKNOCKBACK,//int     splashKnockback;
     REPEATER_SPLASHRADIUS, //int       splashRadius;
     MOD_HSPAWN,            //int       meansOfDeath;
     TEAM_HUMANS,           //int       team;
@@ -1591,7 +1606,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL0_BITE_K_SCALE, //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1612,7 +1626,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1633,7 +1646,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL1_1_SPIT_REPEAT,//int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL1_1_CLAW_K_SCALE,//float    knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1654,7 +1666,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL0_BITE_K_SCALE, //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1675,7 +1686,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL3_FLAME_REPEAT, //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL3_CLAW_K_SCALE, //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1696,7 +1706,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL4_CLAW_K_SCALE, //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1717,7 +1726,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL5_BOUNCEBALL_REPEAT,//int   repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ALEVEL5_CLAW_K_SCALE, //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1738,7 +1746,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    BLASTER_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1759,7 +1766,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     HANDGUN_RELOAD,       //int       reloadTime;
-    HANDGUN_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1780,7 +1786,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     RIFLE_RELOAD,         //int       reloadTime;
-    RIFLE_K_SCALE,        //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1801,7 +1806,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    PAINSAW_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1822,7 +1826,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     SCATTERGUN_BLAST_REPEAT,//int     repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    SCATTERGUN_K_SCALE,   //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1843,7 +1846,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     SHOTGUN_RELOAD,       //int       reloadTime;
-    SHOTGUN_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1864,7 +1866,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     LASGUN_RELOAD,        //int       reloadTime;
-    LASGUN_K_SCALE,       //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1885,7 +1886,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     MDRIVER_RELOAD,       //int       reloadTime;
-    MDRIVER_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qtrue,                //qboolean  canZoom;
@@ -1906,7 +1906,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    CHAINGUN_K_SCALE,     //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1927,7 +1926,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     PRIFLE_RELOAD,        //int       reloadTime;
-    PRIFLE_K_SCALE,       //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1948,7 +1946,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     LCANNON_RELOAD,       //int       reloadTime;
-    LCANNON_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1969,7 +1966,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    GRENADE_K_SCALE,      //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -1990,7 +1986,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
-    LOCKBLOB_K_SCALE,     //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2011,7 +2006,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
-    HIVE_K_SCALE,         //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2032,7 +2026,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     500,                  //int       repeatRate2;
     500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
-    TESLAGEN_K_SCALE,     //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2053,7 +2046,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    MGTURRET_K_SCALE,     //float     knockbackScale;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2074,7 +2066,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     ABUILDER_CLAW_REPEAT, //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    ABUILDER_CLAW_K_SCALE,//float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
@@ -2095,7 +2086,6 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    0.0f,                 //float     knockbackScale;
     qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;

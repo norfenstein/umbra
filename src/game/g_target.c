@@ -272,7 +272,7 @@ void target_kill_use( gentity_t *self, gentity_t *other, gentity_t *activator )
   if( !activator )
     return;
 
-  G_Damage( activator, NULL, NULL, NULL, NULL, 100000, DAMAGE_NO_PROTECTION, MOD_TELEFRAG );
+  G_Damage( activator, NULL, NULL, NULL, NULL, 100000, 0, DAMAGE_NO_PROTECTION, MOD_TELEFRAG );
 }
 
 void SP_target_kill( gentity_t *self )
@@ -452,7 +452,7 @@ void target_hurt_use( gentity_t *self, gentity_t *other, gentity_t *activator )
   if( !activator || !activator->takedamage )
     return;
 
-  G_Damage( activator, self, self, NULL, NULL, self->damage, 0, MOD_TRIGGER_HURT );
+  G_Damage( activator, self, self, NULL, NULL, self->damage, 0, 0, MOD_TRIGGER_HURT );
 }
 
 /*

@@ -89,8 +89,8 @@ void G_ExplodeMissile( gentity_t *ent )
   ent->freeAfterEvent = qtrue;
 
   // splash damage
-  if( ent->splashDamage )
-    G_RadiusDamage( ent->r.currentOrigin, ent->parent, ent->splashDamage,
+  if( ent->splashDamage || ent->splashKnockback )
+    G_RadiusDamage( ent->r.currentOrigin, ent->parent, ent->splashDamage, ent->splashKnockback,
                     ent->splashRadius, ent, ent->splashMethodOfDeath );
 
   trap_LinkEntity( ent );
@@ -226,7 +226,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   if( other->takedamage )
   {
     // FIXME: wrong damage direction?
-    if( ent->damage )
+    if( ent->damage || ent-> knockback )
     {
       vec3_t  velocity;
 
@@ -234,8 +234,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
       if( VectorLength( velocity ) == 0 )
         velocity[ 2 ] = 1;  // stepped on a grenade
 
-      G_Damage( other, ent, attacker, velocity, ent->s.origin, ent->damage,
-        0, ent->methodOfDeath );
+      G_Damage( other, ent, attacker, velocity, ent->s.origin,
+        ent->damage, ent->knockback, 0, ent->methodOfDeath );
     }
   }
 
@@ -266,9 +266,9 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace )
   G_SetOrigin( ent, trace->endpos );
 
   // splash damage (doesn't apply to person directly hit)
-  if( ent->splashDamage )
-    G_RadiusDamage( trace->endpos, ent->parent, ent->splashDamage, ent->splashRadius,
-                    other, ent->splashMethodOfDeath );
+  if( ent->splashDamage || ent->splashKnockback )
+    G_RadiusDamage( trace->endpos, ent->parent, ent->splashDamage, ent->splashKnockback,
+                    ent->splashRadius, other, ent->splashMethodOfDeath );
 
   trap_LinkEntity( ent );
 }
@@ -436,7 +436,9 @@ gentity_t *fire_flamer( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = ALEVEL3_FLAME_DMG;
+  bolt->knockback = 0;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_ALEVEL3_FLAME;
   bolt->splashMethodOfDeath = MOD_ALEVEL3_FLAME;
@@ -483,7 +485,9 @@ gentity_t *fire_blaster( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = BLASTER_DMG;
+  bolt->knockback = BLASTER_KNOCKBACK;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_BLASTER;
   bolt->splashMethodOfDeath = MOD_BLASTER;
@@ -529,8 +533,10 @@ gentity_t *fire_scattergun( gentity_t *self, vec3_t start, vec3_t dir, int charg
   bolt->s.generic1 = self->s.generic1; //weaponMode
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
-  bolt->damage = SCATTERGUN_BLAST_DAMAGE * scale;
-  bolt->splashDamage = SCATTERGUN_BLAST_DAMAGE * scale;
+  bolt->damage = 0;
+  bolt->knockback = SCATTERGUN_BLAST_KNOCKBACK * scale;
+  bolt->splashDamage = 0;
+  bolt->splashKnockback = SCATTERGUN_BLAST_KNOCKBACK * scale;
   bolt->splashRadius = SCATTERGUN_BLAST_RADIUS;
   bolt->methodOfDeath = MOD_SCATTERGUN_BLAST;
   bolt->splashMethodOfDeath = MOD_SCATTERGUN_BLAST;
@@ -576,7 +582,9 @@ gentity_t *fire_pulseRifle( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = PRIFLE_DMG;
+  bolt->knockback = PRIFLE_KNOCKBACK;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_PRIFLE;
   bolt->splashMethodOfDeath = MOD_PRIFLE;
@@ -623,7 +631,9 @@ gentity_t *fire_luciferCannon( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = LCANNON_DAMAGE;
+  bolt->knockback = LCANNON_KNOCKBACK;
   bolt->splashDamage = LCANNON_DAMAGE;
+  bolt->splashKnockback = LCANNON_KNOCKBACK;
   bolt->splashRadius = LCANNON_RADIUS;
   bolt->methodOfDeath = MOD_LCANNON;
   bolt->splashMethodOfDeath = MOD_LCANNON_SPLASH;
@@ -668,7 +678,9 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = GRENADE_DAMAGE;
+  bolt->knockback = GRENADE_KNOCKBACK;
   bolt->splashDamage = GRENADE_DAMAGE;
+  bolt->splashKnockback = GRENADE_KNOCKBACK;
   bolt->splashRadius = GRENADE_RANGE;
   bolt->methodOfDeath = MOD_GRENADE;
   bolt->splashMethodOfDeath = MOD_GRENADE;
@@ -774,7 +786,9 @@ gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = HIVE_DMG;
+  bolt->knockback = 0;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_SWARM;
   bolt->clipmask = MASK_SHOT;
@@ -816,7 +830,9 @@ gentity_t *fire_lockblob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = 0;
+  bolt->knockback = 0;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_UNKNOWN; //doesn't do damage so will never kill
   bolt->clipmask = MASK_SHOT;
@@ -855,7 +871,9 @@ gentity_t *fire_spit( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = 0;
+  bolt->knockback = 0;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->methodOfDeath = MOD_UNKNOWN;
   bolt->splashMethodOfDeath = MOD_UNKNOWN;
@@ -895,7 +913,9 @@ gentity_t *fire_paraLockBlob( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = 0;
+  bolt->knockback = 0;
   bolt->splashDamage = 0;
+  bolt->splashKnockback = 0;
   bolt->splashRadius = 0;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
@@ -933,7 +953,9 @@ gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->r.ownerNum = self->s.number;
   bolt->parent = self;
   bolt->damage = ALEVEL5_BOUNCEBALL_DMG;
+  bolt->knockback = ALEVEL5_BOUNCEBALL_KNOCKBACK;
   bolt->splashDamage = ALEVEL5_BOUNCEBALL_DMG;
+  bolt->splashKnockback = ALEVEL5_BOUNCEBALL_KNOCKBACK;
   bolt->splashRadius = ALEVEL5_BOUNCEBALL_RADIUS;
   bolt->methodOfDeath = MOD_ALEVEL5_BOUNCEBALL;
   bolt->splashMethodOfDeath = MOD_ALEVEL5_BOUNCEBALL;
