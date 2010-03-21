@@ -830,7 +830,7 @@ void      G_HookThink( gentity_t *ent );
 qboolean  CheckVenomAttack( gentity_t *ent );
 void      CheckGrabAttack( gentity_t *ent );
 void      CheckCkitRepair( gentity_t *ent );
-void      G_ChargeAttack( gentity_t *ent, gentity_t *victim );
+void      G_TrampleAttack( gentity_t *ent, gentity_t *victim );
 void      G_CrushAttack( gentity_t *ent, gentity_t *victim );
 
 

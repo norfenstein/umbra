@@ -3244,10 +3244,15 @@ static void PM_Weapon( void )
   switch( pm->ps->weapon )
   {
     case WP_ALEVEL0:
-    case WP_ALEVEL2:
       //venom is only autohit but grapple is secondary
       if( !attack2 )
         return;
+      break;
+
+    case WP_ALEVEL2:
+      if( !attack1 && !attack2 )
+        return;
+      break;
 
     case WP_ALEVEL1_1:
       if( !attack1 && !attack2 )
@@ -3378,11 +3383,6 @@ static void PM_Weapon( void )
     switch( pm->ps->weapon )
     {
       case WP_ALEVEL0:
-        pm->ps->generic1 = WPM_PRIMARY;
-        PM_AddEvent( EV_FIRE_WEAPON );
-        addTime = BG_Weapon( pm->ps->weapon )->repeatRate1;
-        break;
-
       case WP_ALEVEL2:
         pm->ps->generic1 = WPM_PRIMARY;
         PM_AddEvent( EV_FIRE_WEAPON );

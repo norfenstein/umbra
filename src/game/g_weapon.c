@@ -613,27 +613,6 @@ void pulseRifleFire( gentity_t *ent )
 /*
 ======================================================================
 
-FLAME THROWER
-
-======================================================================
-*/
-
-void flamerFire( gentity_t *ent )
-{
-  vec3_t origin;
-
-  // Correct muzzle so that the missile does not start in the ceiling 
-  VectorMA( muzzle, -7.0f, up, origin );
-
-  // Correct muzzle so that the missile fires from the player's hand
-  VectorMA( origin, 4.5f, right, origin );
-
-  fire_flamer( ent, origin, forward );
-}
-
-/*
-======================================================================
-
 GRENADE
 
 ======================================================================
@@ -926,15 +905,6 @@ void buildFire( gentity_t *ent, dynMenu_t menu )
   G_TriggerMenu( ent->client->ps.clientNum, menu );
 }
 
-void spitFire( gentity_t *ent )
-{
-  gentity_t *m;
-
-  m = fire_spit( ent, muzzle, forward );
-
-//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
-}
-
 
 /*
 ======================================================================
@@ -980,8 +950,10 @@ qboolean CheckVenomAttack( gentity_t *ent )
   // only allow bites to work against buildings as they are constructing
   if( traceEnt->s.eType == ET_BUILDABLE )
   {
+    /*
     if( traceEnt->spawned )
       return qfalse;
+      */
 
     if( traceEnt->buildableTeam == TEAM_ALIENS )
       return qfalse;
@@ -1054,10 +1026,56 @@ void G_HookThink( gentity_t *ent )
 /*
 ======================================================================
 
+ALEVEL1_1
+
+======================================================================
+*/
+
+void spitFire( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = fire_spit( ent, muzzle, forward );
+
+//  VectorAdd( m->s.pos.trDelta, ent->client->ps.velocity, m->s.pos.trDelta );  // "real" physics
+}
+
+/*
+======================================================================
+
+ALEVEL2
+
+======================================================================
+*/
+
+void kamikazeExplode( gentity_t *ent )
+{
+  G_RadiusDamage( ent->r.currentOrigin, ent, ALEVEL2_KAMIKAZE_DAMAGE, ALEVEL2_KAMIKAZE_KNOCKBACK,
+                  ALEVEL2_KAMIKAZE_RANGE, ent, MOD_ALEVEL2_KAMIKAZE );
+
+  G_Damage( ent, ent, ent, NULL, ent->r.currentOrigin, ent->health, 0, 0, MOD_ALEVEL2_KAMIKAZE);
+}
+
+/*
+======================================================================
+
 ALEVEL3
 
 ======================================================================
 */
+
+void flamerFire( gentity_t *ent )
+{
+  vec3_t origin;
+
+  // Correct muzzle so that the missile does not start in the ceiling 
+  VectorMA( muzzle, -7.0f, up, origin );
+
+  // Correct muzzle so that the missile fires from the player's hand
+  VectorMA( origin, 4.5f, right, origin );
+
+  fire_flamer( ent, origin, forward );
+}
 
 /*
 ======================================================================
@@ -1139,10 +1157,10 @@ void bounceBallFire( gentity_t *ent )
 
 /*
 ===============
-G_ChargeAttack
+G_TrampleAttack
 ===============
 */
-void G_ChargeAttack( gentity_t *ent, gentity_t *victim )
+void G_TrampleAttack( gentity_t *ent, gentity_t *victim )
 {
   int       damage, knockback;
   vec3_t    forward, normal;
@@ -1376,6 +1394,9 @@ void FireWeapon( gentity_t *ent )
     case WP_ALEVEL1_1:
       meleeAttack( ent, ALEVEL1_1_CLAW_RANGE, ALEVEL1_1_CLAW_WIDTH, ALEVEL1_1_CLAW_WIDTH,
                    ALEVEL1_1_CLAW_DMG, MOD_ALEVEL1_1_CLAW );
+      break;
+    case WP_ALEVEL2:
+      kamikazeExplode( ent );
       break;
     case WP_ALEVEL3:
       meleeAttack( ent, ALEVEL3_CLAW_RANGE, ALEVEL3_CLAW_WIDTH, ALEVEL3_CLAW_WIDTH,

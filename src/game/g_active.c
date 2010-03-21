@@ -289,7 +289,7 @@ void ClientImpacts( gentity_t *ent, pmove_t *pm )
     // tyrant impact attacks
     if( ent->client->ps.weapon == WP_ALEVEL5 )
     {
-      G_ChargeAttack( ent, other );
+      G_TrampleAttack( ent, other );
       G_CrushAttack( ent, other );
     }
 

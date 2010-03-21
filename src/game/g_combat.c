@@ -85,6 +85,7 @@ char *modNames[ ] =
   "MOD_ALEVEL1_0_CLAW",
   "MOD_ALEVEL1_1_CLAW",
   "MOD_ALEVEL2_BITE",
+  "MOD_ALEVEL2_KAMIKAZE",
   "MOD_ALEVEL3_CLAW",
   "MOD_ALEVEL3_FLAME",
   "MOD_ALEVEL4_CLAW",
@@ -281,9 +282,12 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
     if( OnSameTeam( self, attacker ) && attacker == self )
     {
-      // suicides always subtract 1 frag and 1 score
-      G_AddCreditToClient( attacker->client, -CREDITS_PER_FRAG, qtrue );
-      AddScore( attacker, -1 );
+      // unless kamikaze, suicide always subtracts 1 frag and 1 score
+      if( meansOfDeath != MOD_ALEVEL2_KAMIKAZE )
+      {
+        G_AddCreditToClient( attacker->client, -CREDITS_PER_FRAG, qtrue );
+        AddScore( attacker, -1 );
+      }
 
       // forgive teammates for friendly fire
       for( i = 0; i < MAX_CLIENTS; i++ )
@@ -765,7 +769,7 @@ G_SelectiveRadiusDamage
 qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
                                   float radius, gentity_t *ignore, int mod, int team )
 {
-  float     points, dist;
+  float     scale, dist;
   gentity_t *ent;
   int       entityList[ MAX_GENTITIES ];
   int       numListedEntities;
@@ -811,8 +815,7 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
     if( dist >= radius )
       continue;
 
-    damage *= ( 1.0 - dist / radius );
-    knockback *= ( 1.0 - dist / radius );
+    scale = ( 1.0 - dist / radius );
 
     if( CanDamage( ent, origin ) && ent->client &&
         ent->client->ps.stats[ STAT_TEAM ] != team )
@@ -823,7 +826,7 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
       dir[ 2 ] += 24;
       hitClient = qtrue;
       G_Damage( ent, NULL, attacker, dir, origin,
-          (int)damage, (int)knockback, DAMAGE_RADIUS, mod );
+          (int)( damage * scale ), (int)( knockback * scale ), DAMAGE_RADIUS, mod );
     }
   }
 
@@ -839,7 +842,7 @@ G_RadiusDamage
 qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float knockback,
                          float radius, gentity_t *ignore, int mod )
 {
-  float     dist;
+  float     scale, dist;
   gentity_t *ent;
   int       entityList[ MAX_GENTITIES ];
   int       numListedEntities;
@@ -885,8 +888,7 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float
     if( dist >= radius )
       continue;
 
-    damage *= ( 1.0 - dist / radius );
-    knockback *= ( 1.0 - dist / radius );
+    scale = ( 1.0 - dist / radius );
 
     if( CanDamage( ent, origin ) )
     {
@@ -896,7 +898,7 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float
       dir[ 2 ] += 24;
       hitClient = qtrue;
       G_Damage( ent, NULL, attacker, dir, origin,
-          (int)damage, (int)knockback, DAMAGE_RADIUS, mod );
+          (int)( damage * scale ), (int)( knockback * scale ), DAMAGE_RADIUS, mod );
     }
   }
 

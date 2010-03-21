@@ -78,6 +78,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL3_FLAME_SPEED          300.0f
 #define ALEVEL3_FLAME_LAG            0.65f    // the amount of player velocity that is added to the fireball
 
+#define ALEVEL2_KAMIKAZE_DAMAGE      ADM(500)
+#define ALEVEL2_KAMIKAZE_KNOCKBACK   ALEVEL2_KAMIKAZE_DAMAGE
+#define ALEVEL2_KAMIKAZE_RANGE       300
+
 #define ALEVEL4_CLAW_DMG             ADM(80)
 #define ALEVEL4_CLAW_RANGE           80.0f
 #define ALEVEL4_CLAW_WIDTH           12.0f

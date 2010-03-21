@@ -179,6 +179,15 @@ static void CG_Obituary( entityState_t *ent )
           message = "pulse rifled himself";
         break;
 
+      case MOD_ALEVEL2_KAMIKAZE:
+        if( gender == GENDER_FEMALE )
+          message = "exploded herself";
+        else if( gender == GENDER_NEUTER )
+          message = "exploded itself";
+        else
+          message = "exploded himself";
+        break;
+
       default:
         if( gender == GENDER_FEMALE )
           message = "killed herself";
@@ -275,6 +284,12 @@ static void CG_Obituary( entityState_t *ent )
         break;
       case MOD_ALEVEL2_BITE:
         message = "was bitten by";
+        Com_sprintf( className, 64, "'s %s",
+            BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
+        message2 = className;
+        break;
+      case MOD_ALEVEL2_KAMIKAZE:
+        message = "was exploded by";
         Com_sprintf( className, 64, "'s %s",
             BG_ClassConfig( PCL_ALIEN_LEVEL2 )->humanName );
         message2 = className;

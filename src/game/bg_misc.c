@@ -1666,7 +1666,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
     0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
-    qfalse,               //qboolean  hasAltMode;
+    qtrue,                //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
