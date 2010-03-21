@@ -1945,7 +1945,7 @@ static const weaponAttributes_t bg_weapons[ ] =
     LCANNON_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
     0,                    //int       repeatRate3;
-    LCANNON_RELOAD,       //int       reloadTime;
+    0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
     qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;

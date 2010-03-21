@@ -759,15 +759,15 @@ void lcannonFire( gentity_t *ent )
   //fire "drunkenly" if not crouching
   if( !( ent->client->ps.pm_flags & PMF_DUCKED ) )
   {
-    //vec3_t reverse;
+    vec3_t reverse;
 
-    VectorMA( forward, crandom() * 0.1 - 0.05, up, dir );
-    VectorMA( dir, crandom() * 0.2, right, dir );
+    VectorMA( forward, random() * -0.25, up, dir );
+    VectorMA( dir, crandom() * 0.5, right, dir );
 
-    //VectorCopy( dir, reverse );
-    //VectorInverse( reverse );
+    VectorCopy( dir, reverse );
+    VectorInverse( reverse );
 
-    //G_Damage( ent, ent, ent, reverse, muzzle, LCANNON_DAMAGE, 0, MOD_LCANNON);
+    G_Damage( ent, ent, ent, reverse, muzzle, LCANNON_KICKBACK_DAMAGE, LCANNON_KICKBACK_KNOCKBACK, 0, MOD_LCANNON_SPLASH);
   }
   else
   {

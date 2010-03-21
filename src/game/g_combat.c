@@ -648,6 +648,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     targ->lastDamageTime = level.time;
     targ->nextRegenTime = level.time + ALIEN_REGEN_DAMAGE_TIME;
 
+    // reset lcannon charge on damage
+    if( targ->client->ps.weapon == WP_LUCIFER_CANNON )
+      targ->client->ps.stats[ STAT_MISC ] = 0;
+
     // add to the attackers "account" on the target
     if( attacker->client && attacker != targ )
     {

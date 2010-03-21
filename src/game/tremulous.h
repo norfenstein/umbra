@@ -394,10 +394,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define LCANNON_AMMO                5
 #define LCANNON_REPEAT              500
-#define LCANNON_RELOAD              0
 #define LCANNON_DAMAGE              HDM(100)
 #define LCANNON_KNOCKBACK           LCANNON_DAMAGE
-#define LCANNON_KICKBACK            0.25f    // portion of damage dealt to self in kickback
+#define LCANNON_KICKBACK_DAMAGE     15       // damage dealt to self when firing without crouching
+#define LCANNON_KICKBACK_KNOCKBACK  100
 #define LCANNON_RADIUS              150      // primary splash damage radius
 #define LCANNON_SIZE                5        // missile bounding box radius
 #define LCANNON_SPEED               1200
