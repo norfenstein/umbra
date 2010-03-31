@@ -843,7 +843,7 @@ typedef enum
   MOD_ALEVEL5_BOUNCEBALL,
   MOD_ALEVEL5_CLAW,
   MOD_ALEVEL5_TRAMPLE,
-  MOD_ALEVEL5_CRUSH,
+  MOD_STOMP,
 
   MOD_POISON,
   MOD_SWARM,
@@ -892,6 +892,9 @@ typedef struct
   float     stopSpeed;
   float     jumpMagnitude;
   float     knockbackScale;
+  
+  int       stompBaseDamage;
+  float     stompVelDamage;
 
   int       cost;
 } classAttributes_t;

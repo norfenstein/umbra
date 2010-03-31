@@ -427,7 +427,7 @@ struct gclient_s
   float               voiceEnthusiasm;
   char                lastVoiceCmd[ MAX_VOICE_CMD_LEN ];
 
-  int                 lastCrushTime;        // Tyrant crush
+  int                 lastStompTime;
 };
 
 
@@ -831,7 +831,7 @@ qboolean  CheckVenomAttack( gentity_t *ent );
 void      CheckGrabAttack( gentity_t *ent );
 void      CheckCkitRepair( gentity_t *ent );
 void      G_TrampleAttack( gentity_t *ent, gentity_t *victim );
-void      G_CrushAttack( gentity_t *ent, gentity_t *victim );
+void      G_StompAttack( gentity_t *ent, gentity_t *victim, int baseDamage, float velDamage );
 
 
 //

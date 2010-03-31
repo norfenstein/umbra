@@ -810,6 +810,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     0,                                              //int     cost;
   },
   {
@@ -835,6 +837,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ABUILDER_COST,                                  //int     cost;
   },
   {
@@ -859,6 +863,8 @@ static const classAttributes_t bg_classList[ ] =
     400.0f,                                         //float   stopSpeed;
     250.0f,                                         //float   jumpMagnitude;
     2.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ALEVEL0_COST,                                   //int     cost;
   },
   {
@@ -885,6 +891,8 @@ static const classAttributes_t bg_classList[ ] =
     300.0f,                                         //float   stopSpeed;
     310.0f,                                         //float   jumpMagnitude;
     1.1f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ALEVEL1_1_COST,                                 //int     cost;
   },
   {
@@ -911,6 +919,8 @@ static const classAttributes_t bg_classList[ ] =
     300.0f,                                         //float   stopSpeed;
     310.0f,                                         //float   jumpMagnitude;
     1.1f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ALEVEL1_1_COST,                                 //int     cost;
   },
   {
@@ -935,6 +945,8 @@ static const classAttributes_t bg_classList[ ] =
     400.0f,                                         //float   stopSpeed;
     250.0f,                                         //float   jumpMagnitude;
     2.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ALEVEL0_COST,                                   //int     cost;
   },
   {
@@ -959,6 +971,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     380.0f,                                         //float   jumpMagnitude;
     0.7f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     ALEVEL3_COST,                                   //int     cost;
   },
   {
@@ -984,6 +998,8 @@ static const classAttributes_t bg_classList[ ] =
     200.0f,                                         //float   stopSpeed;
     270.0f,                                         //float   jumpMagnitude;
     0.4f,                                           //float   knockbackScale;
+    ALEVEL4_STOMP_DAMAGE,                           //int     stompBaseDamage;
+    ALEVEL4_STOMP_DAMAGE_PER_V,                     //float   stompVelDamage;
     ALEVEL4_COST,                                   //int     cost;
   },
   {
@@ -1010,6 +1026,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     170.0f,                                         //float   jumpMagnitude;
     0.1f,                                           //float   knockbackScale;
+    ALEVEL5_STOMP_DAMAGE,                           //int     stompBaseDamage;
+    ALEVEL5_STOMP_DAMAGE_PER_V,                     //float   stompVelDamage;
     ALEVEL5_COST,                                   //int     cost;
   },
   {
@@ -1033,6 +1051,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     0,                                              //int     cost;
   },
   {
@@ -1056,6 +1076,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     0,                                              //int     cost;
   },
   {
@@ -1079,6 +1101,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     1,                                              //int     cost;
   },
   {
@@ -1102,6 +1126,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     1,                                              //int     cost;
   },
   {
@@ -1125,6 +1151,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     2,                                              //int     cost;
   },
   {
@@ -1148,6 +1176,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     3,                                              //int     cost;
   },
   {
@@ -1171,6 +1201,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    0,                                              //int     stompBaseDamage;
+    0.0f,                                           //float   stompVelDamage;
     4,                                              //int     cost;
   },
   {
@@ -1194,6 +1226,8 @@ static const classAttributes_t bg_classList[ ] =
     100.0f,                                         //float   stopSpeed;
     220.0f,                                         //float   jumpMagnitude;
     1.0f,                                           //float   knockbackScale;
+    HLEVEL5_STOMP_DAMAGE,                           //int     stompBaseDamage;
+    HLEVEL5_STOMP_DAMAGE_PER_V,                     //float   stompVelDamage;
     5,                                              //int     cost;
   }
 };

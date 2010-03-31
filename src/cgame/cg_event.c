@@ -330,7 +330,7 @@ static void CG_Obituary( entityState_t *ent )
             BG_ClassConfig( PCL_ALIEN_LEVEL5 )->humanName );
         message2 = className;
         break;
-      case MOD_ALEVEL5_CRUSH:
+      case MOD_STOMP:
         message = "was crushed under";
         message2 = "'s weight";
         break;

@@ -271,6 +271,11 @@ void ClientImpacts( gentity_t *ent, pmove_t *pm )
   int       i;
   trace_t   trace;
   gentity_t *other;
+  int       stompBaseDamage;
+  float     stompVelDamage;
+
+  stompBaseDamage = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->stompBaseDamage;
+  stompVelDamage = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->stompVelDamage;
 
   // clear a fake trace struct for touch function
   memset( &trace, 0, sizeof( trace ) );
@@ -286,12 +291,11 @@ void ClientImpacts( gentity_t *ent, pmove_t *pm )
     if( other->client && other->client->unlaggedCalc.used )
       other->client->unlaggedCalc.used = qfalse;
 
-    // tyrant impact attacks
     if( ent->client->ps.weapon == WP_ALEVEL5 )
-    {
       G_TrampleAttack( ent, other );
-      G_CrushAttack( ent, other );
-    }
+
+    if( stompBaseDamage || stompVelDamage )
+      G_StompAttack( ent, other, stompBaseDamage, stompVelDamage );
 
     // shove players
     if( ent->client && other->client )

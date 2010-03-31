@@ -88,6 +88,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL4_CLAW_REPEAT          800
 #define ALEVEL4_GRAB_RANGE           80.0f
 #define ALEVEL4_GRAB_TIME            300
+#define ALEVEL4_STOMP_DAMAGE_PER_V   0.25f // damage per falling velocity
+#define ALEVEL4_STOMP_DAMAGE         100   // to players only
 
 #define ALEVEL5_CLAW_DMG             ADM(100)
 #define ALEVEL5_CLAW_RANGE           100.0f
@@ -102,7 +104,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL5_BOUNCEBALL_REPEAT    1200
 #define ALEVEL5_BOUNCEBALL_SPEED     1000.0f
 #define ALEVEL5_BOUNCEBALL_RADIUS    75
-
 #define ALEVEL5_TRAMPLE_DMG             ADM(111)
 #define ALEVEL5_TRAMPLE_KNOCKBACK       ALEVEL5_TRAMPLE_DMG
 #define ALEVEL5_TRAMPLE_SPEED           2.0f
@@ -112,10 +113,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ALEVEL5_TRAMPLE_DURATION        3000  // msec trample lasts on full charge
 #define ALEVEL5_TRAMPLE_STOP_PENALTY    1     // charge lost per msec when stopped
 #define ALEVEL5_TRAMPLE_REPEAT          100   // msec before a trample will rehit a player
-
-#define ALEVEL5_CRUSH_DAMAGE_PER_V      0.5f  // damage per falling velocity
-#define ALEVEL5_CRUSH_DAMAGE            120   // to players only
-#define ALEVEL5_CRUSH_REPEAT            500   // player damage repeat
+#define ALEVEL5_STOMP_DAMAGE_PER_V      0.5f  // damage per falling velocity
+#define ALEVEL5_STOMP_DAMAGE            150   // to players only
 
 /*
  * ALIEN classes
@@ -543,6 +542,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define HUMAN_BUILDABLE_INACTIVE_TIME 90000
 
+#define HLEVEL5_STOMP_DAMAGE_PER_V   0.5f  // damage per falling velocity
+#define HLEVEL5_STOMP_DAMAGE         150   // to players only
+
 /*
  * Misc
  */
@@ -560,11 +562,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_FALL_DISTANCE           120.0f //the fall distance at which maximum damage is dealt
 #define AVG_FALL_DISTANCE           ((MIN_FALL_DISTANCE+MAX_FALL_DISTANCE)/2.0f)
 
+#define STOMP_REPEAT                500 //repeat rate for player stomp damage
+
 #define DEFAULT_ALIEN_BUILDPOINTS   "100"
 #define DEFAULT_ALIEN_QUEUE_TIME    "8000"
 #define DEFAULT_HUMAN_BUILDPOINTS   "100"
 #define DEFAULT_HUMAN_QUEUE_TIME    "8000"
-                                         
                                          
 #define MAXIMUM_BUILD_TIME          20000 // used for pie timer
 

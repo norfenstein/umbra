@@ -1197,12 +1197,10 @@ void G_TrampleAttack( gentity_t *ent, gentity_t *victim )
 
 /*
 ===============
-G_CrushAttack
-
-Should only be called if there was an impact between a tyrant and another player
+G_StompAttack
 ===============
 */
-void G_CrushAttack( gentity_t *ent, gentity_t *victim )
+void G_StompAttack( gentity_t *ent, gentity_t *victim, int baseDamage, float velDamage )
 {
   vec3_t dir;
   float jump;
@@ -1218,17 +1216,17 @@ void G_CrushAttack( gentity_t *ent, gentity_t *victim )
   // Deal velocity based damage to target
   jump = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->jumpMagnitude;
   damage = ( ent->client->pmext.fallVelocity + jump ) *
-           -ALEVEL5_CRUSH_DAMAGE_PER_V;
+           -velDamage;
 
   if( damage < 0 )
     damage = 0;
     
   // Players also get damaged periodically
   if( victim->client &&
-      ent->client->lastCrushTime + ALEVEL5_CRUSH_REPEAT < level.time )
+      ent->client->lastStompTime + STOMP_REPEAT < level.time )
   {
-    ent->client->lastCrushTime = level.time;
-    damage += ALEVEL5_CRUSH_DAMAGE;
+    ent->client->lastStompTime = level.time;
+    damage += baseDamage;
   }
   
   if( damage < 1 )
@@ -1237,7 +1235,7 @@ void G_CrushAttack( gentity_t *ent, gentity_t *victim )
   // Crush the victim over a period of time
   VectorSubtract( victim->s.origin, ent->client->ps.origin, dir );
   G_Damage( victim, ent, ent, dir, victim->s.origin,
-            damage, 0, 0, MOD_ALEVEL5_CRUSH );
+            damage, 0, 0, MOD_STOMP );
 }
 
 //======================================================================
