@@ -969,7 +969,7 @@ The game can override any of the settings and call trap_SetUserinfo
 if desired.
 ============
 */
-void ClientUserinfoChanged( int clientNum )
+char *ClientUserinfoChanged( int clientNum )
 {
   gentity_t *ent;
   char      *s;
@@ -995,7 +995,13 @@ void ClientUserinfoChanged( int clientNum )
         "disconnect \"illegal or malformed userinfo\n\"" );
     trap_DropClient( ent - g_entities, 
         "dropped: illegal or malformed userinfo");
+    return "Illegal or malformed userinfo";
   }
+  // If their userinfo overflowed, tremded is in the process of disconnecting them.
+  // If we send our own disconnect, it won't work, so just return to prevent crashes later
+  //  in this function. This check must come after the Info_Validate call.
+  else if( !userinfo[ 0 ] )
+    return "Empty (overflowed) userinfo";
 
   // stickyspec toggle
   s = Info_ValueForKey( userinfo, "cg_stickySpec" );  
@@ -1155,6 +1161,8 @@ void ClientUserinfoChanged( int clientNum )
   trap_SetConfigstring( CS_PLAYERS + clientNum, userinfo );
 
   /*G_LogPrintf( "ClientUserinfoChanged: %i %s\n", clientNum, userinfo );*/
+
+  return NULL;
 }
 
 
@@ -1181,6 +1189,7 @@ restarts.
 char *ClientConnect( int clientNum, qboolean firstTime )
 {
   char      *value;
+  char      *userInfoError;
   gclient_t *client;
   char      userinfo[ MAX_INFO_STRING ];
   gentity_t *ent;
@@ -1251,7 +1260,10 @@ char *ClientConnect( int clientNum, qboolean firstTime )
 
   // get and distribute relevent paramters
   G_namelog_connect( client );
-  ClientUserinfoChanged( clientNum );
+  userInfoError = ClientUserinfoChanged( clientNum );
+  if( userInfoError != NULL )
+    return userInfoError;
+
   G_LogPrintf( "ClientConnect: %i [%s] (%s) \"%s^7\" \"%c%s%c^7\"\n",
                clientNum, client->pers.ip.str, client->pers.guid,
                client->pers.netname,
@@ -1629,7 +1641,7 @@ void ClientDisconnect( int clientNum )
 
   ent = g_entities + clientNum;
 
-  if( !ent->client )
+  if( !ent->client || ent->client->pers.connected == CON_DISCONNECTED )
     return;
 
   G_LeaveTeam( ent );

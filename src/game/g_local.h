@@ -314,6 +314,7 @@ typedef struct
   class_t             classSelection;     // player class (copied to ent->client->ps.stats[ STAT_CLASS ] once spawned)
   team_t              teamSelection;      // player team (copied to ps.stats[ STAT_TEAM ])
 
+  int                 teamChangeTime;     // level.time of last team change
   namelog_t           *namelog;
   g_admin_admin_t     *admin;
 
@@ -460,11 +461,40 @@ typedef enum
   TW_PASSED
 } timeWarning_t;
 
+// fate of a buildable
+typedef enum
+{
+  BF_CONSTRUCT,
+  BF_DECONSTRUCT,
+  BF_REPLACE,
+  BF_DESTROY,
+  BF_UNPOWER,
+  BF_AUTO
+} buildFate_t;
+
+// data needed to revert a change in layout
+typedef struct
+{
+  int          time;
+  buildFate_t  fate;
+  namelog_t    *actor;
+  buildable_t  modelindex;
+  qboolean     deconstruct;
+  int          deconstructTime;
+  vec3_t       origin;
+  vec3_t       angles;
+  vec3_t       origin2;
+  vec3_t       angles2;
+  buildable_t  powerSource;
+  int          powerValue;
+} buildLog_t;
+
 //
 // this structure is cleared as each map is entered
 //
 #define MAX_SPAWN_VARS      64
 #define MAX_SPAWN_VARS_CHARS  4096
+#define MAX_BUILDLOG          128
 
 typedef struct
 {
@@ -595,6 +625,10 @@ typedef struct
   int               emoticonCount;
 
   namelog_t         *namelogs;
+
+  buildLog_t        buildLog[ MAX_BUILDLOG ];
+  int               buildId;
+  int               numBuildLogs;
 } level_locals_t;
 
 #define CMD_CHEAT         0x0001
@@ -708,6 +742,11 @@ void              G_BaseSelfDestruct( team_t team );
 int               G_NextQueueTime( int queuedBP, int totalBP, int queueBaseRate );
 void              G_QueueBuildPoints( gentity_t *self );
 int               G_GetBuildPoints( const vec3_t pos, team_t team, int dist );
+
+buildLog_t        *G_BuildLogNew( gentity_t *actor, buildFate_t fate );
+void              G_BuildLogSet( buildLog_t *log, gentity_t *ent );
+void              G_BuildLogAuto( gentity_t *actor, gentity_t *buildable, buildFate_t fate );
+void              G_BuildLogRevert( int id );
 
 //
 // g_utils.c
@@ -889,7 +928,7 @@ int  G_TimeTilSuddenDeath( void );
 // g_client.c
 //
 char *ClientConnect( int clientNum, qboolean firstTime );
-void ClientUserinfoChanged( int clientNum );
+char *ClientUserinfoChanged( int clientNum );
 void ClientDisconnect( int clientNum );
 void ClientBegin( int clientNum );
 void ClientCommand( int clientNum );

@@ -70,6 +70,8 @@ void G_namelog_connect( gclient_t *client )
 
 void G_namelog_disconnect( gclient_t *client )
 {
+  if( client->pers.namelog == NULL )
+    return;
   client->pers.namelog->slot = -1;
   client->pers.namelog = NULL;
 }
@@ -77,6 +79,8 @@ void G_namelog_disconnect( gclient_t *client )
 void G_namelog_update_score( gclient_t *client )
 {
   namelog_t *n = client->pers.namelog;
+  if( n == NULL )
+    return;
 
   n->team = client->pers.teamSelection;
   n->score = client->ps.persistant[ PERS_SCORE ];

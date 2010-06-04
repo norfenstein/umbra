@@ -105,7 +105,8 @@ char *modNames[ ] =
   "MOD_ASPAWN",
   "MOD_ATUBE",
   "MOD_OVERMIND",
-  "MOD_DECONSTRUCT"
+  "MOD_DECONSTRUCT",
+  "MOD_REPLACE"
 };
 
 /*
@@ -558,19 +559,18 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
     }
 
     if( targ->s.eType == ET_BUILDABLE && attacker->client &&
-        mod != MOD_DECONSTRUCT )
+        mod != MOD_DECONSTRUCT && mod != MOD_SUICIDE &&
+        mod != MOD_REPLACE )
     {
       if( targ->buildableTeam == attacker->client->pers.teamSelection &&
-        !g_friendlyBuildableFire.integer && mod != MOD_DECONSTRUCT &&
-        mod != MOD_SUICIDE )
+        !g_friendlyBuildableFire.integer )
       {
         return;
       }
 
       // base is under attack warning if DCC'd
       if( targ->buildableTeam == TEAM_HUMANS && G_FindDCC( targ ) &&
-          level.time > level.humanBaseAttackTimer &&
-          mod != MOD_SUICIDE )
+          level.time > level.humanBaseAttackTimer )
       {
         level.humanBaseAttackTimer = level.time + DC_ATTACK_PERIOD;
         G_BroadcastEvent( EV_DCC_ATTACK, 0 );
@@ -800,6 +800,9 @@ qboolean G_SelectiveRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
     if( !ent->takedamage )
       continue;
 
+    if( ent->flags & FL_NOTARGET )
+      continue;
+
     // find the distance from the edge of the bounding box
     for( i = 0 ; i < 3 ; i++ )
     {
@@ -914,12 +917,34 @@ Log deconstruct/destroy events
 */
 void G_LogDestruction( gentity_t *self, gentity_t *actor, int mod )
 {
-  if( !actor )
-    return;
+  buildFate_t fate;
+
+  switch( mod )
+  {
+    case MOD_DECONSTRUCT:
+      fate = BF_DECONSTRUCT;
+      break;
+    case MOD_REPLACE:
+      fate = BF_REPLACE;
+      break;
+    default:
+      fate = ( actor->client ) ? BF_DESTROY : BF_AUTO;
+      break;
+  }
+  G_BuildLogAuto( actor, self, fate );
 
   // don't log when marked structures are removed
-  if( mod == MOD_DECONSTRUCT && !actor->client )
+  if( mod == MOD_REPLACE )
     return;
+
+  G_LogPrintf( S_COLOR_YELLOW "Deconstruct: %d %d %s %s: %s %s by %s\n",
+    actor - g_entities,
+    self - g_entities,
+    BG_Buildable( self->s.modelindex )->name,
+    modNames[ mod ],
+    BG_Buildable( self->s.modelindex )->humanName,
+    mod == MOD_DECONSTRUCT ? "deconstructed" : "destroyed",
+    actor->client ? actor->client->pers.netname : "<world>" );
 
   if( actor->client && actor->client->pers.teamSelection ==
     BG_Buildable( self->s.modelindex )->team )
@@ -931,12 +956,4 @@ void G_LogDestruction( gentity_t *self, gentity_t *actor, int mod )
         actor->client->pers.netname ) );
   }
 
-  G_LogPrintf( S_COLOR_YELLOW "Deconstruct: %d %d %s %s: %s %s by %s\n",
-    actor - g_entities,
-    self - g_entities,
-    BG_Buildable( self->s.modelindex )->name,
-    modNames[ mod ],
-    BG_Buildable( self->s.modelindex )->humanName,
-    mod == MOD_DECONSTRUCT ? "deconstructed" : "destroyed",
-    actor->client ? actor->client->pers.netname : "<world>" );
 }
