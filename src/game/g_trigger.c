@@ -990,7 +990,7 @@ void trigger_heal_touch( gentity_t *self, gentity_t *other, trace_t *trace )
   else
     self->timestamp = level.time + FRAMETIME;
 
-  HealEntity( other, other->client->ps.stats[ STAT_MAX_HEALTH ], self->damage );
+  HealEntity( other, BG_Class( other->client->ps.stats[ STAT_CLASS ] )->health, self->damage );
 
   other->client->ps.stats[ STAT_HEALTH ] = other->health;
 }

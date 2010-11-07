@@ -652,22 +652,23 @@ void ClientTimerActions( gentity_t *ent, int msec )
         ( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X ) )
     {
       int remainingStartupTime = MEDKIT_STARTUP_TIME - ( level.time - client->lastMedKitTime );
+      int maxHealth = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->health;
 
       if( remainingStartupTime < 0 )
       {
-        if( ent->health < ent->client->ps.stats[ STAT_MAX_HEALTH ] &&
+        if( ent->health < maxHealth &&
             ent->client->medKitHealthToRestore &&
             ent->client->ps.pm_type != PM_DEAD )
         {
           ent->client->medKitHealthToRestore--;
-          HealEntity( ent, ent->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
+          HealEntity( ent, maxHealth, 1 );
         }
         else
           ent->client->ps.stats[ STAT_STATE ] &= ~SS_HEALING_2X;
       }
       else
       {
-        if( ent->health < ent->client->ps.stats[ STAT_MAX_HEALTH ] &&
+        if( ent->health < maxHealth &&
             ent->client->medKitHealthToRestore &&
             ent->client->ps.pm_type != PM_DEAD )
         {
@@ -675,7 +676,7 @@ void ClientTimerActions( gentity_t *ent, int msec )
           if( level.time > client->medKitIncrementTime )
           {
             ent->client->medKitHealthToRestore--;
-            HealEntity( ent, ent->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
+            HealEntity( ent, maxHealth, 1 );
 
             client->medKitIncrementTime = level.time +
               ( remainingStartupTime / MEDKIT_STARTUP_SPEED );
@@ -1301,7 +1302,7 @@ void ClientThink_real( gentity_t *ent )
   {
     //if currently using a medkit or have no need for a medkit now
     if( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X ||
-        ( client->ps.stats[ STAT_HEALTH ] == client->ps.stats[ STAT_MAX_HEALTH ] &&
+        ( client->ps.stats[ STAT_HEALTH ] == BG_Class( client->ps.stats[ STAT_CLASS ] )->health &&
           !( client->ps.stats[ STAT_STATE ] & SS_POISONED ) ) )
     {
       BG_DeactivateUpgrade( UP_MEDKIT, client->ps.stats );
@@ -1318,7 +1319,7 @@ void ClientThink_real( gentity_t *ent )
       client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
       client->lastMedKitTime = level.time;
       client->medKitHealthToRestore =
-        client->ps.stats[ STAT_MAX_HEALTH ] - client->ps.stats[ STAT_HEALTH ];
+        BG_Class( client->ps.stats[ STAT_CLASS ] )->health - client->ps.stats[ STAT_HEALTH ];
       client->medKitIncrementTime = level.time +
         ( MEDKIT_STARTUP_TIME / MEDKIT_STARTUP_SPEED );
 
@@ -1380,7 +1381,7 @@ void ClientThink_real( gentity_t *ent )
 
       ent->nextRegenTime += count * interval;
 
-      HealEntity( ent, client->ps.stats[ STAT_MAX_HEALTH ], count );
+      HealEntity( ent, BG_Class( client->ps.stats[ STAT_CLASS ] )->health, count );
     }
   }
 

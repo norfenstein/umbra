@@ -128,7 +128,7 @@ void G_RewardAttackers( gentity_t *self )
     // players are worth 1 + cost score
     score = ( 1 + BG_Class( self->client->ps.stats[ STAT_CLASS ] )->cost );
     team = self->client->pers.teamSelection;
-    maxHealth = self->client->ps.stats[ STAT_MAX_HEALTH ];
+    maxHealth = BG_Class( self->client->ps.stats[ STAT_CLASS ] )->health;
   }
   else if( self->s.eType == ET_BUILDABLE )
   {

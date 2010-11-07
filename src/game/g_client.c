@@ -1494,12 +1494,6 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
 
   BG_ClassBoundingBox( ent->client->pers.classSelection, ent->r.mins, ent->r.maxs, NULL, NULL, NULL );
 
-  if( client->sess.spectatorState == SPECTATOR_NOT )
-    client->ps.stats[ STAT_MAX_HEALTH ] =
-      BG_Class( ent->client->pers.classSelection )->health;
-  else
-    client->ps.stats[ STAT_MAX_HEALTH ] = 100;
-
   // We just spawned, not changing weapons
   client->ps.persistant[ PERS_NEWWEAPON ] = 0;
 
@@ -1513,7 +1507,7 @@ void ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles
   BG_AddClassItems( &client->ps );
 
   // health will count down towards max_health
-  ent->health = client->ps.stats[ STAT_HEALTH ] = client->ps.stats[ STAT_MAX_HEALTH ]; //* 1.25;
+  ent->health = client->ps.stats[ STAT_HEALTH ] = BG_Class( client->ps.stats[ STAT_CLASS ] )->health;
 
   //clear all damage accounts
   for( i = 0; i < MAX_CLIENTS; i++ )

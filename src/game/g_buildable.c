@@ -1523,7 +1523,7 @@ void HMedistat_Think( gentity_t *self )
 
       if( self->enemy == player && player->client &&
           player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS &&
-          player->health < player->client->ps.stats[ STAT_MAX_HEALTH ] &&
+          player->health < BG_Class( player->client->ps.stats[ STAT_CLASS ] )->health &&
           PM_Live( player->client->ps.pm_type ) )
       {
         occupied = qtrue;
@@ -1545,7 +1545,7 @@ void HMedistat_Think( gentity_t *self )
 
         if( player->client && player->client->ps.stats[ STAT_TEAM ] == TEAM_HUMANS )
         {
-          if( player->health < player->client->ps.stats[ STAT_MAX_HEALTH ] &&
+          if( player->health < BG_Class( player->client->ps.stats[ STAT_CLASS ] )->health &&
               PM_Live( player->client->ps.pm_type ) )
           {
             self->enemy = player;
@@ -1574,10 +1574,10 @@ void HMedistat_Think( gentity_t *self )
     }
     else if( self->enemy && self->enemy->client ) //heal!
     {
-      HealEntity( self->enemy, self->enemy->client->ps.stats[ STAT_MAX_HEALTH ], 1 );
+      HealEntity( self->enemy, BG_Class( self->enemy->client->ps.stats[ STAT_CLASS ] )->health, 1 );
 
       //if they're completely healed, give them a medkit
-      if( self->enemy->health >= self->enemy->client->ps.stats[ STAT_MAX_HEALTH ] )
+      if( self->enemy->health >= BG_Class( self->enemy->client->ps.stats[ STAT_CLASS ] )->health )
       {
         if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
           BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );

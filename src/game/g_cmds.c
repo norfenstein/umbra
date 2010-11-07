@@ -329,7 +329,7 @@ void Cmd_Give_f( gentity_t *ent )
   {
     int i;
 
-    ent->health = ent->client->ps.stats[ STAT_MAX_HEALTH ];
+    ent->health = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->health;
     BG_AddUpgradeToInventory( UP_MEDKIT, ent->client->ps.stats );
 
     //clear all damage accounts
@@ -1346,7 +1346,7 @@ void Cmd_Class_f( gentity_t *ent )
     if( ent->client->sess.spectatorState == SPECTATOR_FOLLOW )
       G_StopFollowing( ent );
 
-    if( cost > 0 && cost > ent->client->pers.credit )
+    if( 0 && cost > 0 && cost > ent->client->pers.credit )
     {
       G_TriggerMenuArgs( clientNum, MN_C_CANTSPAWN, newClass );
     }
