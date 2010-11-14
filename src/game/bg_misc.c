@@ -798,6 +798,8 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     0,                                              //int     abilities;
     { WP_NONE, WP_NONE, WP_NONE },                  //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.000f,                                         //float   bob;
@@ -825,6 +827,8 @@ static const classAttributes_t bg_classList[ ] =
     ABUILDER_REGEN,                                 //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_FOVWARPS|SCA_WALLCLIMBER|SCA_ALIENSENSE,    //int     abilities;
     { WP_ABUILD, WP_NONE, WP_NONE },                //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     105.0f,                                         //float   buildDist;
     110,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -851,6 +855,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL0_REGEN,                                  //float   regenRate;
     SCA_WALLCLIMBER|SCA_FOVWARPS|SCA_ALIENSENSE,    //int     abilities;
     { WP_ALEVEL0, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     140,                                            //int     fov;
     0.0f,                                           //float   bob;
@@ -879,6 +885,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_REGEN,                                //float   regenRate;
     SCA_FLIGHT|SCA_FOVWARPS|SCA_ALIENSENSE,         //int     abilities;
     { WP_ALEVEL1_0, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -907,6 +915,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL1_1_REGEN,                                //float   regenRate;
     SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
     { WP_ALEVEL1_1, WP_NONE, WP_NONE },             //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     120,                                            //int     fov;
     0.001f,                                         //float   bob;
@@ -933,6 +943,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL0_REGEN,                                  //float   regenRate;
     SCA_WALLCLIMBER|SCA_FOVWARPS|SCA_ALIENSENSE,    //int     abilities;
     { WP_ALEVEL2, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     140,                                            //int     fov;
     0.0f,                                           //float   bob;
@@ -959,6 +971,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL3_REGEN,                                  //float   regenRate;
     SCA_WALLJUMPER|SCA_FOVWARPS|SCA_ALIENSENSE,     //int     abilities;
     { WP_ALEVEL3, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_GAS_GRENADE, UP_NONE, UP_NONE, UP_NONE },  //upgrade_t upgrades[ 4 ];
+    { 2, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.001f,                                         //float   bob;
@@ -986,6 +1000,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL4_REGEN,                                  //float   regenRate;
     SCA_WALLCLIMBER|SCA_FOVWARPS|SCA_ALIENSENSE,    //int     abilities;
     { WP_ALEVEL4, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_SPORE_GRENADE, UP_NONE, UP_NONE, UP_NONE },//upgrade_t upgrades[ 4 ];
+    { 2, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     110,                                            //int     fov;
     0.0005f,                                        //float   bob;
@@ -1014,6 +1030,8 @@ static const classAttributes_t bg_classList[ ] =
     ALEVEL5_REGEN,                                  //float   regenRate;
     SCA_FOVWARPS|SCA_ALIENSENSE,                    //int     abilities;
     { WP_ALEVEL5, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_SPIKE_GRENADE, UP_NONE, UP_NONE, UP_NONE },//upgrade_t upgrades[ 4 ];
+    { 3, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     0.0f,                                           //float   buildDist;
     90,                                             //int     fov;
     0.001f,                                         //float   bob;
@@ -1039,6 +1057,8 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_HBUILD, WP_BLASTER, WP_NONE },             //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1064,6 +1084,8 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_MACHINEGUN, WP_HANDGUN, WP_NONE },         //weapon_t  weapons[ 3 ];
+    { UP_MEDKIT, UP_NONE, UP_NONE, UP_NONE },       //upgrade_t upgrades[ 4 ];
+    { 1, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1089,6 +1111,9 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS|SCA_SCANNER,//int   abilities;
     { WP_SCATTERGUN, WP_NONE, WP_NONE },            //weapon_t weapons[ 3 ];
+    { UP_MEDKIT, UP_SHOCK_GRENADE,
+      UP_NONE, UP_NONE },                           //upgrade_t upgrades[ 4 ];
+    { 1, 1, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1114,6 +1139,9 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_SHOTGUN, WP_PAIN_SAW, WP_NONE },           //weapon_t  weapons[ 3 ];
+    { UP_MEDKIT, UP_NERVE_GRENADE,
+      UP_NONE, UP_NONE },                           //upgrade_t upgrades[ 4 ];
+    { 1, 2, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1139,6 +1167,8 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_LUCIFER_CANNON, WP_HANDGUN, WP_NONE },     //weapon_t  weapons[ 3 ];
+    { UP_MEDKIT, UP_NONE, UP_NONE, UP_NONE },       //upgrade_t upgrades[ 4 ];
+    { 1, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1164,6 +1194,9 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_CHAINGUN, WP_MASS_DRIVER, WP_NONE },       //weapon_t  weapons[ 3 ];
+    { UP_MEDKIT, UP_FRAG_GRENADE,
+      UP_C4_EXPLOSIVE, UP_NONE },                   //upgrade_t upgrades[ 4 ];
+    { 1, 2, 1, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1189,6 +1222,9 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_LAS_GUN, WP_NONE, WP_NONE },               //weapon_t  weapons[ 3 ];
+    { UP_MEDKIT, UP_FRAG_GRENADE,
+      UP_POWER_ARMOR, UP_NONE },                    //upgrade_t upgrades[ 4 ];
+    { 1, 4, 1, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -1214,6 +1250,8 @@ static const classAttributes_t bg_classList[ ] =
     0.0f,                                           //float   regenRate;
     SCA_TAKESFALLDAMAGE|SCA_CANUSELADDERS,          //int     abilities;
     { WP_PULSE_RIFLE, WP_NONE, WP_NONE },           //weapon_t  weapons[ 3 ];
+    { UP_NONE, UP_NONE, UP_NONE, UP_NONE },         //upgrade_t upgrades[ 4 ];
+    { 0, 0, 0, 0 },                                 //int     upgradeMaxs[ 4 ];
     110.0f,                                         //float   buildDist;
     90,                                             //int     fov;
     0.002f,                                         //float   bob;
@@ -2169,26 +2207,77 @@ const weaponAttributes_t *BG_Weapon( weapon_t weapon )
 static const upgradeAttributes_t bg_upgrades[ ] =
 {
   {
-    UP_MEDKIT,              //int   upgradeNum;
-    "medkit",               //char  *upgradeName;
-    "Medkit",               //char  *humanName;
-    "icons/iconu_atoxin",
-    TEAM_HUMANS             //team_t  team;
+    UP_MEDKIT,              //int      upgradeNum;
+    "medkit",               //char     *name;
+    "Medkit",               //char     *humanName;
+    "icons/iconu_atoxin",   //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
   },
   {
-    UP_JETPACK,             //int   upgradeNum;
-    "jetpack",              //char  *upgradeName;
-    "Jet Pack",             //char  *humanName;
-    "icons/iconu_jetpack",
-    TEAM_HUMANS             //team_t  team;
+    UP_GAS_GRENADE,         //int      upgradeNum;
+    "gasgren",              //char     *name;
+    "Gas Grenade",          //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_ALIENS             //team_t   team;
   },
   {
-    UP_GRENADE,             //int   upgradeNum;
-    "gren",                 //char  *upgradeName;
-    "Grenade",              //char  *humanName;
-    0,
-    TEAM_HUMANS             //team_t  team;
-  }
+    UP_SPORE_GRENADE,       //int      upgradeNum;
+    "sporegren",            //char     *name;
+    "Spore Grenade",        //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_ALIENS             //team_t   team;
+  },
+  {
+    UP_SPIKE_GRENADE,       //int      upgradeNum;
+    "spikegren",            //char     *name;
+    "Spike Grenade",        //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_ALIENS             //team_t   team;
+  },
+  {
+    UP_NERVE_GRENADE,       //int      upgradeNum;
+    "nervegren",            //char     *name;
+    "Nerve Grenade",        //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
+  {
+    UP_SHOCK_GRENADE,       //int      upgradeNum;
+    "shockgren",            //char     *name;
+    "Shock Grenade",        //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
+  {
+    UP_FRAG_GRENADE,        //int      upgradeNum;
+    "fraggren",             //char     *name;
+    "Fragmentation Grenade",//char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
+  {
+    UP_C4_EXPLOSIVE,        //int      upgradeNum;
+    "c4",                   //char     *name;
+    "C4 Explosive",         //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
+    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
+  {
+    UP_POWER_ARMOR,         //int      upgradeNum;
+    "parmor",               //char     *name;
+    "Power Armor",          //char     *humanName;
+    "icons/iconu_jetpack",  //char     *icon;
+    qfalse,                 //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
 };
 
 int   bg_numUpgrades = sizeof( bg_upgrades ) / sizeof( bg_upgrades[ 0 ] );
@@ -2768,61 +2857,18 @@ Give items for a class
 */
 void BG_AddClassItems( playerState_t *ps )
 {
-  int      maxAmmo, maxClips;
-  weapon_t weapon;
-  class_t  class = ps->stats[ STAT_CLASS ];
+  int       i, maxAmmo, maxClips;
+  weapon_t  weapon;
+  class_t   class = ps->stats[ STAT_CLASS ];
 
-  switch( class )
+  ps->stats[ STAT_ITEMS ] = 0;
+  for( i = 0; i < 3; i++ )
   {
-    case PCL_ALIEN_BUILDER:
-    case PCL_ALIEN_LEVEL0:
-    case PCL_ALIEN_LEVEL1_0:
-    case PCL_ALIEN_LEVEL1_1:
-    case PCL_ALIEN_LEVEL2:
-    case PCL_ALIEN_LEVEL3:
-    case PCL_ALIEN_LEVEL4:
-    case PCL_ALIEN_LEVEL5:
-      break;
-
-    case PCL_HUMAN_BUILDER:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL0:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL1_0:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL1_1:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL2:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL3:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL4:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      BG_AddUpgradeToInventory( UP_GRENADE, ps->stats );
-      BG_AddUpgradeToInventory( UP_JETPACK, ps->stats );
-      break;
-
-    case PCL_HUMAN_LEVEL5:
-      BG_AddUpgradeToInventory( UP_MEDKIT, ps->stats );
-      break;
-
-    default:
-      break;
+    BG_AddUpgradeToInventory(
+      BG_Class( class )->upgrades[ i ],
+      BG_Class( class )->upgradeMaxs[ i ],
+      ps->stats
+    );
   }
 
   weapon = BG_Class( class )->weapons[ 2 ];
@@ -2843,43 +2889,60 @@ void BG_AddClassItems( playerState_t *ps )
   ps->weapon = weapon;
   ps->ammo = maxAmmo;
   ps->clips = maxClips;
-
 }
 
 /*
 ========================
 BG_AddUpgradeToInventory
 
-Give the player an upgrade
+Add an upgrade to a player's inventory
 ========================
 */
-void BG_AddUpgradeToInventory( int item, int stats[ ] )
+void BG_AddUpgradeToInventory( int item, int num, int stats[ ] )
 {
-  stats[ STAT_ITEMS ] |= ( 1 << item );
-}
+  int slot, newCount;
 
-/*
-========================
-BG_RemoveUpgradeFromInventory
+  if( item == UP_NONE )
+    return;
 
-Take an upgrade from the player
-========================
-*/
-void BG_RemoveUpgradeFromInventory( int item, int stats[ ] )
-{
-  stats[ STAT_ITEMS ] &= ~( 1 << item );
+  for( slot = 0; slot < 4; slot++ )
+  {
+    if( item == BG_Class( stats[ STAT_CLASS ] )->upgrades[ slot ] ) 
+      break;
+  }
+
+  if( slot == 4 )
+    return;
+
+  newCount = num + ( ( stats[ STAT_ITEMS ] & ( 15 << ( slot * 4 ) ) ) >> ( slot * 4 ) );
+
+  if( newCount < 0 )
+    newCount = 0;
+  if( newCount > 15 )
+    newCount = 15;
+
+  stats[ STAT_ITEMS ] &= ~( 15 << ( slot * 4 ) );
+  stats[ STAT_ITEMS ] |= ( newCount << ( slot * 4 ) );
 }
 
 /*
 ========================
 BG_InventoryContainsUpgrade
 
-Does the player hold an upgrade?
+How many of an upgrade does the player hold?
 ========================
 */
-qboolean BG_InventoryContainsUpgrade( int item, int stats[ ] )
+int BG_InventoryContainsUpgrade( int item, int stats[ ] )
 {
-  return( stats[ STAT_ITEMS ] & ( 1 << item ) );
+  int i;
+
+  for( i = 0; i < 4; i++ )
+  {
+    if ( item == BG_Class( stats[ STAT_CLASS ] )->upgrades[ i ] )
+      return ( stats[ STAT_ITEMS ] & ( 15 << ( i * 4 ) ) ) >> ( i * 4 );
+  }
+
+  return 0;
 }
 
 /*

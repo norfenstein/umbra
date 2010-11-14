@@ -1311,7 +1311,7 @@ void ClientThink_real( gentity_t *ent )
     {
       //remove anti toxin
       BG_DeactivateUpgrade( UP_MEDKIT, client->ps.stats );
-      BG_RemoveUpgradeFromInventory( UP_MEDKIT, client->ps.stats );
+      BG_AddUpgradeToInventory( UP_MEDKIT, -1, client->ps.stats );
 
       client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
       client->poisonImmunityTime = level.time + MEDKIT_POISON_IMMUNITY_TIME;
@@ -1446,14 +1446,14 @@ void ClientThink_real( gentity_t *ent )
       client->ps.ammo += count;
   }
 
-  if( BG_InventoryContainsUpgrade( UP_GRENADE, client->ps.stats ) &&
-      BG_UpgradeIsActive( UP_GRENADE, client->ps.stats ) )
+  if( BG_InventoryContainsUpgrade( UP_FRAG_GRENADE, client->ps.stats ) &&
+      BG_UpgradeIsActive( UP_FRAG_GRENADE, client->ps.stats ) )
   {
     int lastWeapon = ent->s.weapon;
 
     //remove grenade
-    BG_DeactivateUpgrade( UP_GRENADE, client->ps.stats );
-    BG_RemoveUpgradeFromInventory( UP_GRENADE, client->ps.stats );
+    BG_DeactivateUpgrade( UP_FRAG_GRENADE, client->ps.stats );
+    BG_AddUpgradeToInventory( UP_FRAG_GRENADE, -1, client->ps.stats );
 
     //M-M-M-M-MONSTER HACK
     ent->s.weapon = WP_GRENADE;

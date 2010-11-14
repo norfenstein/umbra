@@ -54,10 +54,7 @@ void CG_RegisterUpgrade( int upgradeNum )
 
   upgradeInfo->humanName = BG_Upgrade( upgradeNum )->humanName;
 
-  //la la la la la, i'm not listening!
-  if( upgradeNum == UP_GRENADE )
-    upgradeInfo->upgradeIcon = cg_weapons[ WP_GRENADE ].weaponIcon;
-  else if( ( icon = BG_Upgrade( upgradeNum )->icon ) )
+  if( ( icon = BG_Upgrade( upgradeNum )->icon ) )
     upgradeInfo->upgradeIcon = trap_R_RegisterShader( icon );
 }
 
@@ -1404,12 +1401,17 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
     if( !BG_InventoryContainsWeapon( i, cg.snap->ps.stats ) )
       continue;
 
-    BG_GetAmmoForWeapon( &cg.snap->ps, i, &ammo, &clips );
-
-    if( !ammo && !clips && BG_Weapon( i )->usesAmmo )
+    if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
       colinfo[ numItems ] = 1;
     else
-      colinfo[ numItems ] = 0;
+    {
+      BG_GetAmmoForWeapon( &cg.snap->ps, i, &ammo, &clips );
+
+      if( !ammo && !clips && BG_Weapon( i )->usesAmmo )
+        colinfo[ numItems ] = 1;
+      else
+        colinfo[ numItems ] = 0;
+    }
 
     if( i == cg.weaponSelect )
       selectedItem = numItems;
@@ -1424,7 +1426,11 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
   {
     if( !BG_InventoryContainsUpgrade( i, cg.snap->ps.stats ) )
       continue;
-    colinfo[ numItems ] = 0;
+
+    if( cg.snap->ps.stats[ STAT_TEAM ] == TEAM_ALIENS )
+      colinfo[ numItems ] = 1;
+    else
+      colinfo[ numItems ] = 0;
 
     if( i == cg.weaponSelect - 32 )
       selectedItem = numItems;
@@ -1473,11 +1479,26 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
       trap_R_SetColor( color );
 
       if( items[ item ] < 32 )
+      {
         CG_DrawPic( x, y, iconWidth, iconHeight,
                     cg_weapons[ items[ item ] ].weaponIcon );
+      }
       else
+      {
+        upgrade_t upgrade = items[ item ] - 32;
+
         CG_DrawPic( x, y, iconWidth, iconHeight,
-                    cg_upgrades[ items[ item ] - 32 ].upgradeIcon );
+                    cg_upgrades[ upgrade ].upgradeIcon );
+
+        if( BG_Upgrade( upgrade )->expendable )
+        {
+          color[3] = 1.0;
+          trap_R_SetColor( color );
+          UI_Text_Paint( x, y + iconHeight, 0.3f, color,
+                         va( "%i", BG_InventoryContainsUpgrade( upgrade, cg.predictedPlayerState.stats ) ),
+                         0, 0, ITEM_TEXTSTYLE_NORMAL );
+        }
+      }
     }
     if( vertical )
       y += iconHeight;

@@ -330,7 +330,6 @@ void Cmd_Give_f( gentity_t *ent )
     int i;
 
     ent->health = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->health;
-    BG_AddUpgradeToInventory( UP_MEDKIT, ent->client->ps.stats );
 
     //clear all damage accounts
     for( i = 0; i < MAX_CLIENTS; i++ )

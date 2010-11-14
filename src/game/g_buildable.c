@@ -1558,8 +1558,6 @@ void HMedistat_Think( gentity_t *self )
               player->client->ps.stats[ STAT_STATE ] |= SS_HEALING_ACTIVE;
             }
           }
-          else if( !BG_InventoryContainsUpgrade( UP_MEDKIT, player->client->ps.stats ) )
-            BG_AddUpgradeToInventory( UP_MEDKIT, player->client->ps.stats );
         }
       }
     }
@@ -1575,13 +1573,6 @@ void HMedistat_Think( gentity_t *self )
     else if( self->enemy && self->enemy->client ) //heal!
     {
       HealEntity( self->enemy, BG_Class( self->enemy->client->ps.stats[ STAT_CLASS ] )->health, 1 );
-
-      //if they're completely healed, give them a medkit
-      if( self->enemy->health >= BG_Class( self->enemy->client->ps.stats[ STAT_CLASS ] )->health )
-      {
-        if( !BG_InventoryContainsUpgrade( UP_MEDKIT, self->enemy->client->ps.stats ) )
-          BG_AddUpgradeToInventory( UP_MEDKIT, self->enemy->client->ps.stats );
-      }
     }
   }
 }

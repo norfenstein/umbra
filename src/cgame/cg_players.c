@@ -1429,7 +1429,7 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
   held = es->modelindex;
   active = es->modelindex2;
 
-  if( held & ( 1 << UP_JETPACK ) )
+  if( class == PCL_HUMAN_LEVEL4 )
   {
     memset( &jetpack, 0, sizeof( jetpack ) );
     VectorCopy( torso->lightingOrigin, jetpack.lightingOrigin );
@@ -1446,7 +1446,7 @@ static void CG_PlayerUpgrades( centity_t *cent, refEntity_t *torso )
 
     trap_R_AddRefEntityToScene( &jetpack );
 
-    if( active & ( 1 << UP_JETPACK ) )
+    if( 0 /*TODO active & ( 1 << UP_JETPACK )*/ )
     {
       if( es->pos.trDelta[ 2 ] > 10.0f )
       {

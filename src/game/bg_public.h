@@ -202,11 +202,11 @@ void Pmove( pmove_t *pmove );
 typedef enum
 {
   STAT_HEALTH,
-  STAT_ITEMS,
+  STAT_ITEMS,     // four 4 bit slots
   STAT_ACTIVEITEMS,
-  STAT_WEAPON1,
-  STAT_WEAPON2,
-  STAT_WEAPON3,
+  STAT_WEAPON1,   // ammo in upper 12 bits, clips in lower 4
+  STAT_WEAPON2,   // ammo in upper 12 bits, clips in lower 4
+  STAT_WEAPON3,   // ammo in upper 12 bits, clips in lower 4
   STAT_CLASS,     // player class (for aliens AND humans)
   STAT_TEAM,      // player team
   STAT_STATE,     // client states e.g. wall climbing
@@ -360,8 +360,14 @@ typedef enum
   UP_NONE,
 
   UP_MEDKIT,
-  UP_JETPACK,
-  UP_GRENADE,
+  UP_GAS_GRENADE,
+  UP_SPORE_GRENADE,
+  UP_SPIKE_GRENADE,
+  UP_NERVE_GRENADE,
+  UP_SHOCK_GRENADE,
+  UP_FRAG_GRENADE,
+  UP_C4_EXPLOSIVE,
+  UP_POWER_ARMOR,
 
   UP_NUM_UPGRADES
 } upgrade_t;
@@ -877,6 +883,8 @@ typedef struct
   int       abilities;
 
   weapon_t  weapons[ 3 ];
+  upgrade_t upgrades[ 4 ];
+  int       upgradeMaxs[ 4 ];
 
   float     buildDist;
 
@@ -1017,15 +1025,16 @@ typedef struct
 
   char      *icon;
 
+  qboolean  expendable;
+
   team_t    team;
 } upgradeAttributes_t;
 
 qboolean  BG_WeaponIsFull( weapon_t weapon, int stats[ ], int ammo, int clips );
 qboolean  BG_InventoryContainsWeapon( int weapon, int stats[ ] );
 void      BG_AddClassItems( playerState_t *ps );
-void      BG_AddUpgradeToInventory( int item, int stats[ ] );
-void      BG_RemoveUpgradeFromInventory( int item, int stats[ ] );
-qboolean  BG_InventoryContainsUpgrade( int item, int stats[ ] );
+void      BG_AddUpgradeToInventory( int item, int num, int stats[ ] );
+int       BG_InventoryContainsUpgrade( int item, int stats[ ] );
 void      BG_ActivateUpgrade( int item, int stats[ ] );
 void      BG_DeactivateUpgrade( int item, int stats[ ] );
 qboolean  BG_UpgradeIsActive( int item, int stats[ ] );
