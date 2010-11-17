@@ -2026,9 +2026,109 @@ static const weaponAttributes_t bg_weapons[ ] =
     TEAM_HUMANS           //team_t    team;
   },
   {
-    WP_GRENADE,           //int       weaponNum;
-    "grenade",            //char      *weaponName;
-    "Grenade",            //char      *humanName;
+    WP_GAS_GRENADE,       //int       weaponNum;
+    "gasgren",            //char      *weaponName;
+    "Gas Grenade",        //char      *humanName;
+    1,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    0,                    //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    GRENADE_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t    team;
+  },
+  {
+    WP_SPORE_GRENADE,     //int       weaponNum;
+    "sporegren",          //char      *weaponName;
+    "Spore Grenade",      //char      *humanName;
+    1,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    0,                    //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    GRENADE_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t    team;
+  },
+  {
+    WP_SPIKE_GRENADE,     //int       weaponNum;
+    "spikegren",          //char      *weaponName;
+    "Spike Grenade",      //char      *humanName;
+    1,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    0,                    //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    GRENADE_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  longRanged;
+    TEAM_ALIENS           //team_t    team;
+  },
+  {
+    WP_SHOCK_GRENADE,     //int       weaponNum;
+    "shockgren",          //char      *weaponName;
+    "Shock Grenade",      //char      *humanName;
+    1,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    0,                    //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    GRENADE_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  longRanged;
+    TEAM_HUMANS           //team_t    team;
+  },
+  {
+    WP_NERVE_GRENADE,     //int       weaponNum;
+    "nervegren",          //char      *weaponName;
+    "Nerve Grenade",      //char      *humanName;
+    1,                    //int       maxAmmo;
+    0,                    //int       maxClips;
+    0,                    //int       usesAmmo;
+    0,                    //int       ammoRegen;
+    0,                    //int       ammoRegenDelay;
+    GRENADE_REPEAT,       //int       repeatRate1;
+    0,                    //int       repeatRate2;
+    0,                    //int       repeatRate3;
+    0,                    //int       reloadTime;
+    qfalse,               //qboolean  hasAltMode;
+    qfalse,               //qboolean  hasThirdMode;
+    qfalse,               //qboolean  canZoom;
+    90.0f,                //float     zoomFov;
+    qfalse,               //qboolean  longRanged;
+    TEAM_HUMANS           //team_t    team;
+  },
+  {
+    WP_FRAG_GRENADE,      //int       weaponNum;
+    "fraggren",           //char      *weaponName;
+    "Frag Grenade",       //char      *humanName;
     1,                    //int       maxAmmo;
     0,                    //int       maxClips;
     0,                    //int       usesAmmo;
@@ -2211,7 +2311,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "medkit",               //char     *name;
     "Medkit",               //char     *humanName;
     "icons/iconu_atoxin",   //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2219,7 +2318,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "gasgren",              //char     *name;
     "Gas Grenade",          //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_ALIENS             //team_t   team;
   },
   {
@@ -2227,7 +2325,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "sporegren",            //char     *name;
     "Spore Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_ALIENS             //team_t   team;
   },
   {
@@ -2235,23 +2332,20 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "spikegren",            //char     *name;
     "Spike Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_ALIENS             //team_t   team;
-  },
-  {
-    UP_NERVE_GRENADE,       //int      upgradeNum;
-    "nervegren",            //char     *name;
-    "Nerve Grenade",        //char     *humanName;
-    "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
-    TEAM_HUMANS             //team_t   team;
   },
   {
     UP_SHOCK_GRENADE,       //int      upgradeNum;
     "shockgren",            //char     *name;
     "Shock Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
+    TEAM_HUMANS             //team_t   team;
+  },
+  {
+    UP_NERVE_GRENADE,       //int      upgradeNum;
+    "nervegren",            //char     *name;
+    "Nerve Grenade",        //char     *humanName;
+    "icons/iconw_nade",     //char     *icon;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2259,7 +2353,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "fraggren",             //char     *name;
     "Fragmentation Grenade",//char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2267,7 +2360,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "c4",                   //char     *name;
     "C4 Explosive",         //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
-    qtrue,                  //qboolean expendable;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2275,7 +2367,6 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "parmor",               //char     *name;
     "Power Armor",          //char     *humanName;
     "icons/iconu_jetpack",  //char     *icon;
-    qfalse,                 //qboolean expendable;
     TEAM_HUMANS             //team_t   team;
   },
 };

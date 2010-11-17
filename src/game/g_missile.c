@@ -672,7 +672,7 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->think = G_ExplodeMissile;
   bolt->s.eType = ET_MISSILE;
   bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
-  bolt->s.weapon = WP_GRENADE;
+  bolt->s.weapon = WP_FRAG_GRENADE;
   bolt->s.eFlags = EF_BOUNCE_HALF;
   bolt->s.generic1 = WPM_PRIMARY; //weaponMode
   bolt->r.ownerNum = self->s.number;
@@ -682,8 +682,8 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
   bolt->splashDamage = GRENADE_DAMAGE;
   bolt->splashKnockback = GRENADE_KNOCKBACK;
   bolt->splashRadius = GRENADE_RANGE;
-  bolt->methodOfDeath = MOD_GRENADE;
-  bolt->splashMethodOfDeath = MOD_GRENADE;
+  bolt->methodOfDeath = MOD_FRAG_GRENADE;
+  bolt->splashMethodOfDeath = MOD_FRAG_GRENADE;
   bolt->clipmask = MASK_SHOT;
   bolt->target_ent = NULL;
   bolt->r.mins[ 0 ] = bolt->r.mins[ 1 ] = bolt->r.mins[ 2 ] = -3.0f;
@@ -700,6 +700,85 @@ gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir )
 
   return bolt;
 }
+
+gentity_t *launch_gasGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_GAS_GRENADE;
+  bolt->methodOfDeath = MOD_GAS_GRENADE;
+  bolt->splashMethodOfDeath = MOD_GAS_GRENADE;
+
+  return bolt;
+}
+
+gentity_t *launch_sporeGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_SPORE_GRENADE;
+  bolt->methodOfDeath = MOD_SPORE_GRENADE;
+  bolt->splashMethodOfDeath = MOD_SPORE_GRENADE;
+
+  return bolt;
+}
+
+gentity_t *launch_spikeGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_SPIKE_GRENADE;
+  bolt->methodOfDeath = MOD_SPIKE_GRENADE;
+  bolt->splashMethodOfDeath = MOD_SPIKE_GRENADE;
+
+  return bolt;
+}
+
+gentity_t *launch_shockGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_SHOCK_GRENADE;
+  bolt->methodOfDeath = MOD_SHOCK_GRENADE;
+  bolt->splashMethodOfDeath = MOD_SHOCK_GRENADE;
+
+  return bolt;
+}
+
+gentity_t *launch_nerveGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_NERVE_GRENADE;
+  bolt->methodOfDeath = MOD_NERVE_GRENADE;
+  bolt->splashMethodOfDeath = MOD_NERVE_GRENADE;
+
+  return bolt;
+}
+
+gentity_t *launch_fragGrenade( gentity_t *self, vec3_t start, vec3_t dir )
+{
+  gentity_t *bolt;
+
+  bolt = launch_grenade( self, start, dir );
+
+  bolt->s.weapon = WP_FRAG_GRENADE;
+  bolt->methodOfDeath = MOD_FRAG_GRENADE;
+  bolt->splashMethodOfDeath = MOD_FRAG_GRENADE;
+
+  return bolt;
+}
+
 //=============================================================================
 
 

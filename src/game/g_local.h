@@ -834,7 +834,12 @@ gentity_t *fire_paraLockBlob( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_spit( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_bounceBall( gentity_t *self, vec3_t start, vec3_t dir );
 gentity_t *fire_hive( gentity_t *self, vec3_t start, vec3_t dir );
-gentity_t *launch_grenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_gasGrenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_sporeGrenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_spikeGrenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_shockGrenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_nerveGrenade( gentity_t *self, vec3_t start, vec3_t dir );
+gentity_t *launch_fragGrenade( gentity_t *self, vec3_t start, vec3_t dir );
 
 
 //

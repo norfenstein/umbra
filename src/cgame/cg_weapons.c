@@ -1486,16 +1486,17 @@ void CG_DrawItemSelect( rectDef_t *rect, vec4_t color )
       else
       {
         upgrade_t upgrade = items[ item ] - 32;
+        int       count = BG_InventoryContainsUpgrade( upgrade, cg.predictedPlayerState.stats );
 
         CG_DrawPic( x, y, iconWidth, iconHeight,
                     cg_upgrades[ upgrade ].upgradeIcon );
 
-        if( BG_Upgrade( upgrade )->expendable )
+        if( count > 1 )
         {
           color[3] = 1.0;
           trap_R_SetColor( color );
           UI_Text_Paint( x, y + iconHeight, 0.3f, color,
-                         va( "%i", BG_InventoryContainsUpgrade( upgrade, cg.predictedPlayerState.stats ) ),
+                         va( "%i", count ),
                          0, 0, ITEM_TEXTSTYLE_NORMAL );
         }
       }

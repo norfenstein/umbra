@@ -618,11 +618,46 @@ GRENADE
 ======================================================================
 */
 
-void throwGrenade( gentity_t *ent )
+void throwGasGrenade( gentity_t *ent )
 {
   gentity_t *m;
 
-  m = launch_grenade( ent, muzzle, forward );
+  m = launch_gasGrenade( ent, muzzle, forward );
+}
+
+void throwSporeGrenade( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = launch_sporeGrenade( ent, muzzle, forward );
+}
+
+void throwSpikeGrenade( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = launch_spikeGrenade( ent, muzzle, forward );
+}
+
+void throwShockGrenade( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = launch_shockGrenade( ent, muzzle, forward );
+}
+
+void throwNerveGrenade( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = launch_nerveGrenade( ent, muzzle, forward );
+}
+
+void throwFragGrenade( gentity_t *ent )
+{
+  gentity_t *m;
+
+  m = launch_fragGrenade( ent, muzzle, forward );
 }
 
 /*
@@ -1442,8 +1477,23 @@ void FireWeapon( gentity_t *ent )
     case WP_PAIN_SAW:
       painSawFire( ent );
       break;
-    case WP_GRENADE:
-      throwGrenade( ent );
+    case WP_GAS_GRENADE:
+      throwGasGrenade( ent );
+      break;
+    case WP_SPORE_GRENADE:
+      throwSporeGrenade( ent );
+      break;
+    case WP_SPIKE_GRENADE:
+      throwSpikeGrenade( ent );
+      break;
+    case WP_SHOCK_GRENADE:
+      throwShockGrenade( ent );
+      break;
+    case WP_NERVE_GRENADE:
+      throwNerveGrenade( ent );
+      break;
+    case WP_FRAG_GRENADE:
+      throwFragGrenade( ent );
       break;
 
     case WP_LOCKBLOB_LAUNCHER:
