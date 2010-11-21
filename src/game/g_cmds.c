@@ -320,6 +320,7 @@ void Cmd_Give_f( gentity_t *ent )
 {
   char      *name;
   qboolean  give_all = qfalse;
+  int       i;
 
   name = ConcatArgs( 1 );
   if( Q_stricmp( name, "all" ) == 0 )
@@ -327,8 +328,6 @@ void Cmd_Give_f( gentity_t *ent )
 
   if( give_all || Q_stricmp( name, "health" ) == 0 )
   {
-    int i;
-
     ent->health = BG_Class( ent->client->ps.stats[ STAT_CLASS ] )->health;
 
     //clear all damage accounts
@@ -365,11 +364,22 @@ void Cmd_Give_f( gentity_t *ent )
   {
     gclient_t *client = ent->client;
 
-    if( !BG_Weapon( client->ps.weapon )->usesAmmo )
-      return;
+    if( BG_Weapon( client->ps.weapon )->usesAmmo )
+    {
+      client->ps.ammo = BG_Weapon( client->ps.weapon )->maxAmmo;
+      client->ps.clips = BG_Weapon( client->ps.weapon )->maxClips;
+    }
+  }
 
-    client->ps.ammo = BG_Weapon( client->ps.weapon )->maxAmmo;
-    client->ps.clips = BG_Weapon( client->ps.weapon )->maxClips;
+  for( i = UP_NONE + 1; i < UP_NUM_UPGRADES; i++ )
+  {
+    if( give_all || Q_stricmp( name, BG_Upgrade( i )->name ) == 0 )
+    {
+      BG_AddUpgradeToInventory( i, give_all ? 15 : 1, ent->client->ps.stats );
+
+      if( !give_all )
+        break;
+    }
   }
 }
 
@@ -2257,9 +2267,9 @@ commands_t cmds[ ] = {
   { "give", CMD_CHEAT|CMD_TEAM|CMD_LIVING, Cmd_Give_f },
   { "god", CMD_CHEAT|CMD_TEAM|CMD_LIVING, Cmd_God_f },
   { "ignore", 0, Cmd_Ignore_f },
-  { "itemact", CMD_HUMAN|CMD_LIVING, Cmd_ActivateItem_f },
-  { "itemdeact", CMD_HUMAN|CMD_LIVING, Cmd_DeActivateItem_f },
-  { "itemtoggle", CMD_HUMAN|CMD_LIVING, Cmd_ToggleItem_f },
+  { "itemact", CMD_LIVING, Cmd_ActivateItem_f },
+  { "itemdeact", CMD_LIVING, Cmd_DeActivateItem_f },
+  { "itemtoggle", CMD_LIVING, Cmd_ToggleItem_f },
   { "kill", CMD_TEAM|CMD_LIVING, Cmd_Kill_f },
   { "levelshot", CMD_CHEAT, Cmd_LevelShot_f },
   { "listmaps", CMD_MESSAGE|CMD_INTERMISSION, Cmd_ListMaps_f },
