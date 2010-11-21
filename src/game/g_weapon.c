@@ -1296,41 +1296,6 @@ void CalcMuzzlePoint( gentity_t *ent, vec3_t forward, vec3_t right, vec3_t up, v
 
 /*
 ===============
-FireWeapon3
-===============
-*/
-void FireWeapon3( gentity_t *ent )
-{
-  if( ent->client )
-  {
-    // set aiming directions
-    AngleVectors( ent->client->ps.viewangles, forward, right, up );
-    CalcMuzzlePoint( ent, forward, right, up, muzzle );
-  }
-  else
-  {
-    AngleVectors( ent->s.angles2, forward, right, up );
-    VectorCopy( ent->s.pos.trBase, muzzle );
-  }
-
-  if( BG_Weapon( ent->s.weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) )
-  {
-    if( BG_Weapon( ent->s.weapon )->ammoRegenDelay > 0 )
-      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegenDelay;
-    else if( ent->nextAmmoRegenTime < level.time )
-      ent->nextAmmoRegenTime = level.time + BG_Weapon( ent->s.weapon )->ammoRegen;
-  }
-
-  // fire the specific weapon
-  switch( ent->s.weapon )
-  {
-    default:
-      break;
-  }
-}
-
-/*
-===============
 FireWeapon2
 ===============
 */

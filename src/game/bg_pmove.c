@@ -2990,10 +2990,8 @@ static void PM_Weapon( void )
   int           addTime = 200; //default addTime - should never be used
   qboolean      attack1 = pm->cmd.buttons & BUTTON_ATTACK;
   qboolean      attack2 = pm->cmd.buttons & BUTTON_ATTACK2;
-  qboolean      attack3 = pm->cmd.buttons & BUTTON_USE_HOLDABLE;
   qboolean      usesAmmo1 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_PRIMARY );
   qboolean      usesAmmo2 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_SECONDARY );
-  qboolean      usesAmmo3 = BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY );
 
   // Ignore weapons in some cases
   if( pm->ps->persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT )
@@ -3210,8 +3208,7 @@ static void PM_Weapon( void )
   // check for out of ammo
   if( !pm->ps->ammo && !pm->ps->clips &&
       ( ( usesAmmo1 && attack1 ) ||
-        ( usesAmmo2 && attack2 && BG_Weapon( pm->ps->weapon )->hasAltMode ) ||
-        ( usesAmmo3 && attack3 && BG_Weapon( pm->ps->weapon )->hasThirdMode ) ) )
+        ( usesAmmo2 && attack2 && BG_Weapon( pm->ps->weapon )->hasAltMode ) ) )
   {
     //TODO don't want the delay to interfere with ammo regen
     //TODO and for some reason it clicks again once after ammo comes back
@@ -3273,8 +3270,6 @@ static void PM_Weapon( void )
       break;
 
     case WP_SCATTERGUN:
-      attack3 = qfalse;
-
       if( attack1 )
       {
         // Primary supercedes secondary
@@ -3299,7 +3294,7 @@ static void PM_Weapon( void )
       break;
 
     case WP_LUCIFER_CANNON:
-      attack2 = attack3 = qfalse;
+      attack2 = qfalse;
 
       if( ( attack1 || pm->ps->stats[ STAT_MISC ] == 0 ) )
       {
@@ -3329,7 +3324,7 @@ static void PM_Weapon( void )
       break;
 
     case WP_MASS_DRIVER:
-      attack2 = attack3 = qfalse;
+      attack2 = qfalse;
       // attack2 is handled on the client for zooming (cg_view.c)
 
       if( !attack1 )
@@ -3341,7 +3336,7 @@ static void PM_Weapon( void )
       break;
 
     default:
-      if( !attack1 && !attack2 && !attack3 )
+      if( !attack1 && !attack2 )
       {
         pm->ps->weaponTime = 0;
         pm->ps->weaponstate = WEAPON_READY;
@@ -3351,23 +3346,7 @@ static void PM_Weapon( void )
   }
 
   // fire events for non auto weapons
-  if( attack3 )
-  {
-    if( BG_Weapon( pm->ps->weapon )->hasThirdMode )
-    {
-      pm->ps->generic1 = WPM_TERTIARY;
-      PM_AddEvent( EV_FIRE_WEAPON3 );
-      addTime = BG_Weapon( pm->ps->weapon )->repeatRate3;
-    }
-    else
-    {
-      pm->ps->weaponTime = 0;
-      pm->ps->weaponstate = WEAPON_READY;
-      pm->ps->generic1 = WPM_NOTFIRING;
-      return;
-    }
-  }
-  else if( attack2 )
+  if( attack2 )
   {
     if( BG_Weapon( pm->ps->weapon )->hasAltMode )
     {
@@ -3481,11 +3460,6 @@ static void PM_Weapon( void )
           PM_ForceLegsAnim( NSPA_ATTACK2 );
           PM_StartWeaponAnim( WANIM_ATTACK2 );
         }
-        else if( attack3 )
-        {
-          PM_ForceLegsAnim( NSPA_ATTACK3 );
-          PM_StartWeaponAnim( WANIM_ATTACK3 );
-        }
         break;
     }
 
@@ -3495,9 +3469,8 @@ static void PM_Weapon( void )
   pm->ps->weaponstate = WEAPON_FIRING;
 
   // take an ammo away if not infinite
-  if( ( usesAmmo1 && attack1 && !attack2 && !attack3 ) ||
-      ( usesAmmo2 && attack2 && !attack3 ) ||
-      ( usesAmmo3 && attack3 ) )
+  if( ( usesAmmo1 && attack1 && !attack2 ) ||
+      ( usesAmmo2 && attack2 ) )
   {
     pm->ps->ammo--;
 
@@ -3764,15 +3737,6 @@ void PmoveSingle( pmove_t *pmove )
     pm->ps->eFlags |= EF_FIRING2;
   else
     pm->ps->eFlags &= ~EF_FIRING2;
-
-  // set the firing flag for continuous beam weapons
-  if( !(pm->ps->pm_flags & PMF_RESPAWNED) && pm->ps->pm_type != PM_INTERMISSION &&
-      ( pm->cmd.buttons & BUTTON_USE_HOLDABLE ) &&
-      ( ( pm->ps->ammo > 0 || pm->ps->clips > 0 ) ||
-        !( BG_Weapon( pm->ps->weapon )->usesAmmo & ( 1 << WPM_TERTIARY ) ) ) )
-    pm->ps->eFlags |= EF_FIRING3;
-  else
-    pm->ps->eFlags &= ~EF_FIRING3;
 
 
   // clear the respawned flag if attack and use are cleared

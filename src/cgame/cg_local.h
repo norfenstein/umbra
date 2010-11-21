@@ -1101,10 +1101,8 @@ typedef struct
   int           spawnTime;                          // fovwarp
   int           weapon1Time;                        // time when BUTTON_ATTACK went t->f f->t
   int           weapon2Time;                        // time when BUTTON_ATTACK2 went t->f f->t
-  int           weapon3Time;                        // time when BUTTON_USE_HOLDABLE went t->f f->t
   qboolean      weapon1Firing;
   qboolean      weapon2Firing;
-  qboolean      weapon3Firing;
 
   int           poisonedTime;
 

@@ -1676,10 +1676,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1696,10 +1694,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1716,10 +1712,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL1_1_SPIT_REGEN_DELAY,//int  ammoRegenDelay;
     ALEVEL1_1_CLAW_REPEAT,//int       repeatRate1;
     ALEVEL1_1_SPIT_REPEAT,//int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1736,10 +1730,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     ALEVEL0_BITE_REPEAT,  //int       repeatRate1;
     ALEVEL0_GRAPPLE_REPEAT,//int      repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1756,10 +1748,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL3_FLAME_REGEN_DELAY,//int   ammoRegenDelay;
     ALEVEL3_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL3_FLAME_REPEAT, //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1776,10 +1766,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     ALEVEL4_CLAW_REPEAT,  //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -1796,10 +1784,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     ALEVEL5_BOUNCEBALL_REGEN_DELAY,//int ammoRegenDelay;
     ALEVEL5_CLAW_REPEAT,  //int       repeatRate1;
     ALEVEL5_BOUNCEBALL_REPEAT,//int   repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1816,10 +1802,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     BLASTER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1836,10 +1820,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     HANDGUN_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     HANDGUN_RELOAD,       //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1856,10 +1838,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     RIFLE_REPEAT,         //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     RIFLE_RELOAD,         //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1876,10 +1856,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     PAINSAW_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -1896,10 +1874,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     SCATTERGUN_REPEAT,    //int       repeatRate1;
     SCATTERGUN_BLAST_REPEAT,//int     repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1916,10 +1892,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     SHOTGUN_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     SHOTGUN_RELOAD,       //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1936,10 +1910,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     LASGUN_REGEN_DELAY,   //int       ammoRegenDelay;
     LASGUN_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     LASGUN_RELOAD,        //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1956,10 +1928,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     MDRIVER_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     MDRIVER_RELOAD,       //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qtrue,                //qboolean  canZoom;
     20.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1976,10 +1946,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     CHAINGUN_REPEAT,      //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -1996,10 +1964,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     PRIFLE_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     PRIFLE_RELOAD,        //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -2016,10 +1982,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     LCANNON_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qtrue,                //qboolean  longRanged;
@@ -2036,10 +2000,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2056,10 +2018,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2076,10 +2036,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2096,10 +2054,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2116,10 +2072,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2136,10 +2090,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     GRENADE_REPEAT,       //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2156,10 +2108,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
-    500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2176,10 +2126,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
-    500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2196,10 +2144,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     500,                  //int       repeatRate1;
     500,                  //int       repeatRate2;
-    500,                  //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2216,10 +2162,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     0,                    //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qfalse,               //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2236,10 +2180,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     ABUILDER_BUILD_REPEAT,//int       repeatRate1;
     ABUILDER_CLAW_REPEAT, //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2256,10 +2198,8 @@ static const weaponAttributes_t bg_weapons[ ] =
     0,                    //int       ammoRegenDelay;
     HBUILD_REPEAT,        //int       repeatRate1;
     0,                    //int       repeatRate2;
-    0,                    //int       repeatRate3;
     0,                    //int       reloadTime;
     qtrue,                //qboolean  hasAltMode;
-    qfalse,               //qboolean  hasThirdMode;
     qfalse,               //qboolean  canZoom;
     90.0f,                //float     zoomFov;
     qfalse,               //qboolean  longRanged;
@@ -2568,7 +2508,6 @@ char *eventnames[ ] =
   "EV_CHANGE_WEAPON",
   "EV_FIRE_WEAPON",
   "EV_FIRE_WEAPON2",
-  "EV_FIRE_WEAPON3",
 
   "EV_PLAYER_RESPAWN", // for fovwarp effects
   "EV_PLAYER_TELEPORT_IN",

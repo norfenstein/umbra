@@ -693,10 +693,6 @@ void CG_EntityEvent( centity_t *cent, vec3_t position )
       CG_FireWeapon( cent, WPM_SECONDARY );
       break;
 
-    case EV_FIRE_WEAPON3:
-      CG_FireWeapon( cent, WPM_TERTIARY );
-      break;
-
     //=================================================================
 
     //

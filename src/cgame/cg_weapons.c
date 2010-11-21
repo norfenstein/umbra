@@ -591,11 +591,6 @@ static qboolean CG_ParseWeaponFile( const char *filename, weaponInfo_t *wi )
       weaponMode = WPM_SECONDARY;
       continue;
     }
-    else if( !Q_stricmp( token, "tertiary" ) )
-    {
-      weaponMode = WPM_TERTIARY;
-      continue;
-    }
     else if( !Q_stricmp( token, "weaponModel" ) )
     {
       char path[ MAX_QPATH ];
@@ -984,8 +979,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
     weaponMode = WPM_PRIMARY;
 
   if( ( ( cent->currentState.eFlags & EF_FIRING ) && weaponMode == WPM_PRIMARY ) ||
-      ( ( cent->currentState.eFlags & EF_FIRING2 ) && weaponMode == WPM_SECONDARY ) ||
-      ( ( cent->currentState.eFlags & EF_FIRING3 ) && weaponMode == WPM_TERTIARY ) )
+      ( ( cent->currentState.eFlags & EF_FIRING2 ) && weaponMode == WPM_SECONDARY ) )
     firing = qtrue;
   else
     firing = qfalse;
@@ -1020,12 +1014,6 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
     {
       cg.weapon2Time = cg.time;
       cg.weapon2Firing = ( cg.predictedPlayerState.eFlags & EF_FIRING2 );
-    }
-
-    if( cg.weapon3Firing != ( cg.predictedPlayerState.eFlags & EF_FIRING3 ) )
-    {
-      cg.weapon3Time = cg.time;
-      cg.weapon3Firing = ( cg.predictedPlayerState.eFlags & EF_FIRING3 );
     }
   }
 

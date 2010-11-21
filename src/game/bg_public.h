@@ -289,10 +289,9 @@ typedef enum
 #define EF_NODRAW           0x0100    // may have an event, but no model (unspawned items)
 #define EF_FIRING           0x0200    // for lightning gun
 #define EF_FIRING2          0x0400    // alt fire
-#define EF_FIRING3          0x0800    // third fire
-#define EF_MOVER_STOP       0x1000    // will push otherwise
-#define EF_CONNECTION       0x4000    // draw a connection trouble sprite
-#define EF_BLOBLOCKED       0x8000    // caught by a trapper
+#define EF_MOVER_STOP       0x0800    // will push otherwise
+#define EF_CONNECTION       0x1000    // draw a connection trouble sprite
+#define EF_BLOBLOCKED       0x2000    // caught by a trapper
 
 typedef enum
 {
@@ -310,7 +309,6 @@ typedef enum
 
   WPM_PRIMARY,
   WPM_SECONDARY,
-  WPM_TERTIARY,
 
   WPM_NOTFIRING,
 
@@ -464,7 +462,6 @@ typedef enum
   EV_CHANGE_WEAPON,
   EV_FIRE_WEAPON,
   EV_FIRE_WEAPON2,
-  EV_FIRE_WEAPON3,
 
   EV_PLAYER_RESPAWN, // for fovwarp effects
   EV_PLAYER_TELEPORT_IN,
@@ -1012,11 +1009,9 @@ typedef struct
 
   int       repeatRate1;
   int       repeatRate2;
-  int       repeatRate3;
   int       reloadTime;
 
   qboolean  hasAltMode;
-  qboolean  hasThirdMode;
 
   qboolean  canZoom;
   float     zoomFov;

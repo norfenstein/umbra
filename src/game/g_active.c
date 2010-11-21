@@ -825,10 +825,6 @@ void ClientEvents( gentity_t *ent, int oldEventSequence )
         FireWeapon2( ent );
         break;
 
-      case EV_FIRE_WEAPON3:
-        FireWeapon3( ent );
-        break;
-
       case EV_NOAMMO:
         break;
 
