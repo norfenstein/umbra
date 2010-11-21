@@ -1036,6 +1036,8 @@ typedef struct
 
   char      *icon;
 
+  int       repeatRate;
+
   team_t    team;
 } upgradeAttributes_t;
 

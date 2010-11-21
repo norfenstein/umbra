@@ -2311,6 +2311,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "medkit",               //char     *name;
     "Medkit",               //char     *humanName;
     "icons/iconu_atoxin",   //char     *icon;
+    1000,                   //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2318,6 +2319,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "gasgren",              //char     *name;
     "Gas Grenade",          //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_ALIENS             //team_t   team;
   },
   {
@@ -2325,6 +2327,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "sporegren",            //char     *name;
     "Spore Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_ALIENS             //team_t   team;
   },
   {
@@ -2332,6 +2335,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "spikegren",            //char     *name;
     "Spike Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_ALIENS             //team_t   team;
   },
   {
@@ -2339,6 +2343,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "shockgren",            //char     *name;
     "Shock Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2346,6 +2351,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "nervegren",            //char     *name;
     "Nerve Grenade",        //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2353,6 +2359,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "fraggren",             //char     *name;
     "Fragmentation Grenade",//char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    500,                    //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2360,6 +2367,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "c4",                   //char     *name;
     "C4 Explosive",         //char     *humanName;
     "icons/iconw_nade",     //char     *icon;
+    1000,                   //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
   {
@@ -2367,6 +2375,7 @@ static const upgradeAttributes_t bg_upgrades[ ] =
     "parmor",               //char     *name;
     "Power Armor",          //char     *humanName;
     "icons/iconu_jetpack",  //char     *icon;
+    0,                      //int      repeatRate;
     TEAM_HUMANS             //team_t   team;
   },
 };

@@ -1167,95 +1167,101 @@ static void G_UnlaggedDetectCollisions( gentity_t *ent )
 void UseUpgrade( gentity_t *ent, upgrade_t upgrade )
 {
   gclient_t *client;
+  int repeat = BG_Upgrade( upgrade )->repeatRate;
 
   client = ent->client;
 
-  switch( upgrade )
+  if( repeat && ent->nextUseTime >= level.time )
   {
-    case UP_MEDKIT:
-      if( BG_InventoryContainsUpgrade( UP_MEDKIT, client->ps.stats ) )
+    //can't use this upgrade yet
+    BG_DeactivateUpgrade( upgrade, client->ps.stats );
+  }
+  else
+  {
+    if( BG_InventoryContainsUpgrade( upgrade, client->ps.stats ) )
+    {
+      int lastWeapon;
+
+      switch( upgrade )
       {
-        //if currently using a medkit or have no need for a medkit now
-        if( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X ||
-            ( client->ps.stats[ STAT_HEALTH ] == BG_Class( client->ps.stats[ STAT_CLASS ] )->health &&
-              !( client->ps.stats[ STAT_STATE ] & SS_POISONED ) ) )
-        {
-          BG_DeactivateUpgrade( upgrade, client->ps.stats );
-        }
-        else if( client->ps.stats[ STAT_HEALTH ] > 0 )
-        {
-          //remove item
+        case UP_MEDKIT:
+          //if currently using a medkit or have no need for a medkit now
+          if( client->ps.stats[ STAT_STATE ] & SS_HEALING_2X ||
+              ( client->ps.stats[ STAT_HEALTH ] == BG_Class( client->ps.stats[ STAT_CLASS ] )->health &&
+                !( client->ps.stats[ STAT_STATE ] & SS_POISONED ) ) )
+          {
+            BG_DeactivateUpgrade( upgrade, client->ps.stats );
+          }
+          else if( client->ps.stats[ STAT_HEALTH ] > 0 )
+          {
+            //remove upgrade
+            ent->nextUseTime = level.time + repeat;
+            BG_DeactivateUpgrade( upgrade, client->ps.stats );
+            BG_AddUpgradeToInventory( upgrade, -1, client->ps.stats );
+
+            client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
+            client->poisonImmunityTime = level.time + MEDKIT_POISON_IMMUNITY_TIME;
+
+            client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
+            client->lastMedKitTime = level.time;
+            client->medKitHealthToRestore =
+              BG_Class( client->ps.stats[ STAT_CLASS ] )->health - client->ps.stats[ STAT_HEALTH ];
+            client->medKitIncrementTime = level.time +
+              ( MEDKIT_STARTUP_TIME / MEDKIT_STARTUP_SPEED );
+
+            G_AddEvent( ent, EV_MEDKIT_USED, 0 );
+          }
+          break;
+
+        case UP_GAS_GRENADE:
+        case UP_SPORE_GRENADE:
+        case UP_SPIKE_GRENADE:
+        case UP_SHOCK_GRENADE:
+        case UP_NERVE_GRENADE:
+        case UP_FRAG_GRENADE:
+          //remove upgrade
+          ent->nextUseTime = level.time + repeat;
           BG_DeactivateUpgrade( upgrade, client->ps.stats );
           BG_AddUpgradeToInventory( upgrade, -1, client->ps.stats );
 
-          client->ps.stats[ STAT_STATE ] &= ~SS_POISONED;
-          client->poisonImmunityTime = level.time + MEDKIT_POISON_IMMUNITY_TIME;
+          lastWeapon = ent->s.weapon;
 
-          client->ps.stats[ STAT_STATE ] |= SS_HEALING_2X;
-          client->lastMedKitTime = level.time;
-          client->medKitHealthToRestore =
-            BG_Class( client->ps.stats[ STAT_CLASS ] )->health - client->ps.stats[ STAT_HEALTH ];
-          client->medKitIncrementTime = level.time +
-            ( MEDKIT_STARTUP_TIME / MEDKIT_STARTUP_SPEED );
+          //M-M-M-M-MONSTER HACK
+          switch( upgrade )
+          {
+            case UP_GAS_GRENADE:
+              ent->s.weapon = WP_GAS_GRENADE;
+              break;
+            case UP_SPORE_GRENADE:
+              ent->s.weapon = WP_SPORE_GRENADE;
+              break;
+            case UP_SPIKE_GRENADE:
+              ent->s.weapon = WP_SPIKE_GRENADE;
+              break;
+            case UP_SHOCK_GRENADE:
+              ent->s.weapon = WP_SHOCK_GRENADE;
+              break;
+            case UP_NERVE_GRENADE:
+              ent->s.weapon = WP_NERVE_GRENADE;
+              break;
+            case UP_FRAG_GRENADE:
+              ent->s.weapon = WP_FRAG_GRENADE;
+              break;
+            default:
+              break;
+          }
+          FireWeapon( ent );
+          ent->s.weapon = lastWeapon;
+          break;
 
-          G_AddEvent( ent, EV_MEDKIT_USED, 0 );
-        }
+        case UP_C4_EXPLOSIVE:
+          //remove upgrade
+          ent->nextUseTime = level.time + repeat;
+          BG_DeactivateUpgrade( upgrade, client->ps.stats );
+          BG_AddUpgradeToInventory( upgrade, -1, client->ps.stats );
+          break;
       }
-      break;
-
-    case UP_GAS_GRENADE:
-    case UP_SPORE_GRENADE:
-    case UP_SPIKE_GRENADE:
-    case UP_SHOCK_GRENADE:
-    case UP_NERVE_GRENADE:
-    case UP_FRAG_GRENADE:
-      if( BG_InventoryContainsUpgrade( upgrade, client->ps.stats ) )
-      {
-        int lastWeapon = ent->s.weapon;
-
-        //remove item
-        BG_DeactivateUpgrade( upgrade, client->ps.stats );
-        BG_AddUpgradeToInventory( upgrade, -1, client->ps.stats );
-
-        //M-M-M-M-MONSTER HACK
-        switch( upgrade )
-        {
-          case UP_GAS_GRENADE:
-            ent->s.weapon = WP_GAS_GRENADE;
-            break;
-          case UP_SPORE_GRENADE:
-            ent->s.weapon = WP_SPORE_GRENADE;
-            break;
-          case UP_SPIKE_GRENADE:
-            ent->s.weapon = WP_SPIKE_GRENADE;
-            break;
-          case UP_SHOCK_GRENADE:
-            ent->s.weapon = WP_SHOCK_GRENADE;
-            break;
-          case UP_NERVE_GRENADE:
-            ent->s.weapon = WP_NERVE_GRENADE;
-            break;
-          case UP_FRAG_GRENADE:
-            ent->s.weapon = WP_FRAG_GRENADE;
-            break;
-          default:
-            break;
-        }
-        FireWeapon( ent );
-        ent->s.weapon = lastWeapon;
-      }
-      break;
-
-    case UP_C4_EXPLOSIVE:
-      if( BG_InventoryContainsUpgrade( upgrade, client->ps.stats ) )
-      {
-        int lastWeapon = ent->s.weapon;
-
-        //remove item
-        BG_DeactivateUpgrade( upgrade, client->ps.stats );
-        BG_AddUpgradeToInventory( upgrade, -1, client->ps.stats );
-      }
-      break;
+    }
   }
 }
 
