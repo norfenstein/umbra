@@ -465,7 +465,7 @@ void SpectatorThink( gentity_t *ent, usercmd_t *ucmd )
 
     client->ps.speed = client->pers.flySpeed;
     client->ps.stats[ STAT_MISC ] = 0;
-    client->ps.stats[ STAT_BUILDABLE ] = 0;
+    client->ps.stats[ STAT_BUILDABLE ] = BA_NONE;
     client->ps.stats[ STAT_CLASS ] = PCL_NONE;
     client->ps.weapon = WP_NONE;
 
@@ -1706,8 +1706,8 @@ void ClientThink_real( gentity_t *ent )
     }
   }
 
-  client->ps.persistant[ PERS_BP ] = G_GetBuildPoints( client->ps.origin,
-    client->ps.stats[ STAT_TEAM ], BG_Class( client->ps.stats[ STAT_CLASS ] )->buildDist );
+  client->ps.persistant[ PERS_BP ] = G_GetBuildPoints( client->ps.stats[ STAT_TEAM ] );
+  client->ps.persistant[ PERS_MARKEDBP ] = G_GetMarkedBuildPoints( client->ps.stats[ STAT_TEAM ] );
 
   if( client->ps.persistant[ PERS_BP ] < 0 )
     client->ps.persistant[ PERS_BP ] = 0;

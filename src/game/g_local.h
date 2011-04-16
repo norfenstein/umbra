@@ -284,6 +284,7 @@ typedef struct namelog_s
   int               slot;
   qboolean          banned;
 
+  int               nameOffset;
   int               nameChangeTime;
   int               nameChanges;
   int               voteCount;
@@ -294,6 +295,8 @@ typedef struct namelog_s
   int               score;
   int               credits;
   team_t            team;
+
+  int               id;
 } namelog_t;
 
 // client data that stays across multiple respawns, but is cleared
@@ -425,7 +428,7 @@ struct gclient_s
   unlagged_t          unlaggedBackup;
   unlagged_t          unlaggedCalc;
   int                 unlaggedTime;
- 
+
   float               voiceEnthusiasm;
   char                lastVoiceCmd[ MAX_VOICE_CMD_LEN ];
 
@@ -469,6 +472,7 @@ typedef enum
   BF_DECONSTRUCT,
   BF_REPLACE,
   BF_DESTROY,
+  BF_TEAMKILL,
   BF_UNPOWER,
   BF_AUTO
 } buildFate_t;
@@ -542,6 +546,7 @@ typedef struct
   char              voteDisplayString[ NUM_TEAMS ][ MAX_STRING_CHARS ];
   int               voteTime[ NUM_TEAMS ];        // level.time vote was called
   int               voteExecuteTime[ NUM_TEAMS ]; // time the vote is executed
+  int               voteDelay[ NUM_TEAMS ];       // it doesn't make sense to always delay vote execution
   int               voteYes[ NUM_TEAMS ];
   int               voteNo[ NUM_TEAMS ];
   int               numVotingClients[ NUM_TEAMS ];// set by CalculateRanks
@@ -612,6 +617,7 @@ typedef struct
   qboolean          uncondHumanWin;
   qboolean          alienTeamLocked;
   qboolean          humanTeamLocked;
+  int               pausedTime;
 
   int unlaggedIndex;
   int unlaggedTimes[ MAX_UNLAGGED_MARKERS ];
@@ -619,6 +625,8 @@ typedef struct
   char              layout[ MAX_QPATH ];
 
   team_t            surrenderTeam;
+  int               lastTeamImbalancedTime;
+  int               numTeamImbalanceWarnings;
 
   voice_t           *voices;
 
@@ -672,10 +680,10 @@ void      G_StopFromFollowing( gentity_t *ent );
 void      G_FollowLockView( gentity_t *ent );
 qboolean  G_FollowNewClient( gentity_t *ent, int dir );
 void      G_ToggleFollow( gentity_t *ent );
-void      G_MatchOnePlayer( int *plist, int num, char *err, int len );
-int       G_ClientNumberFromString( char *s );
+int       G_ClientNumberFromString( char *s, char *err, int len );
 int       G_ClientNumbersFromString( char *s, int *plist, int max );
 char      *ConcatArgs( int start );
+char      *ConcatArgsPrintable( int start );
 void      G_Say( gentity_t *ent, saymode_t mode, const char *chatText );
 void      G_DecolorString( char *in, char *out, int len );
 void      G_UnEscapeString( char *in, char *out, int len );
@@ -686,6 +694,8 @@ void      Cmd_Test_f( gentity_t *ent );
 void      Cmd_AdminMessage_f( gentity_t *ent );
 int       G_FloodLimited( gentity_t *ent );
 void      G_ListCommands( gentity_t *ent );
+void      G_LoadCensors( void );
+void      G_CensorString( char *out, const char *in, int len, gentity_t *ent );
 
 //
 // g_physics.c
@@ -719,8 +729,9 @@ typedef enum
   IBE_MAXERRORS
 } itemBuildError_t;
 
-gentity_t         *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
-                    buildable_t spawn, vec3_t spawnOrigin );
+gentity_t         *G_CheckSpawnPoint( int spawnNum, const vec3_t origin,
+                                      const vec3_t normal, buildable_t spawn,
+                                      vec3_t spawnOrigin );
 
 qboolean          G_IsDCCBuilt( void );
 int               G_FindDCC( gentity_t *self );
@@ -742,7 +753,8 @@ void              G_LayoutLoad( void );
 void              G_BaseSelfDestruct( team_t team );
 int               G_NextQueueTime( int queuedBP, int totalBP, int queueBaseRate );
 void              G_QueueBuildPoints( gentity_t *self );
-int               G_GetBuildPoints( const vec3_t pos, team_t team, int dist );
+int               G_GetBuildPoints( team_t team );
+int               G_GetMarkedBuildPoints( team_t team );
 
 buildLog_t        *G_BuildLogNew( gentity_t *actor, buildFate_t fate );
 void              G_BuildLogSet( buildLog_t *log, gentity_t *ent );
@@ -889,7 +901,6 @@ gentity_t *G_SelectTremulousSpawnPoint( team_t team, vec3_t preference, vec3_t o
 gentity_t *G_SelectSpawnPoint( vec3_t avoidPoint, vec3_t origin, vec3_t angles );
 gentity_t *G_SelectAlienLockSpawnPoint( vec3_t origin, vec3_t angles );
 gentity_t *G_SelectHumanLockSpawnPoint( vec3_t origin, vec3_t angles );
-void      SpawnCorpse( gentity_t *ent );
 void      respawn( gentity_t *ent );
 void      BeginIntermission( void );
 void      ClientSpawn( gentity_t *ent, gentity_t *spawn, vec3_t origin, vec3_t angles );
@@ -933,7 +944,7 @@ int  G_TimeTilSuddenDeath( void );
 // g_client.c
 //
 char *ClientConnect( int clientNum, qboolean firstTime );
-char *ClientUserinfoChanged( int clientNum );
+char *ClientUserinfoChanged( int clientNum, qboolean forceName );
 void ClientDisconnect( int clientNum );
 void ClientBegin( int clientNum );
 void ClientCommand( int clientNum );
@@ -974,8 +985,9 @@ void G_WriteSessionData( void );
 // g_maprotation.c
 //
 void      G_PrintRotations( void );
-void      G_AdvanceMapRotation( void );
-qboolean  G_StartMapRotation( char *name, qboolean advance, qboolean putOnStack );
+void      G_AdvanceMapRotation( int depth );
+qboolean  G_StartMapRotation( char *name, qboolean advance,
+                              qboolean putOnStack, qboolean reset_index, int depth );
 void      G_StopMapRotation( void );
 qboolean  G_MapRotationActive( void );
 void      G_InitMapRotations( void );
@@ -1041,6 +1053,7 @@ extern  vmCvar_t  g_alienBuildPoints;
 extern  vmCvar_t  g_alienBuildQueueTime;
 extern  vmCvar_t  g_humanBuildPoints;
 extern  vmCvar_t  g_humanBuildQueueTime;
+extern  vmCvar_t  g_teamImbalanceWarnings;
 extern  vmCvar_t  g_freeFundPeriod;
 
 extern  vmCvar_t  g_unlagged;
@@ -1082,6 +1095,8 @@ extern  vmCvar_t  g_privateMessages;
 extern  vmCvar_t  g_specChat;
 extern  vmCvar_t  g_publicAdminMessages;
 extern  vmCvar_t  g_allowTeamOverlay;
+
+extern  vmCvar_t  g_censorship;
 
 void      trap_Print( const char *fmt );
 void      trap_Error( const char *fmt );

@@ -145,6 +145,7 @@ vmCvar_t  cg_tracerLength;
 vmCvar_t  cg_thirdPerson;
 vmCvar_t  cg_thirdPersonAngle;
 vmCvar_t  cg_thirdPersonShoulderViewMode;
+vmCvar_t  cg_staticDeathCam;
 vmCvar_t  cg_thirdPersonPitchFollow;
 vmCvar_t  cg_thirdPersonRange;
 vmCvar_t  cg_stereoSeparation;
@@ -156,6 +157,7 @@ vmCvar_t  cg_paused;
 vmCvar_t  cg_blood;
 vmCvar_t  cg_teamChatsOnly;
 vmCvar_t  cg_drawTeamOverlay;
+vmCvar_t  cg_teamOverlaySortMode;
 vmCvar_t  cg_teamOverlayMaxPlayers;
 vmCvar_t  cg_teamOverlayUserinfo;
 vmCvar_t  cg_noPrintDuplicate;
@@ -269,8 +271,10 @@ static cvarTable_t cvarTable[ ] =
   { &cg_thirdPersonAngle, "cg_thirdPersonAngle", "0", CVAR_CHEAT },
   { &cg_thirdPersonPitchFollow, "cg_thirdPersonPitchFollow", "0", 0 },
   { &cg_thirdPersonShoulderViewMode, "cg_thirdPersonShoulderViewMode", "1", CVAR_ARCHIVE },
+  { &cg_staticDeathCam, "cg_staticDeathCam", "0", CVAR_ARCHIVE },
   { &cg_stats, "cg_stats", "0", 0 },
   { &cg_drawTeamOverlay, "cg_drawTeamOverlay", "1", CVAR_ARCHIVE },
+  { &cg_teamOverlaySortMode, "cg_teamOverlaySortMode", "1", CVAR_ARCHIVE },
   { &cg_teamOverlayMaxPlayers, "cg_teamOverlayMaxPlayers", "8", CVAR_ARCHIVE },
   { &cg_teamOverlayUserinfo, "teamoverlay", "1", CVAR_ARCHIVE|CVAR_USERINFO },
   { &cg_teamChatsOnly, "cg_teamChatsOnly", "0", CVAR_ARCHIVE },
@@ -1500,7 +1504,7 @@ static int CG_OwnerDrawWidth( int ownerDraw, float scale )
   switch( ownerDraw )
   {
     case CG_KILLER:
-      return UI_Text_Width( CG_GetKillerText( ), scale, 0 );
+      return UI_Text_Width( CG_GetKillerText( ), scale );
       break;
   }
 
@@ -1548,6 +1552,9 @@ void CG_LoadHudMenu( void )
                        ( 480.0f * cgs.glconfig.vidWidth ) );
   cgDC.xscale = cgs.glconfig.vidWidth / 640.0f;
   cgDC.yscale = cgs.glconfig.vidHeight / 480.0f;
+
+  cgDC.smallFontScale = CG_Cvar_Get( "ui_smallFont" );
+  cgDC.bigFontScale = CG_Cvar_Get( "ui_bigFont" );
 
   cgDC.registerShaderNoMip  = &trap_R_RegisterShaderNoMip;
   cgDC.setColor             = &trap_R_SetColor;

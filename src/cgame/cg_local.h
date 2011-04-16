@@ -793,7 +793,6 @@ typedef struct weaponInfoMode_s
   int         missileAnimLooping;
 
   sfxHandle_t firingSound;
-  qboolean    loopFireSound;
 
   qhandle_t   muzzleParticleSystem;
 
@@ -1128,6 +1127,7 @@ typedef struct
   float         painBlendTarget;
   float         healBlendValue;
   int           lastHealth;
+  qboolean      wasDeadLastFrame;
 
   int           lastPredictedCommand;
   int           lastServerTime;
@@ -1329,6 +1329,7 @@ typedef struct
   int           voteTime[ NUM_TEAMS ];
   int           voteYes[ NUM_TEAMS ];
   int           voteNo[ NUM_TEAMS ];
+  char          voteCaller[ NUM_TEAMS ][ MAX_NAME_LENGTH ];
   qboolean      voteModified[ NUM_TEAMS ];// beep whenever changed
   char          voteString[ NUM_TEAMS ][ MAX_STRING_TOKENS ];
 
@@ -1411,6 +1412,7 @@ extern  vmCvar_t    cg_drawCrosshair;
 extern  vmCvar_t    cg_drawCrosshairNames;
 extern  vmCvar_t    cg_crosshairSize;
 extern  vmCvar_t    cg_drawTeamOverlay;
+extern  vmCvar_t    cg_teamOverlaySortMode;
 extern  vmCvar_t    cg_teamOverlayMaxPlayers;
 extern  vmCvar_t    cg_teamOverlayUserinfo;
 extern  vmCvar_t    cg_draw2D;
@@ -1437,6 +1439,7 @@ extern  vmCvar_t    cg_tracerLength;
 extern  vmCvar_t    cg_thirdPerson;
 extern  vmCvar_t    cg_thirdPersonAngle;
 extern  vmCvar_t    cg_thirdPersonShoulderViewMode;
+extern  vmCvar_t    cg_staticDeathCam;
 extern  vmCvar_t    cg_thirdPersonPitchFollow;
 extern  vmCvar_t    cg_thirdPersonRange;
 extern  vmCvar_t    cg_stereoSeparation;

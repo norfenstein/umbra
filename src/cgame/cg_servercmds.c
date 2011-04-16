@@ -260,6 +260,9 @@ static void CG_ConfigStringModified( void )
   else if( num >= CS_VOTE_STRING && num < CS_VOTE_STRING + NUM_TEAMS )
     Q_strncpyz( cgs.voteString[ num - CS_VOTE_STRING ], str,
       sizeof( cgs.voteString[ num - CS_VOTE_STRING ] ) );
+  else if( num >= CS_VOTE_CALLER && num < CS_VOTE_CALLER + NUM_TEAMS )
+    Q_strncpyz( cgs.voteCaller[ num - CS_VOTE_CALLER ], str,
+      sizeof( cgs.voteCaller[ num - CS_VOTE_CALLER ] ) );
   else if( num == CS_INTERMISSION )
     cg.intermissionStarted = atoi( str );
   else if( num >= CS_MODELS && num < CS_MODELS+MAX_MODELS )
@@ -421,20 +424,6 @@ void CG_Menu( int menu, int arg )
       longMsg   = "You must wait until the warmup time is finished "
                   "before joining a team. ";
       shortMsg  = "You cannot join a team during warmup.";
-      type      = DT_COMMAND;
-      break;
-
-    case MN_A_TEAMCHANGEBUILDTIMER:
-      longMsg   = "You cannot leave the Alien team until your build timer "
-                  "has expired.";
-      shortMsg  = "You cannot change teams until your build timer expires";
-      type      = DT_COMMAND;
-      break;
-
-    case MN_H_TEAMCHANGEBUILDTIMER:
-      longMsg   = "You cannot leave the Human team until your build timer "
-                  "has expired.";
-      shortMsg  = "You cannot change teams until your build timer expires";
       type      = DT_COMMAND;
       break;
 
@@ -741,8 +730,13 @@ static void CG_Say( int clientNum, saymode_t mode, const char *text )
                  ignore, prefix, name, cgs.clientinfo[ cg.clientNum ].name,
                  maybeColon, INDENT_MARKER, color, text );
       if( !ignore[0] )
+      {
         CG_CenterPrint( va( "%sPrivate message from: " S_COLOR_WHITE "%s", 
                             color, name ), 200, GIANTCHAR_WIDTH * 4 );
+        if( clientNum < 0 || clientNum >= MAX_CLIENTS )
+          clientNum = cg.clientNum;
+        CG_Printf( ">> to reply, say: /m %d [your message] <<\n", clientNum );
+      }
       break;
     case SAY_RAW:
       CG_Printf( "%s\n", text );

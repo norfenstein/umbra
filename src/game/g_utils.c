@@ -555,8 +555,8 @@ void G_KillBox( gentity_t *ent )
   gentity_t *hit;
   vec3_t    mins, maxs;
 
-  VectorAdd( ent->s.origin, ent->r.mins, mins );
-  VectorAdd( ent->s.origin, ent->r.maxs, maxs );
+  VectorAdd( ent->r.currentOrigin, ent->r.mins, mins );
+  VectorAdd( ent->r.currentOrigin, ent->r.maxs, maxs );
   num = trap_EntitiesInBox( mins, maxs, touch, MAX_GENTITIES );
 
   for( i = 0; i < num; i++ )
@@ -770,15 +770,21 @@ Test a list of entities for the closest to a particular point
 gentity_t *G_ClosestEnt( vec3_t origin, gentity_t **entities, int numEntities )
 {
   int       i;
-  float     nd, d = 1000000.0f;
-  gentity_t *closestEnt = NULL;
+  float     nd, d;
+  gentity_t *closestEnt;
 
-  for( i = 0; i < numEntities; i++ )
+  if( numEntities <= 0 )
+    return NULL;
+
+  closestEnt = entities[ 0 ];
+  d = DistanceSquared( origin, closestEnt->s.origin );
+
+  for( i = 1; i < numEntities; i++ )
   {
     gentity_t *ent = entities[ i ];
 
     nd = DistanceSquared( origin, ent->s.origin );
-    if( i == 0 || nd < d )
+    if( nd < d )
     {
       d = nd;
       closestEnt = ent;
@@ -950,11 +956,13 @@ qboolean G_AddressParse( const char *str, addr_t *addr )
     p = addr6parse( str, addr );
     max = 128;
   }
-  else
+  else if( strchr( str, '.' ) )
   {
     p = addr4parse( str, addr );
     max = 32;
   }
+  else
+    return qfalse;
   Q_strncpyz( addr->str, str, sizeof( addr->str ) );
   if( !p )
     return qfalse;

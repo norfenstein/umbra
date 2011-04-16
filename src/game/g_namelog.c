@@ -37,6 +37,7 @@ void G_namelog_connect( gclient_t *client )
 {
   namelog_t *n, *p = NULL;
   int       i;
+  char      *newname;
 
   for( n = level.namelogs; n; p = n, n = n->next )
   {
@@ -50,15 +51,26 @@ void G_namelog_connect( gclient_t *client )
     n = BG_Alloc( sizeof( namelog_t ) );
     strcpy( n->guid, client->pers.guid );
     if( p )
+    {
       p->next = n;
+      n->id = p->id + 1;
+    }
     else
+    {
       level.namelogs = n;
+      n->id = MAX_CLIENTS;
+    }
   }
   client->pers.namelog = n;
   n->slot = client - level.clients;
   n->banned = qfalse;
 
-  G_namelog_update_name( client );
+  newname = n->name[ n->nameOffset ];
+  // If they're muted, copy in their last known name - this will stop people
+  // reconnecting to get around the name change protection.
+  if( n->muted && G_admin_name_check( &g_entities[ n->slot ],
+      newname, NULL, 0 ) )
+    Q_strncpyz( client->pers.netname, newname, MAX_NAME_LENGTH );
 
   for( i = 0; i < MAX_NAMELOG_ADDRS && n->ip[ i ].str[ 0 ]; i++ )
     if( !strcmp( n->ip[ i ].str, client->pers.ip.str ) )
@@ -89,18 +101,18 @@ void G_namelog_update_score( gclient_t *client )
 
 void G_namelog_update_name( gclient_t *client )
 {
-  int       i;
   char      n1[ MAX_NAME_LENGTH ], n2[ MAX_NAME_LENGTH ];
   namelog_t *n = client->pers.namelog;
 
-  G_SanitiseString( client->pers.netname, n1, sizeof( n1 ) );
-  for( i = 0; i < MAX_NAMELOG_NAMES && n->name[ i ][ 0 ]; i++ )
+  if( n->name[ n->nameOffset ][ 0 ] )
   {
-    G_SanitiseString( n->name[ i ], n2, sizeof( n2 ) );
-    if( !strcmp( n1, n2 ) )
-      return;
+    G_SanitiseString( client->pers.netname, n1, sizeof( n1 ) );
+    G_SanitiseString( n->name[ n->nameOffset ],
+      n2, sizeof( n2 ) );
+    if( strcmp( n1, n2 ) != 0 )
+      n->nameOffset = ( n->nameOffset + 1 ) % MAX_NAMELOG_NAMES;
   }
-  strcpy( n->name[ n->nameChanges % MAX_NAMELOG_NAMES ], client->pers.netname );
+  strcpy( n->name[ n->nameOffset ], client->pers.netname );
 }
 
 void G_namelog_restore( gclient_t *client )

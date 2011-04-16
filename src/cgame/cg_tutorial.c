@@ -202,13 +202,13 @@ static void CG_AlienBuilderText( char *text, playerState_t *ps )
       if( es->eFlags & EF_B_MARKED )
       {
         Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to unmark this structure\n",
+            va( "Press %s to unmark this structure for replacement\n",
               CG_KeyNameForCommand( "deconstruct" ) ) );
       }
       else
       {
         Q_strcat( text, MAX_TUTORIAL_TEXT,
-            va( "Press %s to mark this structure\n",
+            va( "Press %s to mark this structure for replacement\n",
               CG_KeyNameForCommand( "deconstruct" ) ) );
       }
     }
@@ -599,12 +599,16 @@ static void CG_SpectatorText( char *text, playerState_t *ps )
   {
     if( !cg.chaseFollow )
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-          va( "Press %s to switch to chase-cam spectator mode\n",
-            CG_KeyNameForCommand( "+button2" ) ) );
+                va( "Press %s to switch to chase-cam spectator mode\n",
+                    CG_KeyNameForCommand( "+button2" ) ) );
+    else if( cgs.clientinfo[ cg.clientNum ].team == TEAM_NONE )
+      Q_strcat( text, MAX_TUTORIAL_TEXT,
+                va( "Press %s to return to free spectator mode\n",
+                    CG_KeyNameForCommand( "+button2" ) ) );
     else
       Q_strcat( text, MAX_TUTORIAL_TEXT,
-          va( "Press %s to return to free spectator mode\n",
-            CG_KeyNameForCommand( "+button2" ) ) );
+                va( "Press %s to stop following\n",
+                    CG_KeyNameForCommand( "+button2" ) ) );
 
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s or ",
@@ -617,9 +621,11 @@ static void CG_SpectatorText( char *text, playerState_t *ps )
   {
     Q_strcat( text, MAX_TUTORIAL_TEXT,
         va( "Press %s to follow a player\n",
-          CG_KeyNameForCommand( "+button2" ) ) );
+            CG_KeyNameForCommand( "+button2" ) ) );
   }
 }
+
+#define BINDING_REFRESH_INTERVAL 30
 
 /*
 ===============
@@ -632,8 +638,12 @@ const char *CG_TutorialText( void )
 {
   playerState_t *ps;
   static char   text[ MAX_TUTORIAL_TEXT ];
+  static int    refreshBindings = 0;
 
-  CG_GetBindings( );
+  if( refreshBindings == 0 )
+    CG_GetBindings( );
+
+  refreshBindings = ( refreshBindings + 1 ) % BINDING_REFRESH_INTERVAL;
 
   text[ 0 ] = '\0';
   ps = &cg.snap->ps;

@@ -215,6 +215,7 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
     return;
 
   G_LeaveTeam( ent );
+  ent->client->pers.teamChangeTime = level.time;
   ent->client->pers.teamSelection = newTeam;
   ent->client->pers.classSelection = PCL_NONE;
   ClientSpawn( ent, NULL, NULL, NULL );
@@ -222,7 +223,7 @@ void G_ChangeTeam( gentity_t *ent, team_t newTeam )
   // Copy credits to ps for the client
   ent->client->ps.persistant[ PERS_CREDIT ] = ent->client->pers.credit;
 
-  ClientUserinfoChanged( ent->client->ps.clientNum );
+  ClientUserinfoChanged( ent->client->ps.clientNum, qfalse );
 
   G_UpdateTeamConfigStrings( );
 
@@ -396,6 +397,33 @@ void CheckTeamStatus( void )
 
       if( ent->inuse )
         TeamplayInfoMessage( ent );
+    }
+  }
+
+  // Warn on imbalanced teams
+  if( g_teamImbalanceWarnings.integer && !level.intermissiontime &&
+      ( level.time - level.lastTeamImbalancedTime >
+        ( g_teamImbalanceWarnings.integer * 1000 ) ) &&
+      level.numTeamImbalanceWarnings < 3 && !level.restarted )
+  {
+    level.lastTeamImbalancedTime = level.time;
+    if( level.numAlienSpawns > 0 && 
+        level.numHumanClients - level.numAlienClients > 2 )
+    {
+      trap_SendServerCommand( -1, "print \"Teams are imbalanced. "
+                                  "Humans have more players.\n\"");
+      level.numTeamImbalanceWarnings++;
+    }
+    else if( level.numHumanSpawns > 0 && 
+             level.numAlienClients - level.numHumanClients > 2 )
+    {
+      trap_SendServerCommand ( -1, "print \"Teams are imbalanced. "
+                                   "Aliens have more players.\n\"");
+      level.numTeamImbalanceWarnings++;
+    }
+    else
+    {
+      level.numTeamImbalanceWarnings = 0;
     }
   }
 }

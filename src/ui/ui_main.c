@@ -116,8 +116,8 @@ static cvarTable_t    cvarTable[ ] =
   { &ui_lastServerRefresh_1, "ui_lastServerRefresh_1_time", "", CVAR_ARCHIVE},
   { &ui_lastServerRefresh_2, "ui_lastServerRefresh_2_time", "", CVAR_ARCHIVE},
   { &ui_lastServerRefresh_3, "ui_lastServerRefresh_3_time", "", CVAR_ARCHIVE},
-  { &ui_smallFont, "ui_smallFont", "0.2", CVAR_ARCHIVE},
-  { &ui_bigFont, "ui_bigFont", "0.5", CVAR_ARCHIVE},
+  { &ui_smallFont, "ui_smallFont", "0.2", CVAR_ARCHIVE | CVAR_LATCH },
+  { &ui_bigFont, "ui_bigFont", "0.5", CVAR_ARCHIVE | CVAR_LATCH },
   { &ui_findPlayer, "ui_findPlayer", "", CVAR_ARCHIVE},
   { &ui_serverStatusTimeOut, "ui_serverStatusTimeOut", "7000", CVAR_ARCHIVE},
   { &ui_textWrapCache, "ui_textWrapCache", "1", CVAR_ARCHIVE },
@@ -1791,7 +1791,7 @@ static int UI_OwnerDrawWidth( int ownerDraw, float scale )
   }
 
   if( s )
-    return UI_Text_Width( s, scale, 0 );
+    return UI_Text_Width( s, scale );
 
   return 0;
 }
@@ -2709,16 +2709,11 @@ static void UI_RunMenuScript( char **args )
         trap_Cvar_VariableStringBuffer( "ui_sayBuffer", buffer, sizeof( buffer ) );
 
         if( buffer[ 0 ] == '/' || buffer[ 0 ] == '\\' )
-        {
-            Menus_ReplaceActiveByName( "say_command" );
-        }
+          Menus_ReplaceActiveByName( "say_command" );
+        else if( uiInfo.chatTeam )
+          Menus_ReplaceActiveByName( "say_team" );
         else
-        {
-            if( !uiInfo.chatTeam )
-            Menus_ReplaceActiveByName( "say" );
-            else
-            Menus_ReplaceActiveByName( "say_team" );
-        }
+          Menus_ReplaceActiveByName( "say" );
       }
     }
     else if( Q_stricmp( name, "playMovie" ) == 0 )
@@ -2866,16 +2861,26 @@ static void UI_RunMenuScript( char **args )
     {
       if( uiInfo.playerIndex >= 0 && uiInfo.playerIndex < uiInfo.playerCount )
       {
-        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callvote kick %d\n",
-                                               uiInfo.clientNums[ uiInfo.playerIndex ] ) );
+        char buffer[ MAX_CVAR_VALUE_STRING ];
+        trap_Cvar_VariableStringBuffer( "ui_reason", buffer, sizeof( buffer ) ); 
+
+        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callvote kick %d %s\n",
+                                               uiInfo.clientNums[ uiInfo.playerIndex ],
+                                               buffer ) );
+        trap_Cvar_Set( "ui_reason", "" );
       }
     }
     else if( Q_stricmp( name, "voteMute" ) == 0 )
     {
       if( uiInfo.playerIndex >= 0 && uiInfo.playerIndex < uiInfo.playerCount )
       {
-        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callvote mute %d\n",
-                                               uiInfo.clientNums[ uiInfo.playerIndex ] ) );
+        char buffer[ MAX_CVAR_VALUE_STRING ];
+        trap_Cvar_VariableStringBuffer( "ui_reason", buffer, sizeof( buffer ) ); 
+
+        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callvote mute %d %s\n",
+                                               uiInfo.clientNums[ uiInfo.playerIndex ],
+                                               buffer ) );
+        trap_Cvar_Set( "ui_reason", "" );
       }
     }
     else if( Q_stricmp( name, "voteUnMute" ) == 0 )
@@ -2890,16 +2895,26 @@ static void UI_RunMenuScript( char **args )
     {
       if( uiInfo.teamPlayerIndex >= 0 && uiInfo.teamPlayerIndex < uiInfo.myTeamCount )
       {
-        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callteamvote kick %d\n",
-                                               uiInfo.teamClientNums[ uiInfo.teamPlayerIndex ] ) );
+        char buffer[ MAX_CVAR_VALUE_STRING ];
+        trap_Cvar_VariableStringBuffer( "ui_reason", buffer, sizeof( buffer ) ); 
+
+        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callteamvote kick %d %s\n",
+                                               uiInfo.teamClientNums[ uiInfo.teamPlayerIndex ],
+                                               buffer ) );
+        trap_Cvar_Set( "ui_reason", "" );
       }
     }
     else if( Q_stricmp( name, "voteTeamDenyBuild" ) == 0 )
     {
       if( uiInfo.teamPlayerIndex >= 0 && uiInfo.teamPlayerIndex < uiInfo.myTeamCount )
       {
-        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callteamvote denybuild %d\n",
-                                               uiInfo.teamClientNums[ uiInfo.teamPlayerIndex ] ) );
+        char buffer[ MAX_CVAR_VALUE_STRING ];
+        trap_Cvar_VariableStringBuffer( "ui_reason", buffer, sizeof( buffer ) ); 
+
+        trap_Cmd_ExecuteText( EXEC_APPEND, va( "callteamvote denybuild %d %s\n",
+                                               uiInfo.teamClientNums[ uiInfo.teamPlayerIndex ],
+                                               buffer ) );
+        trap_Cvar_Set( "ui_reason", "" );
       }
     }
     else if( Q_stricmp( name, "voteTeamAllowBuild" ) == 0 )
@@ -3257,6 +3272,9 @@ static const char *UI_FeederItemText( int feederID, int index, int column, qhand
               return text;
             }
           }
+
+        case SORT_GAME:
+          return Info_ValueForKey( info, "game" );
 
         case SORT_MAP:
           return Info_ValueForKey( info, "mapname" );
@@ -3666,6 +3684,9 @@ void UI_Init( qboolean inGameLoad )
   uiInfo.uiDC.aspectScale = ( ( 640.0f * uiInfo.uiDC.glconfig.vidHeight ) /
       ( 480.0f * uiInfo.uiDC.glconfig.vidWidth ) );
 
+  uiInfo.uiDC.smallFontScale = trap_Cvar_VariableValue( "ui_smallFont" );
+  uiInfo.uiDC.bigFontScale = trap_Cvar_VariableValue( "ui_bigFont" );
+
   uiInfo.uiDC.registerShaderNoMip = &trap_R_RegisterShaderNoMip;
   uiInfo.uiDC.setColor = &UI_SetColor;
   uiInfo.uiDC.drawHandlePic = &UI_DrawHandlePic;
@@ -3929,7 +3950,7 @@ static void UI_PrintTime ( char *buf, int bufsize, int time )
 // FIXME: move to ui_shared.c?
 void Text_PaintCenter( float x, float y, float scale, vec4_t color, const char *text, float adjust )
 {
-  int len = UI_Text_Width( text, scale, 0 );
+  int len = UI_Text_Width( text, scale );
   UI_Text_Paint( x - len / 2, y, scale, color, text, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE );
 }
 
@@ -3957,7 +3978,7 @@ void Text_PaintCenter_AutoWrapped( float x, float y, float xmax, float ystep, fl
 
     *s3 = '\0';
 
-    width = UI_Text_Width( s1, scale, 0 );
+    width = UI_Text_Width( s1, scale );
 
     *s3 = c_bcp;
 

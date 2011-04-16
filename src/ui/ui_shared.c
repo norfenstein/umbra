@@ -1858,6 +1858,16 @@ void Script_playLooped( itemDef_t *item, char **args )
   }
 }
 
+static ID_INLINE float UI_EmoticonHeight( fontInfo_t *font, float scale )
+{
+  return font->glyphs[ (int)'[' ].height * scale * font->glyphScale;
+}
+
+static ID_INLINE float UI_EmoticonWidth( fontInfo_t *font, float scale )
+{
+  return UI_EmoticonHeight( font, scale ) * DC->aspectScale;
+}
+
 void UI_EscapeEmoticons( char *dest, const char *src, int destsize )
 {
   int len;
@@ -1881,6 +1891,7 @@ qboolean UI_Text_IsEmoticon( const char *s, qboolean *escaped,
                              int *length, qhandle_t *h, int *width )
 {
   const char *p = s;
+  char emoticon[ MAX_EMOTICON_NAME_LEN ];
   int i;
 
   if( *p != '[' )
@@ -1896,11 +1907,16 @@ qboolean UI_Text_IsEmoticon( const char *s, qboolean *escaped,
     *escaped = qfalse;
 
   for( *length = 0; p[ *length ] != ']'; ( *length )++ )
-    if( !p[ *length ] )
+  {
+    if( !p[ *length ] || *length == MAX_EMOTICON_NAME_LEN - 1 )
       return qfalse;
 
+    emoticon[ *length ] = p[ *length ];
+  }
+  emoticon[ *length ] = '\0';
+
   for( i = 0; i < DC->Assets.emoticonCount; i++ )
-    if( !Q_stricmpn( DC->Assets.emoticons[ i ].name, p, *length ) )
+    if( !Q_stricmp( DC->Assets.emoticons[ i ].name, emoticon ) )
       break;
 
   if( i == DC->Assets.emoticonCount )
@@ -1921,12 +1937,11 @@ qboolean UI_Text_IsEmoticon( const char *s, qboolean *escaped,
 
 static float UI_Parse_Indent( const char **text )
 {
-  char  indentWidth[ MAX_STRING_CHARS ];
-  char  *p = indentWidth;
-  int   numChars;
-  float pixels;
-
-  Q_strncpyz( indentWidth, *text, MAX_STRING_CHARS );
+  char        indentWidth[ 32 ];
+  char        *indentWidthPtr;
+  const char  *p = *text;
+  int         numDigits;
+  float       pixels;
 
   while( isdigit( *p ) || *p == '.' )
     p++;
@@ -1934,117 +1949,112 @@ static float UI_Parse_Indent( const char **text )
   if( *p != INDENT_MARKER )
     return 0.0f;
 
-  *p++ = '\0';
-  numChars = ( p - indentWidth );
-  p = indentWidth;
+  numDigits = ( p - *text );
 
-  if( !Float_Parse( &p, &pixels ) )
+  if( numDigits > sizeof( indentWidth ) - 1 )
     return 0.0f;
 
-  (*text) += numChars;
+  strncpy( indentWidth, *text, numDigits );
+
+  indentWidth[ numDigits ] = '\0';
+  indentWidthPtr = indentWidth;
+
+  if( !Float_Parse( &indentWidthPtr, &pixels ) )
+    return 0.0f;
+
+  (*text) += ( numDigits + 1 );
 
   return pixels;
 }
 
-float UI_Text_Width( const char *text, float scale, int limit )
+static ID_INLINE fontInfo_t *UI_FontForScale( float scale )
 {
-  int         count, len;
-  float       out;
+  if( scale <= DC->smallFontScale )
+    return &DC->Assets.smallFont;
+  else if( scale >= DC->bigFontScale )
+    return &DC->Assets.bigFont;
+  else
+    return &DC->Assets.textFont;
+}
+
+float UI_Char_Width( const char **text, float scale )
+{
   glyphInfo_t *glyph;
-  float       useScale;
-  const char  *s = text;
-  fontInfo_t  *font = &DC->Assets.textFont;
+  fontInfo_t  *font;
   int         emoticonLen;
   qboolean    emoticonEscaped;
-  float       emoticonW;
   int         emoticonWidth;
-  int         emoticons = 0;
+
+  if( text && *text )
+  {
+    if( Q_IsColorString( *text ) )
+    {
+      *text += 2;
+      return 0.0f;
+    }
+
+    if( **text == INDENT_MARKER )
+    {
+      (*text)++;
+      return 0.0f;
+    }
+
+    font = UI_FontForScale( scale );
+
+    if( UI_Text_IsEmoticon( *text, &emoticonEscaped, &emoticonLen,
+                            NULL, &emoticonWidth ) )
+    {
+      if( emoticonEscaped )
+        (*text)++;
+      else
+      {
+        *text += emoticonLen;
+        return emoticonWidth * UI_EmoticonWidth( font, scale );
+      }
+    }
+
+    (*text)++;
+
+    glyph = &font->glyphs[ (int)**text ];
+    return glyph->xSkip * DC->aspectScale * scale * font->glyphScale;
+  }
+
+  return 0.0f;
+}
+
+float UI_Text_Width( const char *text, float scale )
+{
+  float       out;
+  const char  *s = text;
   float       indentWidth = 0.0f;
 
-  if( scale <= DC->getCVarValue( "ui_smallFont" ) )
-    font = &DC->Assets.smallFont;
-  else if( scale >= DC->getCVarValue( "ui_bigFont" ) )
-    font = &DC->Assets.bigFont;
-
-  useScale = scale * font->glyphScale;
-  emoticonW = UI_Text_Height( "[", scale, 0 ) * DC->aspectScale;
-  out = 0;
+  out = 0.0f;
 
   if( text )
   {
-    len = Q_PrintStrlen( text );
-
-    if( limit > 0 && len > limit )
-      len = limit;
-
-    count = 0;
     indentWidth = UI_Parse_Indent( &s );
 
-    while( s && *s && count < len )
-    {
-      glyph = &font->glyphs[( int )*s];
-
-      if( Q_IsColorString( s ) )
-      {
-        s += 2;
-        continue;
-      }
-
-      if( *s == INDENT_MARKER )
-      {
-        s++;
-        continue;
-      }
-
-      if( UI_Text_IsEmoticon( s, &emoticonEscaped, &emoticonLen,
-                              NULL, &emoticonWidth ) )
-      {
-        if( emoticonEscaped )
-          s++;
-        else
-        {
-          s += emoticonLen;
-          count += emoticonLen;
-          emoticons += emoticonWidth;
-          continue;
-        }
-      }
-      out += ( glyph->xSkip * DC->aspectScale );
-      s++;
-      count++;
-    }
+    while( *s )
+      out += UI_Char_Width( &s, scale );
   }
 
-  return ( out * useScale ) + ( emoticons * emoticonW ) + indentWidth;
+  return out + indentWidth;
 }
 
-float UI_Text_Height( const char *text, float scale, int limit )
+float UI_Text_Height( const char *text, float scale )
 {
-  int         len, count;
   float       max;
   glyphInfo_t *glyph;
   float       useScale;
   const char  *s = text;
-  fontInfo_t  *font = &DC->Assets.textFont;
-
-  if( scale <= DC->getCVarValue( "ui_smallFont" ) )
-    font = &DC->Assets.smallFont;
-  else if( scale >= DC->getCVarValue( "ui_bigFont" ) )
-    font = &DC->Assets.bigFont;
+  fontInfo_t  *font = UI_FontForScale( scale );
 
   useScale = scale * font->glyphScale;
   max = 0;
 
   if( text )
   {
-    len = strlen( text );
-
-    if( limit > 0 && len > limit )
-      len = limit;
-
-    count = 0;
-
-    while( s && *s && count < len )
+    while( s && *s )
     {
       if( Q_IsColorString( s ) )
       {
@@ -2059,7 +2069,6 @@ float UI_Text_Height( const char *text, float scale, int limit )
           max = glyph->height;
 
         s++;
-        count++;
       }
     }
   }
@@ -2069,12 +2078,12 @@ float UI_Text_Height( const char *text, float scale, int limit )
 
 float UI_Text_EmWidth( float scale )
 {
-  return UI_Text_Width( "M", scale, 0 );
+  return UI_Text_Width( "M", scale );
 }
 
 float UI_Text_EmHeight( float scale )
 {
-  return UI_Text_Height( "M", scale, 0 );
+  return UI_Text_Height( "M", scale );
 }
 
 
@@ -2161,7 +2170,7 @@ static void UI_Text_Paint_Generic( float x, float y, float scale, float gapAdjus
   int         len;
   int         count = 0;
   vec4_t      newColor;
-  fontInfo_t  *font = &DC->Assets.textFont;
+  fontInfo_t  *font = UI_FontForScale( scale );
   glyphInfo_t *glyph;
   float       useScale;
   qhandle_t   emoticonHandle = 0;
@@ -2174,15 +2183,10 @@ static void UI_Text_Paint_Generic( float x, float y, float scale, float gapAdjus
   if( !text )
     return;
 
-  if( scale <= DC->getCVarValue( "ui_smallFont" ) )
-    font = &DC->Assets.smallFont;
-  else if( scale >= DC->getCVarValue( "ui_bigFont" ) )
-    font = &DC->Assets.bigFont;
-
   useScale = scale * font->glyphScale;
 
-  emoticonH = font->glyphs[ (int)'[' ].height * useScale;
-  emoticonW = emoticonH * DC->aspectScale;
+  emoticonH = UI_EmoticonHeight( font, scale );
+  emoticonW = UI_EmoticonWidth( font, scale );
 
   len = strlen( text );
   if( limit > 0 && len > limit )
@@ -2195,9 +2199,11 @@ static void UI_Text_Paint_Generic( float x, float y, float scale, float gapAdjus
 
   while( s && *s && count < len )
   {
+    const char *t = s;
+    float charWidth = UI_Char_Width( &t, scale );
     glyph = &font->glyphs[ (int)*s ];
 
-    if( maxX && UI_Text_Width( s, scale, 1 ) + x > *maxX )
+    if( maxX && charWidth + x > *maxX )
     {
       *maxX = 0;
       break;
@@ -3220,7 +3226,7 @@ static void Item_TextField_CalcPaintOffset( itemDef_t *item, char *buff )
 
       if( buff[ item->cursorPos + 1 ] == '\0' )
       {
-        while( UI_Text_Width( &buff[ editPtr->paintOffset ], item->textscale, 0 ) <=
+        while( UI_Text_Width( &buff[ editPtr->paintOffset ], item->textscale ) <=
                ( editPtr->maxFieldWidth - EDIT_CURSOR_WIDTH ) && editPtr->paintOffset > 0 )
           editPtr->paintOffset--;
       }
@@ -3229,7 +3235,7 @@ static void Item_TextField_CalcPaintOffset( itemDef_t *item, char *buff )
 
       // Shift paintOffset so that the cursor is visible
 
-      while( UI_Text_Width( &buff[ editPtr->paintOffset ], item->textscale, 0 ) >
+      while( UI_Text_Width( &buff[ editPtr->paintOffset ], item->textscale ) >
              ( editPtr->maxFieldWidth - EDIT_CURSOR_WIDTH ) )
         editPtr->paintOffset++;
     }
@@ -4189,7 +4195,7 @@ void Rect_ToWindowCoords( rectDef_t *rect, windowDef_t *window )
   ToWindowCoords( &rect->x, &rect->y, window );
 }
 
-void Item_SetTextExtents( itemDef_t *item, int *width, int *height, const char *text )
+void Item_SetTextExtents( itemDef_t *item, const char *text )
 {
   const char *textPtr = ( text ) ? text : item->text;
   qboolean cvarContent;
@@ -4205,37 +4211,35 @@ void Item_SetTextExtents( itemDef_t *item, int *width, int *height, const char *
   if( textPtr == NULL )
     return;
 
-  *width = item->textRect.w;
-  *height = item->textRect.h;
-
   // as long as the item isn't dynamic content (ownerdraw or cvar), this
   // keeps us from computing the widths and heights more than once
-  if( *width == 0 || cvarContent || ( item->type == ITEM_TYPE_OWNERDRAW &&
+  if( item->textRect.w == 0.0f || cvarContent || ( item->type == ITEM_TYPE_OWNERDRAW &&
       item->textalignment != ALIGN_LEFT ) )
   {
-    int originalWidth;
+    float originalWidth = 0.0f;
 
-    if( cvarContent )
+    if( item->textalignment == ALIGN_CENTER || item->textalignment == ALIGN_RIGHT )
     {
-      char buff[ MAX_CVAR_VALUE_STRING ];
-      DC->getCVarString( item->cvar, buff, sizeof( buff ) );
-      originalWidth = UI_Text_Width( item->text, item->textscale, 0 ) +
-                      UI_Text_Width( buff, item->textscale, 0 );
+      if( cvarContent )
+      {
+        char buff[ MAX_CVAR_VALUE_STRING ];
+        DC->getCVarString( item->cvar, buff, sizeof( buff ) );
+        originalWidth = UI_Text_Width( item->text, item->textscale ) +
+          UI_Text_Width( buff, item->textscale );
+      }
+      else
+        originalWidth = UI_Text_Width( item->text, item->textscale );
     }
-    else
-      originalWidth = UI_Text_Width( item->text, item->textscale, 0 );
 
-    *width = UI_Text_Width( textPtr, item->textscale, 0 );
-    *height = UI_Text_Height( textPtr, item->textscale, 0 );
-    item->textRect.w = *width;
-    item->textRect.h = *height;
+    item->textRect.w = UI_Text_Width( textPtr, item->textscale );
+    item->textRect.h = UI_Text_Height( textPtr, item->textscale );
 
     if( item->textvalignment == VALIGN_BOTTOM )
       item->textRect.y = item->textaligny + item->window.rect.h;
     else if( item->textvalignment == VALIGN_CENTER )
-      item->textRect.y = item->textaligny + ( ( *height + item->window.rect.h ) / 2.0f );
+      item->textRect.y = item->textaligny + ( ( item->textRect.h + item->window.rect.h ) / 2.0f );
     else if( item->textvalignment == VALIGN_TOP )
-      item->textRect.y = item->textaligny + *height;
+      item->textRect.y = item->textaligny + item->textRect.h;
 
     if( item->textalignment == ALIGN_LEFT )
       item->textRect.x = item->textalignx;
@@ -4302,74 +4306,54 @@ static void SkipWhiteSpace( const char **text, char *lastColor )
   }
 }
 
-static void SkipEmoticons( const char **text )
-{
-  int      emoticonLen;
-  qboolean emoticonEscaped;
-
-  while( UI_Text_IsEmoticon( *text, &emoticonEscaped, &emoticonLen, NULL, NULL ) )
-  {
-    if( emoticonEscaped )
-      (*text)++;
-    else
-      (*text) += emoticonLen;
-  }
-}
-
 const char *Item_Text_Wrap( const char *text, float scale, float width )
 {
   static char   out[ 8192 ] = "";
   char          *paint = out;
   char          c[ 3 ] = "";
-  const char    *p = text;
-  const char    *eol;
-  const char    *q = NULL;
-  unsigned int  testLength;
-  unsigned int  i;
+  const char    *p;
+  const char    *eos;
   float         indentWidth = 0.0f;
-  float         testWidth;
 
-  if( strlen( text ) >= sizeof( out ) )
+  if( !text )
+    return NULL;
+
+  p = text;
+  eos = p + strlen( p );
+
+  if( ( eos - p ) >= sizeof( out ) )
     return NULL;
 
   *paint = '\0';
 
   while( *p )
   {
-    eol = p;
-    q = p + 1;
-    testLength = 0;
-    testWidth = width - indentWidth;
+    float       textWidth = 0.0f;
+    const char  *eol = p;
+    const char  *q = p;
+    float       testWidth = width - indentWidth;
 
     SkipColorCodes( &q, c );
 
-    while( testLength == 0 || UI_Text_Width( p, scale, testLength ) < testWidth )
+    while( q && textWidth < testWidth )
     {
       qboolean previousCharIsSpace = qfalse;
 
       // Remaining string is too short to wrap
-      if( testLength >= strlen( p ) )
+      if( q >= eos )
       {
-        eol = p + strlen( p );
+        eol = eos;
         break;
       }
 
-      // Point q at the end of the current testLength
-      for( q = p, i = 0; i < testLength; i++ )
+      if( q > p && *q == INDENT_MARKER )
       {
-        SkipColorCodes( &q, c );
-        SkipEmoticons( &q );
-
-        previousCharIsSpace = isspace( *q );
-        q++;
+        indentWidth = textWidth;
+        eol = p;
       }
-
-      if( testLength > 0 && *q == INDENT_MARKER )
-        indentWidth = UI_Text_Width( p, scale, testLength );
 
       // Some color escapes might still be present
       SkipColorCodes( &q, c );
-      SkipEmoticons( &q );
 
       // Manual line break
       if( *q == '\n' )
@@ -4381,22 +4365,25 @@ const char *Item_Text_Wrap( const char *text, float scale, float width )
       if( !previousCharIsSpace && isspace( *q ) )
         eol = q;
 
-      testLength++;
+      textWidth += UI_Char_Width( &q, scale );
     }
 
     // No split has taken place, so just split mid-word
     if( eol == p )
       eol = q;
 
-    paint = out + strlen( out );
+    // Note that usage of strcat and strlen is deliberately being
+    // avoided here as it becomes surprisingly expensive on larger
+    // blocks of text
 
     // Copy text
     strncpy( paint, p, eol - p );
+    paint += ( eol - p );
+    *paint = '\0';
 
-    paint[ eol - p ] = '\0';
     p = eol;
 
-    if( out[ strlen( out ) - 1 ] == '\n' )
+    if( paint - out > 0 && *( paint - 1 ) == '\n' )
     {
       // The line is deliberately broken, clear the color and
       // any current indent
@@ -4406,20 +4393,31 @@ const char *Item_Text_Wrap( const char *text, float scale, float width )
     else
     {
       // Add a \n if it's not there already
-      Q_strcat( out, sizeof( out ), "\n" );
+      *paint++ = '\n';
+      *paint = '\0';
 
       // Insert a pixel indent on the next line
       if( indentWidth > 0.0f )
-        Q_strcat( out, sizeof( out ), va( "%f%c", indentWidth, INDENT_MARKER ) );
+      {
+        char  *indentMarkerText       = va( "%f%c", indentWidth, INDENT_MARKER );
+        int   indentMarkerTextLength  = strlen( indentMarkerText );
+
+        strncpy( paint, indentMarkerText, indentMarkerTextLength );
+        paint += indentMarkerTextLength;
+        *paint = '\0';
+      }
 
       // Skip leading whitespace on next line and save the
       // last color code
       SkipWhiteSpace( &p, c );
     }
 
-    Q_strcat( out, sizeof( out ), c );
-
-    paint = out + strlen( out );
+    if( c[ 0 ] )
+    {
+      *paint++ = c[ 0 ];
+      *paint++ = c[ 1 ];
+      *paint = '\0';
+    }
   }
 
   return out;
@@ -4489,7 +4487,7 @@ static qboolean UI_CheckWrapCache( const char *text, rectDef_t *rect, float scal
   {
     wrapCache_t *cacheEntry = &wrapCache[ i ];
 
-    if( Q_stricmp( text, cacheEntry->text ) )
+    if( strcmp( text, cacheEntry->text ) )
       continue;
 
     if( rect->x != cacheEntry->rect.x ||
@@ -4537,6 +4535,7 @@ void Item_Text_Wrapped_Paint( itemDef_t *item )
   const char  *p, *textPtr;
   float       x, y, w, h;
   vec4_t      color;
+  qboolean    useWrapCache = (qboolean)DC->getCVarValue( "ui_textWrapCache" );
 
   if( item->text == NULL )
   {
@@ -4557,8 +4556,7 @@ void Item_Text_Wrapped_Paint( itemDef_t *item )
   Item_TextColor( item, &color );
 
   // Check if this block is cached
-  if( ( qboolean )DC->getCVarValue( "ui_textWrapCache" ) &&
-      UI_CheckWrapCache( textPtr, &item->window.rect, item->textscale ) )
+  if( useWrapCache && UI_CheckWrapCache( textPtr, &item->window.rect, item->textscale ) )
   {
     while( UI_NextWrapLine( &p, &x, &y ) )
     {
@@ -4578,7 +4576,8 @@ void Item_Text_Wrapped_Paint( itemDef_t *item )
     float       paintY;
     int         i;
 
-    UI_CreateCacheEntry( textPtr, &item->window.rect, item->textscale );
+    if( useWrapCache )
+      UI_CreateCacheEntry( textPtr, &item->window.rect, item->textscale );
 
     x = item->window.rect.x + item->textalignx;
     y = item->window.rect.y + item->textaligny;
@@ -4633,7 +4632,6 @@ void Item_Text_Wrapped_Paint( itemDef_t *item )
       if( textPtr[ i ] == '\n' || textPtr[ i ] == '\0' )
       {
         itemDef_t   lineItem;
-        int         width, height;
 
         memset( &lineItem, 0, sizeof( itemDef_t ) );
         strncpy( buff, p, lineLength );
@@ -4667,17 +4665,20 @@ void Item_Text_Wrapped_Paint( itemDef_t *item )
                         lineItem.window.rect.w, lineItem.window.rect.h, 1, color );
         }
 
-        Item_SetTextExtents( &lineItem, &width, &height, buff );
+        Item_SetTextExtents( &lineItem, buff );
         UI_Text_Paint( lineItem.textRect.x, lineItem.textRect.y,
                        lineItem.textscale, color, buff, 0, 0,
                        lineItem.textStyle );
-        UI_AddCacheEntryLine( buff, lineItem.textRect.x, lineItem.textRect.y );
+
+        if( useWrapCache )
+          UI_AddCacheEntryLine( buff, lineItem.textRect.x, lineItem.textRect.y );
 
         lineNum++;
       }
     }
 
-    UI_FinishCacheEntry( );
+    if( useWrapCache )
+      UI_FinishCacheEntry( );
   }
 }
 
@@ -4724,7 +4725,6 @@ void Item_Text_Paint( itemDef_t *item )
 {
   char text[1024];
   const char *textPtr;
-  int height, width;
   vec4_t color;
 
   if( item->window.flags & WINDOW_WRAPPED )
@@ -4747,11 +4747,10 @@ void Item_Text_Paint( itemDef_t *item )
     textPtr = item->text;
 
   // this needs to go here as it sets extents for cvar types as well
-  Item_SetTextExtents( item, &width, &height, textPtr );
+  Item_SetTextExtents( item, textPtr );
 
   if( *textPtr == '\0' )
     return;
-
 
   Item_TextColor( item, &color );
 
@@ -4793,7 +4792,7 @@ void Item_TextField_Paint( itemDef_t *item )
     editPtr->paintOffset = 0;
 
   // Shorten string to max viewable
-  while( UI_Text_Width( buff + editPtr->paintOffset, item->textscale, 0 ) >
+  while( UI_Text_Width( buff + editPtr->paintOffset, item->textscale ) >
          ( editPtr->maxFieldWidth - cursorWidth ) && strlen( buff ) > 0 )
     buff[ strlen( buff ) - 1 ] = '\0';
 
@@ -5484,7 +5483,7 @@ void Item_ListBoxRow_Paint( itemDef_t *item, int row, int renderPos, qboolean hi
         {
           float alignOffset = 0.0f, tw;
 
-          tw = UI_Text_Width( text, item->textscale, 0 );
+          tw = UI_Text_Width( text, item->textscale );
 
           switch( listPtr->columnInfo[ j ].align )
           {
@@ -7343,7 +7342,7 @@ qboolean Item_Parse( int handle, itemDef_t *item )
 
       if( test != key->param )
       {
-        if( test == ITEM_TYPE_NONE )
+        if( test == TYPE_NONE )
           PC_SourceError( handle, "menu item keyword %s requires "
                           "type specification", token.string );
         else

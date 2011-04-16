@@ -1208,7 +1208,7 @@ void G_TrampleAttack( gentity_t *ent, gentity_t *victim )
   VectorSubtract( victim->s.origin, ent->s.origin, forward );
   VectorNormalize( forward );
   VectorNegate( forward, normal );
-  
+
   if( !victim->takedamage )
     return;
 

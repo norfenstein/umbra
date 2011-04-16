@@ -1029,6 +1029,7 @@ trigger_ammo_touch
 void trigger_ammo_touch( gentity_t *self, gentity_t *other, trace_t *trace )
 {
   int maxClips, maxAmmo;
+  weapon_t weapon;
 
   if( !other->client )
     return;
@@ -1050,18 +1051,21 @@ void trigger_ammo_touch( gentity_t *self, gentity_t *other, trace_t *trace )
   maxAmmo = BG_Weapon( other->client->ps.weapon )->maxAmmo;
   maxClips = BG_Weapon( other->client->ps.weapon )->maxClips;
 
-  if( ( other->client->ps.ammo + self->damage ) > maxAmmo )
+  if( BG_Weapon( other->client->ps.weapon )->usesAmmo )
   {
-    if( other->client->ps.clips < maxClips )
+    if( ( other->client->ps.ammo + self->damage ) > maxAmmo )
     {
-      other->client->ps.clips++;
-      other->client->ps.ammo = 1;
+      if( other->client->ps.clips < maxClips )
+      {
+        other->client->ps.clips++;
+        other->client->ps.ammo = 1;
+      }
+      else
+        other->client->ps.ammo = maxAmmo;
     }
     else
-      other->client->ps.ammo = maxAmmo;
+      other->client->ps.ammo += self->damage;
   }
-  else
-    other->client->ps.ammo += self->damage;
 }
 
 /*

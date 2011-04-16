@@ -31,6 +31,7 @@ qboolean G_SpawnString( const char *key, const char *defaultString, char **out )
   {
     *out = (char *)defaultString;
 //    G_Error( "G_SpawnString() called while not spawning" );
+    return qfalse;
   }
 
   for( i = 0; i < level.numSpawnVars; i++ )
@@ -318,7 +319,7 @@ qboolean G_CallSpawn( gentity_t *ent )
   {
     // don't spawn built-in buildings if we are using a custom layout
     if( level.layout[ 0 ] && Q_stricmp( level.layout, "*BUILTIN*" ) )
-      return qtrue;
+      return qfalse;
 
     if( buildable == BA_A_SPAWN || buildable == BA_H_SPAWN )
     {
@@ -600,29 +601,17 @@ void SP_worldspawn( void )
 
   trap_SetConfigstring( CS_MOTD, g_motd.string );   // message of the day
 
-  G_SpawnString( "gravity", "800", &s );
-  trap_Cvar_Set( "g_gravity", s );
+  if( G_SpawnString( "gravity", "", &s ) )
+    trap_Cvar_Set( "g_gravity", s );
 
-  G_SpawnString( "humanBuildPoints", DEFAULT_HUMAN_BUILDPOINTS, &s );
-  trap_Cvar_Set( "g_humanBuildPoints", s );
+  if( G_SpawnString( "disabledEquipment", "", &s ) )
+    trap_Cvar_Set( "g_disabledEquipment", s );
 
-  G_SpawnString( "alienBuildPoints", DEFAULT_ALIEN_BUILDPOINTS, &s );
-  trap_Cvar_Set( "g_alienBuildPoints", s );
+  if( G_SpawnString( "disabledClasses", "", &s ) )
+    trap_Cvar_Set( "g_disabledClasses", s );
 
-  G_SpawnString( "enableDust", "0", &s );
-  trap_Cvar_Set( "g_enableDust", s );
-
-  G_SpawnString( "enableBreath", "0", &s );
-  trap_Cvar_Set( "g_enableBreath", s );
-
-  G_SpawnString( "disabledEquipment", "", &s );
-  trap_Cvar_Set( "g_disabledEquipment", s );
-
-  G_SpawnString( "disabledClasses", "", &s );
-  trap_Cvar_Set( "g_disabledClasses", s );
-
-  G_SpawnString( "disabledBuildables", "", &s );
-  trap_Cvar_Set( "g_disabledBuildables", s );
+  if( G_SpawnString( "disabledBuildables", "", &s ) )
+    trap_Cvar_Set( "g_disabledBuildables", s );
 
   g_entities[ ENTITYNUM_WORLD ].s.number = ENTITYNUM_WORLD;
   g_entities[ ENTITYNUM_WORLD ].classname = "worldspawn";
@@ -651,8 +640,6 @@ Parses textual entity definitions out of an entstring and spawns gentities.
 */
 void G_SpawnEntitiesFromString( void )
 {
-  // allow calls to G_Spawn*()
-  level.spawning = qtrue;
   level.numSpawnVars = 0;
 
   // the worldspawn is not an actual entity, but it still
@@ -666,7 +653,5 @@ void G_SpawnEntitiesFromString( void )
   // parse ents
   while( G_ParseSpawnVars( ) )
     G_SpawnGEntityFromSpawnVars( );
-
-  level.spawning = qfalse;      // any future calls to G_Spawn*() will be errors
 }
 

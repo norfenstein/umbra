@@ -66,8 +66,8 @@ G_CheckSpawnPoint
 Check if a spawn at a specified point is valid
 ===============
 */
-gentity_t *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
-    buildable_t spawn, vec3_t spawnOrigin )
+gentity_t *G_CheckSpawnPoint( int spawnNum, const vec3_t origin,
+    const vec3_t normal, buildable_t spawn, vec3_t spawnOrigin )
 {
   float   displacement;
   vec3_t  mins, maxs;
@@ -117,10 +117,10 @@ gentity_t *G_CheckSpawnPoint( int spawnNum, vec3_t origin, vec3_t normal,
 ==================
 G_GetBuildPoints
 
-Get the number of build points from a position
+Get the number of build points for a team
 ==================
 */
-int G_GetBuildPoints( const vec3_t pos, team_t team, int extraDistance )
+int G_GetBuildPoints( team_t team )
 {
   if( G_TimeTilSuddenDeath( ) <= 0 )
   {
@@ -136,6 +136,46 @@ int G_GetBuildPoints( const vec3_t pos, team_t team, int extraDistance )
   }
 
   return 0;
+}
+
+/*
+==================
+G_GetMarkedBuildPoints
+
+Get the number of marked build points for a team
+==================
+*/
+int G_GetMarkedBuildPoints( team_t team )
+{
+  gentity_t *ent;
+  int       i;
+  int sum = 0;
+
+  if( G_TimeTilSuddenDeath( ) <= 0 )
+    return 0;
+
+  if( !g_markDeconstruct.integer )
+    return 0;
+
+  for( i = MAX_CLIENTS, ent = g_entities + i; i < level.num_entities; i++, ent++ )
+  {
+    if( ent->s.eType != ET_BUILDABLE )
+      continue;
+
+    if( !ent->inuse )
+      continue;
+
+    if( ent->health <= 0 )
+      continue;
+
+    if( ent->buildableTeam != team )
+      continue;
+
+    if( ent->deconstruct )
+      sum += BG_Buildable( ent->s.modelindex )->buildPoints;
+  }
+
+  return sum;
 }
 
 /*
@@ -2067,10 +2107,16 @@ void G_BuildableThink( gentity_t *ent, int msec )
   int buildTime = BG_Buildable( ent->s.modelindex )->buildTime;
 
   //toggle spawned flag for buildables
-  if( !ent->spawned && ent->health > 0 )
+  if( !ent->spawned && ent->health > 0 && !level.pausedTime )
   {
     if( ent->buildTime + buildTime < level.time )
+    {
       ent->spawned = qtrue;
+      if( ent->s.modelindex == BA_A_OVERMIND )
+      {
+        G_TeamCommand( TEAM_ALIENS, "cp \"The Overmind has awakened!\"" );
+      }
+    }
   }
 
   // Timer actions
@@ -2401,6 +2447,7 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
 {
   int               i;
   int               numBuildables = 0;
+  int               numRequired = 0;
   int               pointsYielded = 0;
   gentity_t         *ent;
   team_t            team = BG_Buildable( buildable )->team;
@@ -2412,12 +2459,13 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
   buildable_t       spawn;
   buildable_t       core;
   int               spawnCount = 0;
+  qboolean          changed = qtrue;
 
   level.numBuildablesForRemoval = 0;
 
   if( team == TEAM_ALIENS )
   {
-    remainingBP     = G_GetBuildPoints( origin, team, 0 );
+    remainingBP     = G_GetBuildPoints( team );
     remainingSpawns = level.numAlienSpawns;
     bpError         = IBE_NOALIENBP;
     spawn           = BA_A_SPAWN;
@@ -2425,7 +2473,7 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
   }
   else if( team == TEAM_HUMANS )
   {
-    remainingBP     = G_GetBuildPoints( origin, team, 0 );
+    remainingBP     = G_GetBuildPoints( team );
     remainingSpawns = level.numHumanSpawns;
     bpError         = IBE_NOHUMANBP;
     spawn           = BA_H_SPAWN;
@@ -2522,6 +2570,8 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
     }
   }
 
+  numRequired = level.numBuildablesForRemoval;
+
   // We still need build points, but have no candidates for removal
   if( buildPoints > 0 && numBuildables == 0 )
     return bpError;
@@ -2542,6 +2592,30 @@ static itemBuildError_t G_SufficientBPAvailable( buildable_t     buildable,
   {
     ent = level.markedBuildables[ level.numBuildablesForRemoval ];
     pointsYielded += BG_Buildable( ent->s.modelindex )->buildPoints;
+  }
+
+  // Do another pass to see if we can meet quota with fewer buildables
+  //  than we have now due to mismatches between priority and BP amounts
+  //  by repeatedly testing if we can chop off the first thing that isn't
+  //  required by rules of collision/uniqueness, which are always at the head
+  while( changed && level.numBuildablesForRemoval > 1 && 
+         level.numBuildablesForRemoval > numRequired )
+  {
+    int pointsUnYielded = 0;
+    changed = qfalse;
+    ent = level.markedBuildables[ numRequired ];
+    pointsUnYielded = BG_Buildable( ent->s.modelindex )->buildPoints;
+
+    if( pointsYielded - pointsUnYielded >= buildPoints )
+    {
+      pointsYielded -= pointsUnYielded;
+      memmove( &level.markedBuildables[ numRequired ],
+               &level.markedBuildables[ numRequired + 1 ],
+               ( level.numBuildablesForRemoval - numRequired ) 
+                 * sizeof( gentity_t * ) );
+      level.numBuildablesForRemoval--;
+      changed = qtrue;
+    }
   }
 
   for( i = 0; i < level.numBuildablesForRemoval; i++ )
@@ -2728,13 +2802,17 @@ G_Build
 Spawns a buildable
 ================
 */
-static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t origin, vec3_t angles )
+static gentity_t *G_Build( gentity_t *builder, buildable_t buildable,
+    const vec3_t origin, const vec3_t angles )
 {
   gentity_t *built;
   vec3_t    normal;
+  vec3_t    localOrigin;
   char      readable[ MAX_STRING_CHARS ];
   char      buildnums[ MAX_STRING_CHARS ];
   buildLog_t *log;
+
+  VectorCopy( origin, localOrigin );
 
   if( builder->client )
     log = G_BuildLogNew( builder, BF_CONSTRUCT );
@@ -2779,7 +2857,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   // when building the initial layout, spawn the entity slightly off its
   // target surface so that it can be "dropped" onto it
   if( !builder->client )
-    VectorMA( origin, 1.0f, normal, origin );
+    VectorMA( localOrigin, 1.0f, normal, localOrigin );
 
   built->health = 1;
 
@@ -2911,7 +2989,7 @@ static gentity_t *G_Build( gentity_t *builder, buildable_t buildable, vec3_t ori
   else
     built->builtBy = -1;
 
-  G_SetOrigin( built, origin );
+  G_SetOrigin( built, localOrigin );
 
   // gently nudge the buildable onto the surface :)
   VectorScale( normal, -50.0f, built->s.pos.trDelta );
@@ -3456,7 +3534,7 @@ void G_BuildLogRevertThink( gentity_t *ent )
   int       victims = 0;
   int       i;
 
-  if( ent->suicideTime > level.time )
+  if( ent->suicideTime > 0 )
   {
     BG_BuildableBoundingBox( ent->s.modelindex, mins, maxs );
     VectorAdd( ent->s.pos.trBase, mins, mins );
@@ -3477,6 +3555,8 @@ void G_BuildLogRevertThink( gentity_t *ent )
         victims++;
       }
     }
+
+    ent->suicideTime--;
 
     if( victims )
     {
@@ -3516,19 +3596,22 @@ void G_BuildLogRevert( int id )
       for( i = MAX_CLIENTS; i < level.num_entities; i++ )
       {
         ent = &g_entities[ i ];
-        if( ent->s.eType != ET_BUILDABLE ||
-          ent->s.modelindex != log->modelindex ||
-          ent->health <= 0 )
-          continue;
-
-        VectorSubtract( ent->s.pos.trBase, log->origin, dist );
-        if( VectorLengthSquared( dist ) > 2.0f )
-          continue;
-
-        G_LogPrintf( "revert: remove %d %s\n",
-          ent - g_entities, BG_Buildable( ent->s.modelindex )->name );
-        G_FreeEntity( ent );
-        break;
+        if( ( ( ent->s.eType == ET_BUILDABLE &&
+                ent->health > 0 ) ||
+              ( ent->s.eType == ET_GENERAL &&
+                ent->think == G_BuildLogRevertThink ) ) &&
+            ent->s.modelindex == log->modelindex )
+        {
+          VectorSubtract( ent->s.pos.trBase, log->origin, dist );
+          if( VectorLengthSquared( dist ) <= 2.0f )
+          {
+            if( ent->s.eType == ET_BUILDABLE )
+              G_LogPrintf( "revert: remove %d %s\n",
+                ent - g_entities, BG_Buildable( ent->s.modelindex )->name );
+            G_FreeEntity( ent );
+            break;
+          }
+        }
       }
     }
     else
@@ -3546,9 +3629,11 @@ void G_BuildLogRevert( int id )
 
       builder->think = G_BuildLogRevertThink;
       builder->nextthink = level.time + FRAMETIME;
-      builder->suicideTime = level.time + 3000;
 
-      if( log->fate == BF_DESTROY )
+      // Number of thinks before giving up and killing players in the way
+      builder->suicideTime = 30; 
+
+      if( log->fate == BF_DESTROY || log->fate == BF_TEAMKILL )
       {
         int value = log->powerValue;
 

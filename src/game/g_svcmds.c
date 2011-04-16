@@ -58,6 +58,9 @@ void  Svcmd_EntityList_f( void )
       case ET_BUILDABLE:
         G_Printf( "ET_BUILDABLE        " );
         break;
+      case ET_LOCATION:
+        G_Printf( "ET_LOCATION         " );
+        break;
       case ET_MISSILE:
         G_Printf( "ET_MISSILE          " );
         break;
@@ -114,23 +117,15 @@ void  Svcmd_EntityList_f( void )
 
 static gclient_t *ClientForString( char *s )
 {
-  int idnum, count;
-  int pids[ MAX_CLIENTS ];
+  int  idnum;
+  char err[ MAX_STRING_CHARS ];
 
-  if( ( count = G_ClientNumbersFromString( s, pids, MAX_CLIENTS ) ) != 1 )
+  idnum = G_ClientNumberFromString( s, err, sizeof( err ) );
+  if( idnum == -1 )
   {
-    idnum = G_ClientNumberFromString( s );
-
-    if( idnum == -1 )
-    {
-      char err[ MAX_STRING_CHARS ];
-      G_MatchOnePlayer( pids, count, err, sizeof( err ) );
-      G_Printf( "%s\n", err );
-      return NULL;
-    }
+    G_Printf( "%s", err );
+    return NULL;
   }
-  else
-    idnum = pids[ 0 ];
 
   return &level.clients[ idnum ];
 }
@@ -344,7 +339,7 @@ static void Svcmd_MapRotation_f( void )
   G_ClearRotationStack( );
 
   trap_Argv( 1, rotationName, sizeof( rotationName ) );
-  if( !G_StartMapRotation( rotationName, qfalse, qtrue ) )
+  if( !G_StartMapRotation( rotationName, qfalse, qtrue, qfalse, 0 ) )
     G_Printf( "maprotation: invalid map rotation \"%s\"\n", rotationName );
 }
 
@@ -454,6 +449,29 @@ static void Svcmd_DumpUser_f( void )
   }
 }
 
+static void Svcmd_Pr_f( void )
+{
+  char targ[ 4 ];
+  int cl;
+
+  if( trap_Argc( ) < 3 )
+  {
+    G_Printf( "usage: <clientnum|-1> <message>\n" );
+    return;
+  }
+
+  trap_Argv( 1, targ, sizeof( targ ) );
+  cl = atoi( targ );
+
+  if( cl >= MAX_CLIENTS || cl < -1 )
+  {
+    G_Printf( "invalid clientnum %d\n", cl );
+    return;
+  }
+
+  trap_SendServerCommand( cl, va( "print \"%s\n\"", ConcatArgs( 2 ) ) );
+}
+
 static void Svcmd_PrintQueue_f( void )
 {
   char team[ MAX_STRING_CHARS ];
@@ -515,6 +533,11 @@ static void Svcmd_SuddenDeath_f( void )
       offset, offset == 1 ? "" : "s" ) );
 }
 
+static void Svcmd_G_AdvanceMapRotation_f( void )
+{
+  G_AdvanceMapRotation( 0 );
+}
+
 struct svcmd
 {
   char     *cmd;
@@ -523,7 +546,7 @@ struct svcmd
 } svcmds[ ] = {
   { "a", qtrue, Svcmd_MessageWrapper },
   { "admitDefeat", qfalse, Svcmd_AdmitDefeat_f },
-  { "advanceMapRotation", qfalse, G_AdvanceMapRotation },
+  { "advanceMapRotation", qfalse, Svcmd_G_AdvanceMapRotation_f },
   { "alienWin", qfalse, Svcmd_TeamWin_f },
   { "chat", qtrue, Svcmd_MessageWrapper },
   { "cp", qtrue, Svcmd_CenterPrint_f },
@@ -537,8 +560,10 @@ struct svcmd
   { "layoutLoad", qfalse, Svcmd_LayoutLoad_f },
   { "layoutSave", qfalse, Svcmd_LayoutSave_f },
   { "listmaps", qtrue, Svcmd_ListMapsWrapper },
+  { "loadcensors", qfalse, G_LoadCensors },
   { "m", qtrue, Svcmd_MessageWrapper },
   { "mapRotation", qfalse, Svcmd_MapRotation_f },
+  { "pr", qfalse, Svcmd_Pr_f },
   { "printqueue", qfalse, Svcmd_PrintQueue_f },
   { "say", qtrue, Svcmd_MessageWrapper },
   { "say_team", qtrue, Svcmd_TeamMessage_f },

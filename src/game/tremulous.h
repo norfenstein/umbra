@@ -360,7 +360,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SHOTGUN_MAXCLIPS            3
 #define SHOTGUN_REPEAT              1000
 #define SHOTGUN_RELOAD              2000
-#define SHOTGUN_SPREAD              900
+#define SHOTGUN_SPREAD              700
 #define SHOTGUN_DMG                 HDM(5)
 #define SHOTGUN_KNOCKBACK           SHOTGUN_DMG
 #define SHOTGUN_RANGE               (8192 * 12)
@@ -497,7 +497,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DC_SPLASHKNOCKBACK          DC_SPLASHDAMAGE
 #define DC_SPLASHRADIUS             100
 #define DC_ATTACK_PERIOD            10000 // how often to spam "under attack"
-#define DC_HEALRATE                 3
+#define DC_HEALRATE                 4
 #define DC_RANGE                    1000
 
 #define ARMOURY_BP                  10

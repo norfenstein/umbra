@@ -74,6 +74,7 @@ typedef struct
 {
   char *keyword;
   qboolean ( * handler ) ( gentity_t *ent );
+  qboolean silent;
   char *flag;
   char *function;  // used for !help
   char *syntax;  // used for !help
@@ -92,16 +93,21 @@ g_admin_level_t;
 typedef struct g_admin_admin
 {
   struct g_admin_admin *next;
+  int level;
   char guid[ 33 ];
   char name[ MAX_NAME_LENGTH ];
-  int level;
   char flags[ MAX_ADMIN_FLAGS ];
 }
 g_admin_admin_t;
 
 #define ADDRLEN 16
+/*
+addr_ts are passed as "arg" to admin_search for IP address matching
+admin_search prints (char *)arg, so the stringified address needs to be first
+*/
 typedef struct
 {
+  char str[ 44 ];
   enum
   {
     IPv4,
@@ -109,8 +115,8 @@ typedef struct
   } type;
   byte addr[ ADDRLEN ];
   int mask;
-  char str[ 44 ];
 } addr_t;
+
 typedef struct g_admin_ban
 {
   struct g_admin_ban *next;
@@ -121,6 +127,7 @@ typedef struct g_admin_ban
   char made[ 18 ]; // big enough for strftime() %c
   int expires;
   char banner[ MAX_NAME_LENGTH ];
+  int warnCount;
 }
 g_admin_ban_t;
 
@@ -171,6 +178,8 @@ qboolean G_admin_restart( gentity_t *ent );
 qboolean G_admin_nextmap( gentity_t *ent );
 qboolean G_admin_namelog( gentity_t *ent );
 qboolean G_admin_lock( gentity_t *ent );
+qboolean G_admin_pause( gentity_t *ent );
+qboolean G_admin_builder( gentity_t *ent );
 qboolean G_admin_buildlog( gentity_t *ent );
 qboolean G_admin_revert( gentity_t *ent );
 
