@@ -3493,8 +3493,6 @@ typedef struct gameElements_s
 {
   buildable_t       buildables[ BA_NUM_BUILDABLES ];
   class_t           classes[ PCL_NUM_CLASSES ];
-  weapon_t          weapons[ WP_NUM_WEAPONS ];
-  upgrade_t         upgrades[ UP_NUM_UPGRADES ];
 } gameElements_t;
 
 static gameElements_t bg_disabledGameElements;
@@ -3508,13 +3506,6 @@ void BG_InitAllowedGameElements( void )
 {
   char cvar[ MAX_CVAR_VALUE_STRING ];
 
-  trap_Cvar_VariableStringBuffer( "g_disabledEquipment",
-      cvar, MAX_CVAR_VALUE_STRING );
-
-  BG_ParseCSVEquipmentList( cvar,
-      bg_disabledGameElements.weapons, WP_NUM_WEAPONS,
-      bg_disabledGameElements.upgrades, UP_NUM_UPGRADES );
-
   trap_Cvar_VariableStringBuffer( "g_disabledClasses",
       cvar, MAX_CVAR_VALUE_STRING );
 
@@ -3526,44 +3517,6 @@ void BG_InitAllowedGameElements( void )
 
   BG_ParseCSVBuildableList( cvar,
       bg_disabledGameElements.buildables, BA_NUM_BUILDABLES );
-}
-
-/*
-============
-BG_WeaponIsAllowed
-============
-*/
-qboolean BG_WeaponIsAllowed( weapon_t weapon )
-{
-  int i;
-
-  for( i = 0; i < WP_NUM_WEAPONS &&
-      bg_disabledGameElements.weapons[ i ] != WP_NONE; i++ )
-  {
-    if( bg_disabledGameElements.weapons[ i ] == weapon )
-      return qfalse;
-  }
-
-  return qtrue;
-}
-
-/*
-============
-BG_UpgradeIsAllowed
-============
-*/
-qboolean BG_UpgradeIsAllowed( upgrade_t upgrade )
-{
-  int i;
-
-  for( i = 0; i < UP_NUM_UPGRADES &&
-      bg_disabledGameElements.upgrades[ i ] != UP_NONE; i++ )
-  {
-    if( bg_disabledGameElements.upgrades[ i ] == upgrade )
-      return qfalse;
-  }
-
-  return qtrue;
 }
 
 /*

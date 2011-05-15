@@ -88,7 +88,6 @@ vmCvar_t  g_freeFundPeriod;
 
 vmCvar_t  g_unlagged;
 
-vmCvar_t  g_disabledEquipment;
 vmCvar_t  g_disabledClasses;
 vmCvar_t  g_disabledBuildables;
 
@@ -137,7 +136,6 @@ static char cv_humanMaxStage[ MAX_CVAR_VALUE_STRING ];
 static char cv_alienMaxStage[ MAX_CVAR_VALUE_STRING ];
 static char cv_disabledBuildables[ MAX_CVAR_VALUE_STRING ];
 static char cv_disabledClasses[ MAX_CVAR_VALUE_STRING ];
-static char cv_disabledEquipment[ MAX_CVAR_VALUE_STRING ];
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -209,7 +207,6 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_unlagged, "g_unlagged", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue  },
 
-  { &g_disabledEquipment, "g_disabledEquipment", "", CVAR_ROM | CVAR_SYSTEMINFO, 0, qfalse, cv_disabledEquipment  },
   { &g_disabledClasses, "g_disabledClasses", "", CVAR_ROM | CVAR_SYSTEMINFO, 0, qfalse, cv_disabledClasses  },
   { &g_disabledBuildables, "g_disabledBuildables", "", CVAR_ROM | CVAR_SYSTEMINFO, 0, qfalse, cv_disabledBuildables  },
 

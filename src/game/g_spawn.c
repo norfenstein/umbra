@@ -604,9 +604,6 @@ void SP_worldspawn( void )
   if( G_SpawnString( "gravity", "", &s ) )
     trap_Cvar_Set( "g_gravity", s );
 
-  if( G_SpawnString( "disabledEquipment", "", &s ) )
-    trap_Cvar_Set( "g_disabledEquipment", s );
-
   if( G_SpawnString( "disabledClasses", "", &s ) )
     trap_Cvar_Set( "g_disabledClasses", s );
 
